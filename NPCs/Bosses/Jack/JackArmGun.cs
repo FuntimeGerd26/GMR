@@ -16,10 +16,6 @@ namespace GMR.NPCs.Bosses.Jack
 {
     public class JackArmGun : ModNPC
     {
-        // This is a neat trick that uses the fact that NPCs have all NPC.ai[] values set to 0f on spawn (if not otherwise changed).
-        // We set ParentIndex to a number in the body after spawning it. If we set ParentIndex to 3, NPC.ai[0] will be 4. If NPC.ai[0] is 0, ParentIndex will be -1.
-        // Now combine both facts, and the conclusion is that if this NPC spawns by other means (not from the body), ParentIndex will be -1, allowing us to distinguish
-        // between a proper spawn and an invalid/"cheated" spawn
         public int ParentIndex
         {
             get => (int)NPC.ai[1] - 1;
@@ -50,8 +46,8 @@ namespace GMR.NPCs.Bosses.Jack
         {
             NPC.width = 30;
             NPC.height = 72;
-            NPC.lifeMax = 9000;
-            NPC.defense = 35;
+            NPC.lifeMax = 6000;
+            NPC.defense = 5;
             NPC.HitSound = SoundID.NPCHit4;
             NPC.DeathSound = SoundID.NPCDeath14;
             NPC.knockBackResist = 0f;
@@ -66,20 +62,15 @@ namespace GMR.NPCs.Bosses.Jack
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
             Player player = Main.player[NPC.target];
-            NPC.lifeMax = (int)(NPC.lifeMax * 1f);
-            NPC.lifeMax += numPlayers * 100;
+            NPC.lifeMax = (int)(NPC.lifeMax * 1f) + 5;
+            NPC.lifeMax = NPC.lifeMax / 2 * numPlayers;
         }
 
         public override void AI()
         {
-            NPC.dontTakeDamage = true;
-
             if (!NPC.AnyNPCs(ModContent.NPCType<Jack>()))
             {
                 NPC.life += -250;
-                float ai1 = Main.rand.Next(20, 30);
-                Vector2 speed = -Vector2.UnitY.RotatedByRandom(Math.PI / 2) * Main.rand.NextFloat(2f, 6f);
-                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, speed, ModContent.ProjectileType<Projectiles.Bosses.AttackPreview>(), 0, 1f, Main.myPlayer, ai1);
 
                 if (NPC.life <= 0)
                 {
@@ -113,8 +104,6 @@ namespace GMR.NPCs.Bosses.Jack
                         dust.noGravity = true;
                         dust.fadeIn = Main.rand.NextFloat(0.1f, 0.5f);
                     }
-                    Vector2 speed = -Vector2.UnitY.RotatedByRandom(Math.PI / 2) * Main.rand.NextFloat(20f, 20f);
-                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, speed, ModContent.ProjectileType<Projectiles.Bosses.AttackPreview>(), 0, 1f, Main.myPlayer, NPC.whoAmI);
                     SoundEngine.PlaySound(SoundID.Item62, NPC.Center);
                 }
                 return;
@@ -151,42 +140,27 @@ namespace GMR.NPCs.Bosses.Jack
                     Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(25f, 20f), ModContent.ProjectileType<Projectiles.Bosses.JackBlastBad>(), NPC.damage, 1f, Main.myPlayer, NPC.whoAmI);
                 }
             }
-            if (NPC.alpha >= 254 && NPC.ai[2] == 1)
-            {
-                NPC.ai[2]++;
-            }
-            if (++NPC.localAI[1] > 120 && NPC.ai[2] == 0)
-            {
-                NPC.ai[2]++;
-            }
-
-        }
-
-        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
-        {
-            Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
-            Texture2D glowtexture = Terraria.GameContent.TextureAssets.Npc["NPCs/Bosses/Jack/JackArmGun_Glow"].Value;
-            SpriteEffects effects = SpriteEffects.None;
-            Color glow = new Color(255, 255, 255, 255);
-
-            if (NPC.ai[2] == 0)
-            {
-                glow.A = 255;
-            }
             if (NPC.ai[2] == 1)
             {
-                glow.A -= 1;
+                int dustType = 60;
+                for (int i = 0; i < 20; i++)
+                {
+                    Vector2 velocity = NPC.velocity + new Vector2(Main.rand.NextFloat(-5f, 5f), Main.rand.NextFloat(-5f, 5f));
+                    Dust dust = Dust.NewDustPerfect(NPC.Center, dustType, velocity, 30, Color.White, Main.rand.NextFloat(1.6f, 3.8f));
+
+                    dust.noLight = false;
+                    dust.noGravity = true;
+                    dust.fadeIn = Main.rand.NextFloat(0.1f, 0.5f);
+                }
+                if (++NPC.localAI[1] > 30)
+                {
+                    NPC.ai[2]++;
+                }
             }
-            if (NPC.ai[2] == 2)
+            if ((++NPC.localAI[1] > 120) && NPC.ai[2] == 0)
             {
-                glow.A = 255;
+                NPC.ai[2]++;
             }
-            spriteBatch.Draw(texture, NPC.Center - screenPos,
-                            NPC.frame, drawColor, NPC.rotation,
-                            new Vector2(NPC.width * 0.5f, NPC.height * 0.5f), 1f, effects, 0f);
-            spriteBatch.Draw(glowtexture, npc.Center - screenPos,
-                        NPC.frame, Color.White + glow, NPC.rotation,
-                        new Vector2(NPC.width * 0.5f, NPC.height * 0.5f), 1f, effects, 0f);
         }
     }
 }
