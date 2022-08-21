@@ -204,6 +204,7 @@ namespace GMR.NPCs.Bosses.Jack
 
             if (NPC.life <= 0)
             {
+                Main.NewText("Well sh-", Color.Red);
                 int dustType = 60;
                 for (int i = 0; i < 40; i++)
                 {
@@ -220,7 +221,6 @@ namespace GMR.NPCs.Bosses.Jack
                 velocity2 = new Vector2(0f, -20f);
                 for (int i = 0; i < numberProjectiles; i++)
                 {
-                    Main.NewText("Well sh-", Color.Red);
                     Vector2 perturbedSpeed = velocity2.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * 1f;
                     Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, perturbedSpeed, ModContent.ProjectileType<Projectiles.Bosses.AttackPreview>(), 0, 1f, Main.myPlayer, NPC.whoAmI);
                 }
@@ -233,8 +233,16 @@ namespace GMR.NPCs.Bosses.Jack
                 NPC.localAI[0] = 500;
                 if (NPC.ai[2] == 0)
                 {
+                    if (Main.rand.NextBool(10))
+                    {
+                    Main.NewText("Cya", Color.Red);
                     NPC.ai[2]++;
-                    Main.NewText("See ya on the flipside", Color.Red);
+                    }
+                    else
+                    {
+                        Main.NewText("OBJECTIVE DOWNED", Color.Red);
+                        NPC.ai[2]++;
+                    }
                 }
                     return;
             }

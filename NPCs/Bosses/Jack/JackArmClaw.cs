@@ -132,13 +132,13 @@ namespace GMR.NPCs.Bosses.Jack
 
             if ((int)NPC.ai[2] == 2)
             {
-                if (++NPC.localAI[0] > 2)
+                if (++NPC.localAI[0] > 61)
                 {
                     NPC.localAI[0] = 0;
                     NPC.localAI[1] = 0;
                     NPC.ai[2] = 0;
                 }
-                else if (++NPC.localAI[0] > 1)
+                else if (++NPC.localAI[0] > 60)
                 {
                     Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(25f, 0f), ModContent.ProjectileType<Projectiles.Bosses.JackArmClaw>(), NPC.damage, 1f, Main.myPlayer, NPC.whoAmI);
                 }
