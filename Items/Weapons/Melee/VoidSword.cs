@@ -22,8 +22,8 @@ namespace GMR.Items.Weapons.Melee
 			Item.width = 46;
 			Item.height = 48;
 			Item.rare = 5;
-			Item.useTime = 16;
-			Item.useAnimation = 16;
+			Item.useTime = 14;
+			Item.useAnimation = 14;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.value = Item.sellPrice(silver: 70);
 			Item.autoReuse = true;

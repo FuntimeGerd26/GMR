@@ -31,7 +31,7 @@ namespace GMR.Items.Weapons.Melee
 			Item.DamageType = DamageClass.Melee;
 			Item.damage = 8;
 			Item.crit = 14;
-			Item.knockBack = 1f;
+			Item.knockBack = 2f;
 		}
 
 		public override void OnHitNPC(Player player, NPC target, int damage, float knockback, bool crit)

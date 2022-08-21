@@ -13,7 +13,7 @@ namespace GMR.Items.Weapons.Melee
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Survival Blade");
-			Tooltip.SetDefault("Having this in your inventory increases melee speed and all damage by 5%");
+			Tooltip.SetDefault("Having this in your inventory increases melee speed and all damage by 3%");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
@@ -37,8 +37,8 @@ namespace GMR.Items.Weapons.Melee
 
 		public override void UpdateInventory(Player player)
 		{
-			player.GetAttackSpeed(DamageClass.Melee) += 0.05f;
-			player.GetDamage(DamageClass.Generic) += 0.05f;
+			player.GetAttackSpeed(DamageClass.Melee) += 0.03f;
+			player.GetDamage(DamageClass.Generic) += 0.03f;
 		}
 
 		public override void AddRecipes()

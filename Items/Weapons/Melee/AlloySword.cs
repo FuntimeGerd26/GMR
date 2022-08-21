@@ -20,7 +20,7 @@ namespace GMR.Items.Weapons.Melee
 
 		public override void SetDefaults()
 		{
-			Item.damage = 40;
+			Item.damage = 30;
 			Item.useTime = 18;
 			Item.useAnimation = 18;
 			Item.width = 56;
@@ -42,7 +42,7 @@ namespace GMR.Items.Weapons.Melee
 		{
 			if (player.altFunctionUse == 2)
 			{
-				Item.damage = 40;
+				Item.damage = 30;
 				Item.useTime = 12;
 				Item.useAnimation = 12;
 				Item.autoReuse = false;
@@ -54,7 +54,7 @@ namespace GMR.Items.Weapons.Melee
 			}
 			else
 			{
-				Item.damage = 50;
+				Item.damage = 35;
 				Item.useTime = 16;
 				Item.useAnimation = 16;
 				Item.autoReuse = true;

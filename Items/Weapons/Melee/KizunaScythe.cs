@@ -31,7 +31,7 @@ namespace GMR.Items.Weapons.Melee
 			Item.noMelee = true;
 			Item.UseSound = SoundID.Item7;
 			Item.DamageType = DamageClass.Melee;
-			Item.damage = 50;
+			Item.damage = 35;
 			Item.crit = 4;
 			Item.knockBack = 4f;
 			Item.shoot = ModContent.ProjectileType<Projectiles.Melee.KizunaScythe>();
