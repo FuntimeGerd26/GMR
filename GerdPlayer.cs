@@ -23,7 +23,10 @@ namespace GMR
 		public Item JackExpert;
 		public Item DevPlush;
 		public bool DevInmune;
+		public Item AmalgamPlush;
+		public bool AmalgamInmune;
 		public Item OverlordBlade;
+		public Item OverlordBoots;
 
 		public override void OnEnterWorld(Player player)
 		{
@@ -35,7 +38,10 @@ namespace GMR
 			JackExpert = null;
 			DevPlush = null;
 			DevInmune = false;
+			AmalgamPlush = null;
+			AmalgamInmune = false;
 			OverlordBlade = null;
+			OverlordBoots = null;
 		}
 
 		public override void UpdateDead()
@@ -43,23 +49,36 @@ namespace GMR
 			JackExpert = null;
 			DevPlush = null;
 			DevInmune = false;
+			AmalgamPlush = null;
+			AmalgamInmune = false;
 			OverlordBlade = null;
+			OverlordBoots = null;
 		}
 
 		public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter)
 		{
 			if (OverlordBlade != null)
 			{
-				damage = (int)(damage * 1.45);
-
+				if (OverlordBoots != null)
+				{	
+						damage = (int)(damage * 0.90);
+				}
 				float numberProjectiles = 8;
 				float rotation = MathHelper.ToRadians(Main.rand.NextFloat(180f, -180f));
+
 				Vector2 velocity;
 				velocity = new Vector2(0f, -40f);
 				for (int i = 0; i < numberProjectiles; i++)
 				{
 					Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * 1f;
-					Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center, perturbedSpeed + Player.velocity, ModContent.ProjectileType<Projectiles.OverlordOrbHurt>(), 100, 3f, Main.myPlayer);
+					if(OverlordBoots == null)
+					{
+						Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center, perturbedSpeed + Player.velocity, ModContent.ProjectileType<Projectiles.OverlordOrbHurt>(), 200, 4f, Main.myPlayer);
+					}
+					else
+                    {
+						Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center, perturbedSpeed + Player.velocity, ModContent.ProjectileType<Projectiles.OverlordOrbHurt>(), 100, 2f, Main.myPlayer);
+					}
 				}
 			}
 			return true;
@@ -76,6 +95,10 @@ namespace GMR
 			{
 				Player.AddImmuneTime(cooldownCounter, 120);
 			}
+			if (!pvp && AmalgamInmune)
+            {
+				Player.AddImmuneTime(cooldownCounter, 240);
+			}
 		}
 
 		public override bool Shoot(Item item, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
@@ -84,14 +107,14 @@ namespace GMR
 
 			if (DevPlush != null)
 			{
-				if (Main.rand.NextBool(5))
+				if (Main.rand.NextBool(5)) // 1 in 5 (20%)
 				{
 					float numberProjectiles = 3; //3 shots
 					float rotation = MathHelper.ToRadians(22);
 					position += Vector2.Normalize(velocity) * 5f;
 					for (int i = 0; i < numberProjectiles; i++)
 					{
-						Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * 1f;
+						Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * 2f;
 						Projectile.NewProjectile(Player.GetSource_Accessory(DevPlush), position, perturbedSpeed, type, (damage / 2) + (damage / 4), knockback, player.whoAmI);
 						Projectile.NewProjectile(Player.GetSource_Accessory(DevPlush), position, velocity, ModContent.ProjectileType<Projectiles.Ranged.JackClaw>(), damage, knockback, player.whoAmI);
 					}
@@ -99,7 +122,40 @@ namespace GMR
 				}
 				else
 				{
+					return true;
+				}
+			}
 
+			if (AmalgamPlush != null)
+			{
+				if (Main.rand.NextBool(3)) // 1 in 3 (33%)
+				{
+					float numberProjectiles = 7; //3 shots
+					float rotation = MathHelper.ToRadians(14);
+					position += Vector2.Normalize(velocity) * 5f;
+					for (int i = 0; i < numberProjectiles; i++)
+					{
+						Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * 2f;
+						Projectile.NewProjectile(Player.GetSource_Accessory(AmalgamPlush), position, perturbedSpeed, type, damage, knockback, player.whoAmI);
+						Projectile.NewProjectile(Player.GetSource_Accessory(AmalgamPlush), position, velocity * 2, ModContent.ProjectileType<Projectiles.Ranged.JackClaw>(), damage, knockback, player.whoAmI);
+					}
+					return true;
+				}
+				else if ((type == ProjectileID.FireArrow) || (type == ProjectileID.WoodenArrowFriendly))
+				{
+					float numberProjectiles = 3; //3 shots
+					float rotation = MathHelper.ToRadians(5);
+					position += Vector2.Normalize(velocity) * 5f;
+					for (int i = 0; i < numberProjectiles; i++)
+					{
+						Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * 2f;
+						Projectile.NewProjectile(Player.GetSource_Accessory(JackExpert), position, perturbedSpeed, ModContent.ProjectileType<Projectiles.Ranged.JackShard>(), damage * 2, knockback, player.whoAmI);
+					}
+					return false;
+				}
+				else
+				{
+					return true;
 				}
 			}
 
@@ -110,8 +166,8 @@ namespace GMR
 				position += Vector2.Normalize(velocity) * 5f;
 				for (int i = 0; i < numberProjectiles; i++)
 				{
-					Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * .5f;
-					Projectile.NewProjectile(Player.GetSource_Accessory(JackExpert), position, perturbedSpeed, ModContent.ProjectileType<Projectiles.Ranged.JackShot>(), damage / 2, knockback, player.whoAmI);
+					Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * 1f;
+					Projectile.NewProjectile(Player.GetSource_Accessory(JackExpert), position, perturbedSpeed, ModContent.ProjectileType<Projectiles.Ranged.JackShard>(), damage / 2, knockback, player.whoAmI);
 				}
 				return false;
 			}
@@ -122,8 +178,8 @@ namespace GMR
 				position += Vector2.Normalize(velocity) * 5f;
 				for (int i = 0; i < numberProjectiles; i++)
 				{
-					Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * .5f;
-					Projectile.NewProjectile(Player.GetSource_Accessory(JackExpert), position, perturbedSpeed, ModContent.ProjectileType<Projectiles.Ranged.JackShot>(), damage, knockback, player.whoAmI);
+					Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * 1f;
+					Projectile.NewProjectile(Player.GetSource_Accessory(JackExpert), position, perturbedSpeed, ModContent.ProjectileType<Projectiles.Ranged.JackShard>(), damage, knockback, player.whoAmI);
 				}
 				return false;
 			}

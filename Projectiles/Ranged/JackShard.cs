@@ -39,7 +39,7 @@ namespace GMR.Projectiles.Ranged
 		{
 			Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<Projectiles.Ranged.JackShard>(), Projectile.damage / 2, Projectile.knockBack, Main.myPlayer);
 
-			if (Projectile.damage < 20)
+			if (Projectile.damage < 5)
 			{
 				Projectile.Kill();
 				return;

@@ -125,6 +125,19 @@ namespace GMR.NPCs.Bosses.Jack
                 CombatText.NewText(displayPoint, Color.Red, "DEPLOYING WEAPONS");
             }
 
+            if (NPC.life < NPC.lifeMax / 2 && NPC.ai[3] == -1 && !NPC.AnyNPCs(ModContent.NPCType<NPCs.Enemies.JackBlade>()))
+            {
+                NPC.ai[3]++;
+                int count = 1;
+                int spawnX = (int)NPC.position.X + NPC.width / 2;
+                int spawnY = (int)NPC.position.Y + NPC.height / 2;
+                for (int i = 0; i < count; i++)
+                {
+                    NPC.NewNPC(NPC.GetSource_FromThis("GMR/NPCs/Jack"), spawnX, spawnY, ModContent.NPCType<NPCs.Enemies.JackBlade>(), NPC.whoAmI, 0f, NPC.whoAmI);
+                }
+                CombatText.NewText(displayPoint, Color.Red, "DEPLOYING BLADE");
+            }
+
             if ((int)NPC.ai[1] == 0 || NPC.ai[1] == -1)
             {
                 NPC.ai[1]++;
@@ -331,6 +344,10 @@ namespace GMR.NPCs.Bosses.Jack
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Ranged.JackCannon>(), 10));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Ranged.JackRifle>(), 26));
+            if (Main.expertMode)
+            {
+                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Accessories.JackExpert>(), 5));
+            }
         }
 
         public override void OnKill()

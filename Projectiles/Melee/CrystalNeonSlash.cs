@@ -71,13 +71,13 @@ namespace GMR.Projectiles.Melee
 			if (Projectile.scale >= 3f)
 			{
 				Projectile.scale = 3f;
-                Projectile.width = 490;
-				Projectile.height = 490;
+                Projectile.width = 600;
+				Projectile.height = 600;
             }
 			else if (Projectile.scale == 3f)
 			{
-				Projectile.width = 490;
-				Projectile.height = 490;
+				Projectile.width = 600;
+				Projectile.height = 600;
 			}
 		    if (Projectile.scale >= 1.5f)
             {
