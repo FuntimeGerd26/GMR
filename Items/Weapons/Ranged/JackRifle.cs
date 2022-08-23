@@ -35,8 +35,8 @@ namespace GMR.Items.Weapons.Ranged
 				PitchVariance = 0.1f,
 				MaxInstances = 1,
 			};
-			Item.DamageType = ModContent.GetInstance<Classless>();
-			Item.damage = 100;
+			Item.DamageType = DamageClass.Ranged;
+			Item.damage = 50;
 			Item.crit = 100;
 			Item.knockBack = 3f;
 			Item.noMelee = true;

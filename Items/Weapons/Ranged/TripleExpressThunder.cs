@@ -12,7 +12,8 @@ namespace GMR.Items.Weapons.Ranged
 	{
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("Hitting an enemy will make the projectile split into 4 and deal double the damage");
+			DisplayName.SetDefault("Triple Crowd Control 3000");
+			Tooltip.SetDefault("After the projectile hits 2 enemies it will split into 3 projectiles and deal double the damage");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
@@ -34,7 +35,7 @@ namespace GMR.Items.Weapons.Ranged
 			Item.knockBack = 6f;
 			Item.noMelee = true;
 			Item.shoot = ModContent.ProjectileType<Projectiles.Ranged.GungeonBullet2>();
-			Item.shootSpeed = 45f;
+			Item.shootSpeed = 25f;
 			Item.useAmmo = AmmoID.Bullet;
 		}
 
@@ -47,14 +48,14 @@ namespace GMR.Items.Weapons.Ranged
 		{
 			if (type == ProjectileID.Bullet || type == ProjectileID.MeteorShot || type == ProjectileID.CrystalBullet || type == ProjectileID.CursedBullet || type == ProjectileID.IchorBullet || type == ProjectileID.ChlorophyteBullet || type == ProjectileID.BulletHighVelocity || type == ProjectileID.VenomBullet || type == ProjectileID.PartyBullet || type == ProjectileID.NanoBullet || type == ProjectileID.ExplosiveBullet || type == ProjectileID.GoldenBullet || type == ProjectileID.MoonlordBullet)
 			{
-				float numberProjectiles = 2;
+				float numberProjectiles = 3;
 				float rotation = MathHelper.ToRadians(20);
 				position += Vector2.Normalize(velocity) * 5f;
 				for (int i = 0; i < numberProjectiles; i++)
 				{
 					Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * .5f;
 					Projectile.NewProjectile(Item.GetSource_FromThis(), position, perturbedSpeed, ModContent.ProjectileType<Projectiles.Ranged.GungeonBullet2>(), damage, knockback, player.whoAmI);
-					type = ModContent.ProjectileType<Projectiles.Ranged.GungeonBullet2>();
+					type = ModContent.ProjectileType<Projectiles.Ranged.GungeonSharpBullet>();
 				}
 			}
 		}
