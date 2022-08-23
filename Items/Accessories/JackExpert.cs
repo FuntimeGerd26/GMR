@@ -14,7 +14,7 @@ namespace GMR.Items.Accessories
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Jack Emblem");
-			Tooltip.SetDefault("Increases ranged damage by 5%\nMakes wooden arrows turn into 3 Jack Shots, Fire arrows decrease the spread");
+			Tooltip.SetDefault("Increases ranged damage by 5%\nConverts wooden arrows turn into evenly spread 3 Jack Shards, Fire arrows decrease the spread");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
@@ -24,7 +24,7 @@ namespace GMR.Items.Accessories
 			Item.width = 38;
 			Item.height = 52;
 			Item.value = Item.sellPrice(silver: 100);
-			Item.rare = 5;
+			Item.rare = 4;
 			Item.accessory = true;
 		}
 

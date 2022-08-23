@@ -14,7 +14,7 @@ namespace GMR.Items.Misc.Materials
 		{
 			Tooltip.SetDefault("'A strange box filled with unseen technology'");
 
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
 		}
 
 		public override void SetDefaults()
