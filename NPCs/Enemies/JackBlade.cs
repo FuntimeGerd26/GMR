@@ -97,7 +97,6 @@ namespace GMR.NPCs.Enemies
             }
 
             //NPC.rotation = NPC.velocity.ToRotation() + MathHelper.ToRadians(-90f);
-            NPC.velocity *= 1.2f;
 
             if (player.dead)
             {
