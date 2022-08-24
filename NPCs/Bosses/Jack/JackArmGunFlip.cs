@@ -51,7 +51,7 @@ namespace GMR.NPCs.Bosses.Jack
             NPC.HitSound = SoundID.NPCHit4;
             NPC.DeathSound = SoundID.NPCDeath14;
             NPC.knockBackResist = 0f;
-            NPC.damage = 7;
+            NPC.damage = 5;
             NPC.aiStyle = -1;
             NPC.noTileCollide = true;
             NPC.noGravity = true;

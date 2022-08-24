@@ -69,7 +69,7 @@ namespace GMR.NPCs.Enemies
 
         public override void AI()
         {
-            if (!NPC.AnyNPCs(ModContent.NPCType<NPCs.Bosses.Jack.Jack>()))
+            if (!Main.expertMode || !NPC.AnyNPCs(ModContent.NPCType<NPCs.Bosses.Jack.Jack>()))
             {
                 NPC.life += -50;
 
@@ -97,6 +97,7 @@ namespace GMR.NPCs.Enemies
             }
 
             //NPC.rotation = NPC.velocity.ToRotation() + MathHelper.ToRadians(-90f);
+            NPC.velocity *= 1.2f;
 
             if (player.dead)
             {

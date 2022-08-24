@@ -125,7 +125,7 @@ namespace GMR.NPCs.Bosses.Jack
                 CombatText.NewText(displayPoint, Color.Red, "DEPLOYING WEAPONS");
             }
 
-            if (NPC.life < NPC.lifeMax / 2 && NPC.ai[3] == -1 && !NPC.AnyNPCs(ModContent.NPCType<NPCs.Enemies.JackBlade>()))
+            if ((NPC.life < NPC.lifeMax / 5) && ((int)NPC.ai[3] == -1) || !NPC.AnyNPCs(ModContent.NPCType<NPCs.Enemies.JackBlade>()))
             {
                 NPC.ai[3]++;
                 int count = 1;
