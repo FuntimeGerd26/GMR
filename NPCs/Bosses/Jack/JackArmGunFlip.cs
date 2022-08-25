@@ -59,6 +59,11 @@ namespace GMR.NPCs.Bosses.Jack
             NPC.npcSlots = 1f;
         }
 
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Ranged.JackRifle>(), 30));
+        }
+
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
             Player player = Main.player[NPC.target];
@@ -117,7 +122,7 @@ namespace GMR.NPCs.Bosses.Jack
 
             NPC.rotation = MathHelper.ToRadians(45f);
 
-            if (player.dead)
+            if (Main.dayTime || player.dead)
             {
                 NPC.velocity.Y += 0.5f;
                 NPC.EncourageDespawn(300);

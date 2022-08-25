@@ -37,7 +37,7 @@ namespace GMR.Projectiles.Ranged
 		{
 			if (Projectile.ai[1] == 0)
 			{
-			    float numberProjectiles = 5;
+			    float numberProjectiles = 3;
 				float rotation = MathHelper.ToRadians(45);
 				for (int i = 0; i < numberProjectiles; i++)
 				{

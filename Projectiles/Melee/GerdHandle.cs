@@ -138,6 +138,7 @@ namespace GMR.Projectiles.Melee
 							{
 								Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * 1f;
 								Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, perturbedSpeed, ModContent.ProjectileType<Projectiles.Melee.GerdBladeHome>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
+								SoundEngine.PlaySound(SoundID.Item39, Projectile.position);
 							}
 							Projectile.localAI[0] = 0;
 						}
@@ -163,6 +164,7 @@ namespace GMR.Projectiles.Melee
 								{
 									Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * 1f;
 									Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, perturbedSpeed, ModContent.ProjectileType<Projectiles.Melee.GerdBlade>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
+									SoundEngine.PlaySound(SoundID.Item39, Projectile.position);
 								}
 							}
 							break;
@@ -182,6 +184,7 @@ namespace GMR.Projectiles.Melee
 								{
 									Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * 1f;
 									Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, perturbedSpeed, ModContent.ProjectileType<Projectiles.Melee.GerdBlade>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
+									SoundEngine.PlaySound(SoundID.Item39, Projectile.position);
 								}
 							}
 							break;

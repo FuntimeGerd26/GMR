@@ -24,7 +24,7 @@ namespace GMR.Projectiles.Ranged
 			Projectile.height = 20;
 			Projectile.aiStyle = -1;
 			Projectile.friendly = true;
-			Projectile.penetrate = 2;
+			Projectile.penetrate = 1;
 			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.timeLeft = 600;
 			Projectile.light = 0.50f;
@@ -37,41 +37,23 @@ namespace GMR.Projectiles.Ranged
 		public override void AI()
 		{
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
-			if (++Projectile.localAI[0] > 120)
-			{
-				if (Projectile.velocity.Y > 0f)
-				{
-					Projectile.velocity.Y += -1f;
-				}
-				else if (Projectile.velocity.Y < -0f)
-				{
-					Projectile.velocity.Y += 1f;
-				}
-
-				if (Projectile.velocity.X > 0f)
-				{
-					Projectile.velocity.X += 0.5f;
-				}
-				else if (Projectile.velocity.X < 0f)
-				{
-					Projectile.velocity.X += -0.5f;
-				}
-			}
+			Projectile.damage += Projectile.damage / 20;
         }
 
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			if (Projectile.penetrate <= 1)
+			if (Projectile.penetrate <= 1 || ++Projectile.localAI[0] > 20)
 			{
 				if (Projectile.ai[1] == 0)
 				{
 					float numberProjectiles = 3;
-					float rotation = MathHelper.ToRadians(14);
+					float rotation = MathHelper.ToRadians(10);
 					for (int i = 0; i < numberProjectiles; i++)
 					{
 						Vector2 perturbedSpeed = Projectile.velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * 1f;
-						Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, perturbedSpeed , ModContent.ProjectileType<Projectiles.Ranged.GungeonBulletShard>(), Projectile.damage * 2, Projectile.knockBack * 2, Main.myPlayer);
+						Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, perturbedSpeed, ModContent.ProjectileType<Projectiles.Ranged.GungeonBullet2>(), Projectile.damage * 2, Projectile.knockBack * 2, Main.myPlayer);
 						Projectile.ai[1] = 1;
+						Projectile.localAI[0] = 0;
 					}
 				}
 

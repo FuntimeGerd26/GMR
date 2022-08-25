@@ -26,7 +26,7 @@ namespace GMR.Projectiles.Ranged
 			Projectile.height = 20;
 			Projectile.aiStyle = 1;
 			Projectile.friendly = true;
-			Projectile.penetrate = 3;
+			Projectile.penetrate = 2;
 			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.timeLeft = 600;
 			Projectile.light = 0.50f; 

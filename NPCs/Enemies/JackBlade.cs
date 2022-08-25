@@ -96,13 +96,17 @@ namespace GMR.NPCs.Enemies
                 NPC.TargetClosest();
             }
 
-            //NPC.rotation = NPC.velocity.ToRotation() + MathHelper.ToRadians(-90f);
 
             if (player.dead)
             {
                 NPC.velocity.Y += 0.5f;
                 NPC.EncourageDespawn(300);
+                NPC.aiStyle = 0;
                 return;
+            }
+            else
+            {
+                NPC.aiStyle = 23;
             }
 
             int dustId = Dust.NewDust(NPC.position, NPC.width, NPC.height, 60, NPC.velocity.X * 0.5f,

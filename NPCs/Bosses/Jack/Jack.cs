@@ -23,6 +23,7 @@ namespace GMR.NPCs.Bosses.Jack
 
         public static int MinionType()
         {
+            return ModContent.NPCType<NPCs.Enemies.JackBlade>();
             return ModContent.NPCType<JackArmGun>();
             return ModContent.NPCType<JackArmGunFlip>();
         }
@@ -66,7 +67,7 @@ namespace GMR.NPCs.Bosses.Jack
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.ZoneSkyHeight && !Main.dayTime)
+            if (!Main.dayTime)
             {
                 return 0.012f;
             }
@@ -130,12 +131,11 @@ namespace GMR.NPCs.Bosses.Jack
                 NPC.ai[3]++;
                 int count = 1;
                 int spawnX = (int)NPC.position.X + NPC.width / 2;
-                int spawnY = (int)NPC.position.Y + NPC.height / 2;
+                int spawnY = (int)NPC.position.Y + NPC.height / 2 - 250;
                 for (int i = 0; i < count; i++)
                 {
                     NPC.NewNPC(NPC.GetSource_FromThis("GMR/NPCs/Jack"), spawnX, spawnY, ModContent.NPCType<NPCs.Enemies.JackBlade>(), NPC.whoAmI, 0f, NPC.whoAmI);
                 }
-                CombatText.NewText(displayPoint, Color.Red, "DEPLOYING BLADE");
             }
 
             if ((int)NPC.ai[1] == 0 || NPC.ai[1] == -1)
@@ -239,14 +239,14 @@ namespace GMR.NPCs.Bosses.Jack
                 }
             }
 
-            if (player.dead)
+            if (Main.dayTime || player.dead)
             {
                 NPC.velocity.Y *= 7f;
                 NPC.EncourageDespawn(300);
                 NPC.localAI[0] = 500;
                 if (NPC.ai[2] == 0)
                 {
-                    if (Main.rand.NextBool(10))
+                    if (Main.dayTime || Main.rand.NextBool(10))
                     {
                     Main.NewText("Cya", Color.Red);
                     NPC.ai[2]++;

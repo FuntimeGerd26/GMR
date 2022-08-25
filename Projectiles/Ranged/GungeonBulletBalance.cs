@@ -9,7 +9,7 @@ using Terraria.ModLoader;
 
 namespace GMR.Projectiles.Ranged
 {
-	public class GungeonBullet2 : ModProjectile
+	public class GungeonBulletBalance : ModProjectile
 	{
 		public override string Texture => "GMR/Projectiles/Ranged/GungeonSharpBullet";
 
@@ -26,7 +26,7 @@ namespace GMR.Projectiles.Ranged
 			Projectile.height = 20;
 			Projectile.aiStyle = -1;
 			Projectile.friendly = true;
-			Projectile.penetrate = 3;
+			Projectile.penetrate = 1;
 			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.timeLeft = 600;
 			Projectile.light = 0.50f;
@@ -37,28 +37,28 @@ namespace GMR.Projectiles.Ranged
 		}
 
 		public override void AI()
-        {
+		{
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
-			if (++Projectile.localAI[0] > 10)
-            {
-				Projectile.velocity.Y += 1.5f;
-			}
-			else
-            {
-				Projectile.velocity.Y += -0.75f;
-            }
-			if (Projectile.velocity.X > 0f)
-            {
-				Projectile.velocity.X += -0.05f;
-			}
-			else if (Projectile.velocity.X < 0f)
+        }
+
+		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		{
+			if (Projectile.penetrate <= 1 || ++Projectile.localAI[0] > 20)
 			{
-				Projectile.velocity.X += 0.05f;
+				if (Projectile.ai[1] == 0)
+				{
+					float numberProjectiles = 3;
+					float rotation = MathHelper.ToRadians(14);
+					for (int i = 0; i < numberProjectiles; i++)
+					{
+						Vector2 perturbedSpeed = Projectile.velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * 1f;
+						Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, perturbedSpeed, ModContent.ProjectileType<Projectiles.Ranged.GungeonBulletFlip>(), Projectile.damage * 2, Projectile.knockBack * 2, Main.myPlayer);
+						Projectile.ai[1] = 1;
+						Projectile.localAI[0] = 0;
+					}
+				}
+
 			}
-			else if (Projectile.velocity.X == 0f)
-            {
-				Projectile.velocity.X = 0f;
-            }				
 		}
 
 		public override bool PreDraw(ref Color lightColor)

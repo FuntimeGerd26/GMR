@@ -9,9 +9,9 @@ using Terraria.ModLoader;
 
 namespace GMR.Projectiles.Ranged
 {
-	public class GungeonBullet2 : ModProjectile
+	public class GungeonBulletFlip : ModProjectile
 	{
-		public override string Texture => "GMR/Projectiles/Ranged/GungeonSharpBullet";
+		public override string Texture => "GMR/Projectiles/Ranged/GungeonBullet";
 
 		public override void SetStaticDefaults()
 		{
@@ -24,41 +24,26 @@ namespace GMR.Projectiles.Ranged
 		{
 			Projectile.width = 20;
 			Projectile.height = 20;
-			Projectile.aiStyle = -1;
+			Projectile.aiStyle = 1;
 			Projectile.friendly = true;
-			Projectile.penetrate = 3;
+			Projectile.penetrate = 2;
 			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.timeLeft = 600;
-			Projectile.light = 0.50f;
+			Projectile.light = 0.50f; 
 			Projectile.ignoreWater = true;
 			Projectile.tileCollide = true;
 			Projectile.extraUpdates = 1;
 			AIType = ProjectileID.Bullet;
 		}
 
-		public override void AI()
-        {
-			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
-			if (++Projectile.localAI[0] > 10)
-            {
-				Projectile.velocity.Y += 1.5f;
-			}
-			else
-            {
-				Projectile.velocity.Y += -0.75f;
-            }
-			if (Projectile.velocity.X > 0f)
-            {
-				Projectile.velocity.X += -0.05f;
-			}
-			else if (Projectile.velocity.X < 0f)
-			{
-				Projectile.velocity.X += 0.05f;
-			}
-			else if (Projectile.velocity.X == 0f)
-            {
-				Projectile.velocity.X = 0f;
-            }				
+		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		{
+			Projectile.velocity = -Projectile.velocity + 0.5f / Projectile.MaxUpdates * Vector2.Normalize(Projectile.velocity);
+		}
+		public override bool OnTileCollide(Vector2 oldVelocity)
+		{
+			Projectile.velocity = -Projectile.velocity + 0.5f / Projectile.MaxUpdates * Vector2.Normalize(Projectile.velocity);
+			return false;
 		}
 
 		public override bool PreDraw(ref Color lightColor)
@@ -81,7 +66,7 @@ namespace GMR.Projectiles.Ranged
 			Collision.HitTiles(Projectile.position + Projectile.velocity, Projectile.velocity, Projectile.width, Projectile.height);
 			SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
 			int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 60, Projectile.velocity.X * 0.5f,
-				Projectile.velocity.Y * 0.2f, 60, default(Color), 2f);
+	        	Projectile.velocity.Y * 0.2f, 60, default(Color), 2f);
 			Main.dust[dustId].noGravity = true;
 			int dustId3 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 60, Projectile.velocity.X * 0.5f,
 				Projectile.velocity.Y * 0.2f, 60, default(Color), 2f);
