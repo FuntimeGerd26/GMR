@@ -12,7 +12,7 @@ namespace GMR.Items.Weapons.Ranged
 	{
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("'Bad in the Good'\nUpon hitting an enemy the projectiles will split into 5 more");
+			Tooltip.SetDefault("'Bad in the Good'\nUpon hitting an enemy the projectiles will split into 3 more");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
@@ -27,7 +27,7 @@ namespace GMR.Items.Weapons.Ranged
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.value = Item.sellPrice(silver: 75);
 			Item.autoReuse = true;
-			Item.UseSound = SoundID.Item11;
+			Item.UseSound = SoundID.Item41;
 			Item.DamageType = DamageClass.Ranged;
 			Item.damage = 30;
 			Item.crit = 4;

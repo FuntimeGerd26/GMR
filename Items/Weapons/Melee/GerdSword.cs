@@ -11,9 +11,9 @@ namespace GMR.Items.Weapons.Melee
 	{
 		private static readonly Color[] itemNameCycleColors = {
 			new Color(255, 255, 255),
-			new Color(20, 20, 255),
-			new Color(255, 255, 255),
-			new Color(20, 125, 255),
+			new Color(205, 125, 255),
+			new Color(0, 0, 0),
+			new Color(125, 205, 255),
 		};
 
 		public override void SetStaticDefaults()
@@ -54,8 +54,8 @@ namespace GMR.Items.Weapons.Melee
 			{
 				if (line2.Mod == "Terraria" && line2.Name == "ItemName")
 				{
-					float fade = (Main.GameUpdateCount % 30) / 30f;
-					int index = (int)((Main.GameUpdateCount / 30) % numColors);
+					float fade = (Main.GameUpdateCount % 60) / 60f;
+					int index = (int)((Main.GameUpdateCount / 60) % numColors);
 					int nextIndex = (index + 1) % numColors;
 
 					line2.OverrideColor = Color.Lerp(itemNameCycleColors[index], itemNameCycleColors[nextIndex], fade);

@@ -8,12 +8,11 @@ using Terraria.ModLoader;
 
 namespace GMR.Items.Weapons.Ranged
 {
-	public class TripleExpressThunder : ModItem
+	public class YinYangGuns : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Triple Crowd Control 3000");
-			Tooltip.SetDefault("After the projectile hits an enemy it will split into 3 projectiles and gain gravity, along of dealing double damage");
+			Tooltip.SetDefault("'Black and White into a balance'\nUpon hitting an enemy projectiles will split into 3 and then bounce from enemies and tiles");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
@@ -22,20 +21,21 @@ namespace GMR.Items.Weapons.Ranged
 		{
 			Item.width = 48;
 			Item.height = 28;
-			Item.rare = 4;
-			Item.useTime = 60;
-			Item.useAnimation = 60;
+			Item.rare = 6;
+			Item.useTime = 16;
+			Item.useAnimation = 23;
+			Item.reuseDelay = 30;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.value = Item.sellPrice(silver: 75);
 			Item.autoReuse = true;
-			Item.UseSound = SoundID.Item11;
+			Item.UseSound = SoundID.Item41;
 			Item.DamageType = DamageClass.Ranged;
-			Item.damage = 40;
+			Item.damage = 25;
 			Item.crit = 4;
-			Item.knockBack = 6f;
+			Item.knockBack = 2f;
 			Item.noMelee = true;
-			Item.shoot = ModContent.ProjectileType<Projectiles.Ranged.GungeonBullet2>();
-			Item.shootSpeed = 15f;
+			Item.shoot = ModContent.ProjectileType<Projectiles.Ranged.GungeonBulletBalance>();
+			Item.shootSpeed = 25f;
 			Item.useAmmo = AmmoID.Bullet;
 		}
 
@@ -48,7 +48,16 @@ namespace GMR.Items.Weapons.Ranged
 		{
 			if (type == ProjectileID.Bullet || type == ProjectileID.MeteorShot || type == ProjectileID.CrystalBullet || type == ProjectileID.CursedBullet || type == ProjectileID.IchorBullet || type == ProjectileID.ChlorophyteBullet || type == ProjectileID.BulletHighVelocity || type == ProjectileID.VenomBullet || type == ProjectileID.PartyBullet || type == ProjectileID.NanoBullet || type == ProjectileID.ExplosiveBullet || type == ProjectileID.GoldenBullet || type == ProjectileID.MoonlordBullet)
 			{
-				type = ModContent.ProjectileType<Projectiles.Ranged.GungeonSharpBullet>();
+				float numberProjectiles = 3;
+				float rotation = MathHelper.ToRadians(14);
+				position += Vector2.Normalize(velocity);
+				for (int i = 0; i < numberProjectiles; i++)
+				{
+					Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1)) * .5f);
+					Projectile.NewProjectile(Item.GetSource_FromThis(), position, perturbedSpeed, ModContent.ProjectileType<Projectiles.Ranged.GungeonBulletBalance>(), damage, knockback, player.whoAmI);
+					type = 0;
+					SoundEngine.PlaySound(SoundID.Item41, player.position);
+				}
 			}
 		}
 	}
