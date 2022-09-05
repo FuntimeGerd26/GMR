@@ -98,8 +98,8 @@ namespace GMR.NPCs.Bosses.Jack
                     dust.noGravity = true;
                     dust.fadeIn = Main.rand.NextFloat(0.1f, 0.5f);
                 }
-                float numberProjectiles = 8;
-                float rotation = MathHelper.ToRadians(90);
+                float numberProjectiles = 18;
+                float rotation = MathHelper.ToRadians(180);
                 Vector2 velocity2;
                 velocity2 = new Vector2(0f, -20f);
                 for (int i = 0; i < numberProjectiles; i++)

@@ -9,11 +9,11 @@ using Terraria.ModLoader;
 
 namespace GMR.Projectiles.Melee
 {
-	public class GerdBlade : ModProjectile
+	public class GerdCrimsonBlade : ModProjectile
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Violet Blade");
+			DisplayName.SetDefault("Crimson Blade");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 1;
 		}
@@ -42,7 +42,7 @@ namespace GMR.Projectiles.Melee
 
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			target.AddBuff(BuffID.CursedInferno, 6000);
+			target.AddBuff(BuffID.Ichor, 6000);
 		}
 
 		public override bool PreDraw(ref Color lightColor)

@@ -67,29 +67,8 @@ namespace GMR.Projectiles.Melee
 			player.itemTime = 2;
 			player.itemAnimation = 2;
 			player.reuseDelay = 10;
-			Projectile.scale = player.GetAttackSpeed(DamageClass.Melee);
-			if (Projectile.scale >= 3f)
-			{
-				Projectile.scale = 3f;
-                Projectile.width = 600;
-				Projectile.height = 600;
-            }
-			else if (Projectile.scale == 3f)
-			{
-				Projectile.width = 600;
-				Projectile.height = 600;
-			}
-		    if (Projectile.scale >= 1.5f)
-            {
-				Projectile.width = 225;
-				Projectile.height = 225;
-			}
-			else if (Projectile.scale == 1.5f)
-			{
-				Projectile.width = 225;
-				Projectile.height = 225;
-			}
-
+			if (Projectile.scale > 1f)
+				Projectile.scale = 1f;
 		}
 
 		public override bool PreDraw(ref Color lightColor)

@@ -10,7 +10,7 @@ using ReLogic.Content;
 
 namespace GMR.Projectiles.Melee
 {
-	public class GerdHandle : ModProjectile
+	public class GerdCrimsonHandle : ModProjectile
 	{
 		private const string ChainTexturePath = "GMR/Empty";
 
@@ -36,7 +36,7 @@ namespace GMR.Projectiles.Melee
 
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Violet Handle");
+			DisplayName.SetDefault("Crimson Handle");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
 		}
@@ -137,7 +137,7 @@ namespace GMR.Projectiles.Melee
 							for (int i = 0; i < numberProjectiles; i++)
 							{
 								Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * 1f;
-								Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, perturbedSpeed, ModContent.ProjectileType<Projectiles.Melee.GerdBlade>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
+								Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, perturbedSpeed, ModContent.ProjectileType<Projectiles.Melee.GerdCrimsonBlade>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
 								SoundEngine.PlaySound(SoundID.Item39, Projectile.position);
 							}
 							Projectile.localAI[0] = 0;
@@ -163,7 +163,7 @@ namespace GMR.Projectiles.Melee
 								for (int i = 0; i < numberProjectiles; i++)
 								{
 									Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * 1f;
-									Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, perturbedSpeed, ModContent.ProjectileType<Projectiles.Melee.GerdBlade>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
+									Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, perturbedSpeed, ModContent.ProjectileType<Projectiles.Melee.GerdCrimsonBlade>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
 									SoundEngine.PlaySound(SoundID.Item39, Projectile.position);
 								}
 							}
@@ -183,7 +183,7 @@ namespace GMR.Projectiles.Melee
 								for (int i = 0; i < numberProjectiles; i++)
 								{
 									Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * 1f;
-									Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, perturbedSpeed, ModContent.ProjectileType<Projectiles.Melee.GerdBlade>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
+									Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, perturbedSpeed, ModContent.ProjectileType<Projectiles.Melee.GerdCrimsonBlade>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
 									SoundEngine.PlaySound(SoundID.Item39, Projectile.position);
 								}
 							}
@@ -542,7 +542,7 @@ namespace GMR.Projectiles.Melee
 
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			target.AddBuff(BuffID.CursedInferno, 6000);
+			target.AddBuff(BuffID.Ichor, 6000);
 		}
 	}
 }
