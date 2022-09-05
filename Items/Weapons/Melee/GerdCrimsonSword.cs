@@ -7,19 +7,19 @@ using Terraria.ModLoader;
 
 namespace GMR.Items.Weapons.Melee
 {
-	public class GerdSword : ModItem
+	public class GerdCrimsonSword : ModItem
 	{
 		private static readonly Color[] itemNameCycleColors = {
 			new Color(255, 255, 255),
-			new Color(205, 125, 255),
+			new Color(255, 125, 205),
 			new Color(0, 0, 0),
-			new Color(125, 205, 255),
+			new Color(255, 205, 125),
 		};
 
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Violet's Spirit Sword");
-			Tooltip.SetDefault("Throws the sword handle like a flail towards enemies, Inflicts cursed inferno");
+			DisplayName.SetDefault("Crimson's Spirit Sword");
+			Tooltip.SetDefault("Throws the sword handle like a flail towards enemies, Inflicts ichor");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
@@ -40,7 +40,7 @@ namespace GMR.Items.Weapons.Melee
 			Item.crit = 4;
 			Item.knockBack = 1f;
 			Item.noUseGraphic = true;
-			Item.shoot = ModContent.ProjectileType<Projectiles.Melee.GerdHandle>();
+			Item.shoot = ModContent.ProjectileType<Projectiles.Melee.GerdCrimsonHandle>();
 			Item.shootSpeed = 6f;
 			Item.channel = true;
 			Item.noMelee = true;

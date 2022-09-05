@@ -69,14 +69,7 @@ namespace GMR.Items.Weapons.Melee
 
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
 		{
-			if (player.altFunctionUse == 2)
-			{
-				type = Main.rand.Next(new int[] { type, ModContent.ProjectileType<Projectiles.Melee.AlloySwordThrowMultiplicate>(), ModContent.ProjectileType<Projectiles.Melee.AlloySwordThrow>(), ModContent.ProjectileType<Projectiles.Melee.AlloySwordThrow>() });
-			}
-			else
-            {
-
-            }
+			type = Main.rand.Next(new int[] { ModContent.ProjectileType<Projectiles.Melee.AlloySwordThrowMultiplicate>(), ModContent.ProjectileType<Projectiles.Melee.AlloySwordThrow>(), ModContent.ProjectileType<Projectiles.Melee.AlloySwordThrow>() });
 		}
 
 		public override void AddRecipes()

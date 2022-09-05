@@ -40,7 +40,6 @@ namespace GMR.Items.Weapons.Melee
 			player.GetAttackSpeed(DamageClass.Melee) += 0.02f;
 		}
 
-
 		public override void AddRecipes()
 		{
 			Recipe recipe = CreateRecipe();

@@ -51,5 +51,36 @@ namespace GMR.Items.Weapons.Ranged
 				type = ModContent.ProjectileType<Projectiles.Ranged.NeonGunSlash>();
 			}
 		}
+
+		public override void AddRecipes()
+		{
+			Recipe recipe = CreateRecipe();
+			recipe.AddIngredient(ItemID.CobaltBar, 14);
+			recipe.AddIngredient(ItemID.SoulofLight, 18);
+			recipe.AddIngredient(ItemID.GoldBar, 8);
+			recipe.AddTile(TileID.MythrilAnvil);
+			recipe.Register();
+
+			Recipe recipe2 = CreateRecipe();
+			recipe2.AddIngredient(ItemID.SilverBar, 14);
+			recipe2.AddIngredient(ItemID.SoulofLight, 18);
+			recipe2.AddIngredient(ItemID.PlatinumBar, 8);
+			recipe2.AddTile(TileID.MythrilAnvil);
+			recipe2.Register();
+
+			Recipe recipe3 = CreateRecipe();
+			recipe3.AddIngredient(ItemID.SilverBar, 14);
+			recipe3.AddIngredient(ItemID.SoulofLight, 18);
+			recipe3.AddIngredient(ItemID.GoldBar, 8);
+			recipe3.AddTile(TileID.MythrilAnvil);
+			recipe3.Register();
+
+			Recipe recipe4 = CreateRecipe();
+			recipe4.AddIngredient(ItemID.CobaltBar, 14);
+			recipe4.AddIngredient(ItemID.SoulofLight, 18);
+			recipe4.AddIngredient(ItemID.PlatinumBar, 8);
+			recipe4.AddTile(TileID.MythrilAnvil);
+			recipe4.Register();
+		}
 	}
 }

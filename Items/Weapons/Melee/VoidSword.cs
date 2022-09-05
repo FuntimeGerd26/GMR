@@ -46,9 +46,9 @@ namespace GMR.Items.Weapons.Melee
 		{
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(null, "Glaicey");
-			recipe.AddIngredient(ItemID.SoulofNight, 20);
+			recipe.AddIngredient(ItemID.Bone, 40);
 			recipe.AddIngredient(ItemID.Hellstone, 25);
-			recipe.AddTile(TileID.MythrilAnvil);
+			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}
 	}

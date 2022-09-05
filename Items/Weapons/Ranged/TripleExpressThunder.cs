@@ -51,5 +51,22 @@ namespace GMR.Items.Weapons.Ranged
 				type = ModContent.ProjectileType<Projectiles.Ranged.GungeonSharpBullet>();
 			}
 		}
+
+		public override void AddRecipes()
+		{
+			Recipe recipe = CreateRecipe();
+			recipe.AddIngredient(ItemID.Bone, 20);
+			recipe.AddIngredient(ItemID.Feather, 18);
+			recipe.AddIngredient(ItemID.GoldBar, 12);
+			recipe.AddTile(TileID.Anvils);
+			recipe.Register();
+
+			Recipe recipe2 = CreateRecipe();
+			recipe2.AddIngredient(ItemID.Bone, 20);
+			recipe2.AddIngredient(ItemID.Feather, 18);
+			recipe2.AddIngredient(ItemID.PlatinumBar, 12);
+			recipe2.AddTile(TileID.Anvils);
+			recipe2.Register();
+		}
 	}
 }
