@@ -27,6 +27,7 @@ namespace GMR
 		public bool AmalgamInmune;
 		public Item OverlordBlade;
 		public Item OverlordBoots;
+		public Item Thunderblade;
 
 		public override void OnEnterWorld(Player player)
 		{
@@ -42,6 +43,7 @@ namespace GMR
 			AmalgamInmune = false;
 			OverlordBlade = null;
 			OverlordBoots = null;
+			Thunderblade = null;
 		}
 
 		public override void UpdateDead()
@@ -53,6 +55,7 @@ namespace GMR
 			AmalgamInmune = false;
 			OverlordBlade = null;
 			OverlordBoots = null;
+			Thunderblade = null;
 		}
 
 		public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter)
@@ -79,6 +82,19 @@ namespace GMR
                     {
 						Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center, perturbedSpeed + Player.velocity, ModContent.ProjectileType<Projectiles.OverlordOrbHurt>(), 100, 2f, Main.myPlayer);
 					}
+				}
+			}
+			if (Thunderblade != null)
+            {
+				float numberProjectiles = 4;
+				float rotation = MathHelper.ToRadians(Main.rand.NextFloat(25f, -25f));
+				Vector2 velocity;
+				velocity = new Vector2(0f, 80f);
+				for (int i = 0; i < numberProjectiles; i++)
+				{
+					Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * 1f;
+						Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center - 600 * Vector2.UnitY, perturbedSpeed + Player.velocity / 2, ModContent.ProjectileType<Projectiles.Ranged.Lightning>(), 50, 3f, Main.myPlayer);
+
 				}
 			}
 			return true;

@@ -9,28 +9,26 @@ using Terraria.ModLoader;
 
 namespace GMR.Projectiles.Melee
 {
-	public class CrystalNeonSlash : ModProjectile
+	public class AlloybloodSwing : ModProjectile
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Neon Slash");
+			DisplayName.SetDefault("Alloyblood Slash");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
-			Main.projFrames[Projectile.type] = 14;
+			Main.projFrames[Projectile.type] = 9;
 		}
 
 		public override void SetDefaults()
 		{
-			Projectile.width = 150;
-			Projectile.height = 150;
+			Projectile.width = 160;
+			Projectile.height = 130;
 			Projectile.friendly = true;
 			Projectile.DamageType = DamageClass.Melee;
 			Projectile.ignoreWater = true;
 			Projectile.tileCollide = false;
 			Projectile.penetrate = -1;
 		}
-
-		public override Color? GetAlpha(Color lightColor) => new Color(237, 131, 225, 85);
 
 		public override void AI()
 		{
@@ -69,16 +67,27 @@ namespace GMR.Projectiles.Melee
 			player.reuseDelay = 10;
 		}
 
+		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		{
+			int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 60, Projectile.velocity.X * 0.5f,
+				Projectile.velocity.Y * 0.2f, 60, default(Color), 2f);
+			Main.dust[dustId].noGravity = true;
+			int dustId3 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 60, Projectile.velocity.X * 0.5f,
+				Projectile.velocity.Y * 0.2f, 60, default(Color), 2f);
+			Main.dust[dustId3].noGravity = true;
+		}
+
 		public override bool PreDraw(ref Color lightColor)
 		{
+			Vector2 playerArmPosition = Main.GetPlayerArmPosition(Projectile);
+			playerArmPosition.Y -= Main.player[Projectile.owner].gfxOffY;
 			Texture2D texture2D13 = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			int num156 = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Height / Main.projFrames[Projectile.type]; //ypos of lower right corner of sprite to draw
 			int y3 = num156 * Projectile.frame; //ypos of upper left corner of sprite to draw
 			Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);
 			Vector2 origin2 = rectangle.Size() / 2f;
 
-			Color color26 = new Color(237, 131, 225, 85);
-			color26 = Projectile.GetAlpha(color26);
+			Color color26 = Color.Red;
 
 			SpriteEffects spriteEffects = SpriteEffects.None;
 			if (Projectile.spriteDirection == -1)
@@ -94,39 +103,8 @@ namespace GMR.Projectiles.Melee
 					continue;
 				Vector2 value4 = Vector2.Lerp(Projectile.oldPos[(int)i], Projectile.oldPos[max0], 1 - i % 1);
 				float num165 = MathHelper.Lerp(Projectile.oldRot[(int)i], Projectile.oldRot[max0], 1 - i % 1);
-				Main.EntitySpriteDraw(texture2D13, value4 + Projectile.Size / 2f - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, Projectile.scale, spriteEffects, 0);
+				Main.EntitySpriteDraw(texture2D13, value4 + Projectile.Size / 2f - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, Projectile.scale * 2, spriteEffects, 0);
 			}
-
-			Main.EntitySpriteDraw(texture2D13, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), Projectile.GetAlpha(color26), Projectile.rotation, origin2, Projectile.scale, spriteEffects, 0);
-
-			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>(Texture);
-
-			int frameHeight = texture.Height / Main.projFrames[Projectile.type];
-			int startY = frameHeight * Projectile.frame;
-
-			Rectangle sourceRectangle = new Rectangle(0, startY, texture.Width, frameHeight);
-
-			Vector2 origin = sourceRectangle.Size() / 2;
-
-			if (Projectile.spriteDirection == 1)
-			{
-				float offsetY = 75f;
-				float offsetX = 85f;
-				origin.Y = (float)(Projectile.spriteDirection == 1 ? sourceRectangle.Height - offsetY : offsetY);
-				origin.X = (float)(Projectile.spriteDirection == 1 ? sourceRectangle.Width - offsetX : offsetX);
-			}
-			else if (Projectile.spriteDirection == -1)
-			{
-				float offsetY2 = 75f;
-				float offsetX2 = 75f;
-				origin.Y = (float)(Projectile.spriteDirection == -1 ? sourceRectangle.Height - offsetY2 : offsetY2);
-			    origin.X = (float)(Projectile.spriteDirection == -1 ? sourceRectangle.Width - offsetX2 : offsetX2);
-		    }
-			
-			Color drawColor = Projectile.GetAlpha(lightColor);
-			Main.EntitySpriteDraw(texture,
-				Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY),
-				sourceRectangle, drawColor, Projectile.rotation, origin, Projectile.scale, spriteEffects, 0);
 			return false;
 		}
 	}

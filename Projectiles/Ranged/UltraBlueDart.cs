@@ -41,7 +41,7 @@ namespace GMR.Projectiles.Ranged
 				for (int i = 0; i < numberProjectiles; i++)
 				{
 					Vector2 perturbedSpeed = Projectile.velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * 1f;
-					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, -perturbedSpeed, ModContent.ProjectileType<Projectiles.Ranged.GungeonBulletShard>(), Projectile.damage / 3, Projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, -perturbedSpeed, ModContent.ProjectileType<Projectiles.XShotEnergy>(), Projectile.damage / 2, Projectile.knockBack, Main.myPlayer);
 					Projectile.ai[1] = 1;
 				}
 			}
