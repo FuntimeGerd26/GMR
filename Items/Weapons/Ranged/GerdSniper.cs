@@ -13,7 +13,7 @@ namespace GMR.Items.Weapons.Ranged
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Ultra-Blue Sniper");
-			Tooltip.SetDefault("'Reloading won't be the worst thing'\nHaving this increases ranged weapon speed by 10% but decreases damage by 5%\nUpon hitting enemies shoots 3 energy bullets behind it");
+			Tooltip.SetDefault("'Last thing you want to do is having to reload it'\nHaving this increases ranged weapon speed by 5% and increases damage by 10%\nUpon hitting enemies shoots 3 energy bullets behind it");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
@@ -42,8 +42,8 @@ namespace GMR.Items.Weapons.Ranged
 
 		public override void UpdateInventory(Player player)
 		{
-			player.GetAttackSpeed(DamageClass.Ranged) += 0.1f;
-			player.GetDamage(DamageClass.Ranged) += 0.05f;
+			player.GetAttackSpeed(DamageClass.Ranged) += 0.05f;
+			player.GetDamage(DamageClass.Ranged) += 0.10f;
 		}
 
 		public override Vector2? HoldoutOffset()

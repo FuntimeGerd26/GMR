@@ -13,7 +13,7 @@ namespace GMR.Items.Weapons.Ranged
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Ultra-Blue Bow");
-			Tooltip.SetDefault("Increases all ranged weapon speed by 5%\nHas a chance to shoot an ultra-blue energy bolt which splits in 3\nUpon hitting enemies the projectiles will double their speed");
+			Tooltip.SetDefault("Increases all ranged weapon speed by 5% but decreases crit chance by 2%\nHas a chance to shoot an ultra-blue energy bolt which splits in 3\nUpon hitting enemies the projectiles will double their speed");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
@@ -42,7 +42,8 @@ namespace GMR.Items.Weapons.Ranged
 
 		public override void UpdateInventory(Player player)
 		{
-			player.GetAttackSpeed(DamageClass.Ranged) += 0.5f;
+			player.GetAttackSpeed(DamageClass.Ranged) += 0.50f;
+			player.GetCritChance(DamageClass.Ranged) += -2f;
 		}
 
 		public override Vector2? HoldoutOffset()
