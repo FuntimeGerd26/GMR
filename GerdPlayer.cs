@@ -28,10 +28,11 @@ namespace GMR
 		public Item OverlordBlade;
 		public Item OverlordBoots;
 		public Item Thunderblade;
+		public bool BLBook;
 
 		public override void OnEnterWorld(Player player)
 		{
-			Main.NewText($"[i:{ModContent.ItemType<Items.Vanity.GerdHead>()}] You are playing a beta version or an early release, Please remember that", Color.Cyan);
+			Main.NewText($"[i:{ModContent.ItemType<Items.Vanity.GerdHead>()}] Welcome to the Beta of Gerd's Lab", Color.Cyan);
 		}
 
 		public override void ResetEffects()
@@ -44,6 +45,7 @@ namespace GMR
 			OverlordBlade = null;
 			OverlordBoots = null;
 			Thunderblade = null;
+			BLBook = false;
 		}
 
 		public override void UpdateDead()
@@ -56,10 +58,16 @@ namespace GMR
 			OverlordBlade = null;
 			OverlordBoots = null;
 			Thunderblade = null;
+			BLBook = false;
 		}
 
 		public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter)
 		{
+			if (BLBook)
+			{
+				damage = (int)(damage * 1.05);
+			}
+
 			if (OverlordBlade != null)
 			{
 				if (OverlordBoots != null)

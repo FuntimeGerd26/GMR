@@ -21,8 +21,8 @@ namespace GMR.Projectiles.Melee
 
 		public override void SetDefaults()
 		{
-			Projectile.width = 160;
-			Projectile.height = 130;
+			Projectile.width = 320;
+			Projectile.height = 260;
 			Projectile.friendly = true;
 			Projectile.DamageType = DamageClass.Melee;
 			Projectile.ignoreWater = true;
@@ -69,6 +69,7 @@ namespace GMR.Projectiles.Melee
 
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
+			Projectile.scale += 0.01f;
 			int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 60, Projectile.velocity.X * 0.5f,
 				Projectile.velocity.Y * 0.2f, 60, default(Color), 2f);
 			Main.dust[dustId].noGravity = true;

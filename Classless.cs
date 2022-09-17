@@ -9,18 +9,17 @@ namespace GMR
 	{
 		public override void SetStaticDefaults()
 		{
-			//Unable to increase it's damage with accessories, at least has ranged bonuses like rifle scope
-			ClassName.SetDefault("flat damage");
+			ClassName.SetDefault("base damage");
 		}
 
 		public override StatInheritanceData GetModifierInheritance(DamageClass damageClass)
 		{
 			if (damageClass == DamageClass.Generic)
-				return StatInheritanceData.None;
+				return StatInheritanceData.Full;
 
 			return new StatInheritanceData
 			(
-				damageInheritance: 0f,
+				damageInheritance: 0.1f,
 				critChanceInheritance: 0f,
 				attackSpeedInheritance: 0f,
 				armorPenInheritance: 0f,
@@ -37,7 +36,7 @@ namespace GMR
 			if (damageClass == DamageClass.Summon)
 				return false;
 			if (damageClass == DamageClass.Ranged)
-				return true;
+				return false;
 
 			return false;
 		}
