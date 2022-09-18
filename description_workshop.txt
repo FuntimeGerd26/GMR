@@ -1,13 +1,13 @@
-<Gerd's Lab Beta>
+<Gerd's Lab>
 An old mod that died to my horrible coding skills a year ago
 
-To expect from the mod in the future:
+Current Progress:
 - 1 Boss
-- 10+ Weapons
-- Many vanities and armors
+- 20+ Weapons
+- 4 Armors
 - Near 100 items
 
 For suggestions or questions join the discord server
 Discord: https://discord.gg/mSbCKZ37FB
 
-For bug report make a discussion on the steam page
+For bug reports look at the steam disscussions

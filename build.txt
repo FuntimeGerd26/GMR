@@ -1,6 +1,6 @@
-displayName = [c/752841:Gerd's] [c/505967:Lab] [c/FFB2E0:Beta]
+displayName = [c/752841:Gerd's] [c/505967:Lab] [c/FFB2E0:1.0]
 author = Mr.Gerd26
-version = 0.1.4
+version = 1.0
 includeSource = true
 includePDB = true
 homepage = https://discord.gg/mSbCKZ37FB

@@ -15,13 +15,11 @@ namespace GMR
 		public override StatInheritanceData GetModifierInheritance(DamageClass damageClass)
 		{
 			if (damageClass == DamageClass.Generic)
-				return StatInheritanceData.Full;
-
 			return new StatInheritanceData
 			(
-				damageInheritance: 0.1f,
+				damageInheritance: 0.1f, //Damage ups give only 10% of their increase
 				critChanceInheritance: 0f,
-				attackSpeedInheritance: 0f,
+				attackSpeedInheritance: 0.5f, //half speed increase from attack speed increases
 				armorPenInheritance: 0f,
 				knockbackInheritance: 0f
 			);
