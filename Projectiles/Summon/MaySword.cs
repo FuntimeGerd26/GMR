@@ -7,17 +7,17 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace GMR.Projectiles.Melee
+namespace GMR.Projectiles.Summon
 {
-    public class BLBook : ModProjectile
+    public class MaySword : ModProjectile
     {
-        public override string Texture => "GMR/Items/Accessories/BLBook";
+        public override string Texture => "GMR/Projectiles/Summon/MaySword";
 
         public int rotationDirection;
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("BL Book");
+            DisplayName.SetDefault("Violet Blade");
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
@@ -25,12 +25,12 @@ namespace GMR.Projectiles.Melee
 
         public override void SetDefaults()
         {
-            Projectile.width = 40;
-            Projectile.height = 40;
+            Projectile.width = 70;
+            Projectile.height = 70;
             Projectile.friendly = true;
             Projectile.DamageType = ModContent.GetInstance<Classless>();
-            Projectile.penetrate = 3;
-            Projectile.timeLeft = 300;
+            Projectile.penetrate = -1;
+            Projectile.timeLeft = 150;
             Projectile.ignoreWater = true;
             Projectile.tileCollide = false;
             Projectile.extraUpdates = 1;
@@ -78,18 +78,39 @@ namespace GMR.Projectiles.Melee
                 Projectile.Center = Main.player[Projectile.owner].Center + Vector2.Normalize(Projectile.velocity) * Projectile.ai[0];
                 Projectile.Center += Projectile.velocity.RotatedBy(Math.PI / 2 * Projectile.localAI[1]);
                 Projectile.velocity = Projectile.DirectionFrom(Main.player[Projectile.owner].Center) * Projectile.velocity.Length();
-                Projectile.velocity += 0.05f / Projectile.MaxUpdates * Vector2.Normalize(Projectile.velocity);
+                if (Projectile.timeLeft > 80)
+                {
+                    Projectile.velocity += 7f / Projectile.MaxUpdates * Vector2.Normalize(Projectile.velocity);
+                }
+                else
+                {
+                    Projectile.velocity += -7f / Projectile.MaxUpdates * Vector2.Normalize(Projectile.velocity);
+                }
             }
 
             Projectile.direction = Projectile.spriteDirection = rotationDirection;
-            Projectile.rotation = 0f;
+            if (Projectile.timeLeft > 80)
+            {
+                Projectile.rotation += -0.07f;
+            }
+            else
+            {
+                Projectile.rotation += 0.07f;
+            }
+
 
             Player player = Main.player[Projectile.owner];
-            if (!player.HasBuff(ModContent.BuffType<Buffs.Minions.BLBook>()))
+            GerdPlayer modPlayer = player.GetModPlayer<GerdPlayer>();
+            if (!modPlayer.MayDress)
             {
                 Projectile.Kill();
-                    return;
+                return;
             }
+        }
+
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            target.immune[Projectile.owner] = 10;
         }
 
         public override bool PreDraw(ref Color lightColor)
