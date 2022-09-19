@@ -29,10 +29,11 @@ namespace GMR
 		public Item OverlordBoots;
 		public Item Thunderblade;
 		public bool BLBook;
+		public bool MayDress;
 
 		public override void OnEnterWorld(Player player)
 		{
-			Main.NewText($"[i:{ModContent.ItemType<Items.Vanity.GerdHead>()}] Welcome to the Beta of Gerd's Lab", Color.Cyan);
+			Main.NewText($"[i:{ModContent.ItemType<Items.Vanity.GerdHead>()}] Welcome to the Beta of Gerd's Lab", Color.Cyan); //To-do: Remove before release 
 		}
 
 		public override void ResetEffects()
@@ -46,6 +47,7 @@ namespace GMR
 			OverlordBoots = null;
 			Thunderblade = null;
 			BLBook = false;
+			MayDress = false;
 		}
 
 		public override void UpdateDead()
@@ -59,13 +61,20 @@ namespace GMR
 			OverlordBoots = null;
 			Thunderblade = null;
 			BLBook = false;
+			MayDress = false;
+		}
+
+		public override void ModifyStartingInventory(IReadOnlyDictionary<string, List<Item>> itemsByMod, bool mediumCoreDeath)
+		{
+			Player player = Main.player[0];
+			player.QuickSpawnItem(Player.GetSource_FromThis(), ModContent.ItemType<Items.Accessories.MayDress>(), 1); //Should hopefully summon the accessory
 		}
 
 		public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter)
 		{
-			if (BLBook)
+			if (BLBook || MayDress)
 			{
-				damage = (int)(damage * 1.05);
+				damage = (int)(damage * 1.10); //Take 10% more damage
 			}
 
 			if (OverlordBlade != null)
@@ -74,15 +83,15 @@ namespace GMR
 				{	
 						damage = (int)(damage * 0.90);
 				}
-				float numberProjectiles = 8;
-				float rotation = MathHelper.ToRadians(Main.rand.NextFloat(180f, -180f));
+				float numberProjectiles = 8; //number of projectiles shot
+				float rotation = MathHelper.ToRadians(Main.rand.NextFloat(180f, -180f)); //rotation, MathHelper.ToRadians(Main.rand.NextFloat(MAXf, MIN or -MAXf))
 
-				Vector2 velocity;
-				velocity = new Vector2(0f, -40f);
+				Vector2 velocity; //Because there's none in here
+				velocity = new Vector2(0f, -40f); // Vector2(Xf, Yf)
 				for (int i = 0; i < numberProjectiles; i++)
 				{
-					Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * 1f;
-					if(OverlordBoots == null)
+					Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * 1f; //No idea, just don't touch any value, the last "* 1f" is ok to modify tho
+					if(OverlordBoots != null)
 					{
 						Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center, perturbedSpeed + Player.velocity, ModContent.ProjectileType<Projectiles.OverlordOrbHurt>(), 200, 4f, Main.myPlayer);
 					}
@@ -105,11 +114,11 @@ namespace GMR
 
 				}
 			}
-			return true;
+			return true; //True for taking damage, maybe idk
 		}
 		public override void PostHurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit, int cooldownCounter)
 		{
-			if (!DevInmune)
+			if (!DevInmune) //No idea what this part is for but keep it
 			{
 				return;
 			}
@@ -142,17 +151,17 @@ namespace GMR
 						Projectile.NewProjectile(Player.GetSource_Accessory(DevPlush), position, perturbedSpeed, type, (damage / 2) + (damage / 4), knockback, player.whoAmI);
 						Projectile.NewProjectile(Player.GetSource_Accessory(DevPlush), position, velocity, ModContent.ProjectileType<Projectiles.Ranged.JackClaw>(), damage, knockback, player.whoAmI);
 					}
-					return true;
+					return true; //Shoot vanilla projectiles
 				}
 				else
 				{
-					return true;
+					return true; //DO NOT CHANGE TO FALSE, This makes weapon shoot projectiles without this accessory on
 				}
 			}
 
 			if (AmalgamPlush != null)
 			{
-				if (Main.rand.NextBool(3)) // 1 in 3 (33%)
+				if (Main.rand.NextBool(3)) // 1 in 3 (33.333333333333333333333333333333333333333333333333333333%) (Funny)
 				{
 					float numberProjectiles = 7; //3 shots
 					float rotation = MathHelper.ToRadians(14);
@@ -205,7 +214,7 @@ namespace GMR
 					Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * 1f;
 					Projectile.NewProjectile(Player.GetSource_Accessory(JackExpert), position, perturbedSpeed, ModContent.ProjectileType<Projectiles.Ranged.JackShard>(), damage, knockback, player.whoAmI);
 				}
-				return false;
+				return false; //Do not shoot vanilla projectile, Since it's getting replaced by this
 			}
 			else
 			{
