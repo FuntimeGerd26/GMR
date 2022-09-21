@@ -30,10 +30,12 @@ namespace GMR
 		public Item Thunderblade;
 		public bool BLBook;
 		public bool MayDress;
+		public Item Halu;
 
 		public override void OnEnterWorld(Player player)
 		{
-			Main.NewText($"[i:{ModContent.ItemType<Items.Vanity.GerdHead>()}] Welcome to the Beta of Gerd's Lab", Color.Cyan); //To-do: Remove before release 
+			//player.QuickSpawnItem(player.GetSource_FromThis(), ModContent.ItemType<Items.Accessories.BLBook>());
+			//Main.NewText($"[i:{ModContent.ItemType<Items.Vanity.GerdHead>()}] Welcome to the Beta of Gerd's Lab", Color.Cyan); //To-do: Remove before release
 		}
 
 		public override void ResetEffects()
@@ -48,6 +50,7 @@ namespace GMR
 			Thunderblade = null;
 			BLBook = false;
 			MayDress = false;
+			Halu = null;
 		}
 
 		public override void UpdateDead()
@@ -62,6 +65,7 @@ namespace GMR
 			Thunderblade = null;
 			BLBook = false;
 			MayDress = false;
+			Halu = null;
 		}
 
 		public override void ModifyStartingInventory(IReadOnlyDictionary<string, List<Item>> itemsByMod, bool mediumCoreDeath)
@@ -118,9 +122,9 @@ namespace GMR
 		}
 		public override void PostHurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit, int cooldownCounter)
 		{
-			if (!DevInmune) //No idea what this part is for but keep it
+			if (!DevInmune || !AmalgamInmune)
 			{
-				return;
+				return; //Is this for using usual frames if not having these?
 			}
 
 			// Don't apply extra immunity time to pvp damage (like vanilla)
@@ -163,7 +167,7 @@ namespace GMR
 			{
 				if (Main.rand.NextBool(3)) // 1 in 3 (33.333333333333333333333333333333333333333333333333333333%) (Funny)
 				{
-					float numberProjectiles = 7; //3 shots
+					float numberProjectiles = 7; //7 shots
 					float rotation = MathHelper.ToRadians(14);
 					position += Vector2.Normalize(velocity) * 5f;
 					for (int i = 0; i < numberProjectiles; i++)
@@ -176,7 +180,7 @@ namespace GMR
 				}
 				else if ((type == ProjectileID.FireArrow) || (type == ProjectileID.WoodenArrowFriendly))
 				{
-					float numberProjectiles = 3; //3 shots
+					float numberProjectiles = 3;
 					float rotation = MathHelper.ToRadians(5);
 					position += Vector2.Normalize(velocity) * 5f;
 					for (int i = 0; i < numberProjectiles; i++)
@@ -194,7 +198,7 @@ namespace GMR
 
 			if ((JackExpert != null) && (type == ProjectileID.FireArrow))
 			{
-				float numberProjectiles = 3; //3 shots
+				float numberProjectiles = 3;
 				float rotation = MathHelper.ToRadians(5);
 				position += Vector2.Normalize(velocity) * 5f;
 				for (int i = 0; i < numberProjectiles; i++)
@@ -206,7 +210,7 @@ namespace GMR
 			}
 			else if ((JackExpert != null) && (type == ProjectileID.WoodenArrowFriendly))
 			{
-				float numberProjectiles = 3; //3 shots
+				float numberProjectiles = 3;
 				float rotation = MathHelper.ToRadians(25);
 				position += Vector2.Normalize(velocity) * 5f;
 				for (int i = 0; i < numberProjectiles; i++)
