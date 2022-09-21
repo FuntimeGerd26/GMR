@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Graphics.Shaders;
@@ -14,6 +15,12 @@ namespace GMR.Items.Accessories
 {
 	public class MayDress : ModItem
 	{
+		private static readonly Color[] itemNameCycleColors = {
+			new Color(255, 255, 255),
+			new Color(205, 125, 255),
+			new Color(0, 0, 0),
+		};
+
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Violet's Dress");
@@ -43,14 +50,31 @@ namespace GMR.Items.Accessories
 			player.GPlayer().DevPlush = Item;
 			player.GPlayer().DevInmune = true;
 			player.GetAttackSpeed(DamageClass.Generic) += 0.10f;
-			if (player.ownedProjectileCounts[ModContent.ProjectileType<Projectiles.Summon.MaySword>()] < 1)
+			if (player.ownedProjectileCounts[ModContent.ProjectileType<Projectiles.Summon.MaySaw>()] < 1)
 			{
 				const int max = 4;
 				Vector2 velocity = new Vector2(0f, -7f);
 				for (int i = 0; i < max; i++)
 				{
 					Vector2 perturbedSpeed = velocity.RotatedBy(2 * Math.PI / max * i);
-					Projectile.NewProjectile(Item.GetSource_FromThis(), player.Center, perturbedSpeed, ModContent.ProjectileType<Projectiles.Summon.MaySword>(), 50, 4f, player.whoAmI, 0, (player.Center - 140 * Vector2.UnitX - player.position).Length());
+					Projectile.NewProjectile(Item.GetSource_FromThis(), player.Center, perturbedSpeed, ModContent.ProjectileType<Projectiles.Summon.MaySaw>(), 50, 4f, player.whoAmI, 0, (player.Center - 140 * Vector2.UnitX - player.position).Length());
+				}
+			}
+		}
+		
+		public override void ModifyTooltips(List<TooltipLine> tooltips)
+		{
+			int numColors = itemNameCycleColors.Length;
+
+			foreach (TooltipLine line2 in tooltips)
+			{
+				if (line2.Mod == "Terraria" && line2.Name == "ItemName")
+				{
+					float fade = (Main.GameUpdateCount % 40) / 40f;
+					int index = (int)((Main.GameUpdateCount / 40) % numColors);
+					int nextIndex = (index + 1) % numColors;
+
+					line2.OverrideColor = Color.Lerp(itemNameCycleColors[index], itemNameCycleColors[nextIndex], fade);
 				}
 			}
 		}

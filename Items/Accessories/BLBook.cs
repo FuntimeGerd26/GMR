@@ -19,7 +19,7 @@ namespace GMR.Items.Accessories
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("BL Book");
-			Tooltip.SetDefault("Summons 4 orbiting BL Books around the player\nIncreases all damage by 20%");
+			Tooltip.SetDefault("Summons 4 orbiting BL Books around the player\nIncreases all damage by 20%\nIncreases damage taken by 10%");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
@@ -41,6 +41,7 @@ namespace GMR.Items.Accessories
 		{
 			player.GetDamage(DamageClass.Generic) += 0.2f;
 			player.AddBuff(ModContent.BuffType<Buffs.Minions.BLBook>(), 2);
+			player.GPlayer().BLBook = true;
 			flip = !flip;
 			if (player.HasBuff(ModContent.BuffType<Buffs.Minions.BLBook>()) && player.ownedProjectileCounts[ModContent.ProjectileType<Projectiles.Melee.BLBook>()] < 1)
 			{ 
