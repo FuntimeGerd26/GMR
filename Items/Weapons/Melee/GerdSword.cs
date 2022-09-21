@@ -13,7 +13,7 @@ namespace GMR.Items.Weapons.Melee
 			new Color(255, 255, 255),
 			new Color(205, 125, 255),
 			new Color(0, 0, 0),
-			new Color(125, 205, 255),
+			new Color(105, 185, 225),
 		};
 
 		public override void SetStaticDefaults()
