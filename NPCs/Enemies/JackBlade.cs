@@ -69,25 +69,19 @@ namespace GMR.NPCs.Enemies
 
         public override void AI()
         {
-            if (!Main.expertMode || !NPC.AnyNPCs(ModContent.NPCType<NPCs.Bosses.Jack.Jack>()))
+            if (NPC.life <= 0)
             {
-                NPC.life += -50;
-
-                if (NPC.life <= 0)
+                int dustType = 60;
+                for (int i = 0; i < 20; i++)
                 {
-                    int dustType = 60;
-                    for (int i = 0; i < 20; i++)
-                    {
-                        Vector2 velocity = NPC.velocity + new Vector2(Main.rand.NextFloat(-5f, 5f), Main.rand.NextFloat(-5f, 5f));
-                        Dust dust = Dust.NewDustPerfect(NPC.Center, dustType, velocity, 30, Color.White, Main.rand.NextFloat(1.6f, 3.8f));
+                    Vector2 velocity = NPC.velocity + new Vector2(Main.rand.NextFloat(-5f, 5f), Main.rand.NextFloat(-5f, 5f));
+                    Dust dust = Dust.NewDustPerfect(NPC.Center, dustType, velocity, 30, Color.White, Main.rand.NextFloat(1.6f, 3.8f));
 
-                        dust.noLight = false;
-                        dust.noGravity = true;
-                        dust.fadeIn = Main.rand.NextFloat(0.1f, 0.5f);
-                    }
-                    SoundEngine.PlaySound(SoundID.Item62, NPC.Center);
+                    dust.noLight = false;
+                    dust.noGravity = true;
+                    dust.fadeIn = Main.rand.NextFloat(0.1f, 0.5f);
                 }
-                return;
+                SoundEngine.PlaySound(SoundID.Item62, NPC.Center);
             }
 
             Player player = Main.player[NPC.target];

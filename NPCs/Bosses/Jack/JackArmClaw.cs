@@ -131,42 +131,36 @@ namespace GMR.NPCs.Bosses.Jack
             }
             else
             {
-                NPC.Center = Main.player[NPC.target].Center - 250 * Vector2.UnitX;
+                NPC.Center = Main.player[NPC.target].Center - 300 * Vector2.UnitX;
             }
+            if (++NPC.ai[1] > 300) //Each 5 seconds run
+            {
+                if (++NPC.ai[2] > 120) //after 2 seconds from start
+                {
+                    if (++NPC.ai[0] > 31) //resets all
+                    {
+                        NPC.ai[0] = 0;
+                        NPC.ai[1] = 0;
+                        NPC.ai[2] = 0;
+                    }
+                    else if (++NPC.ai[0] > 30) //2.5 seconds after start, shoot
+                    {
+                        Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(15f, 0f), ModContent.ProjectileType<Projectiles.Bosses.JackArmClaw>(), NPC.damage, 1f, Main.myPlayer, NPC.whoAmI);
+                    }
+                }
+                else if (++NPC.ai[2] > 60) //Dust after 1 second from start
+                {
+                    int dustType = 60;
+                    for (int i = 0; i < 5; i++)
+                    {
+                        Vector2 velocity = NPC.velocity + new Vector2(Main.rand.NextFloat(-5f, 5f), Main.rand.NextFloat(-5f, 5f));
+                        Dust dust = Dust.NewDustPerfect(NPC.Center, dustType, velocity, 30, Color.White, Main.rand.NextFloat(1.6f, 3.8f));
 
-            if ((int)NPC.ai[2] == 2)
-            {
-                if (++NPC.localAI[0] > 61)
-                {
-                    NPC.localAI[0] = 0;
-                    NPC.localAI[1] = 0;
-                    NPC.ai[2] = 0;
+                        dust.noLight = false;
+                        dust.noGravity = true;
+                        dust.fadeIn = Main.rand.NextFloat(0.1f, 0.5f);
+                    }
                 }
-                else if (++NPC.localAI[0] > 60)
-                {
-                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(25f, 0f), ModContent.ProjectileType<Projectiles.Bosses.JackArmClaw>(), NPC.damage, 1f, Main.myPlayer, NPC.whoAmI);
-                }
-            }
-            if (NPC.ai[2] == 1)
-            {
-                int dustType = 60;
-                for (int i = 0; i < 20; i++)
-                {
-                    Vector2 velocity = NPC.velocity + new Vector2(Main.rand.NextFloat(-5f, 5f), Main.rand.NextFloat(-5f, 5f));
-                    Dust dust = Dust.NewDustPerfect(NPC.Center, dustType, velocity, 30, Color.White, Main.rand.NextFloat(1.6f, 3.8f));
-
-                    dust.noLight = false;
-                    dust.noGravity = true;
-                    dust.fadeIn = Main.rand.NextFloat(0.1f, 0.5f);
-                }
-                if (++NPC.localAI[1] > 20)
-                {
-                    NPC.ai[2]++;
-                }
-            }
-            if ((++NPC.localAI[1] > 180) && NPC.ai[2] == 0)
-            {
-                NPC.ai[2]++;
             }
         }
     }

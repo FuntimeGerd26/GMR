@@ -9,24 +9,24 @@ using Terraria.ModLoader;
 
 namespace GMR.Projectiles.Bosses
 {
-	public class JackBlastBad : ModProjectile
+	public class AlloyCrate : ModProjectile
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Jack Blast");
-			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
-			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+			DisplayName.SetDefault("Alloy Crate");
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
 		}
 
 		public override void SetDefaults()
 		{
-			Projectile.width = 20;
-			Projectile.height = 20;
+			Projectile.width = 30;
+			Projectile.height = 30;
 			Projectile.aiStyle = 1;
 			Projectile.hostile = true;
 			Projectile.timeLeft = 600;
-			Projectile.alpha = 125;
-			Projectile.light = 0.45f; 
+			Projectile.alpha = 0;
+			Projectile.light = 0.45f;
 			Projectile.ignoreWater = true;
 			Projectile.tileCollide = true;
 			Projectile.extraUpdates = 1;
@@ -36,9 +36,32 @@ namespace GMR.Projectiles.Bosses
 		public override void AI()
 		{
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
-			if (++Projectile.localAI[0] > 10)
+			if (++Projectile.localAI[0] > 20)
 			{
-				Projectile.velocity.Y += 1.5f;
+				if (Projectile.velocity.Y > 0)
+				{
+				Projectile.velocity.Y += -1f;
+     			}
+				if (Projectile.velocity.X > 0)
+				{
+					Projectile.velocity.X += -1f;
+				}
+				if (Projectile.velocity.Y < 0)
+				{
+					Projectile.velocity.Y += 1f;
+				}
+				if (Projectile.velocity.X < 0)
+				{
+					Projectile.velocity.X += 1f;
+				}
+				if (Projectile.velocity.Y == 0)
+				{
+					Projectile.velocity.Y = 0f;
+				}
+				if (Projectile.velocity.X == 0)
+				{
+					Projectile.velocity.X = 0f;
+				}
 			}
 		}
 		

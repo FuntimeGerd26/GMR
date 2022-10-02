@@ -130,41 +130,36 @@ namespace GMR.NPCs.Bosses.Jack
             }
             else
             {
-                NPC.Center = Main.player[NPC.target].Center - 300 * Vector2.UnitX - 250 * Vector2.UnitY;
+                NPC.Center = Main.player[NPC.target].Center - 350 * Vector2.UnitX - 300 * Vector2.UnitY;
             }
-            if ((int)NPC.ai[2] == 2)
+            if (++NPC.ai[1] > 180) //Each 3 seconds run
             {
-                if (++NPC.localAI[0] > 31)
+                if (++NPC.ai[2] > 120) //after 2 seconds from start
                 {
-                    NPC.localAI[0] = 0;
-                    NPC.localAI[1] = 0;
-                    NPC.ai[2] = 0;
+                    if (++NPC.ai[0] > 31) //resets all
+                    {
+                        NPC.ai[0] = 0;
+                        NPC.ai[1] = 0;
+                        NPC.ai[2] = 0;
+                    }
+                    else if (++NPC.ai[0] > 30) //2.5 seconds after start, shoot
+                    {
+                        Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(15f, 10f), Main.rand.Next(new int[] { ModContent.ProjectileType<Projectiles.Bosses.AlloyCrate>(), ModContent.ProjectileType<Projectiles.Bosses.JackBlastBad>() }), NPC.damage, 1f, Main.myPlayer, NPC.whoAmI);
+                    }
                 }
-                else if (++NPC.localAI[0] > 30)
+                else if (++NPC.ai[2] > 60) //Dust after 1 second from start
                 {
-                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(25f, 20f), ModContent.ProjectileType<Projectiles.Bosses.JackBlastBad>(), NPC.damage, 1f, Main.myPlayer, NPC.whoAmI);
-                }
-            }
-            if (NPC.ai[2] == 1)
-            {
-                int dustType = 60;
-                for (int i = 0; i < 20; i++)
-                {
-                    Vector2 velocity = NPC.velocity + new Vector2(Main.rand.NextFloat(-5f, 5f), Main.rand.NextFloat(-5f, 5f));
-                    Dust dust = Dust.NewDustPerfect(NPC.Center, dustType, velocity, 30, Color.White, Main.rand.NextFloat(1.6f, 3.8f));
+                    int dustType = 60;
+                    for (int i = 0; i < 5; i++)
+                    {
+                        Vector2 velocity = NPC.velocity + new Vector2(Main.rand.NextFloat(-5f, 5f), Main.rand.NextFloat(-5f, 5f));
+                        Dust dust = Dust.NewDustPerfect(NPC.Center, dustType, velocity, 30, Color.White, Main.rand.NextFloat(1.6f, 3.8f));
 
-                    dust.noLight = false;
-                    dust.noGravity = true;
-                    dust.fadeIn = Main.rand.NextFloat(0.1f, 0.5f);
+                        dust.noLight = false;
+                        dust.noGravity = true;
+                        dust.fadeIn = Main.rand.NextFloat(0.1f, 0.5f);
+                    }
                 }
-                if (++NPC.localAI[1] > 30)
-                {
-                    NPC.ai[2]++;
-                }
-            }
-            if ((++NPC.localAI[1] > 120) && NPC.ai[2] == 0)
-            {
-                NPC.ai[2]++;
             }
         }
     }

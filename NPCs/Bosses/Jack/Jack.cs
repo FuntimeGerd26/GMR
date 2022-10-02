@@ -67,11 +67,6 @@ namespace GMR.NPCs.Bosses.Jack
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (!Main.dayTime)
-            {
-                return 0.012f;
-            }
-
             return 0f;
         }
 
@@ -80,7 +75,7 @@ namespace GMR.NPCs.Bosses.Jack
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
             BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Sky,
             BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
-            new FlavorTextBestiaryInfoElement("A machine made with the forges on the underworld, it is weak compared to other creations that have came from them, the ones under all."),
+            new FlavorTextBestiaryInfoElement("A machine made with the forges on the underworld, it is weak compared to other creations that have came from them, this model is named after it's inventor."),
             });
         }
 
@@ -97,15 +92,6 @@ namespace GMR.NPCs.Bosses.Jack
                     dust.noLight = false;
                     dust.noGravity = true;
                     dust.fadeIn = Main.rand.NextFloat(0.1f, 0.5f);
-                }
-                float numberProjectiles = 18;
-                float rotation = MathHelper.ToRadians(180);
-                Vector2 velocity2;
-                velocity2 = new Vector2(0f, -20f);
-                for (int i = 0; i < numberProjectiles; i++)
-                {
-                    Vector2 perturbedSpeed = velocity2.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * 1f;
-                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, perturbedSpeed, ModContent.ProjectileType<Projectiles.Bosses.AttackPreview>(), 0, 1f, Main.myPlayer, NPC.whoAmI);
                 }
             }
         }
@@ -126,12 +112,12 @@ namespace GMR.NPCs.Bosses.Jack
                 CombatText.NewText(displayPoint, Color.Red, "DEPLOYING WEAPONS");
             }
 
-            if ((NPC.life < NPC.lifeMax / 5) && ((int)NPC.ai[3] == -1) || !NPC.AnyNPCs(ModContent.NPCType<NPCs.Enemies.JackBlade>()))
+            if ((NPC.life < NPC.lifeMax / 5) && !NPC.AnyNPCs(ModContent.NPCType<NPCs.Enemies.JackBlade>()))
             {
                 NPC.ai[3]++;
-                int count = 1;
+                int count = 3;
                 int spawnX = (int)NPC.position.X + NPC.width / 2;
-                int spawnY = (int)NPC.position.Y + NPC.height / 2 - 250;
+                int spawnY = (int)NPC.position.Y + NPC.height / 2 - 300;
                 for (int i = 0; i < count; i++)
                 {
                     NPC.NewNPC(NPC.GetSource_FromThis("GMR/NPCs/Jack"), spawnX, spawnY, ModContent.NPCType<NPCs.Enemies.JackBlade>(), NPC.whoAmI, 0f, NPC.whoAmI);
@@ -228,28 +214,19 @@ namespace GMR.NPCs.Bosses.Jack
                     dust.noGravity = true;
                     dust.fadeIn = Main.rand.NextFloat(0.1f, 0.5f);
                 }
-                float numberProjectiles = 8;
-                float rotation = MathHelper.ToRadians(90);
-                Vector2 velocity2;
-                velocity2 = new Vector2(0f, -20f);
-                for (int i = 0; i < numberProjectiles; i++)
-                {
-                    Vector2 perturbedSpeed = velocity2.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * 1f;
-                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, perturbedSpeed, ModContent.ProjectileType<Projectiles.Bosses.AttackPreview>(), 0, 1f, Main.myPlayer, NPC.whoAmI);
-                }
             }
 
             if (Main.dayTime || player.dead)
             {
                 NPC.velocity.Y *= 7f;
                 NPC.EncourageDespawn(300);
-                NPC.localAI[0] = 500;
+                NPC.ai[0] = 500;
                 if (NPC.ai[2] == 0)
                 {
                     if (Main.dayTime || Main.rand.NextBool(10))
                     {
-                    Main.NewText("Cya", Color.Red);
-                    NPC.ai[2]++;
+                            Main.NewText("Cya", Color.Red);
+                            NPC.ai[2]++;
                     }
                     else
                     {
@@ -259,61 +236,6 @@ namespace GMR.NPCs.Bosses.Jack
                 }
                     return;
             }
-            /*if (NPC.ai[1] == 2)
-            {
-                if (++NPC.localAI[0] > 500) //No lock
-                {
-                    NPC.Center = NPC.Center;
-                }
-                else if (++NPC.localAI[0] > 480) //Reset
-                {
-                    NPC.localAI[0] = 0;
-                }
-                else if (++NPC.localAI[0] > 360) //Left
-                {
-                    NPC.Center = Main.player[NPC.target].Center - 150 * Vector2.UnitX;
-
-                    int dustId = Dust.NewDust(NPC.position, NPC.width, NPC.height, 60, NPC.velocity.X * 0.5f,
-                        NPC.velocity.Y * 0.2f, 60, default(Color), 2f);
-                    Main.dust[dustId].noGravity = true;
-                    int dustId3 = Dust.NewDust(NPC.position, NPC.width, NPC.height, 60, NPC.velocity.X * 0.5f,
-                        NPC.velocity.Y * 0.2f, 60, default(Color), 2f);
-                    Main.dust[dustId3].noGravity = true;
-                }
-                else if (++NPC.localAI[0] > 240) //Up
-                {
-                    NPC.Center = Main.player[NPC.target].Center - 150 * Vector2.UnitY;
-
-                    int dustId = Dust.NewDust(NPC.position, NPC.width, NPC.height, 60, NPC.velocity.X * 0.5f,
-                        NPC.velocity.Y * 0.2f, 60, default(Color), 2f);
-                    Main.dust[dustId].noGravity = true;
-                    int dustId3 = Dust.NewDust(NPC.position, NPC.width, NPC.height, 60, NPC.velocity.X * 0.5f,
-                        NPC.velocity.Y * 0.2f, 60, default(Color), 2f);
-                    Main.dust[dustId3].noGravity = true;
-                }
-                else if (++NPC.localAI[0] > 120) //Right
-                {
-                    NPC.Center = Main.player[NPC.target].Center + 150 * Vector2.UnitX;
-
-                    int dustId = Dust.NewDust(NPC.position, NPC.width, NPC.height, 60, NPC.velocity.X * 0.5f,
-                        NPC.velocity.Y * 0.2f, 60, default(Color), 2f);
-                    Main.dust[dustId].noGravity = true;
-                    int dustId3 = Dust.NewDust(NPC.position, NPC.width, NPC.height, 60, NPC.velocity.X * 0.5f,
-                        NPC.velocity.Y * 0.2f, 60, default(Color), 2f);
-                    Main.dust[dustId3].noGravity = true;
-                }
-                else //Down
-                {
-                    NPC.Center = Main.player[NPC.target].Center + 150 * Vector2.UnitY;
-
-                    int dustId = Dust.NewDust(NPC.position, NPC.width, NPC.height, 60, NPC.velocity.X * 0.5f,
-                        NPC.velocity.Y * 0.2f, 60, default(Color), 2f);
-                    Main.dust[dustId].noGravity = true;
-                    int dustId3 = Dust.NewDust(NPC.position, NPC.width, NPC.height, 60, NPC.velocity.X * 0.5f,
-                        NPC.velocity.Y * 0.2f, 60, default(Color), 2f);
-                    Main.dust[dustId3].noGravity = true;
-                }
-            }*/
         }
 
         public override void FindFrame(int FrameHeight)
@@ -342,11 +264,11 @@ namespace GMR.NPCs.Bosses.Jack
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Ranged.JackCannon>(), 10));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Ranged.JackRifle>(), 26));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Ranged.JackCannon>(), 3));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Ranged.JackRifle>(), 5));
             if (Main.expertMode)
             {
-                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Accessories.JackExpert>(), 5));
+                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Accessories.JackExpert>(), 1));
             }
         }
 
