@@ -266,6 +266,7 @@ namespace GMR.NPCs.Bosses.Jack
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Ranged.JackCannon>(), 3));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Ranged.JackRifle>(), 5));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Vanity.JackMask>(), 10));
             if (Main.expertMode)
             {
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Accessories.JackExpert>(), 1));
