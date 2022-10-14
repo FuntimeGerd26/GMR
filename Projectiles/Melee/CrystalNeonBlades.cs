@@ -7,35 +7,33 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace GMR.Projectiles.Bosses
+namespace GMR.Projectiles.Melee
 {
-	public class JackBlastBad : ModProjectile
+	public class CrystalNeonBlades : ModProjectile
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Jack Blast");
-			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
-			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+			DisplayName.SetDefault("Crystal Neon Blades");
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 1;
 		}
 
 		public override void SetDefaults()
 		{
-			Projectile.width = 22;
-			Projectile.height = 66;
-			Projectile.aiStyle = 1;
-			Projectile.hostile = true;
-			Projectile.timeLeft = 600;
-			Projectile.alpha = 125;
-			Projectile.light = 0.45f; 
+			Projectile.width = 88;
+			Projectile.height = 88;
+			Projectile.friendly = true;
+			Projectile.DamageType = DamageClass.Melee;
+			Projectile.timeLeft = 600; 
 			Projectile.ignoreWater = true;
-			Projectile.tileCollide = true;
+			Projectile.tileCollide = false;
 			Projectile.extraUpdates = 1;
-			AIType = ProjectileID.Bullet;
 		}
 
 		public override void AI()
 		{
-			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
+			Projectile.rotation += Projectile.spriteDirection * 0.45f;
+			Projectile.velocity += 0.5f / Projectile.MaxUpdates * Vector2.Normalize(Projectile.velocity);
 		}
 
 		public override bool PreDraw(ref Color lightColor)
@@ -46,8 +44,7 @@ namespace GMR.Projectiles.Bosses
 			for (int k = 0; k < Projectile.oldPos.Length; k++)
 			{
 				Vector2 drawPos = (Projectile.oldPos[k] - Main.screenPosition) + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
-				Color color = Projectile.GetAlpha(lightColor) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-				Main.EntitySpriteDraw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
+				Main.EntitySpriteDraw(texture, drawPos, null, Color.HotPink, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
 			}
 			return true;
 		}

@@ -7,34 +7,30 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace GMR.Projectiles.Ranged
+namespace GMR.Projectiles.Magic
 {
-	public class DualShooterBullet : ModProjectile
+	public class PlagueBolt : ModProjectile
 	{
-		public override string Texture => "GMR/Projectiles/GlowSprite";
-
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Dual Blast");
-			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
+			DisplayName.SetDefault("Plague Bolt");
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
-			ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
 		}
 
 		public override void SetDefaults()
 		{
-			Projectile.width = 100;
-			Projectile.height = 100;
-			Projectile.aiStyle = -1;
+			Projectile.width = 12;
+			Projectile.height = 12;
+			Projectile.aiStyle = 1;
 			Projectile.friendly = true;
-			Projectile.DamageType = DamageClass.Ranged;
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.timeLeft = 600;
-			Projectile.alpha = 125;
 			Projectile.light = 0.25f; 
 			Projectile.ignoreWater = true;
 			Projectile.tileCollide = false;
 			Projectile.extraUpdates = 1;
-			Projectile.scale = 0.20f;
+			AIType = ProjectileID.Bullet;
 		}
 
 		public override void AI()
@@ -53,9 +49,10 @@ namespace GMR.Projectiles.Ranged
 				// If found, change the velocity of the projectile and turn it in the direction of the target
 				// Use the SafeNormalize extension method to avoid NaNs returned by Vector2.Normalize when the vector is zero
 				Projectile.velocity = (closestNPC.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * projSpeed;
+				Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90f);
 			}
 			else
-            {
+			{
 				AIType = ProjectileID.Bullet;
 			}
 		}
@@ -100,10 +97,17 @@ namespace GMR.Projectiles.Ranged
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
 			target.AddBuff(BuffID.Poisoned, 600);
-			target.AddBuff(BuffID.Venom, 300);
+
+			float numberProjectiles = 4;
+			float rotation = MathHelper.ToRadians(45);
+			for (int i = 0; i < numberProjectiles; i++)
+			{
+				Vector2 perturbedSpeed = Projectile.velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * 1f;
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, perturbedSpeed, ModContent.ProjectileType<Projectiles.Magic.MaskedPlagueClaw>(), Projectile.damage / 2, Projectile.knockBack, Main.myPlayer);
+			}
 		}
 
-		public override Color? GetAlpha(Color lightColor) => new Color(255, 218, 218, 0);
+		public override Color? GetAlpha(Color lightColor) => new Color(116, 234, 204, 125);
 
 		public override bool PreDraw(ref Color lightColor)
 		{
@@ -113,7 +117,7 @@ namespace GMR.Projectiles.Ranged
 			Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);
 			Vector2 origin2 = rectangle.Size() / 2f;
 
-			Color color26 = new Color(255, 218, 218, 0);
+			Color color26 = new Color(116, 234, 204, 125);
 			color26 = Projectile.GetAlpha(color26);
 
 			SpriteEffects effects = SpriteEffects.None;
@@ -121,7 +125,6 @@ namespace GMR.Projectiles.Ranged
 			for (float i = 0; i < ProjectileID.Sets.TrailCacheLength[Projectile.type]; i += 0.5f)
 			{
 				Color color27 = color26;
-				color27.A = 0;
 				color27 *= (float)(ProjectileID.Sets.TrailCacheLength[Projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[Projectile.type];
 				int max0 = (int)i - 1;//Math.Max((int)i - 1, 0);
 				if (max0 < 0)
@@ -133,12 +136,6 @@ namespace GMR.Projectiles.Ranged
 
 			Main.EntitySpriteDraw(texture2D13, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), Projectile.GetAlpha(color26), Projectile.rotation, origin2, Projectile.scale, effects, 0);
 			return false;
-		}
-
-		public override void Kill(int timeLeft)
-		{
-			Collision.HitTiles(Projectile.position + Projectile.velocity, Projectile.velocity, Projectile.width, Projectile.height);
-			SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
 		}
 	}
 }

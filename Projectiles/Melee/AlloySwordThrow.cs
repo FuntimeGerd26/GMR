@@ -11,6 +11,8 @@ namespace GMR.Projectiles.Melee
 {
 	public class AlloySwordThrow : ModProjectile
 	{
+		public override string Texture => "GMR/Items/Weapons/Melee/AlloySword";
+
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Alloy Blade");

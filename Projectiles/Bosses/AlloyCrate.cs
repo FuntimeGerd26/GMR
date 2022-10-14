@@ -24,7 +24,7 @@ namespace GMR.Projectiles.Bosses
 			Projectile.height = 30;
 			Projectile.aiStyle = 1;
 			Projectile.hostile = true;
-			Projectile.timeLeft = 600;
+			Projectile.timeLeft = 125;
 			Projectile.alpha = 0;
 			Projectile.light = 0.45f;
 			Projectile.ignoreWater = true;
@@ -36,12 +36,29 @@ namespace GMR.Projectiles.Bosses
 		public override void AI()
 		{
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
-			if (++Projectile.localAI[0] > 20)
+
+			if (Projectile.localAI[0] > 121)
+			{
+
+			}
+			else if (++Projectile.localAI[0] > 120)
+            {
+				SoundEngine.PlaySound(SoundID.NPCDeath14, Projectile.position);
+				float numberProjectiles = 4; //3 shots
+				float rotation = MathHelper.ToRadians(180);
+				Vector2 velocity = new Vector2(0f, 20f);
+				for (int i = 0; i < numberProjectiles; i++)
+				{
+					Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * 1f;
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, perturbedSpeed, ModContent.ProjectileType<Projectiles.Bosses.JackBlastBad>(), Projectile.damage / 2, Projectile.knockBack, Main.myPlayer);
+				}
+			}
+			else if (++Projectile.localAI[0] > 20)
 			{
 				if (Projectile.velocity.Y > 0)
 				{
-				Projectile.velocity.Y += -1f;
-     			}
+					Projectile.velocity.Y += -1f;
+				}
 				if (Projectile.velocity.X > 0)
 				{
 					Projectile.velocity.X += -1f;

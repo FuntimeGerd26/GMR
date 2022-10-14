@@ -128,6 +128,7 @@ namespace GMR.Projectiles.Melee
 				Projectile.Damage();
 			}
 		}
+
 		public override bool PreDraw(ref Color lightColor)
 		{
 			Main.instance.LoadProjectile(Projectile.type);

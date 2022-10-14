@@ -11,6 +11,8 @@ namespace GMR.Projectiles.Melee
 {
 	public class AlloyDagger : ModProjectile
 	{
+		public override string Texture => "GMR/Items/Weapons/Melee/AlloyDagger";
+
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Alloy Dagger");

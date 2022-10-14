@@ -9,70 +9,46 @@ using Terraria.ModLoader;
 
 namespace GMR.Projectiles.Melee
 {
-	public class AlloybloodSwing : ModProjectile
+	public class GerdHeroSwordThrow : ModProjectile
 	{
+		public override string Texture => "GMR/Items/Weapons/Melee/GerdHeroSword";
+
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Alloyblood Slash");
-			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
+			DisplayName.SetDefault("Advanced Survival Sword");
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
-			Main.projFrames[Projectile.type] = 9;
 		}
 
 		public override void SetDefaults()
 		{
-			Projectile.width = 320;
-			Projectile.height = 260;
+			Projectile.width = 54;
+			Projectile.height = 54;
+			Projectile.aiStyle = 1;
 			Projectile.friendly = true;
 			Projectile.DamageType = DamageClass.Melee;
+			Projectile.timeLeft = 600; 
 			Projectile.ignoreWater = true;
-			Projectile.tileCollide = false;
-			Projectile.penetrate = -1;
+			Projectile.tileCollide = true;
+			Projectile.extraUpdates = 1;
+			AIType = ProjectileID.Bullet;
 		}
 
 		public override void AI()
 		{
-			if (++Projectile.frameCounter >= 1)
-			{
-				Projectile.frameCounter = 0;
-
-				if (++Projectile.frame >= Main.projFrames[Projectile.type])
-					Projectile.frame = 0;
-			}
-
-			Player player = Main.player[Projectile.owner];
-			if (Projectile.owner == Main.myPlayer && !player.controlUseItem)
-			{
-				Projectile.Kill();
-				return;
-			}
-			if (Projectile.owner == Main.myPlayer && player.controlUseItem)
-			{
-				Projectile.timeLeft = 2;
-			}
-
-			if (player.dead)
-			{
-				Projectile.Kill();
-				return;
-			}
-
-			Projectile.position.X = Main.player[Projectile.owner].Center.X - Projectile.width / 2;
-			Projectile.position.Y = Main.player[Projectile.owner].Center.Y - Projectile.height / 2;
-			Projectile.direction = player.direction;
-			Projectile.spriteDirection = Projectile.direction;
-			player.heldProj = Projectile.whoAmI;
-			player.itemTime = 2;
-			player.itemAnimation = 2;
-			player.reuseDelay = 10;
+			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(45f);
+			Projectile.velocity += 0.5f / Projectile.MaxUpdates * Vector2.Normalize(Projectile.velocity);
+			Projectile.localAI[1] = 1f;
 		}
 
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 60, Projectile.velocity.X * 0.5f,
+			Player player = Main.player[Projectile.owner];
+			player.AddBuff(ModContent.BuffType<Buffs.Buff.Empowered>(), 600);
+			int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 163, Projectile.velocity.X * 0.5f,
 				Projectile.velocity.Y * 0.2f, 60, default(Color), 2f);
 			Main.dust[dustId].noGravity = true;
-			int dustId3 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 60, Projectile.velocity.X * 0.5f,
+			int dustId3 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 163, Projectile.velocity.X * 0.5f,
 				Projectile.velocity.Y * 0.2f, 60, default(Color), 2f);
 			Main.dust[dustId3].noGravity = true;
 		}
@@ -87,7 +63,7 @@ namespace GMR.Projectiles.Melee
 			Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);
 			Vector2 origin2 = rectangle.Size() / 2f;
 
-			Color color26 = Color.Red;
+			Color color26 = Color.Green;
 
 			SpriteEffects spriteEffects = SpriteEffects.None;
 			if (Projectile.spriteDirection == -1)

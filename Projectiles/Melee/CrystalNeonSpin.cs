@@ -9,20 +9,19 @@ using Terraria.ModLoader;
 
 namespace GMR.Projectiles.Melee
 {
-	public class AlloybloodSwing : ModProjectile
+	public class CrystalNeonSpin : ModProjectile
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Alloyblood Slash");
+			DisplayName.SetDefault("Crystal Neon Blade");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
-			Main.projFrames[Projectile.type] = 9;
 		}
 
 		public override void SetDefaults()
 		{
-			Projectile.width = 320;
-			Projectile.height = 260;
+			Projectile.width = 284;
+			Projectile.height = 284;
 			Projectile.friendly = true;
 			Projectile.DamageType = DamageClass.Melee;
 			Projectile.ignoreWater = true;
@@ -32,14 +31,6 @@ namespace GMR.Projectiles.Melee
 
 		public override void AI()
 		{
-			if (++Projectile.frameCounter >= 1)
-			{
-				Projectile.frameCounter = 0;
-
-				if (++Projectile.frame >= Main.projFrames[Projectile.type])
-					Projectile.frame = 0;
-			}
-
 			Player player = Main.player[Projectile.owner];
 			if (Projectile.owner == Main.myPlayer && !player.controlUseItem)
 			{
@@ -57,6 +48,11 @@ namespace GMR.Projectiles.Melee
 				return;
 			}
 
+			if (++Projectile.localAI[0] == 120)
+			{
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), player.Center, new Vector2(Projectile.spriteDirection * 35f, 0f), ModContent.ProjectileType<Projectiles.Melee.CrystalNeonThrow>(), Projectile.damage / 2, Projectile.knockBack, Main.myPlayer);
+					Projectile.localAI[0] = 0;
+			}
 			Projectile.position.X = Main.player[Projectile.owner].Center.X - Projectile.width / 2;
 			Projectile.position.Y = Main.player[Projectile.owner].Center.Y - Projectile.height / 2;
 			Projectile.direction = player.direction;
@@ -65,7 +61,8 @@ namespace GMR.Projectiles.Melee
 			player.itemTime = 2;
 			player.itemAnimation = 2;
 			player.reuseDelay = 10;
-		}
+			Projectile.rotation += Projectile.spriteDirection * 0.45f;
+        }
 
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
@@ -87,23 +84,18 @@ namespace GMR.Projectiles.Melee
 			Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);
 			Vector2 origin2 = rectangle.Size() / 2f;
 
-			Color color26 = Color.Red;
-
 			SpriteEffects spriteEffects = SpriteEffects.None;
 			if (Projectile.spriteDirection == -1)
 				spriteEffects = SpriteEffects.FlipHorizontally;
 
 			for (float i = 0; i < ProjectileID.Sets.TrailCacheLength[Projectile.type]; i += 0.5f)
 			{
-				Color color27 = color26;
-				color27.A = 0;
-				color27 *= (float)(ProjectileID.Sets.TrailCacheLength[Projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[Projectile.type];
 				int max0 = (int)i - 1;//Math.Max((int)i - 1, 0);
 				if (max0 < 0)
 					continue;
 				Vector2 value4 = Vector2.Lerp(Projectile.oldPos[(int)i], Projectile.oldPos[max0], 1 - i % 1);
 				float num165 = MathHelper.Lerp(Projectile.oldRot[(int)i], Projectile.oldRot[max0], 1 - i % 1);
-				Main.EntitySpriteDraw(texture2D13, value4 + Projectile.Size / 2f - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, Projectile.scale * 2, spriteEffects, 0);
+				Main.EntitySpriteDraw(texture2D13, value4 + Projectile.Size / 2f - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), Color.HotPink, num165, origin2, Projectile.scale * 2, spriteEffects, 0);
 			}
 			return false;
 		}

@@ -9,20 +9,19 @@ using Terraria.ModLoader;
 
 namespace GMR.Projectiles.Melee
 {
-	public class AlloybloodSwing : ModProjectile
+	public class ArkBladeSpin : ModProjectile
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Alloyblood Slash");
+			DisplayName.SetDefault("Ark Blade");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
-			Main.projFrames[Projectile.type] = 9;
 		}
 
 		public override void SetDefaults()
 		{
-			Projectile.width = 320;
-			Projectile.height = 260;
+			Projectile.width = 350;
+			Projectile.height = 350;
 			Projectile.friendly = true;
 			Projectile.DamageType = DamageClass.Melee;
 			Projectile.ignoreWater = true;
@@ -32,14 +31,6 @@ namespace GMR.Projectiles.Melee
 
 		public override void AI()
 		{
-			if (++Projectile.frameCounter >= 1)
-			{
-				Projectile.frameCounter = 0;
-
-				if (++Projectile.frame >= Main.projFrames[Projectile.type])
-					Projectile.frame = 0;
-			}
-
 			Player player = Main.player[Projectile.owner];
 			if (Projectile.owner == Main.myPlayer && !player.controlUseItem)
 			{
@@ -57,15 +48,24 @@ namespace GMR.Projectiles.Melee
 				return;
 			}
 
-			Projectile.position.X = Main.player[Projectile.owner].Center.X - Projectile.width / 2;
-			Projectile.position.Y = Main.player[Projectile.owner].Center.Y - Projectile.height / 2;
+			if (++Projectile.localAI[0] > 120)
+			{
+				Projectile.position = Projectile.Center;
+				Projectile.Center = Main.MouseWorld;
+			}
+			else
+            {
+				Projectile.position.X = Main.player[Projectile.owner].Center.X - Projectile.width / 2;
+				Projectile.position.Y = Main.player[Projectile.owner].Center.Y - Projectile.height / 2;
+			}
 			Projectile.direction = player.direction;
 			Projectile.spriteDirection = Projectile.direction;
 			player.heldProj = Projectile.whoAmI;
 			player.itemTime = 2;
 			player.itemAnimation = 2;
 			player.reuseDelay = 10;
-		}
+			Projectile.rotation += Projectile.spriteDirection * 0.45f;
+        }
 
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{

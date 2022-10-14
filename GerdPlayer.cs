@@ -71,7 +71,10 @@ namespace GMR
 		public override void ModifyStartingInventory(IReadOnlyDictionary<string, List<Item>> itemsByMod, bool mediumCoreDeath)
 		{
 			Player player = Main.player[0];
-			player.QuickSpawnItem(Player.GetSource_FromThis(), ModContent.ItemType<Items.Accessories.MayDress>(), 1); //Should hopefully summon the accessory
+			if (Main.getGoodWorld)
+			{
+				player.QuickSpawnItem(Player.GetSource_FromThis(), ModContent.ItemType<Items.Weapons.Melee.GerdDagger>(), 1); //Should hopefully summon an item
+			}
 		}
 
 		public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter)
@@ -142,32 +145,11 @@ namespace GMR
 		{
 			Player player = Main.player[0];
 
-			if (DevPlush != null)
-			{
-				if (Main.rand.NextBool(5)) // 1 in 5 (20%)
-				{
-					float numberProjectiles = 3; //3 shots
-					float rotation = MathHelper.ToRadians(22);
-					position += Vector2.Normalize(velocity) * 5f;
-					for (int i = 0; i < numberProjectiles; i++)
-					{
-						Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * 2f;
-						Projectile.NewProjectile(Player.GetSource_Accessory(DevPlush), position, perturbedSpeed, type, (damage / 2) + (damage / 4), knockback, player.whoAmI);
-						Projectile.NewProjectile(Player.GetSource_Accessory(DevPlush), position, velocity, ModContent.ProjectileType<Projectiles.Ranged.JackClaw>(), damage, knockback, player.whoAmI);
-					}
-					return true; //Shoot vanilla projectiles
-				}
-				else
-				{
-					return true; //DO NOT CHANGE TO FALSE, This makes weapon shoot projectiles without this accessory on
-				}
-			}
-
-			if (AmalgamPlush != null)
+			if (item.damage > 0 && AmalgamPlush != null)
 			{
 				if (Main.rand.NextBool(3)) // 1 in 3 (33.333333333333333333333333333333333333333333333333333333%) (Funny)
 				{
-					float numberProjectiles = 7; //7 shots
+					float numberProjectiles = 5; //5 shots
 					float rotation = MathHelper.ToRadians(14);
 					position += Vector2.Normalize(velocity) * 5f;
 					for (int i = 0; i < numberProjectiles; i++)
@@ -195,8 +177,28 @@ namespace GMR
 					return true;
 				}
 			}
+			else if (DevPlush != null)
+			{
+				if (item.damage > 0 && Main.rand.NextBool(5)) // 1 in 5 (20%)
+				{
+					float numberProjectiles = 3; //3 shots
+					float rotation = MathHelper.ToRadians(22);
+					position += Vector2.Normalize(velocity) * 5f;
+					for (int i = 0; i < numberProjectiles; i++)
+					{
+						Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * 2f;
+						Projectile.NewProjectile(Player.GetSource_Accessory(DevPlush), position, perturbedSpeed, type, (damage / 2) + (damage / 4), knockback, player.whoAmI);
+						Projectile.NewProjectile(Player.GetSource_Accessory(DevPlush), position, velocity, ModContent.ProjectileType<Projectiles.Ranged.JackClaw>(), damage, knockback, player.whoAmI);
+					}
+					return true; //Shoot vanilla projectiles
+				}
+				else
+				{
+					return true; //DO NOT CHANGE TO FALSE, This makes weapon shoot projectiles without this accessory on
+				}
+			}
 
-			if ((JackExpert != null) && (type == ProjectileID.FireArrow))
+			if (item.damage > 0 && (JackExpert != null) && (type == ProjectileID.FireArrow))
 			{
 				float numberProjectiles = 3;
 				float rotation = MathHelper.ToRadians(5);
@@ -208,7 +210,7 @@ namespace GMR
 				}
 				return false;
 			}
-			else if ((JackExpert != null) && (type == ProjectileID.WoodenArrowFriendly))
+			else if (item.damage > 0 && (JackExpert != null) && (type == ProjectileID.WoodenArrowFriendly))
 			{
 				float numberProjectiles = 3;
 				float rotation = MathHelper.ToRadians(25);
