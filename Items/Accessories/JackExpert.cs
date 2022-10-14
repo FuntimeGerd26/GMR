@@ -9,6 +9,7 @@ using GMR;
 
 namespace GMR.Items.Accessories
 {
+	[AutoloadEquip(EquipType.HandsOn)]
 	public class JackExpert : ModItem
 	{
 		public override void SetStaticDefaults()

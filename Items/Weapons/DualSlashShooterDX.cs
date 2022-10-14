@@ -9,20 +9,21 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GMR.Items.Weapons
 {
-	public class DualSlashShooter : ModItem
+	public class DualSlashShooterDX : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("'A weapon in beta stage, handle it carefuly'");
+			DisplayName.SetDefault("Dual Slash Shooter DX");
+			Tooltip.SetDefault("'Testing Complete'");
 		}
 
 		public override void SetDefaults()
 		{
-			Item.width = 22;
+			Item.width = 24;
 			Item.height = 36;
-			Item.rare = 6;
 			Item.value = Item.sellPrice(silver: 125);
 			Item.useStyle = ItemUseStyleID.HoldUp;
+			Item.rare = 7;
 			Item.useTime = 20;
 			Item.useAnimation = 20;
 			Item.autoReuse = true;
@@ -32,18 +33,18 @@ namespace GMR.Items.Weapons
 		public override void AddRecipes()
 		{
 			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.HallowedBar, 18);
-			recipe.AddIngredient(ItemID.SoulofNight, 22);
-			recipe.AddIngredient(ItemID.SoulofMight, 18);
+			recipe.AddIngredient(null, "DualSlashShooter");
+			recipe.AddIngredient(ItemID.ChlorophyteBar, 24);
+			recipe.AddIngredient(ItemID.Ectoplasm, 7);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 
 			Recipe recipe2 = CreateRecipe();
-			recipe2.AddIngredient(null, "DualSlashCutter");
+			recipe2.AddIngredient(null, "DualSlashBlade");
 			recipe2.Register();
 
 			Recipe recipe3 = CreateRecipe();
-			recipe3.AddIngredient(null, "DualGunShooter");
+			recipe3.AddIngredient(null, "DualBlasterShooter");
 			recipe3.Register();
 		}
 	}

@@ -8,48 +8,42 @@ using Terraria.ModLoader;
 
 namespace GMR.Items.Weapons.Melee
 {
-	public class VoidSword : ModItem
+	public class SpazSword : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("Shoots projectiles which inflict Frostburn and Weak to enemies");
+			Tooltip.SetDefault("Hitting enemies grants the 'Empowered' buff for 5 seconds");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
 		public override void SetDefaults()
 		{
-			Item.width = 46;
-			Item.height = 48;
-			Item.rare = 5;
-			Item.useTime = 18;
-			Item.useAnimation = 18;
+			Item.width = 44;
+			Item.height = 54;
+			Item.rare = 2;
+			Item.useTime = 14;
+			Item.useAnimation = 14;
 			Item.useStyle = ItemUseStyleID.Swing;
-			Item.value = Item.sellPrice(silver: 70);
+			Item.value = Item.sellPrice(silver: 40);
 			Item.autoReuse = true;
 			Item.UseSound = SoundID.Item1;
 			Item.DamageType = DamageClass.Melee;
-			Item.damage = 44;
+			Item.damage = 12;
 			Item.crit = 4;
-			Item.knockBack = 3f;
-			Item.scale = 1.5f;
-			Item.shoot = ModContent.ProjectileType<Projectiles.Melee.VoidScythe>();
-			Item.shootSpeed = 6f;
+			Item.knockBack = 4f;
 		}
 
 		public override void OnHitNPC(Player player, NPC target, int damage, float knockback, bool crit)
 		{
-			// 60 frames = 1 second
-			target.AddBuff(BuffID.Frostburn, 900);
-			target.AddBuff(BuffID.Weak, 600);
+			player.AddBuff(ModContent.BuffType<Buffs.Buff.Empowered>(), 300);
 		}
 
 		public override void AddRecipes()
 		{
 			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(null, "Glaicey");
-			recipe.AddIngredient(ItemID.Bone, 40);
-			recipe.AddIngredient(ItemID.Hellstone, 25);
+			recipe.AddIngredient(ItemID.IceBlock, 15);
+			recipe.AddIngredient(ItemID.SnowBlock, 20);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}

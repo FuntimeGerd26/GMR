@@ -14,7 +14,7 @@ namespace GMR.Items.Accessories
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Amalgamion Plushie");
-			Tooltip.SetDefault("'7'\nIncreases invincibility frames by 4 seconds\nWeapons have a chance to shoot 7 projectiles and shoot an aditional special projectile\nIncreases ranged and magic damage by 14%\nConverts wooden and fire arrows turn into 3 Jack Shards");
+			Tooltip.SetDefault("'7'\nIncreases invincibility frames by 4 seconds\nWeapons have a chance to shoot 5 projectiles and shoot an aditional special projectile\nIncreases ranged and magic damage by 14%\nConverts wooden and fire arrows turn into 3 Jack Shards");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}

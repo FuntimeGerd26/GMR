@@ -46,7 +46,7 @@ namespace GMR.Items.Accessories
 		public const int DashDuration = 35; // Duration of the dash afterimage effect in frames
 
 		// The initial velocity.  10 velocity is about 37.5 tiles/second or 50 mph
-		public const float DashVelocity = 15f;
+		public const float DashVelocity = 25f;
 
 		// The direction the player has double tapped.  Defaults to -1 for no dash double tap
 		public int DashDir = -1;

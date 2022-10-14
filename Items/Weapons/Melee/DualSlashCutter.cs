@@ -1,11 +1,11 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
-using Terraria.GameContent.ItemDropRules;
+using Microsoft.Xna.Framework;
+using Terraria.DataStructures;
+using Terraria.GameContent.Creative;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace GMR.Items.Weapons.Melee
 {
@@ -13,7 +13,7 @@ namespace GMR.Items.Weapons.Melee
 	{
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("'Today is friday in california'\nIncreases health regen when hitting an enemy\nRight-click to switch to gun mode");
+			Tooltip.SetDefault("'Today is friday in california'\nGives various buffs when hitting an enemy\nInflicts Poisoned and Venom on enemies");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
@@ -44,14 +44,11 @@ namespace GMR.Items.Weapons.Melee
 			player.AddBuff(BuffID.RapidHealing, 180);
 		}
 
-		public override bool CanRightClick()
+		public override void AddRecipes()
 		{
-			return true;
-		}
-
-		public override void ModifyItemLoot(ItemLoot itemLoot)
-		{
-			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Ranged.DualGunShooter>(), 1));
+			Recipe recipe = CreateRecipe();
+			recipe.AddIngredient(null, "DualSlashShooter");
+			recipe.Register();
 		}
 	}
 }

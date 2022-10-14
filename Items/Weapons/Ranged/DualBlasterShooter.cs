@@ -1,5 +1,6 @@
 using Terraria;
 using Terraria.ID;
+using Terraria.Audio;
 using Terraria.ModLoader;
 using Terraria.GameContent;
 using Microsoft.Xna.Framework;
@@ -9,11 +10,11 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GMR.Items.Weapons.Ranged
 {
-	public class DualGunShooter : ModItem
+	public class DualBlasterShooter : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("'Shoot!'\nBullets home into enemies if there's one nearby");
+			Tooltip.SetDefault("'Blaster mode'\nBullets home into enemies if there's one nearby\nShoots a burst of bullets");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
@@ -22,21 +23,21 @@ namespace GMR.Items.Weapons.Ranged
 		{
 			Item.width = 48;
 			Item.height = 30;
-			Item.rare = 6;
-			Item.useTime = 18;
-			Item.useAnimation = 18;
-			Item.reuseDelay = 25;
+			Item.rare = 3;
+			Item.useTime = 7;
+			Item.useAnimation = 14;
+			Item.reuseDelay = 24;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.value = Item.sellPrice(silver: 125);
 			Item.autoReuse = true;
 			Item.UseSound = SoundID.Item41;
 			Item.DamageType = DamageClass.Ranged;
-			Item.damage = 60;
+			Item.damage = 75;
 			Item.crit = 4;
-			Item.knockBack = 4f;
+			Item.knockBack = 7f;
 			Item.noMelee = true;
 			Item.shoot = ModContent.ProjectileType<Projectiles.Ranged.DualShooterBullet>();
-			Item.shootSpeed = 16f;
+			Item.shootSpeed = 20f;
 			Item.useAmmo = AmmoID.Bullet;
 		}
 
@@ -45,13 +46,14 @@ namespace GMR.Items.Weapons.Ranged
 			if (type == ProjectileID.Bullet || type == ProjectileID.MeteorShot || type == ProjectileID.CrystalBullet || type == ProjectileID.CursedBullet || type == ProjectileID.IchorBullet || type == ProjectileID.ChlorophyteBullet || type == ProjectileID.BulletHighVelocity || type == ProjectileID.VenomBullet || type == ProjectileID.PartyBullet || type == ProjectileID.NanoBullet || type == ProjectileID.ExplosiveBullet || type == ProjectileID.GoldenBullet || type == ProjectileID.MoonlordBullet)
 			{
 				type = ModContent.ProjectileType<Projectiles.Ranged.DualShooterBullet>();
+				SoundEngine.PlaySound(SoundID.Item41, player.position);
 			}
 		}
 
 		public override void AddRecipes()
 		{
 			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(null, "DualSlashShooter");
+			recipe.AddIngredient(null, "DualSlashShooterDX");
 			recipe.Register();
 		}
 	}
