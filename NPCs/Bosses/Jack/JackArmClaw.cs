@@ -51,17 +51,12 @@ namespace GMR.NPCs.Bosses.Jack
             NPC.HitSound = SoundID.NPCHit4;
             NPC.DeathSound = SoundID.NPCDeath14;
             NPC.knockBackResist = 0f;
-            NPC.damage = 8;
+            NPC.damage = 6;
             NPC.aiStyle = -1;
             NPC.noTileCollide = true;
             NPC.noGravity = true;
             NPC.value = Item.buyPrice(gold: 0);
             NPC.npcSlots = 1f;
-        }
-
-        public override void ModifyNPCLoot(NPCLoot npcLoot)
-        {
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Ranged.JackRifle>(), 30));
         }
 
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
@@ -131,7 +126,7 @@ namespace GMR.NPCs.Bosses.Jack
             }
             else
             {
-                NPC.Center = Main.player[NPC.target].Center - 300 * Vector2.UnitX;
+                NPC.Center = Main.player[NPC.target].Center - 350 * Vector2.UnitX;
             }
             if (++NPC.ai[1] > 300) //Each 5 seconds run
             {
@@ -145,7 +140,7 @@ namespace GMR.NPCs.Bosses.Jack
                     }
                     else if (++NPC.ai[0] > 30) //2.5 seconds after start, shoot
                     {
-                        Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(15f, 0f), ModContent.ProjectileType<Projectiles.Bosses.JackArmClaw>(), NPC.damage, 1f, Main.myPlayer, NPC.whoAmI);
+                        Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(6f, 0f), ModContent.ProjectileType<Projectiles.Bosses.JackArmClaw>(), NPC.damage, 1f, Main.myPlayer, NPC.whoAmI);
                     }
                 }
                 else if (++NPC.ai[2] > 60) //Dust after 1 second from start

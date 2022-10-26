@@ -27,19 +27,6 @@ namespace GMR
 
 		public GMR()
 		{
-			if (ModLoader.TryGetMod("ROR2HealthBars", out var ror2HBs))
-			{
-				ror2HBs.Call("HPPool", new List<int>()
-				{
-					ModContent.NPCType<NPCs.Bosses.Jack.Jack>(),
-					ModContent.NPCType<NPCs.Bosses.Jack.JackArmGun>(),
-					ModContent.NPCType<NPCs.Bosses.Jack.JackArmGunFlip>(),
-					ModContent.NPCType<NPCs.Bosses.Jack.JackArmClaw>(),
-					ModContent.NPCType<NPCs.Bosses.Jack.JackArmClawFlip>()
-				});
-				ror2HBs.Call("CustomName", ModContent.NPCType<NPCs.Bosses.Jack.Jack>(), "Jack");
-				ror2HBs.Call("BossDesc", ModContent.NPCType<NPCs.Bosses.Jack.Jack>(), "The Wandering Machine");
-			}
 		}
 
 		public static GMR GetInstance()

@@ -18,7 +18,7 @@ namespace GMR.NPCs.Bosses.Jack
     [AutoloadBossHead()]
     public class Jack : ModNPC
     {
-        private int frame = 0;
+/*        private int frame = 0;
         private double counting;
 
         public static int MinionType()
@@ -285,6 +285,6 @@ namespace GMR.NPCs.Bosses.Jack
                 dust.noGravity = true;
                 dust.fadeIn = Main.rand.NextFloat(0.3f, 0.8f);
             }
-        }
+        }*/
     }
 }

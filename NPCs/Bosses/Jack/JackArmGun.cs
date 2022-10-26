@@ -51,7 +51,7 @@ namespace GMR.NPCs.Bosses.Jack
             NPC.HitSound = SoundID.NPCHit4;
             NPC.DeathSound = SoundID.NPCDeath14;
             NPC.knockBackResist = 0f;
-            NPC.damage = 5;
+            NPC.damage = 4;
             NPC.aiStyle = -1;
             NPC.noTileCollide = true;
             NPC.noGravity = true;
@@ -130,7 +130,7 @@ namespace GMR.NPCs.Bosses.Jack
             }
             else
             {
-                NPC.Center = Main.player[NPC.target].Center - 350 * Vector2.UnitX - 300 * Vector2.UnitY;
+                NPC.Center = Main.player[NPC.target].Center - 360 * Vector2.UnitX - 320 * Vector2.UnitY;
             }
             if (++NPC.ai[1] > 180) //Each 3 seconds run
             {
@@ -144,7 +144,7 @@ namespace GMR.NPCs.Bosses.Jack
                     }
                     else if (++NPC.ai[0] > 30) //2.5 seconds after start, shoot
                     {
-                        Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(15f, 10f), Main.rand.Next(new int[] { ModContent.ProjectileType<Projectiles.Bosses.AlloyCrate>(), ModContent.ProjectileType<Projectiles.Bosses.JackBlastBad>() }), NPC.damage, 1f, Main.myPlayer, NPC.whoAmI);
+                        Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(6f, 4f), Main.rand.Next(new int[] { ModContent.ProjectileType<Projectiles.Bosses.AlloyCrate>(), ModContent.ProjectileType<Projectiles.Bosses.JackBlastBad>() }), NPC.damage, 1f, Main.myPlayer, NPC.whoAmI);
                     }
                 }
                 else if (++NPC.ai[2] > 60) //Dust after 1 second from start

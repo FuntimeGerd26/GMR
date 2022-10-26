@@ -1,11 +1,12 @@
 <Gerd's Lab>
 An old mod that died to my horrible coding skills a year ago
+Now revived because i literally couldn't do anything non-modding related for too long
 
 Current Progress:
-- 1 Boss
 - 20+ Weapons
 - 4 Armors
 - Near 100 items
+- A bad boss (Probably won't change)
 
 For suggestions or questions join the discord server
 Discord: https://discord.gg/mSbCKZ37FB

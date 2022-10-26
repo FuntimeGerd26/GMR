@@ -20,6 +20,9 @@ namespace GMR
 {
 	public partial class GerdPlayer : ModPlayer
 	{
+		public int originalDefense;
+		public bool FirstTick;
+
 		public Item JackExpert;
 		public Item DevPlush;
 		public bool DevInmune;
@@ -31,6 +34,8 @@ namespace GMR
 		public bool BLBook;
 		public bool MayDress;
 		public Item Halu;
+		public bool Glimmering;
+		public bool Thoughtful;
 
 		public override void OnEnterWorld(Player player)
 		{
@@ -51,6 +56,8 @@ namespace GMR
 			BLBook = false;
 			MayDress = false;
 			Halu = null;
+			Glimmering = false;
+			Thoughtful = false;
 		}
 
 		public override void UpdateDead()
@@ -66,6 +73,8 @@ namespace GMR
 			BLBook = false;
 			MayDress = false;
 			Halu = null;
+			Glimmering = false;
+			Thoughtful = false;
 		}
 
 		public override void ModifyStartingInventory(IReadOnlyDictionary<string, List<Item>> itemsByMod, bool mediumCoreDeath)
@@ -75,6 +84,33 @@ namespace GMR
 			{
 				player.QuickSpawnItem(Player.GetSource_FromThis(), ModContent.ItemType<Items.Weapons.Melee.GerdDagger>(), 1); //Should hopefully summon an item
 			}
+		}
+
+		public override void UpdateBadLifeRegen()
+		{
+			void DamageOverTime(int badLifeRegen, bool affectLifeRegenCount = false)
+			{
+				if (Player.lifeRegen > 0)
+					Player.lifeRegen = 0;
+
+				if (affectLifeRegenCount && Player.lifeRegenCount > 0)
+					Player.lifeRegen = 0;
+
+				Player.lifeRegenTime = 0;
+				Player.lifeRegen -= badLifeRegen;
+			}
+
+			if (Glimmering)
+				DamageOverTime(5, true);
+
+			if (!FirstTick)
+			{
+				originalDefense = Player.statDefense;
+				FirstTick = true;
+			}
+
+			if (Thoughtful)
+				Player.statDefense += -14;
 		}
 
 		public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter)
