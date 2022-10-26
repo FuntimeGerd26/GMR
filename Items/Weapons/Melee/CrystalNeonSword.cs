@@ -21,7 +21,7 @@ namespace GMR.Items.Weapons.Melee
 		{
 			Item.width = 44;
 			Item.height = 84;
-			Item.rare = 4;
+			Item.rare = 3;
 			Item.useTime = 2;
 			Item.useAnimation = 2;
 			Item.reuseDelay = 12;
@@ -30,13 +30,24 @@ namespace GMR.Items.Weapons.Melee
 			Item.autoReuse = true;
 			Item.UseSound = SoundID.Item1;
 			Item.DamageType = DamageClass.Melee;
-			Item.damage = 60;
+			Item.damage = 50;
 			Item.crit = 4;
 			Item.knockBack = 3f;
 			Item.noMelee = true;
 			Item.noUseGraphic = true;
 			Item.shoot = ModContent.ProjectileType<Projectiles.Melee.CrystalNeonSpin>();
 			Item.shootSpeed = 1f;
+		}
+
+		public override void AddRecipes()
+		{
+			Recipe recipe = CreateRecipe();
+			recipe.AddIngredient(null, "NeonBlade");
+			recipe.AddIngredient(ItemID.SoulofLight, 18);
+			recipe.AddIngredient(ItemID.Pearlwood, 30);
+			recipe.AddRecipeGroup("GMR:AnyGem", 4);
+			recipe.AddTile(TileID.MythrilAnvil);
+			recipe.Register();
 		}
 	}
 }

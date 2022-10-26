@@ -30,7 +30,7 @@ namespace GMR.Items.Misc.BossSummon
 			Item.consumable = true;
 		}
 
-		public override bool CanUseItem(Player player)
+/*		public override bool CanUseItem(Player player)
 		{
 			// If you decide to use the below UseItem code, you have to include !NPC.AnyNPCs(id), as this is also the check the server does when receiving MessageID.SpawnBoss.
 			// If you want more constraints for the summon item, combine them as boolean expressions:
@@ -79,6 +79,6 @@ namespace GMR.Items.Misc.BossSummon
 			recipe2.AddIngredient(ItemID.TungstenBar, 20);
 			recipe2.AddTile(TileID.Anvils);
 			recipe2.Register();
-		}
+		}*/
 	}
 }

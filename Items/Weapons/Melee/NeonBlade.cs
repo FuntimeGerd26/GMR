@@ -12,7 +12,7 @@ namespace GMR.Items.Weapons.Melee
 	{
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("While hitting enemies will create mines which last for 10 seconds\n'1000 degrees knife'");
+			Tooltip.SetDefault("Hitting an enemy will create an orb that will chase enemies after half seconds\n'1000 degrees knife'");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
@@ -21,7 +21,7 @@ namespace GMR.Items.Weapons.Melee
 		{
 			Item.width = 46;
 			Item.height = 48;
-			Item.rare = 5;
+			Item.rare = 4;
 			Item.useTime = 16;
 			Item.useAnimation = 16;
 			Item.useStyle = ItemUseStyleID.Swing;
@@ -29,10 +29,9 @@ namespace GMR.Items.Weapons.Melee
 			Item.autoReuse = true;
 			Item.UseSound = SoundID.Item1;
 			Item.DamageType = DamageClass.Melee;
-			Item.damage = 44;
+			Item.damage = 25;
 			Item.crit = 4;
 			Item.knockBack = 3f;
-			Item.scale = 1.5f;
 		}
 
 		public override void MeleeEffects(Player player, Rectangle hitbox)
@@ -45,19 +44,39 @@ namespace GMR.Items.Weapons.Melee
 
 		public override void OnHitNPC(Player player, NPC target, int damage, float knockback, bool crit)
 		{
-			Projectile.NewProjectile(player.GetSource_FromThis(), player.Center, player.velocity * 0, ModContent.ProjectileType<Projectiles.NeonMine>(), Item.damage, Item.knockBack, Main.myPlayer);
-			target.AddBuff(BuffID.OnFire, 6000);
+			Projectile.NewProjectile(player.GetSource_FromThis(), player.Center, new Vector2(player.direction * 3f, 0f), ModContent.ProjectileType<Projectiles.NeonOrb>(), Item.damage, Item.knockBack, Main.myPlayer);
+			target.AddBuff(BuffID.OnFire, 3000);
 		}
 
 		public override void AddRecipes()
 		{
 			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(null, "VoidSword");
-			recipe.AddIngredient(ItemID.OrichalcumBar, 18);
-			recipe.AddIngredient(ItemID.SoulofSight, 14);
-			recipe.AddIngredient(ItemID.Ruby, 7);
+			recipe.AddIngredient(ItemID.GoldBar, 18);
+			recipe.AddIngredient(ItemID.CrimstoneBlock, 28);
+			recipe.AddIngredient(ItemID.Ruby, 4);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
+
+			Recipe recipe2 = CreateRecipe();
+			recipe2.AddIngredient(ItemID.GoldBar, 18);
+			recipe2.AddIngredient(ItemID.EbonstoneBlock, 28);
+			recipe2.AddIngredient(ItemID.Ruby, 4);
+			recipe2.AddTile(TileID.Anvils);
+			recipe2.Register();
+
+			Recipe recipe3 = CreateRecipe();
+			recipe3.AddIngredient(ItemID.PlatinumBar, 18);
+			recipe3.AddIngredient(ItemID.CrimstoneBlock, 28);
+			recipe3.AddIngredient(ItemID.Ruby, 4);
+			recipe3.AddTile(TileID.Anvils);
+			recipe3.Register();
+
+			Recipe recipe4 = CreateRecipe();
+			recipe4.AddIngredient(ItemID.PlatinumBar, 18);
+			recipe4.AddIngredient(ItemID.EbonstoneBlock, 28);
+			recipe4.AddIngredient(ItemID.Ruby, 4);
+			recipe4.AddTile(TileID.Anvils);
+			recipe4.Register();
 		}
 	}
 }

@@ -14,7 +14,7 @@ namespace GMR.Items.Weapons.Magic
 		{
 			DisplayName.SetDefault("Masked Plague's Staff");
 			Tooltip.SetDefault("Shoots 3 plague bolts that inflict poison");
-
+			Item.staff[Item.type] = true;
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
@@ -25,16 +25,16 @@ namespace GMR.Items.Weapons.Magic
 			Item.rare = 3;
 			Item.useTime = 18;
 			Item.useAnimation = 18;
-			Item.useStyle = ItemUseStyleID.HoldUp;
+			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.value = Item.sellPrice(silver: 75);
 			Item.autoReuse = true;
-			Item.UseSound = SoundID.Item43; //SoundID.Item9 too
+			Item.UseSound = SoundID.Item43;
 			Item.DamageType = DamageClass.Magic;
 			Item.damage = 16;
 			Item.crit = 4;
 			Item.knockBack = 6f;
 			Item.noMelee = true;
-			Item.shoot = ModContent.ProjectileType<Projectiles.Magic.MaskedPlagueClaw>();
+			Item.shoot = ModContent.ProjectileType<Projectiles.Magic.PlagueBolt>();
 			Item.shootSpeed = 35f;
 			Item.mana = 5;
 		}

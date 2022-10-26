@@ -20,8 +20,8 @@ namespace GMR.Items.Weapons.Melee
 
 		public override void SetDefaults()
 		{
-			Item.width = 60;
-			Item.height = 58;
+			Item.width = 66;
+			Item.height = 74;
 			Item.rare = 7;
 			Item.useTime = 14;
 			Item.useAnimation = 14;
