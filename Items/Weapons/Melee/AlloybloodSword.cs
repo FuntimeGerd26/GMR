@@ -1,10 +1,12 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.GameContent.Creative;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.GameContent.Creative;
 
 namespace GMR.Items.Weapons.Melee
 {
@@ -12,7 +14,7 @@ namespace GMR.Items.Weapons.Melee
 	{
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("Hitting enemies increases size of the projectile");
+			Tooltip.SetDefault("Throws a sword which chases your cursor");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
@@ -32,12 +34,31 @@ namespace GMR.Items.Weapons.Melee
 			Item.DamageType = DamageClass.Melee;
 			Item.damage = 50;
 			Item.crit = 50;
-			Item.knockBack = 1f;
+			Item.knockBack = 0f;
 			Item.noMelee = true;
 			Item.noUseGraphic = true;
 			Item.useTurn = true;
-			Item.shoot = ModContent.ProjectileType<Projectiles.Melee.AlloybloodSwing>();
-			Item.shootSpeed = 1f;
+			Item.shoot = ModContent.ProjectileType<Projectiles.Melee.AlloybloodSpin>();
+			Item.shootSpeed = 6f;
+		}
+
+		public override void AddRecipes()
+		{
+			Recipe recipe = CreateRecipe();
+			recipe.AddIngredient(null, "AluminiumSword");
+			recipe.AddIngredient(null, "AlloySword");
+			recipe.AddIngredient(ItemID.OrichalcumBar, 12);
+			recipe.AddIngredient(null, "UpgradeCrystal", 50);
+			recipe.AddTile(TileID.Anvils);
+			recipe.Register();
+
+			Recipe recipe2 = CreateRecipe();
+			recipe2.AddIngredient(null, "AluminiumSword");
+			recipe2.AddIngredient(null, "AlloySword");
+			recipe2.AddIngredient(ItemID.MythrilBar, 12);
+			recipe2.AddIngredient(null, "UpgradeCrystal", 50);
+			recipe2.AddTile(TileID.Anvils);
+			recipe2.Register();
 		}
 	}
 }

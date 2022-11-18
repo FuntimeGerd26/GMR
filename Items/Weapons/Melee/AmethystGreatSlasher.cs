@@ -26,7 +26,7 @@ namespace GMR.Items.Weapons.Melee
 			Item.useTime = 16;
 			Item.useAnimation = 16;
 			Item.useStyle = ItemUseStyleID.Swing;
-			Item.value = Item.sellPrice(silver: 50);
+			Item.value = Item.sellPrice(silver: 120);
 			Item.autoReuse = true;
 			Item.UseSound = SoundID.Item1;
 			Item.DamageType = DamageClass.Melee;

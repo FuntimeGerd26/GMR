@@ -8,11 +8,11 @@ using Terraria.ModLoader;
 
 namespace GMR.Items.Weapons.Melee
 {
-	public class SpazSword : ModItem
+	public class AluminiumSword : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("Hitting enemies grants the 'Empowered' buff for 5 seconds");
+			Tooltip.SetDefault("'Anything, but it...'");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
@@ -21,7 +21,7 @@ namespace GMR.Items.Weapons.Melee
 		{
 			Item.width = 44;
 			Item.height = 54;
-			Item.rare = 2;
+			Item.rare = 1;
 			Item.useTime = 14;
 			Item.useAnimation = 14;
 			Item.useStyle = ItemUseStyleID.Swing;
@@ -29,29 +29,26 @@ namespace GMR.Items.Weapons.Melee
 			Item.autoReuse = true;
 			Item.UseSound = SoundID.Item1;
 			Item.DamageType = DamageClass.Melee;
-			Item.damage = 12;
+			Item.damage = 15;
 			Item.crit = 4;
-			Item.knockBack = 4f;
-		}
-
-		public override void OnHitNPC(Player player, NPC target, int damage, float knockback, bool crit)
-		{
-			player.AddBuff(ModContent.BuffType<Buffs.Buff.Empowered>(), 300);
+			Item.knockBack = 3f;
 		}
 
 		public override void AddRecipes()
 		{
 			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.TungstenBar, 18);
+			recipe.AddIngredient(ItemID.CopperBar, 18);
+			recipe.AddIngredient(ItemID.Glass, 20);
 			recipe.AddIngredient(ItemID.FallenStar, 8);
-			recipe.AddIngredient(null, "GerdDagger");
+			recipe.AddIngredient(null, "UpgradeCrystal", 20);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 
 			Recipe recipe2 = CreateRecipe();
-			recipe2.AddIngredient(ItemID.SilverBar, 18);
+			recipe2.AddIngredient(ItemID.TinBar, 18);
+			recipe2.AddIngredient(ItemID.Glass, 20);
 			recipe2.AddIngredient(ItemID.FallenStar, 8);
-			recipe2.AddIngredient(null, "GerdDagger");
+			recipe2.AddIngredient(null, "UpgradeCrystal", 20);
 			recipe2.AddTile(TileID.Anvils);
 			recipe2.Register();
 		}

@@ -13,7 +13,7 @@ namespace GMR.Items.Weapons.Melee
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Alloy Metal Sword");
-			Tooltip.SetDefault("Right-click to throw a dagger that can randomly multiplicate when hitting an enemy");
+			Tooltip.SetDefault($"[i:{ModContent.ItemType<UI.ItemEffectIcon>()}] Right-click to throw a dagger that can randomly multiplicate when hitting an enemy");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
@@ -78,6 +78,7 @@ namespace GMR.Items.Weapons.Melee
 			recipe.AddIngredient(null, "GerdOldSword");
 			recipe.AddIngredient(null, "AlloyDagger");
 			recipe.AddIngredient(ItemID.HellstoneBar, 10);
+			recipe.AddIngredient(null, "UpgradeCrystal", 40);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}

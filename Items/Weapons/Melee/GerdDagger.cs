@@ -46,6 +46,7 @@ namespace GMR.Items.Weapons.Melee
 			recipe.AddIngredient(ItemID.Wood, 15);
 			recipe.AddIngredient(ItemID.IronBar, 2);
 			recipe.AddRecipeGroup("GMR:AnyGem", 4);
+			recipe.AddIngredient(null, "UpgradeCrystal", 20);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 
@@ -53,6 +54,7 @@ namespace GMR.Items.Weapons.Melee
 			recipe2.AddIngredient(ItemID.Wood, 15);
 			recipe2.AddIngredient(ItemID.LeadBar, 2);
 			recipe2.AddRecipeGroup("GMR:AnyGem", 4);
+			recipe2.AddIngredient(null, "UpgradeCrystal", 20);
 			recipe2.AddTile(TileID.Anvils);
 			recipe2.Register();
 		}

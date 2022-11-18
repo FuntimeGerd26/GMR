@@ -25,7 +25,7 @@ namespace GMR.Items.Weapons.Melee
 			Item.useTime = 50;
 			Item.useAnimation = 50;
 			Item.useStyle = ItemUseStyleID.Swing;
-			Item.value = Item.sellPrice(silver: 30);
+			Item.value = Item.sellPrice(silver: 130);
 			Item.autoReuse = true;
 			Item.noUseGraphic = true;
 			Item.noMelee = true;
@@ -42,13 +42,17 @@ namespace GMR.Items.Weapons.Melee
 		{
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(ItemID.TitaniumBar, 18);
+			recipe.AddIngredient(ItemID.SoulofFright, 28);
 			recipe.AddIngredient(null, "AlloyBox", 2);
+			recipe.AddIngredient(null, "BossUpgradeCrystal", 4);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 
 			Recipe recipe2 = CreateRecipe();
 			recipe2.AddIngredient(ItemID.AdamantiteBar, 18);
+			recipe2.AddIngredient(ItemID.SoulofFright, 28);
 			recipe2.AddIngredient(null, "AlloyBox", 2);
+			recipe2.AddIngredient(null, "BossUpgradeCrystal", 4);
 			recipe2.AddTile(TileID.MythrilAnvil);
 			recipe2.Register();
 		}

@@ -13,7 +13,7 @@ namespace GMR.Items.Weapons.Melee
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Masked Plague's Sword");
-			Tooltip.SetDefault("Right-click to sting your enemies");
+			Tooltip.SetDefault($"[i:{ModContent.ItemType<UI.ItemEffectIcon>()}] Right-click to use as a spear that shoots extra projectiles");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}

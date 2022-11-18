@@ -12,7 +12,7 @@ namespace GMR.Items.Weapons.Melee
 	{
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("Hitting an enemy will create an orb that will chase enemies after half seconds\n'1000 degrees knife'");
+			Tooltip.SetDefault("Hitting an enemy will create an orb that will chase enemies after half second\n'1000 degrees knife'");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
@@ -44,7 +44,7 @@ namespace GMR.Items.Weapons.Melee
 
 		public override void OnHitNPC(Player player, NPC target, int damage, float knockback, bool crit)
 		{
-			Projectile.NewProjectile(player.GetSource_FromThis(), player.Center, new Vector2(player.direction * 3f, 0f), ModContent.ProjectileType<Projectiles.NeonOrb>(), Item.damage, Item.knockBack, Main.myPlayer);
+			Projectile.NewProjectile(player.GetSource_FromThis(), player.Center, new Vector2(player.direction * -3f, 0f), ModContent.ProjectileType<Projectiles.NeonOrb>(), Item.damage, Item.knockBack, Main.myPlayer);
 			target.AddBuff(BuffID.OnFire, 3000);
 		}
 
@@ -54,6 +54,7 @@ namespace GMR.Items.Weapons.Melee
 			recipe.AddIngredient(ItemID.GoldBar, 18);
 			recipe.AddIngredient(ItemID.CrimstoneBlock, 28);
 			recipe.AddIngredient(ItemID.Ruby, 4);
+			recipe.AddIngredient(null, "UpgradeCrystal", 40);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 
@@ -61,6 +62,7 @@ namespace GMR.Items.Weapons.Melee
 			recipe2.AddIngredient(ItemID.GoldBar, 18);
 			recipe2.AddIngredient(ItemID.EbonstoneBlock, 28);
 			recipe2.AddIngredient(ItemID.Ruby, 4);
+			recipe2.AddIngredient(null, "UpgradeCrystal", 40);
 			recipe2.AddTile(TileID.Anvils);
 			recipe2.Register();
 
@@ -68,6 +70,7 @@ namespace GMR.Items.Weapons.Melee
 			recipe3.AddIngredient(ItemID.PlatinumBar, 18);
 			recipe3.AddIngredient(ItemID.CrimstoneBlock, 28);
 			recipe3.AddIngredient(ItemID.Ruby, 4);
+			recipe3.AddIngredient(null, "UpgradeCrystal", 40);
 			recipe3.AddTile(TileID.Anvils);
 			recipe3.Register();
 
@@ -75,6 +78,7 @@ namespace GMR.Items.Weapons.Melee
 			recipe4.AddIngredient(ItemID.PlatinumBar, 18);
 			recipe4.AddIngredient(ItemID.EbonstoneBlock, 28);
 			recipe4.AddIngredient(ItemID.Ruby, 4);
+			recipe4.AddIngredient(null, "UpgradeCrystal", 40);
 			recipe4.AddTile(TileID.Anvils);
 			recipe4.Register();
 		}

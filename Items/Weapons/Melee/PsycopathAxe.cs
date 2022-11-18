@@ -30,7 +30,7 @@ namespace GMR.Items.Weapons.Melee
 			Item.useTime = 120;
 			Item.useAnimation = 120;
 			Item.useStyle = ItemUseStyleID.Swing;
-			Item.value = Item.sellPrice(silver: 100);
+			Item.value = Item.sellPrice(silver: 150);
 			Item.autoReuse = true;
 			Item.noUseGraphic = true;
 			Item.noMelee = true;

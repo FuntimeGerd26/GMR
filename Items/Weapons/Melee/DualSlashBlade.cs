@@ -13,7 +13,7 @@ namespace GMR.Items.Weapons.Melee
 	{
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("'Blade mode'\nHitting an enemy gives the player 'Dual Cutting Edge' buff for 3 seconds\nRight-click to throw the sword as a boomerang");
+			Tooltip.SetDefault($"'Blade mode'\nHitting an enemy gives the player 'Dual Cutting Edge' buff for 3 seconds\n[i:{ModContent.ItemType<UI.ItemEffectIcon>()}] Right-click to throw the sword as a boomerang");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1; //Count of items to research
 		}

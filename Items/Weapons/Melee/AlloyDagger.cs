@@ -45,6 +45,7 @@ namespace GMR.Items.Weapons.Melee
 			recipe.AddIngredient(null, "GerdDagger");
 			recipe.AddIngredient(null, "AlloyBox");
 			recipe.AddIngredient(ItemID.GoldBar, 8);
+			recipe.AddIngredient(null, "UpgradeCrystal", 30);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 
@@ -52,6 +53,7 @@ namespace GMR.Items.Weapons.Melee
 			recipe2.AddIngredient(null, "GerdDagger");
 			recipe2.AddIngredient(null, "AlloyBox");
 			recipe2.AddIngredient(ItemID.PlatinumBar, 8);
+			recipe2.AddIngredient(null, "UpgradeCrystal", 30);
 			recipe2.AddTile(TileID.Anvils);
 			recipe2.Register();
 		}

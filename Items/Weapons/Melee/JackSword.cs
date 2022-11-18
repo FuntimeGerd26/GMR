@@ -8,48 +8,47 @@ using Terraria.ModLoader;
 
 namespace GMR.Items.Weapons.Melee
 {
-	public class AmalgamatedSword : ModItem
+	public class JackSword : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("'Enemies will start doubting whenever to attack you or not, loosing their focus'\nInflicts thoughtful to enemies");
+			DisplayName.SetDefault("Infra-Red Sword");
+			Tooltip.SetDefault("''\nInflicts Partially Crystalized debuff to enemies");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
 		public override void SetDefaults()
 		{
-			Item.width = 66;
-			Item.height = 70;
-			Item.rare = 6;
-			Item.useTime = 20;
-			Item.useAnimation = 20;
+			Item.width = 62;
+			Item.height = 76;
+			Item.rare = 5;
+			Item.useTime = 24;
+			Item.useAnimation = 24;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.value = Item.sellPrice(silver: 270);
 			Item.autoReuse = true;
 			Item.UseSound = SoundID.Item1;
 			Item.DamageType = DamageClass.Melee;
-			Item.damage = 70;
+			Item.damage = 60;
 			Item.crit = 4;
-			Item.knockBack = 6f;
-			Item.scale = 2f;
-			Item.shoot = ModContent.ProjectileType<Projectiles.Melee.AmalgamatedSword>();
-			Item.shootSpeed = 6f;
+			Item.knockBack = 3f;
+			Item.shoot = ModContent.ProjectileType<Projectiles.Melee.JackSwordScythe>();
+			Item.shootSpeed = 12f;
 		}
 
 		public override void OnHitNPC(Player player, NPC target, int damage, float knockback, bool crit)
 		{
-			// 60 frames = 1 second
-			target.AddBuff(BuffID.Frostburn, 900);
-			target.AddBuff(BuffID.Weak, 600);
+			target.AddBuff(ModContent.BuffType<Buffs.Debuffs.PartiallyCrystallized>(), 120);
 		}
 
 		public override void AddRecipes()
 		{
 			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(null, "SpazSword");
-			recipe.AddIngredient(null, "NeonBlade");
-			recipe.AddIngredient(null, "VoidSword");
+			recipe.AddIngredient(null, "GerdOldSword");
+			recipe.AddIngredient(ItemID.SoulofNight, 28);
+			recipe.AddRecipeGroup("GMR:AnyGem", 8);
+			recipe.AddIngredient(null, "UpgradeCrystal", 48);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 		}
