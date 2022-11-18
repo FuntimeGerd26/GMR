@@ -9,31 +9,29 @@ using GMR;
 
 namespace GMR.Items.Accessories
 {
-	[AutoloadEquip(EquipType.HandsOn)]
-	public class JackExpert : ModItem
+	public class AluminiumCharm : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Jack Emblem");
-			Tooltip.SetDefault("Increases ranged damage by 5%\nConverts wooden arrows turn into evenly spread 3 Jack Shards, Fire arrows decrease the spread");
+			DisplayName.SetDefault("Aluminium Charm");
+			Tooltip.SetDefault("Ranged weapons will shoot a projectile that will home into enemies\nIncreases ranged crit chance by 3%");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
 		public override void SetDefaults()
 		{
-			Item.width = 38;
-			Item.height = 52;
-			Item.value = Item.sellPrice(silver: 100);
-			Item.rare = 4;
+			Item.width = 48;
+			Item.height = 38;
+			Item.value = Item.sellPrice(silver: 80);
+			Item.rare = 2;
 			Item.accessory = true;
-			Item.expert = true;
 		}
 
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			player.GetDamage(DamageClass.Ranged) += 0.5f;
-			player.GPlayer().JackExpert = Item;
+			player.GPlayer().AluminiumCharm = Item;
+			player.GetCritChance(DamageClass.Ranged) += 3f;
 		}
 	}
 }

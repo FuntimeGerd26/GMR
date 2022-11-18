@@ -21,7 +21,6 @@ namespace GMR.Items.Vanity
 			Item.rare = ItemRarityID.Blue;
 			Item.value = Item.sellPrice(silver: 30);
 			Item.vanity = true;
-			Item.maxStack = 1;
 		}
 	}
 }

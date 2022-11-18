@@ -24,9 +24,8 @@ namespace GMR.Items.Accessories
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Violet's Dress");
-			Tooltip.SetDefault("'It's so sad'\nIncreases invincibility frames by 2 seconds\nWeapons have a chance to shoot 3 projectile that deal 75% damage and shoot an aditional special projectile" +
-				"\nIncreases attack speed and damage taken by 10%" +
-                "\nSummons 4 orbiting swords around you");
+			Tooltip.SetDefault($"'It's so sad'\nIncreases invincibility frames by 2 seconds\n[i:{ModContent.ItemType<Items.Accessories.DevPlushie>()}] Weapons have a chance to shoot 3 projectile that deal 75% damage and shoot an aditional special projectile" +
+				$"\nSummons 4 orbiting saws around you");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}

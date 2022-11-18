@@ -5,21 +5,21 @@ using Terraria.ModLoader;
 
 namespace GMR.Items.Vanity
 {
-	[AutoloadEquip(EquipType.Legs)]
-	public class SpazThighs : ModItem
+	[AutoloadEquip(EquipType.Body)]
+	public class IceyBody : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Spazmatanium's Thighs");
+			DisplayName.SetDefault("Ice Princess Dress");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
 		public override void SetDefaults()
 		{
-			Item.width = 22;
-			Item.height = 16;
+			Item.width = 32;
+			Item.height = 22;
 			Item.rare = ItemRarityID.Blue;
-			Item.value = Item.sellPrice(silver: 30);
+			Item.value = Item.sellPrice(silver: 75);
 			Item.vanity = true;
 		}
 	}

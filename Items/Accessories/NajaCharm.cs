@@ -9,31 +9,28 @@ using GMR;
 
 namespace GMR.Items.Accessories
 {
-	[AutoloadEquip(EquipType.HandsOn)]
-	public class JackExpert : ModItem
+	public class NajaCharm : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Jack Emblem");
-			Tooltip.SetDefault("Increases ranged damage by 5%\nConverts wooden arrows turn into evenly spread 3 Jack Shards, Fire arrows decrease the spread");
+			DisplayName.SetDefault("Volcano Charm");
+			Tooltip.SetDefault("Using any weapon that's not ranged will shoot a fireball that explodes dealing damage on a large area");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
 		public override void SetDefaults()
 		{
-			Item.width = 38;
-			Item.height = 52;
-			Item.value = Item.sellPrice(silver: 100);
-			Item.rare = 4;
+			Item.width = 26;
+			Item.height = 28;
+			Item.value = Item.sellPrice(silver: 145);
+			Item.rare = 5;
 			Item.accessory = true;
-			Item.expert = true;
 		}
 
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			player.GetDamage(DamageClass.Ranged) += 0.5f;
-			player.GPlayer().JackExpert = Item;
+			player.GPlayer().NajaCharm = Item;
 		}
 	}
 }
