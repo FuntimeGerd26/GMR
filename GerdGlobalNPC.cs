@@ -20,15 +20,31 @@ namespace GMR
 
         public bool Glimmering;
         public bool Thoughtful;
+        public bool PartialCrystal;
 
         public override void ResetEffects(NPC npc)
         {
             Glimmering = false;
             Thoughtful = false;
+            PartialCrystal = false;
         }
 
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
         {
+
+            if(npc.boss)
+            {
+                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Misc.Materials.BossUpgradeCrystal>()));
+                if (Main.hardMode)
+                {
+                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Misc.Materials.HardmodeUpgradeCrystal>()));
+                }
+            }
+            else
+            {
+               npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Misc.Materials.UpgradeCrystal>(), 3));
+            }
+
             switch (npc.type)
             {
                 case 48: //Harpy
@@ -165,6 +181,28 @@ namespace GMR
                 if (damage > 5 || damage < 5)
                     damage = 5;
             }
+
+            if (PartialCrystal)
+            {
+                if (npc.lifeRegen > 0)
+                    npc.lifeRegen = 0;
+                npc.lifeRegen -= 30;
+                if (Main.hardMode && npc.boss)
+                {
+                    if (damage > 200 || damage < 200)
+                        damage = 200;
+                }
+                else if (npc.boss)
+                {
+                    if (damage > 40 || damage < 40)
+                        damage = 40;
+                }
+                else
+                {
+                    if (damage > npc.lifeMax / 40 || damage < npc.lifeMax / 40)
+                        damage = npc.lifeMax / 40;
+                }
+            }
         }
 
         public override void DrawEffects(NPC npc, ref Color drawColor)
@@ -178,13 +216,29 @@ namespace GMR
                     Main.dust[d].velocity *= 2f;
                 }
             }
+
+            if (PartialCrystal)
+            {
+                if (Main.rand.NextBool(7))
+                {
+                    int d = Dust.NewDust(npc.position, npc.width, npc.height, 60, npc.velocity.X * 0.5f, npc.velocity.Y * 0.5f, 0, Color.White, 2f);
+                    Main.dust[d].noGravity = true;
+                    Main.dust[d].velocity *= 3f;
+                }
+            }
         }
 
         public override Color? GetAlpha(NPC npc, Color drawColor)
         {
             if (Thoughtful)
             {
-                drawColor = Color.LightBlue;
+                drawColor = Color.Cyan;
+                return drawColor;
+            }
+
+            if (PartialCrystal)
+            {
+                drawColor = Color.Red;
                 return drawColor;
             }
 

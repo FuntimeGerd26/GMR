@@ -1,6 +1,6 @@
-displayName = [c/752841:Gerd's] [c/505967:Lab] [c/FFB2E0:The funny is gone]
+displayName = [c/752841:Gerd's] [c/505967:Lab]
 author = Mr.Gerd26
-version = 1.0
+version = 1.0.1.2
 includeSource = true
 includePDB = true
-homepage = https://discord.gg/mSbCKZ37FB
+homepage = https://discord.gg/b7UpgT8Fn7

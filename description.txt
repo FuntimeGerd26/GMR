@@ -1,13 +1,10 @@
 [c/D500EA:<Gerd's] [c/4CBAB7:Lab>]
-An old mod that died to my horrible coding skills a year ago
-Now revived because i literally couldn't do anything non-modding related for too long
+This mod only aims to add content, no lore, no bosses(yet), only items
 
 Current Progress:
 - 20+ Weapons
-- 4 Armors
-- Near 100 items
-- A bad boss (Probably won't change)
-
+- 8 Armors
+- Over 100 items
 
 For suggestions or questions join the discord server (Accessible though homepage button)
 

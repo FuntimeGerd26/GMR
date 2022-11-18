@@ -20,9 +20,12 @@ namespace GMR
 {
 	public partial class GerdPlayer : ModPlayer
 	{
+		#region Feature Stuff
 		public int originalDefense;
 		public bool FirstTick;
+		#endregion
 
+		#region Accessories
 		public Item JackExpert;
 		public Item DevPlush;
 		public bool DevInmune;
@@ -34,13 +37,27 @@ namespace GMR
 		public bool BLBook;
 		public bool MayDress;
 		public Item Halu;
-		public bool Glimmering;
-		public bool Thoughtful;
+		public Item AluminiumCharm;
+		public Item NajaCharm;
+        #endregion
 
-		public override void OnEnterWorld(Player player)
+		#region Armor Sets
+        public bool InfraRedSet;
+		public bool MagnumSet;
+		public bool AmethystSet;
+		public Item BoostSet;
+        #endregion
+
+		#region Debuffs
+        public bool Glimmering;
+		public bool Thoughtful;
+		public bool PainHeal;
+		public bool PartialCrystal;
+        #endregion
+
+        public override void OnEnterWorld(Player player)
 		{
 			//player.QuickSpawnItem(player.GetSource_FromThis(), ModContent.ItemType<Items.Accessories.BLBook>());
-			//Main.NewText($"[i:{ModContent.ItemType<Items.Vanity.GerdHead>()}] Welcome to the Beta of Gerd's Lab", Color.Cyan); //To-do: Remove before release
 		}
 
 		public override void ResetEffects()
@@ -58,6 +75,14 @@ namespace GMR
 			Halu = null;
 			Glimmering = false;
 			Thoughtful = false;
+			PainHeal = false;
+			InfraRedSet = false;
+			PartialCrystal = false;
+			MagnumSet = false;
+			AmethystSet = false;
+			BoostSet = null;
+			AluminiumCharm = null;
+			NajaCharm = null;
 		}
 
 		public override void UpdateDead()
@@ -75,15 +100,20 @@ namespace GMR
 			Halu = null;
 			Glimmering = false;
 			Thoughtful = false;
+			PainHeal = false;
+			InfraRedSet = false;
+			PartialCrystal = false;
+			MagnumSet = false;
+			AmethystSet = false;
+			BoostSet = null;
+            AluminiumCharm = null;
+			NajaCharm = null;
 		}
 
-		public override void ModifyStartingInventory(IReadOnlyDictionary<string, List<Item>> itemsByMod, bool mediumCoreDeath)
+        public override void ModifyStartingInventory(IReadOnlyDictionary<string, List<Item>> itemsByMod, bool mediumCoreDeath)
 		{
 			Player player = Main.player[0];
-			if (Main.getGoodWorld)
-			{
-				player.QuickSpawnItem(Player.GetSource_FromThis(), ModContent.ItemType<Items.Weapons.Melee.GerdDagger>(), 1); //Should hopefully summon an item
-			}
+			player.QuickSpawnItem(Player.GetSource_FromThis(), ModContent.ItemType<Items.Weapons.Melee.GerdDagger>(), 1); //Should add the item to the player's inventory while generating a character
 		}
 
 		public override void UpdateBadLifeRegen()
@@ -103,6 +133,12 @@ namespace GMR
 			if (Glimmering)
 				DamageOverTime(5, true);
 
+			if (PartialCrystal)
+			{
+				DamageOverTime(Player.statLifeMax2 / 40, true);
+				Player.lifeRegen += -35;
+			}
+
 			if (!FirstTick)
 			{
 				originalDefense = Player.statDefense;
@@ -111,6 +147,9 @@ namespace GMR
 
 			if (Thoughtful)
 				Player.statDefense += -14;
+
+			if (PainHeal)
+				Player.lifeRegen = 0;
 		}
 
 		public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter)
@@ -118,6 +157,16 @@ namespace GMR
 			if (BLBook || MayDress)
 			{
 				damage = (int)(damage * 1.10); //Take 10% more damage
+			}
+
+			if (PainHeal)
+            {
+				damage = (int)(damage * 0.75); //Take 25% less damage
+            }
+
+			if (AmethystSet)
+			{
+				damage = (int)(damage * 0.80);
 			}
 
 			if (OverlordBlade != null)
@@ -171,6 +220,10 @@ namespace GMR
 			{
 				Player.AddImmuneTime(cooldownCounter, 120);
 			}
+			if (!pvp && InfraRedSet)
+			{
+				Player.AddImmuneTime(cooldownCounter, 180);
+			}
 			if (!pvp && AmalgamInmune)
             {
 				Player.AddImmuneTime(cooldownCounter, 240);
@@ -181,7 +234,48 @@ namespace GMR
 		{
 			Player player = Main.player[0];
 
-			if (item.damage > 0 && AmalgamPlush != null)
+			if (player.HeldItem?.DamageType?.CountsAsClass(DamageClass.Melee) == true) // If the damage class is melee, Check for the armor set being true 
+			{
+				if (BoostSet != null && item.damage > 0)
+				{
+					Projectile.NewProjectile(Player.GetSource_Accessory(BoostSet), position, velocity * 2, ModContent.ProjectileType<Projectiles.BoostFlame>(), damage / 2, knockback / 2, Main.myPlayer);
+				}
+
+				if (NajaCharm != null && item.damage > 0)
+				{
+					Projectile.NewProjectile(Player.GetSource_Accessory(NajaCharm), position, velocity / 2, ModContent.ProjectileType<Projectiles.NajaFireball>(), damage, knockback, Main.myPlayer);
+				}
+				return true;
+			}
+			
+			if (player.HeldItem?.DamageType?.CountsAsClass(DamageClass.Ranged) == true)
+			{
+				if (AluminiumCharm != null && item.damage > 0)
+				{
+					Projectile.NewProjectile(Player.GetSource_Accessory(AluminiumCharm), position, velocity * 1.5f, ModContent.ProjectileType<Projectiles.Ranged.AluminiumShot>(), damage / 2, knockback / 2, Main.myPlayer);
+				}
+				return true;
+			}
+
+			if (player.HeldItem?.DamageType?.CountsAsClass(DamageClass.Magic) == true)
+			{
+				if (NajaCharm != null && item.damage > 0)
+				{
+					Projectile.NewProjectile(Player.GetSource_Accessory(NajaCharm), position, velocity / 2, ModContent.ProjectileType<Projectiles.NajaFireball>(), damage, knockback, Main.myPlayer);
+				}
+				return true;
+			}
+
+			if (player.HeldItem?.DamageType?.CountsAsClass(DamageClass.Summon) == true)
+			{
+				if (NajaCharm != null && item.damage > 0)
+				{
+					Projectile.NewProjectile(Player.GetSource_Accessory(NajaCharm), position, velocity / 2, ModContent.ProjectileType<Projectiles.NajaFireball>(), damage, knockback, Main.myPlayer);
+				}
+				return true;
+			}
+
+			if (item.damage > 0 && AmalgamPlush != null) //If projectile deals over 0 damage and Has the item on
 			{
 				if (Main.rand.NextBool(3)) // 1 in 3 (33.333333333333333333333333333333333333333333333333333333%) (Funny)
 				{
@@ -234,7 +328,19 @@ namespace GMR
 				}
 			}
 
-			if (item.damage > 0 && (JackExpert != null) && (type == ProjectileID.FireArrow))
+			if (item.damage > 0 && (JackExpert != null) && (type == ProjectileID.FireArrow) && AmalgamPlush != null)
+			{
+				float numberProjectiles = 7;
+				float rotation = MathHelper.ToRadians(7);
+				position += Vector2.Normalize(velocity) * 5f;
+				for (int i = 0; i < numberProjectiles; i++)
+				{
+					Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * 1.5f;
+					Projectile.NewProjectile(Player.GetSource_Accessory(AmalgamPlush), position, perturbedSpeed, ModContent.ProjectileType<Projectiles.Ranged.JackShard>(), damage, knockback, player.whoAmI);
+				}
+				return false;
+			}
+			else if (item.damage > 0 && (JackExpert != null) && (type == ProjectileID.FireArrow))
 			{
 				float numberProjectiles = 3;
 				float rotation = MathHelper.ToRadians(5);
