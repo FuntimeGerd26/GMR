@@ -63,6 +63,7 @@ namespace GMR.Items.Weapons.Magic
 			recipe.AddIngredient(ItemID.Feather, 18);
 			recipe.AddIngredient(ItemID.Silk, 20);
 			recipe.AddRecipeGroup("GMR:AnyGem", 7);
+			recipe.AddIngredient(null, "UpgradeCrystal", 20);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}

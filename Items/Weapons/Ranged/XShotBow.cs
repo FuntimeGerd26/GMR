@@ -23,9 +23,9 @@ namespace GMR.Items.Weapons.Ranged
 			Item.width = 32;
 			Item.height = 56;
 			Item.rare = 6;
-			Item.useTime = 20;
-			Item.useAnimation = 25;
-			Item.reuseDelay = 50;
+			Item.useTime = 4;
+			Item.useAnimation = 12;
+			Item.reuseDelay = 25;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.value = Item.sellPrice(silver: 120);
 			Item.autoReuse = true;
@@ -36,13 +36,13 @@ namespace GMR.Items.Weapons.Ranged
 			Item.knockBack = 3f;
 			Item.noMelee = true;
 			Item.shoot = ModContent.ProjectileType<Projectiles.Ranged.XShotArrow>();
-			Item.shootSpeed = 40f;
+			Item.shootSpeed = 12f;
 			Item.useAmmo = AmmoID.Arrow;
 		}
 
 		public override void UpdateInventory(Player player)
 		{
-			player.GetAttackSpeed(DamageClass.Ranged) += 0.50f;
+			player.GetAttackSpeed(DamageClass.Ranged) += 0.05f;
 			player.GetCritChance(DamageClass.Ranged) += -2f;
 		}
 
@@ -57,6 +57,7 @@ namespace GMR.Items.Weapons.Ranged
 			{
 				type = Main.rand.Next(new int[] { ModContent.ProjectileType<Projectiles.Ranged.XShotArrow>(), ModContent.ProjectileType<Projectiles.Ranged.XShotArrow>(), ModContent.ProjectileType<Projectiles.XShotEnergy>()});
 				SoundEngine.PlaySound(SoundID.Item5, player.position);
+				velocity = velocity.RotatedByRandom(MathHelper.ToRadians(5));
 			}
 		}
 

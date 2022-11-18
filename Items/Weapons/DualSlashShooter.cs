@@ -35,6 +35,7 @@ namespace GMR.Items.Weapons
 			recipe.AddIngredient(ItemID.HallowedBar, 18);
 			recipe.AddIngredient(ItemID.SoulofNight, 22);
 			recipe.AddIngredient(ItemID.SoulofMight, 18);
+			recipe.AddIngredient(null, "HardmodeUpgradeCrystal", 2);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 

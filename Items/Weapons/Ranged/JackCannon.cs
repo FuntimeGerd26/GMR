@@ -36,7 +36,7 @@ namespace GMR.Items.Weapons.Ranged
 			Item.knockBack = 3f;
 			Item.noMelee = true;
 			Item.shoot = ModContent.ProjectileType<Projectiles.Ranged.JackBlastSmall>();
-			Item.shootSpeed = 30f;
+			Item.shootSpeed = 12f;
 			Item.useAmmo = AmmoID.Bullet;
 		}
 
