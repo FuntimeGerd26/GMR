@@ -6,12 +6,12 @@ using Terraria.ModLoader;
 namespace GMR.Items.Armor
 {
 	[AutoloadEquip(EquipType.Legs)]
-	public class AluminiumLeggings : ModItem
+	public class ArmorMoldBoots : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Aluminium Boots");
-			Tooltip.SetDefault("Increases all weapon speed by 2%\nIncreases damage by 2%");
+			DisplayName.SetDefault("Legging Mold");
+			Tooltip.SetDefault("Useful for creating Leggings");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
@@ -22,27 +22,19 @@ namespace GMR.Items.Armor
 			Item.rare = 1;
 			Item.value = Item.sellPrice(silver: 30);
 			Item.maxStack = 1;
-			Item.defense = 3;
-		}
-
-		public override void UpdateEquip(Player player)
-		{
-			player.GetDamage(DamageClass.Generic) += 2f;
-			player.GetAttackSpeed(DamageClass.Generic) += 0.02f;
+			Item.defense = 4;
 		}
 
 		public override void AddRecipes()
 		{
 			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.CopperBar, 10);
-			recipe.AddIngredient(ItemID.FallenStar, 6);
+			recipe.AddIngredient(ItemID.IronBar, 4);
 			recipe.AddIngredient(null, "UpgradeCrystal", 40);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 
 			Recipe recipe2 = CreateRecipe();
-			recipe2.AddIngredient(ItemID.TinBar, 10);
-			recipe2.AddIngredient(ItemID.FallenStar, 6);
+			recipe2.AddIngredient(ItemID.LeadBar, 4);
 			recipe2.AddIngredient(null, "UpgradeCrystal", 40);
 			recipe2.AddTile(TileID.Anvils);
 			recipe2.Register();

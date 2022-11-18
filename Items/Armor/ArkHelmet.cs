@@ -64,11 +64,9 @@ namespace GMR.Items.Armor
 		{
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(null, "AlloybloodHelmet");
-			recipe.AddIngredient(ItemID.FragmentNebula, 10);
-			recipe.AddIngredient(ItemID.FragmentStardust, 10);
-			recipe.AddIngredient(ItemID.FragmentVortex, 10);
-			recipe.AddIngredient(ItemID.FragmentSolar, 10);
+			recipe.AddIngredient(null, "MagnumFoxMask");
 			recipe.AddIngredient(3467, 12);
+			recipe.AddIngredient(null, "HardmodeUpgradeCrystal", 2);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}

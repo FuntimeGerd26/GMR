@@ -11,7 +11,7 @@ namespace GMR.Items.Armor
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Amethyst Boots");
-			Tooltip.SetDefault("Increases ranged speed by 3%, and melee speed by 5%\nIncreases damage reduction by 3%");
+			Tooltip.SetDefault("Increases ranged speed by 3%, and melee speed by 5%");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
@@ -27,7 +27,6 @@ namespace GMR.Items.Armor
 
 		public override void UpdateEquip(Player player)
 		{
-			player.endurance = 1f - (0.03f * (1f - player.endurance));
 			player.GetAttackSpeed(DamageClass.Melee) += 0.05f;
 			player.GetAttackSpeed(DamageClass.Ranged) += 0.03f;
 		}
@@ -37,12 +36,16 @@ namespace GMR.Items.Armor
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(ItemID.IronBar, 7);
 			recipe.AddIngredient(ItemID.Amethyst, 3);
+			recipe.AddIngredient(null, "BossUpgradeCrystal");
+			recipe.AddIngredient(null, "UpgradeCrystal", 25);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 
 			Recipe recipe2 = CreateRecipe();
 			recipe2.AddIngredient(ItemID.LeadBar, 7);
 			recipe2.AddIngredient(ItemID.Amethyst, 3);
+			recipe2.AddIngredient(null, "BossUpgradeCrystal");
+			recipe2.AddIngredient(null, "UpgradeCrystal", 25);
 			recipe2.AddTile(TileID.Anvils);
 			recipe2.Register();
 		}

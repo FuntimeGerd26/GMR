@@ -22,7 +22,7 @@ namespace GMR.Items.Armor
 			Item.rare = 8;
 			Item.value = Item.sellPrice(silver: 180);
 			Item.maxStack = 1;
-			Item.defense = 18;
+			Item.defense = 17;
 		}
 
 		public override void UpdateEquip(Player player)
@@ -59,18 +59,16 @@ namespace GMR.Items.Armor
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(ItemID.HallowedBar, 12);
 			recipe.AddIngredient(ItemID.Ectoplasm, 8);
-			recipe.AddIngredient(ItemID.TitaniumHelmet);
-			recipe.AddIngredient(ItemID.TitaniumMask);
-			recipe.AddIngredient(ItemID.TitaniumHeadgear);
+			recipe.AddIngredient(null, "HardmodeUpgradeCrystal");
+			recipe.AddIngredient(null, "ArmorMoldMask");
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 
 			Recipe recipe2 = CreateRecipe();
 			recipe2.AddIngredient(ItemID.HallowedBar, 12);
 			recipe2.AddIngredient(ItemID.Ectoplasm, 8);
-			recipe2.AddIngredient(ItemID.AdamantiteHelmet);
-			recipe2.AddIngredient(ItemID.AdamantiteMask);
-			recipe2.AddIngredient(ItemID.AdamantiteHeadgear);
+			recipe2.AddIngredient(null, "HardmodeUpgradeCrystal");
+			recipe2.AddIngredient(null, "ArmorMoldMask");
 			recipe2.AddTile(TileID.Anvils);
 			recipe2.Register();
 		}

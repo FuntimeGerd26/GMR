@@ -39,14 +39,16 @@ namespace GMR.Items.Armor
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(ItemID.HallowedBar, 24);
 			recipe.AddIngredient(ItemID.Ectoplasm, 16);
-			recipe.AddIngredient(ItemID.TitaniumBreastplate);
+			recipe.AddIngredient(null, "HardmodeUpgradeCrystal");
+			recipe.AddIngredient(null, "ArmorMoldChestplate");
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 
 			Recipe recipe2 = CreateRecipe();
 			recipe2.AddIngredient(ItemID.HallowedBar, 24);
 			recipe2.AddIngredient(ItemID.Ectoplasm, 16);
-			recipe2.AddIngredient(ItemID.AdamantiteBreastplate);
+			recipe2.AddIngredient(null, "HardmodeUpgradeCrystal");
+			recipe2.AddIngredient(null, "ArmorMoldChestplate");
 			recipe2.AddTile(TileID.Anvils);
 			recipe2.Register();
 		}

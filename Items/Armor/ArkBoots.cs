@@ -38,11 +38,9 @@ namespace GMR.Items.Armor
 		{
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(null, "AlloybloodLeggings");
-			recipe.AddIngredient(ItemID.FragmentNebula, 15);
-			recipe.AddIngredient(ItemID.FragmentStardust, 15);
-			recipe.AddIngredient(ItemID.FragmentVortex, 15);
-			recipe.AddIngredient(ItemID.FragmentSolar, 15);
+			recipe.AddIngredient(null, "MagnumFoxBoots");
 			recipe.AddIngredient(3467, 12);
+			recipe.AddIngredient(null, "HardmodeUpgradeCrystal", 2);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}

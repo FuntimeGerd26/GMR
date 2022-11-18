@@ -5,44 +5,36 @@ using Terraria.ModLoader;
 
 namespace GMR.Items.Armor
 {
-	[AutoloadEquip(EquipType.Body)]
-	public class AmethystGolemChestplate : ModItem
+	[AutoloadEquip(EquipType.Head)]
+	public class ArmorMoldMask : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Amethyst Chestplate");
-			Tooltip.SetDefault("Increases all damage by 4%");
+			DisplayName.SetDefault("Mask Mold");
+			Tooltip.SetDefault("Useful for making Masks");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
 		public override void SetDefaults()
 		{
-			Item.width = 38;
-			Item.height = 28;
+			Item.width = 18;
+			Item.height = 18;
+			Item.rare = 1;
 			Item.value = Item.sellPrice(silver: 40);
-			Item.rare = 2;
-			Item.defense = 5;
-		}
-
-		public override void UpdateEquip(Player player)
-		{
-			player.GetDamage(DamageClass.Generic) += 0.04f;
+			Item.maxStack = 1;
+			Item.defense = 3;
 		}
 
 		public override void AddRecipes()
 		{
 			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.IronBar, 10);
-			recipe.AddIngredient(ItemID.Amethyst, 6);
-			recipe.AddIngredient(null, "BossUpgradeCrystal");
+			recipe.AddIngredient(ItemID.IronBar, 5);
 			recipe.AddIngredient(null, "UpgradeCrystal", 30);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 
 			Recipe recipe2 = CreateRecipe();
-			recipe2.AddIngredient(ItemID.LeadBar, 10);
-			recipe2.AddIngredient(ItemID.Amethyst, 6);
-			recipe2.AddIngredient(null, "BossUpgradeCrystal");
+			recipe2.AddIngredient(ItemID.LeadBar, 5);
 			recipe2.AddIngredient(null, "UpgradeCrystal", 30);
 			recipe2.AddTile(TileID.Anvils);
 			recipe2.Register();

@@ -29,7 +29,7 @@ namespace GMR.Items.Armor
 		{
 			player.GetKnockback(DamageClass.Generic) += 1f;
 			player.GetArmorPenetration(DamageClass.Generic) += 10f;
-			player.endurance = 1f - (0.05f * (1f - player.endurance));
+			player.endurance += 0.05f;
 			player.GetAttackSpeed(DamageClass.Generic) += 0.15f;
 			player.GetDamage(DamageClass.Generic) += 0.10f;
 			player.maxMinions = 2;
@@ -39,11 +39,9 @@ namespace GMR.Items.Armor
 		{
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(null, "AlloybloodChestplate");
-			recipe.AddIngredient(ItemID.FragmentNebula, 20);
-			recipe.AddIngredient(ItemID.FragmentStardust, 20);
-			recipe.AddIngredient(ItemID.FragmentVortex, 20);
-			recipe.AddIngredient(ItemID.FragmentSolar, 20);
+			recipe.AddIngredient(null, "MagnumFoxChestplate");
 			recipe.AddIngredient(3467, 16);
+			recipe.AddIngredient(null, "HardmodeUpgradeCrystal", 3);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}
