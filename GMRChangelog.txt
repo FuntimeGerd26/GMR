@@ -224,4 +224,32 @@ Violet's Sword and Violet's Great Slasher's sprites bigger (Like 1.4.4's Sword C
 224. Multiple recipe changes
 225. Reworked Masked Plague's Cloack
 226. Buffed Spazmatanium Charge Bow and changed it's tooltip
-227. Edited the Description of the Mod for a better description of the mod 
+227. Edited the Description of the Mod for a better description of the mod
+228. Added an old fellow
+229. Resprited Violet's Great Slasher
+230. Removed some items from the Shape Shifter's Shop
+231. Added Thunder Volcano Charm, Awakened Dress, Infra-Red Enchantment, Alloyblood Generator, Masked Plague Enchantment, Aluminium Enchantment, Amethyst Golem Enchantment, Magnum Enchantment
+232. Fixed internal number stuff (Balancing)
+233. Reworked Dreaming Dress
+234. Added a proper set bonus to Magnum and Amethyst Golem armor
+235. Added Masked Plague's Tome
+236. Added Boost Enchantment
+237. Fixed Phoenix Sword's recipe using bugs instead of ducks, and also addded more recipes with birds instead of ducks (If you don't want to use your ducks for some reason)
+238. Bio-Mass Force Gun now has the same downside as Infra-Red Railgun
+239. Violet Module dosen't ignore the downside of railguns now
+240. Railguns now deal higher damage as compensation for the downside
+241. Resprited Scrap Fragment
+242. Added Force of Utility and Alloyblood Enchantment
+243. Fixed BL Book and BL Fujoshi's projectiles not using the item's damage
+244. Boost, Magnum and Alloyblood armors have had the Mold armor removed from their recipe
+245. Ark armor now uses the Ancient Manipulator instead of a Mythril/Orichalcum Anvil to craft
+246. Removed Mold armor
+247. Renamed Violet's Spirit Sword to Umbra del Solei
+248. Nerfed Sun Burnt to only decrease NPC damage by 10% instead of 25%
+249. Added Luminite Bars to Umbra del Solei and it now uses the Ancient Manipulator instead of a HM Anvil
+250. Masked Plague Sword no longer has a right-click, Instead it now shoots sword from the sky
+251. Alloyblood Shotgun's Special projectile will now infinitely pierce as long as it dosen't hit a boss
+252. Dual Slash Blade, Alloy Sword and Ultra-Blue Handgun's Right-Click now dosen't require you to click each time you want to use them
+253. Reworked Ultra-Blue Handgun's Effects
+254. Fixed Alloy Sword's Projectiles hitting the ground when thrown
+255. Fixed Devilish Debuff not dealing damage properly to NPCs because it reduced their defence, while also using the defence stat for it's damage
