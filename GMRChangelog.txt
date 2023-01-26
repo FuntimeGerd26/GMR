@@ -253,3 +253,40 @@ Violet's Sword and Violet's Great Slasher's sprites bigger (Like 1.4.4's Sword C
 253. Reworked Ultra-Blue Handgun's Effects
 254. Fixed Alloy Sword's Projectiles hitting the ground when thrown
 255. Fixed Devilish Debuff not dealing damage properly to NPCs because it reduced their defence, while also using the defence stat for it's damage
+256. Fixed Masked Plague Cloack giving 80% damage increase instead of 8%
+257. Added a new effect to Alloyblood Enchantment
+258. Added Masked Plague's Band
+259. BL Fujoshi now uses Tinkerer's Workbench and Upgrade Crystals to craft
+260. Awakened Dress and Amalgamation Plushie now use Tinkerer's Workbench to craft
+261. Reworked how Debuffs applied colours to bosses (No more semi-transparent ML for y'all)
+262. Added Plantera Whip
+263. Ark Blade's projectile now has a cap on the amount of explosions generated
+264. Fixed Alloyblood Whip and Sun Burnt Whip's projectile sprites not drawing correctly
+265. Resprited Infra-Red Visor and Infra-Red Jetpack
+266. Reworked Ark Blade
+267. Added Masked Plague's Emblems
+268. Fixed Infra-Red Drone spawning infinite Infra-Red Swords
+269. Renamed Infra-Red Jetpack -> Infra-Red Wings
+270. Balanced the wings to match their tier
+271. Added Infra-Red Gun and Infra-Red Staff
+272. Added Infra-Red Gun Drone
+273. Reworked How the arms of Acheron Move and Spawn
+274. Changed how the Shape Shifter moves in
+275. Fixed Psycopath Axe dropping before the Evil bosses have been defeated
+276. Resprited Thunderblade Charm's Projectile
+277. Fixed the Memer's Bestiary entry being the same as the Shape Shifter's 
+278. Reworked Spazmatanium Blade
+279. Added Chaos Angel Vanity Set
+280. Thunderblade Charm's Projectiles now split in a bigger spread
+281. Fixed Awakened Dress and Thunder Volcano Charm having a broken tooltip
+282. Added Prism Blade and Prism Sniper
+283. Fixed Alloyblood Whip's .cs file having an extra l on it's name
+284. Added Memer Enchantment, Amalgamate Enchantment, Amalgamation Enchantment, Chaos Angel Enchantment, Ark Enchantment, Sandwave Enchantment, Force Of Curses and Force Of Refereces
+285. Removed the Ark Amalgam Set, has almost no difference from the Amalgamate set
+286. Added Infra-Red Minigun and Amalgamation Vanity Set
+287. Alloyblood Enchantment now adds +2 Sentries
+288. Fixed some tooltips not mentioning all effects of the items
+289. Changed the "Hide this to only get the buffs" to "Hide this to distable this effect" on items like Dreaming Dress and Awakened Dress
+290. Gave an effect to all unfinished Enchantments
+291. Reworked Neon Blade
+292. Added Violet's Soul
