@@ -290,3 +290,84 @@ Violet's Sword and Violet's Great Slasher's sprites bigger (Like 1.4.4's Sword C
 290. Gave an effect to all unfinished Enchantments
 291. Reworked Neon Blade
 292. Added Violet's Soul
+293. Reworked Acheron
+294. Added Jack [Boss]
+295. Decreased the Spawnrate of Infra-Red Drone
+296. Changed the Sprites of some NPCs back to an older version
+297. Added Infra-Red Tome
+298. Added Sounds to NPC's attacks
+299. Removed Umbra Del Solei's projectiles piercing, Significantly nerfing it's damage
+300. Put a cap to Bio-Mass Force Gun's projectiles when using Violet's Module as ammo, it now caps at 3k Damage
+301. Overhauled some projectile's and Item's code
+302. Infra-Red armor now has a recipe, and is no longer sold by the Shape Shifter
+303. Acheron can now be summoned by using the "Challenge!" button of the Shape Shifter in Hardmode
+304. Made the mod's Vanities obtainable now through the NPC's shops
+305. Changed some NPC's Bestiary entries for a more insteresting story, instead of random facts
+306. Fixed Halu not working correctly
+307. Fixed Multiple issues with the code for NPC drops
+308. Renamed Book of the Dreaming to Tome of Dreams and reworked it into a weapon
+309. Fixed an issue with Right-Click weapons, they now use CanUseItem instead of UseItem
+310. Phoenix Sword now has a cap on the ammount of explosions caused by hitting an enemy
+311. Neon Sword no longer shoots homing Projectiles
+312. Alloyblood Sword's Main projectile no longer shoots more projectiles, but instead explodes upon hitting an enemy
+313. Decreased the damage of Phoenix Sword 48 -> 42
+314. Masked Plague Sword now shoots only 2 sword from the sky and they can't pierce, but now the projectiles come from above your cursor instead of the player, making hitting enemies far easier
+315. Removed the extra immunity frames granted from Memer Enchantment and upgrades
+316. Added Ancient Railcannon
+317. Infra-Red Railgun and Ancient Railcannon now have a decreased cooldown when the projectiles hit an enemy (Violet & Masked Plague 5 seconds -> 3 seconds, Neon 10 seconds -> 5 seconds)
+318. Reworked Crystal Neon Sword and Hero Training Sword, the last of this kind of swords, kinda bad weapons before ngl
+319. Crystal Neon Sword and Hero Training Sword now say what they do in their tooltip
+320. Fixed Alloy Crate using the wrong materials to craft
+321. Multiple effects of enchantments (And upgrades) can now be toggled off by hiding them
+322. Remade some of Acheron's attack code
+323. Partially undid changelog 322's changes
+324. Added Infra-Red Pickaxe
+325. Prismatic Sniper's projectile has a different look now
+326. Added Akira's Space Staff
+327. Adding new (visual) effects to a few thing weapons and items
+328. Expert and Master tooltips now have a new effect on them
+329. Removed the Triple Crowd Control
+330. Decreased the amount of dust made by various projectiles
+331. Decreased the damage of Ark's Equalizer 58 -> 38, and changed it's tooltip to it's new effect
+332. Projectile Multiplying accessories no longer shoot sped up versions of the projectiles
+333. Epiphany and Infra-Red Sword's projectiles now properly show where they actually are
+334. Neon Gun Blade's projectiles now inflict crystal sickness
+335. Reworked Epiphany
+336. Fixed the stats between Dual Desert Sword and Dual Desert Axe (Damage being significantly lower on the sword), Removed the right-click for changing between weapons, instead you can craft the other weapon in a Hardmode Anvil
+337. Fixed whips having weird gaps in them
+338. Removed the "Wind-up" abilities from Alloyblood and Sun Burnt Whip, buffed the whip's stats for making up
+339. Added Reality Snapper
+340. Reworked Desert Axe's, Dual Desert Sword and Dual Desert Axe's effects
+341. Plantera Whip is now obtainable (Drop from Plantera with a 10% chance)
+342. Updated Acheron's Sprites
+343. Railguns can no longer shoot while on cooldown
+344. All friendly projectiles (Added by the mod) now deal 80% of the damage they used to do (I've heard most weapons are quite OP)
+345. The projectile shot by Infra-Red Sword and Infra-Red Enchantment now uses new visuals
+346. Reworked Psycopath Axe
+347. Explosions deal x2 damage now
+348. Reworked Acheron and Jack's Arms code, Now they take even less space!
+349. Added a new attacks to Jack
+350. Reworked Spazmatanium Charge Bow
+351. Buffed Infra-Red Wings, wing time: 1.5 Seconds -> 2 Seconds, Speed: 75% -> 80%
+352. Removed the extra wing time effect from Memer Enchantment
+353. Infra-Red Staff now has a marker on where the projectiles were shot at
+354. Increased Acheron's Health and Defense
+355. Decreased Jack's Damage, Health and Defense
+356. Fixed starting items from FTW not being added to the player's inventory
+357. Halu has double spawnrates on FTW
+358. Charge Rifle's sprite when shooting now shows the direction of the spread bullets 
+359. Resprited Infra-Red Sword, Increased it's damage and now on hit makes an explosion
+360. Added Ancient Sword
+361. Jack and it's arms now move slower, No longer gets buffed stats in hardmode
+362. BL Fujoshi (and upgrades) now shoots 6 BL Books and 2 Psycopath Axes instead of 8 of each
+363. Increased the damage of NPCs, literally everyone had single digit damage
+364. Undid changelog 344 (Decreased friendly projectile damage no more)
+365. Infra-Red Drone Now moves slower towards the player
+366. Decreased the health of Acheron and Jack, Now they become invulnerable even with the arms still alive when under 25% HP
+367. Changed the mod icon, Half Acheron and Half Jack can now be seen in it 
+368. Jack and Acheron's arms now stay on the sides of the player when the player has instant respawn or some sort of quick respawn mod
+369. Added The Crucifix and Mumeiken Kyomu
+370. Jack's Claw projectile is now (more) visible and faster, the Slashes now are shot with low speed and speed up instead of immediately going towards the player at full speed
+371. Acheron's Arms now act as Jack's, The cannon arms no longer have a chance to shoot explosive crates
+372. Jack can now perform the rain attack along the Back to player attack
+373. Removed the Vertebrae and Rotten Chunk from Amalgam Plushie's Recipe
