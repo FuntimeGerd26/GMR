@@ -532,3 +532,12 @@ Violet's Sword and Violet's Great Slasher's sprites bigger (Like 1.4.4's Sword C
 530. Added a Special Surprise
 531. Explosions now deal damage to players too
 532. Reworked Epiphany and Ark Blade's Projectile
+533. Fixed issues with Jack and Acheron's Downed bools not being saved
+534. Gave Akira's Space Staff, Umbra del Solei, Prism Sniper and Kizuna Scythe better homing code
+535. Alloyblood Sword's Projectile is now bigger and has new effects
+536. Ark Blade now uses Luminite Bars instead of Spectre Bars
+537. Umbra del Solei now uses Souls of Might instead of Souls of Night, and Epiphany uses Souls of Sight
+538. Fixed some misc issues
+539. Infra-Red Staff is now Uncraftable and is dropped by Acheron
+540. Buffed Infra-Red Staff to match hardmode weapons
+541. Resprited Infra-Red Staff
