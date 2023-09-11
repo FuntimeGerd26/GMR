@@ -1,0 +1,24 @@
+<Gerd's Lab>
+This mod only aims to add content, with no clear specific goal
+
+Current Progress:
+- 20+ Weapons
+- 8 Armors
+- Over 100 items
+- 2 Town NPCs
+- 4 Bosses
+
+Themes made by:
+- Trerios: zenovia.
+- Magma Eye: Yuri 0
+- Jack: Spectra
+- Acheron: Spectra
+
+For suggestions, bug reports or questions join the discord server: https://discord.gg/b7UpgT8Fn7
+or you can make a new discussion in the workshop page if you don't have a discord account
+
+
+
+
+Play Aequus Mod
+It has cool stuff, i may have taken some code from it to make a few things in this mod

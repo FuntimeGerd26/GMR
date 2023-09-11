@@ -1,0 +1,2685 @@
+Mods: {
+	GMR: {
+		ItemTooltip.Common.DedicatedItem: Bonded Item
+
+		Conditions: {
+			DefeatEye: Sold after defeating the Eye of Cthulhu
+			DefeatEvil: Sold after defeating the Eater of World or the Brain of Cthulhu
+			DefeatMagma: Sold after defeating Magma Eye
+			DefeatSkeletron: Sold after defeating Skeletron
+			DefeatJack: Sold after defeating Jack
+			Hardmode: Sold after entering Hardmode in any way
+			DefeatAcheron: Solf after defeating Acheron
+			AnyMech: Sold after defeating any of the mech bosses
+			DefeatPlantera: Sold after defeating Plantera
+			DefeatGolem: Sold after defeating Golem
+			DefeatMagmaEye: Sold After defeating Magma Eye
+			GetFixedBoi: Be in the seed "For The Worthy" or any mix with it
+		}
+
+		Items: {
+			AlloybloodGenerator: {
+				Tooltip:
+					'''
+					Increases movement speed and knockback by 18%
+					Increases damage and attack speed 16%
+					'''
+				DisplayName: Alloyblood Generator
+			}
+
+			AluminiumCharm: {
+				Tooltip:
+					'''
+					Ranged weapons will shoot a projectile that will home into enemies
+					Increases ranged crit chance by 3%
+					'''
+				DisplayName: Aluminium Charm
+			}
+
+			ShiningKuwagata: {
+				Tooltip:
+					'''
+					Increases attack speed and movement speed by 6%
+					Increases max minion slots by 1
+					Decreases knockback by 10%
+					'You are the King!'
+					'''
+				DisplayName: Shining Beetle Emblem
+			}
+
+			AmalgamationPlushie: {
+				Tooltip:
+					'''
+					'7'
+					Increases invincibility frames by 4 seconds
+					Increases ranged and magic damage by 14%
+					Weapons have a chance to shoot 5 projectiles and shoot an aditional special projectile
+					Converts wooden and fire arrows turn into 3 Jack Shards
+					'''
+				DisplayName: Amalgamation Plushie
+			}
+
+			AncientBullets: {
+				Tooltip:
+					'''
+					If the weapon uses bullets as ammo, it has a chance to turn them into Infra-Red Bullets that inflict 'Partially Crystalized'
+					Increases ranged damage by 3% and ranged attack speed by 5%
+					'Holds just a bit of data'
+					'''
+				DisplayName: Ancient Bullets
+			}
+
+			AncientCore: {
+				Tooltip:
+					'''
+					Increases summon and melee damage by 5%
+					Increases magic crit rate by 5%
+					If the weapon uses bullets as ammo, it has a chance to turn them into Explosive Infra-Red Bullets that inflict 'Partially Crystalized'
+					'Holds just a bit of data'
+					'''
+				DisplayName: Ancient Core
+			}
+
+			BLBook: {
+				Tooltip:
+					'''
+					Summons 4 orbiting BL Books around the player
+					Increases all damage by 20%
+					Increases damage taken by 10%
+					'''
+				DisplayName: BL Book
+			}
+
+			BLFujoshi: {
+				Tooltip:
+					'''
+					Summons 8 orbiting BL Books and Psyco Axes around the player
+					Increases all damage by 25%
+					Increases damage taken by 10%
+					Hide the accessory to only get the buffs
+					'Endless BL, How shameless!'
+					'''
+				DisplayName: BL Fujoshi
+			}
+
+			BloodyMedkit: {
+				Tooltip:
+					'''
+					Heals you by 10% of HP when you are below 20% HP
+					Increases max health by 10%
+					You take 25% less damage but can't naturally regenerate health while in cooldown
+					'''
+				DisplayName: Bloody Medkit
+			}
+
+			ChargedArm: {
+				Tooltip:
+					'''
+					Ranged weapons have a chance to shoot a homing rocket
+					Increases summoner damage by 12%
+					'''
+				DisplayName: Charged Rocket Arm
+			}
+
+			CoreHookArm: {
+				Tooltip: Pulls you towards enemies when hitting them with the hook
+				DisplayName: Core Hook Arm
+			}
+
+			DevPlushie: {
+				Tooltip:
+					'''
+					'Wait was it 3 or 4?'
+					Increases invincibility frames by 2 seconds
+					Weapons have a chance to shoot 3 projectile that deal 75% damage and shoot an aditional special projectile
+					'''
+				DisplayName: Marketable Amalgam
+			}
+
+			Halu: {
+				Tooltip:
+					'''
+					Increases spawn rates times 5
+					Increases all offence by 20%
+					'Some say it may attract more unwanted attention if the worthy wears it'
+					'''
+				DisplayName: Halu
+			}
+
+			IceyWings: {
+				Tooltip: Allows the player to fly
+				DisplayName: Icey Wings
+			}
+
+			InfraRedWings: {
+				Tooltip:
+					'''
+					Allows the player to fly
+					Increases damage and attack speed by 3%
+					'''
+				DisplayName: Infra Red Wings
+			}
+
+			JackCore: {
+				Tooltip:
+					'''
+					'It dosen't do much, it's just a core'
+					Increases damage by 3%
+					Increases movement speed by 3%
+					'''
+				DisplayName: Infra-Red Core
+			}
+
+			JackExpert: {
+				Tooltip:
+					'''
+					Increases ranged damage by 6%
+					Increases movement speed by 5%
+					When hit, the player will create an explotion in a large radius
+					'It contains a small amount of information'
+					'''
+				DisplayName: Infra-Red Emblem
+			}
+
+			MaskedPlagueBand: {
+				Tooltip:
+					'''
+					Gives the player the 'Plague Regen' buff
+					Increases magic and melee damage and attack speed by 4%
+					Increases max mana by 30
+					'Someone's gift is now yours'
+					'''
+				DisplayName: Masked Plague's Band
+			}
+
+			MaskedPlagueCloak: {
+				Tooltip:
+					'''
+					Using Magic or Summon weapons will shoot a homing projectile that inflicts 'Crystal Plague'
+					When hitting enemies, magic projectiles have a 10% chance to heal 1% of your max health
+					Increases magic damage by 3% and summon damage by 8%
+					'''
+				DisplayName: Masked Plague's Cloak
+			}
+
+			MaskedPlagueEmblemMagic: {
+				Tooltip:
+					'''
+					Increases magic attack speed by 2%
+					Increases magic damage by 3%
+					Increases mana by 20
+					'''
+				DisplayName: Masked Plague's Mage Emblem
+			}
+
+			MaskedPlagueEmblemMelee: {
+				Tooltip:
+					'''
+					Increases melee attack speed by 2%
+					Increases melee damage by 3%
+					Increases damage reduction by 3%
+					'''
+				DisplayName: Masked Plague's Warrior Emblem
+			}
+
+			MaskedPlagueEmblemRanged: {
+				Tooltip:
+					'''
+					Increases ranged attack speed by 2%
+					Increases ranged damage by 3%
+					Increases movement speed by 5%
+					'''
+				DisplayName: Masked Plague's Ranger Emblem
+			}
+
+			MaskedPlagueEmblemSummon: {
+				Tooltip:
+					'''
+					Increases summon knockback by 2%
+					Increases summon damage by 3%
+					Increases max minion slots by 1
+					'''
+				DisplayName: Masked Plague's Summoner Emblem
+			}
+
+			MayAwakeDress: {
+				Tooltip:
+					'''
+					'It has woken up to kick gum and chew ass'
+					Increases damage by 12% and attack speed by 10%
+					Increases invincibility frames by 3 seconds
+					Weapons have a chance to shoot 3 projectile that deal 75% damage and shoot an aditional special projectile
+					Summons 6 orbiting saws around you that inflict 'Mimir' to enemies
+					Hide the accessory to distable this effect
+					'''
+				DisplayName: Awakened Dress
+			}
+
+			MayDress: {
+				Tooltip:
+					'''
+					'A tragedy is the story of it's owner'
+					Increases invincibility frames by 2 seconds
+					Weapons have a chance to shoot 3 projectile that deal 75% damage and shoot an aditional special projectile
+					Summons 4 orbiting saws around you that inflict 'Mimir' on enemies
+					Hide the accessory to distable this effect
+					'''
+				DisplayName: Dreaming Dress
+			}
+
+			NajaBladeCharm: {
+				Tooltip:
+					'''
+					Increases damage and attack speed by 8%
+					Makes lightnings fall from the sky when taking damage
+					Using any weapon that's not ranged will shoot a fireball that explodes dealing damage on a large area
+					'''
+				DisplayName: Thunder Volcano Charm
+			}
+
+			NajaCharm: {
+				Tooltip: Using any weapon that's not ranged will shoot a fireball that explodes dealing damage on a large area
+				DisplayName: Volcano Charm
+			}
+
+			NeonWings: {
+				Tooltip: Allows the player to fly
+				DisplayName: Neon Wings
+			}
+
+			AlloybloodEnchantment: {
+				Tooltip:
+					'''
+					Increases movement speed by 25%
+					Increases knockback by 20%
+					Increases armor penetration and attack speed of all weapons by 5%
+					Increases max minions and sentries by 2
+					When under 50% of health: increased armor penetration, crit chance, damage by 7% and decreased mana cost by 7%
+					Summons 8 orbiting BL Books and Psyco Axes around the player and increases damage taken by 10%, you can hide the accessory to distable this effect
+					Melee weapons shoot an Alloyblood Dagger that inflicts 'Devilish' to enemies, hitting enemies with this dagger has a chance to drop Alloyblood Cans above you which heal 15% life
+					'Conclusion, Zero'
+					'''
+				DisplayName: Alloyblood Enchantment
+			}
+
+			AluminiumEnchantment: {
+				Tooltip:
+					'''
+					Increases damage, knockback, attack speed by 5%, weapons have a chance to shoot an Aluminium Shuriken
+					Ranged weapons will shoot a projectile that will home into enemies
+					'It's called aluminium you silly'
+					'''
+				DisplayName: Aluminium Enchantment
+			}
+
+			AmalgamateEnchantment: {
+				Tooltip:
+					'''
+					Increases max mana by 30
+					Increases max sentries by 1
+					Increases immunity time by 3 seconds
+					Gives the player the 'Plague Regen' buff
+					Weapons have a chance to shoot 3 projectile that deal 75% damage and shoot an aditional special projectile
+					Summons 6 orbiting saws around you that inflict 'Mimir' to enemies, hide the accessory to distable this effect
+					[c/00BBFF:'It's orange!]'
+					'''
+				DisplayName: Amalgamate Enchantment
+			}
+
+			AmalgamationEnchantment: {
+				Tooltip:
+					'''
+					Increases health, health regen and damage reduction by 10%
+					Increases magic and ranged knockback by 5%
+					Increases ranged and magic damage by 18%
+					Increases luck cap and bullet damage by 20%
+					Effect of Palladin's Shield
+					'A true amalgamation'
+					'''
+				DisplayName: Amalgamation Enchantment
+			}
+
+			AmethystGolemEnchantment: {
+				Tooltip:
+					'''
+					Increases attack speed and armor penetration by 5%
+					Increases damage reduction by 3%
+					When damaged you release crystal shards
+					'You cannot just sit inside enemies'
+					'''
+				DisplayName: Amethyst Golem Enchantment
+			}
+
+			ArkEnchantment: {
+				Tooltip:
+					'''
+					Increases movement speed by 35%
+					Increases knockback by 25%
+					Increases armor penetration and attack speed of all weapons by 15%
+					Increases max minions and sentries by 3
+					When under 75% of health: increased armor penetration, crit chance, damage by 14% and decreased mana cost by 10%
+					Summons 8 orbiting BL Books and Psyco Axes around the player and increases damage taken by 10%, you can hide the accessory to distable this effect
+					Melee weapons shoot an Alloyblood Dagger that inflicts 'Devilish' to enemies, hitting enemies with this dagger has a chance to drop Alloyblood Cans above you which heal 15% life
+					'Conclusion, One'
+					'''
+				DisplayName: Ark Enchantment
+			}
+
+			BoostEnchantment: {
+				Tooltip:
+					'''
+					Melee weapons that shoot projectiles now shoot an aditional fire ball
+					Increases max mana by 10%
+					Reduces mana cost by 5%
+					Greatly increases movement speed and allows to walk on water and lava
+					Increases attack speed by 15% and increases wing time by 10%
+					Makes lightnings fall from the sky when taking damage and using any weapon that's not ranged will shoot a fireball that explodes dealing damage on a large area
+					[c/FF5555:Boost Time!]
+					'''
+				DisplayName: Boost Enchantment
+			}
+
+			ChaosAngelEnchantment: {
+				Tooltip:
+					'''
+					Heals you by 10% of HP when you are below 20% HP and increases max HP by 10%
+					While in cooldown increases summon damage by 15% and decreases damage taken by 25% but can't naturally regenerate health
+					Increases summon damage and attack speed by 9%
+					Increases health regeneration by 20%
+					Increases max sentries by 1
+					'Im just tired man'
+					'''
+				DisplayName: Chaos Angel Enchantment
+			}
+
+			ForceOfCurses: {
+				Tooltip:
+					'''
+					Increases max minions and sentries by 3, increases armor penetration, attack speed and knockback by 20%, increases movement speed and damage by 35% and increases jump speed and wing time by 20%
+					Increases mana by 40 and increases damage reduction by 5%
+					Every 2 seconds you shoot a knife that homes into enemies and gives the player the 'Sunburnt' and 'Empowered' buffs
+					Increases invincibility frames by 2 seconds and weapons have a chance to shoot 3 projectile that deal 75% damage and shoot an aditional special projectile
+					Melee and ranged attack inflict frostburn
+					A style of swords can now shoot an extra projectile that goes through walls and deals 50% more damage
+					Melee weapons that shoot projectiles now shoot an aditional fire ball
+					Makes lightnings fall from the sky when taking damage and using any weapon that's not ranged will shoot a fireball that explodes dealing damage on a large area
+					Greatly increases movement speed and allows to walk on water and lava
+					When under 75% of health: increased armor penetration, crit chance, damage by 14% and decreased mana cost by 10%
+					Summons 8 orbiting BL Books and Psyco Axes around the player and increases damage taken by 10%, you can hide the accessory to distable this effect
+					Melee weapons shoot an Alloyblood Dagger that inflicts 'Devilish' to enemies, hitting enemies with this dagger has a chance to drop Alloyblood Cans above you which heal 15% life
+					'The end is never the end is never the end'
+					'''
+				DisplayName: Force Of Curses
+			}
+
+			ForceOfReferences: {
+				Tooltip:
+					'''
+					Increases invincibility frames by 3 seconds
+					Increases summon damage and attack speed by 10%
+					Increases knockback by 8% and increases health, health regen and damage reduction by 10%
+					Gives the player the 'Plague Regen' buff
+					Weapons have a chance to shoot 3 projectile that deal 75% damage and shoot an aditional special projectile
+					Summons 6 orbiting saws around you that inflict 'Mimir' to enemies, hide the accessory to distable this effect
+					Increases luck cap and bullet damage by 20%
+
+					Heals you by 10% of HP when you are below 20% HP and increases max HP by 10%
+					While in cooldown increases summon damage by 15% and decreases damage taken by 25% but can't naturally regenerate health
+					Increases flight time by 2 seconds and gives the effects of Star Veil, Shiny Stone, Honeycomb, Frozen Turtle Shell, Mana Flower and Celestial Cuffs
+					Increases falling speed and melee size and increases defense by 10
+					Makes you explode into a rain of fireballs when hit
+					'It's not orange'
+					'''
+				DisplayName: Force Of References
+			}
+
+			ForceOfUtilities: {
+				Tooltip:
+					'''
+					Increases damage, knockback, armor penetration, attack speed, max health and movement speed by 15%
+					Increases damage reduction by 5% and max minions by 2
+					Increases the speed of ranged velocity and ranged weapons have a chance to shoot a rocket
+					Using Magic or Summon weapons will shoot a homing projectile
+					When damaged you release crystal shards
+					Ranged weapons will shoot a projectile that will home into enemies and all weapons have a chance to shoot an Aluminium Shuriken
+					Buffs the Zombie Breaker, makes ALL projectile shooting weapons deal 5% more damage
+					'A handy tool that will help us later'
+					'''
+				DisplayName: Force Of Utilities
+			}
+
+			ChaosAngelSoul: {
+				Tooltip:
+					'''
+					Summons Chaos Hands to protect the player
+					Enemies hit by the hands will have a severely lowered movement speed
+					Increases summon damage and attack speed by 5%
+					Increases wing time by 2 seconds
+					Increases all crit rate by 2%
+					'''
+				DisplayName: Chaos Angel Soul
+			}
+
+			MagamaticEnchantment: {
+				Tooltip:
+					'''
+					Makes you explode into a rain of fireballs when hit
+					Increases armor penetration by 10%
+					Increases melee and summon damage and attack speed by 5%
+					'Rip and tear them apart'
+					'''
+				DisplayName: Magamatic Enchantment
+			}
+
+			VioletsSoul: {
+				Tooltip:
+					'''
+					'For the love of whatever higher being you have just use Recipe Browser or memorize what the materials did, If you can't do that then may you have mercy for yourself'
+					Increases damage, attack speed, knockback, movement speed, health, life regeneration, mana, damage reduction, aggro and immunity time
+					Spawnrate is increased to x5
+					Increases ranged velocity, you randomly shoot rockets, when hit you release crystal shards and fireballs
+					Gives the player buffs, increases luck, below 20% health you will be healed, increases flight time and grants the effects of Star Veil, Shiny Stone, Honeycomb, Frozen Turtle Shell, Mana Flower and Celestial Cuffs
+					Every 2 seconds shoots a projectile that homes, attacking has a chance to shoot 5 of the projectile you shot and summons orbiting projectiles if not hidden
+					Attacks shoot extra projectiles, increases the damage of all projectile shooting weapons by 5% and buffs the Zombie Breaker
+					'''
+				DisplayName: Violet's Soul
+			}
+
+			IcePrincessEnchantment: {
+				Tooltip:
+					'''
+					Increases invincibility frames by 2 seconds and weapons have a chance to shoot 3 projectile that deal 75% damage and shoot an aditional special projectile
+					Increases melee damage by 5% and melee speed by 8%
+					Increases mana by 40 and decreases knockback by 15%
+					Melee and ranged attack inflict frostburn
+					'A sight that chilled me to the bone'
+					'''
+				DisplayName: Ice Princess Enchantment
+			}
+
+			JackEnchantment: {
+				Tooltip:
+					'''
+					A style of swords can now shoot an extra projectile that goes through walls and deals 50% more damage
+					Increases crit chance by 4%, increases jump speed by 14%
+					Increases max minions and sentries by 2
+					Increases movement speed by 7%
+					'100110'
+					'''
+				DisplayName: Infra-Red Enchantment
+			}
+
+			MagnumEnchantment: {
+				Tooltip:
+					'''
+					Increases the speed of ranged velocity
+					Ranged weapons have a chance to shoot a rocket
+					Increases ranged damage by 10%
+					Increases max health by 10%
+					Increases movement speed by 5%
+					'Time for the highlight'
+					'''
+				DisplayName: Magnum Enchantment
+			}
+
+			ArmoredBullEnchantment: {
+				Tooltip:
+					'''
+					Increases endurance and melee attack speed by 2%
+					Zombie Breaker will now be inflict 'Venom', and the 'Poison Charge' mode's attacks will heal you by 2% of your max health
+					Increases the damage of ALL projectile shooting weapons by 5%
+					'Hit! Golden Fever'
+					'''
+				DisplayName: Armored Bull Enchantment
+			}
+
+			MaskedPlagueEnchantment: {
+				Tooltip:
+					'''
+					Using Magic or Summon weapons will shoot a homing projectile that inflicts 'Crystal Plague'
+					Increases magic damage by 6% and summon damage by 10%
+					Increases max minions by 2
+					'No it dosen't bring the plague'
+					'''
+				DisplayName: Masked Plague Enchantment
+			}
+
+			MemerEnchantment: {
+				Tooltip:
+					'''
+					Increases flight time by 2 seconds and increases magic damage by 15%
+					Star Veil, Shiny Stone, Honeycomb, Mana Flower and Celestial Cuffs effects
+					Increases falling speed and melee size
+					Increases defense by 10
+					'You can make rules, but who's gonna follow them?'
+					'''
+				DisplayName: Memer Enchantment
+			}
+
+			SandwaveEnchantment: {
+				Tooltip:
+					'''
+					Every 2 seconds you shoot a knife that homes into enemies
+					Gives the player the 'Sunburnt' and 'Empowered' buffs
+					Increases all damage by 18% and increases damage reduction by 5%
+					'Glory on it's bare bones'
+					'''
+				DisplayName: Sandwave Enchantment
+			}
+
+			SpazCape: {
+				Tooltip: Allows the player to fly
+				DisplayName: Spaz Cape
+			}
+
+			ThunderbladeCharm: {
+				Tooltip:
+					'''
+					Increases attack speed by 5%
+					Makes lightnings fall from the sky when taking damage
+					'''
+				DisplayName: Thunderblade Charm
+			}
+
+			AlloybloodChestplate: {
+				Tooltip:
+					'''
+					'殺意'
+					Increases damage by 12% and movement speed by 5%
+					Increases weapon speed by 7%
+					Increases max minions by 2
+					Decreases mana cost by 18%
+					'''
+				DisplayName: Alloyblood Torso
+			}
+
+			AlloybloodHelmet: {
+				Tooltip:
+					'''
+					'絶望'
+					Increases damage by 7% and crit chance by 2%
+					Increases weapon speed by 18%
+					Increases max minions by 1
+					Increases max mana by 40
+					'''
+				DisplayName: Alloyblood Visor
+			}
+
+			AlloybloodLeggings: {
+				Tooltip:
+					'''
+					'破滅'
+					Increases movement speed by 25%
+					Increases knockback of weapons
+					Increases armor penetration and attack speed of melee and summoner weapons by 5%
+					'''
+				DisplayName: Alloyblood Greaves
+			}
+
+			AluminiumBreastplate: {
+				Tooltip:
+					'''
+					Increases weapon speed by 1%
+					Increases magic damage by 2%
+					'''
+				DisplayName: Aluminium Breastplate
+			}
+
+			AluminiumHelmet: {
+				Tooltip:
+					'''
+					Increases all weapon speed by 2%
+					Increases crit chance by 3%
+					'''
+				DisplayName: Aluminium Helmet
+			}
+
+			AluminiumLeggings: {
+				Tooltip:
+					'''
+					Increases all weapon speed by 2%
+					Increases damage by 2%
+					'''
+				DisplayName: Aluminium Boots
+			}
+
+			AmethystGolemBoots: {
+				Tooltip: Increases ranged speed by 3%, and melee speed by 5%
+				DisplayName: Amethyst Boots
+			}
+
+			AmethystGolemChestplate: {
+				Tooltip: Increases all damage by 4%
+				DisplayName: Amethyst Chestplate
+			}
+
+			AmethystGolemHelmet: {
+				Tooltip: Increases melee and minion damage by 5% and ranged & magic speed by 3%
+				DisplayName: Amethyst Visor
+			}
+
+			ArkBoots: {
+				Tooltip:
+					'''
+					'闘争'
+					Increases all weapon damage and armor penetration by 10%
+					Increases knockback of weapons
+					Increases damage reduction by 5%
+					Increases movement speed by 30%
+					'''
+				DisplayName: Ark Greaves
+			}
+
+			ArkChestplate: {
+				Tooltip:
+					'''
+					'憎悪'
+					Increases all weapon damage and armor penetration by 10%, increases attack speed by 15%
+					Increases knockback of weapons
+					Increases max minion slots by 2, increases damage reduction by 5%
+					'''
+				DisplayName: Ark Body
+			}
+
+			ArkHelmet: {
+				Tooltip:
+					'''
+					'絶滅'
+					Increases all weapon damage, crit chance, attack speed and armor penetration by 15% if the player is below 50% health
+					Increases damage and attack speed by 5%
+					Increases max minion slots by 2, increases max mana by 60
+					'''
+				DisplayName: Ark Headgear
+			}
+
+			BoostFoxBoots: {
+				Tooltip:
+					'''
+					Increases movement speed by 25%
+					Increases all weapon attack speed by 15%
+					Increases wing time by 10%
+					Allows walking on water and lava
+					'''
+				DisplayName: Boost Boots
+			}
+
+			BoostFoxChestplate: {
+				Tooltip:
+					'''
+					Increases melee, magic and summon damage and attack speed by 7%
+					Decreases ranged damage by 10%
+					Increases melee knockback by 20%
+					Increases movement speed by 10%
+					'''
+				DisplayName: Boost Chestplate
+			}
+
+			BoostFoxMask: {
+				Tooltip:
+					'''
+					Increases melee damage by 10%
+					Increases melee speed and magic damage by 6%
+					Increases mana regen and reduces mana cost by 5%
+					Increases movement speed by 15%
+					'''
+				DisplayName: Boost Mask
+			}
+
+			ArmoredBullGreaves: {
+				Tooltip:
+					'''
+					Increases melee attack speed and damage by 2%
+					Increases damage reduction by 1%
+					Increases movement speed by 5%
+					'''
+				DisplayName: Armored Bull Greaves
+			}
+
+			ArmoredBullChestplate: {
+				Tooltip:
+					'''
+					Increases melee attack speed by 6%
+					Increases damage reduction by 2%
+					Increases aggression slightly
+					'''
+				DisplayName: Armored Bull Chestplate
+			}
+
+			ArmoredBullHelmet: {
+				Tooltip:
+					'''
+					Increases melee damage by 4%
+					Increases attack speed and knockback by 3%
+					Increases damage reduction by 1%
+					'''
+				DisplayName: Armored Bull Helmet
+			}
+
+			InfraRedGreaves: {
+				Tooltip:
+					'''
+					Increases movement speed and jump speed by 7%
+					Increases max mana by 60
+					Increases attack speed by 3%
+					'''
+				DisplayName: Infra-Red Greaves
+			}
+
+			InfraRedPlating: {
+				Tooltip:
+					'''
+					Increases all damage by 6%
+					Increases critical strike chance by 4
+					Increases max summons and sentries by 2
+					'''
+				DisplayName: Infra-Red Chestplate
+			}
+
+			InfraRedVisor: {
+				Tooltip:
+					'''
+					Increases crit chance and attack speed by 2%
+					Increases ranged and magic damage by 3%
+					'''
+				DisplayName: Infra-Red Visor
+			}
+
+			MagnumFoxBoots: {
+				Tooltip:
+					'''
+					Increases melee attack speed by 4%
+					Increases movement speed by 5%
+					'''
+				DisplayName: Magnum Boots
+			}
+
+			MagnumFoxChestplate: {
+				Tooltip:
+					'''
+					Increases all weapon attack speed by 5%
+					Increases all knockback slightly
+					'''
+				DisplayName: Magnum Chestplate
+			}
+
+			MagnumFoxMask: {
+				Tooltip: Increases all damage by 10%
+				DisplayName: Magnum Mask
+			}
+
+			MaskedPlagueBreastplate: {
+				Tooltip:
+					'''
+					Increases magic weapon speed by 5%
+					Increases magic and ranged weapon damage by 5%
+					Decreases mana costs by 3%
+					'''
+				DisplayName: Masked Plague's Breastplate
+			}
+
+			MaskedPlagueHeadgear: {
+				Tooltip:
+					'''
+					Increases movement speed by 3%
+					Increases magic and ranged crit chance by 5%
+					'''
+				DisplayName: Masked Plague's Headgear
+			}
+
+			DGPCrate: {
+				Tooltip:
+					'''
+					'Through careful choosing, you have been chosen to participate in the Desire Grand Prix'
+					Right-Click to open
+					'''
+				DisplayName: Desire Crate
+			}
+
+			JackDroneOld: {
+				Tooltip: Calls an ancient machine
+				DisplayName: Ancient Drone
+			}
+
+			Medkit: {
+				Tooltip: Increases health regeneration for 20 seconds
+				DisplayName: Medkit
+			}
+
+			AlloyBox: {
+				Tooltip: "'A strange box filled with technology that you don't even remember making'"
+				DisplayName: Alloy Box
+			}
+
+			BossUpgradeCrystal: {
+				Tooltip: "'A crystal powerful enough to make more items'"
+				DisplayName: Crystal Ring
+			}
+
+			HardmodeUpgradeCrystal: {
+				Tooltip: "'A crystal powerful enough to make even more items'"
+				DisplayName: Crystal Claw
+			}
+
+			ScrapFragment: {
+				Tooltip: "'A bunch of crystals and metal plates, somehow perfectly cut'"
+				DisplayName: Scrap Fragment
+			}
+
+			SpecialUpgradeCrystal: {
+				Tooltip: "'A crystal gotten from dificult extraction, extracting it is more of patience than effort'"
+				DisplayName: Crystal Emblem
+			}
+
+			UpgradeCrystal: {
+				Tooltip: "'A crystal powerful enough to make some items'"
+				DisplayName: Crystal Screw
+			}
+
+			AmethystModule: {
+				Tooltip: Homing beams
+				DisplayName: Violet Module
+			}
+
+			MaskedPlagueModule: {
+				Tooltip: Explosive beams
+				DisplayName: Masked Plague Module
+			}
+
+			NeonModule: {
+				Tooltip: Piercing beam
+				DisplayName: Neon Module
+			}
+
+			JuiceBox: {
+				Tooltip: "'Smells so nice'"
+				DisplayName: Oil Box
+			}
+
+			MagmaAltar: {
+				Tooltip: Allows for summoning Magma Eye freely
+				DisplayName: Magmatic Altar
+			}
+
+			DualSlashShooter: {
+				Tooltip: "'A weapon in beta stage, handle it carefuly'"
+				DisplayName: Dual Slash Shooter
+			}
+
+			DualSlashShooterDX: {
+				Tooltip: "'Testing Complete'"
+				DisplayName: Dual Slash Shooter DX
+			}
+
+			Crucifix: {
+				Tooltip: Shoots hallowed energy in random directions that after some time home into enemies
+				DisplayName: The Crucifix
+			}
+
+			InfraRedBook: {
+				Tooltip: Creates a crate that stops moving after a second, that on hit with enemies explodes into 4 Infra-Red Beams
+				DisplayName: Infra-Red Tome
+			}
+
+			InfraRedStaff: {
+				Tooltip: Shoots a ring of energy from your cursor that spirals outwards
+				DisplayName: Infra-Red Staff
+			}
+
+			MaskedPlagueStaff: {
+				Tooltip: Shoots 3 plague bolts that home into enemies, inflict poison and can go through blocks
+				DisplayName: Masked Plague's Staff
+			}
+
+			MaskedPlagueTome: {
+				Tooltip: Shoots a plague bolt that inflicts poison and homes into enemies, having this in your inventory increases magic damage and mana by [c/66FF66:5%]
+				DisplayName: Masked Plague's Tome
+			}
+
+			PrismaticBlade: {
+				Tooltip:
+					'''
+					Shoots homing swords
+					Has a chance to throw swords from the sky and below the player
+					'''
+				DisplayName: Prism Blade
+			}
+
+			PrismaticSwordDance: {
+				Tooltip: Shoots homing swords
+				DisplayName: Prismatic Sword Staff
+			}
+
+			SpaceDoggoStaff: {
+				Tooltip:
+					'''
+					Holding down the use button will charge 
+					Has a chance to throw swords from the sky and below the player
+					'''
+				DisplayName: Akira's Space Staff
+			}
+
+			TomeOfDreams: {
+				Tooltip:
+					'''
+					Shoots a homing heart that inflicts 'Glimmering' to enemies
+					Right-Click will give you 'Violet's Blessing' for a minute and shoot a faster and stronger heart, uses 50 mana
+					'It is written in.. Spanish?'
+					'''
+				DisplayName: Tome Of Dreams
+			}
+
+			AlloybloodSword: {
+				Tooltip:
+					'''
+					Throws a sword which chases your cursor
+					Grants the 'Blood Overflow' buff upon hitting enemies 
+					'''
+				DisplayName: Alloyblood Sword
+			}
+
+			AlloyDagger: {
+				Tooltip: Throws a dagger at enemies
+				DisplayName: Alloy Metal Dagger
+			}
+
+			AlloySword: {
+				Tooltip: Right-click to throw a dagger that can randomly multiplicate when hitting an enemy
+				DisplayName: Alloy Metal Sword
+			}
+
+			AluminiumSword: {
+				Tooltip: "'I've got no idea'"
+				DisplayName: Aluminium Sword
+			}
+
+			AmethystGreatSlasher: {
+				Tooltip:
+					'''
+					'Not only shouldn't you be holding it, but it somehow isn't falling apart'
+					Inflicts Crystal Sickness to enemies and Thoughtful to you
+					'''
+				DisplayName: Violet's Great Slasher
+			}
+
+			AmethystSword: {
+				Tooltip:
+					'''
+					'You can't hold it'
+					Inflicts Crystal Sickness to enemies
+					'''
+				DisplayName: Violet's Sword
+			}
+
+			AncientPickaxe: {
+				Tooltip: Hold right-click to throw the pickaxe in an arc
+				DisplayName: Ancient Pickaxe
+			}
+
+			ArkBlade: {
+				Tooltip:
+					'''
+					Inflicts 'Devilish' to enemies, and makes them explode
+					Grants the 'Blood Overflow' buff upon hitting enemies
+					'''
+				DisplayName: Ark Blade
+			}
+
+			AstraLux: {
+				DisplayName: Astra Lux
+				Tooltip:
+					'''
+					Inflicts 'Devilish' to enemies
+					Heals you by 0.5% of health when hitting an enemy
+					[c/DD1166:--Special Melee Weapon--]
+					'''
+			}
+
+			BiomeSword: {
+				DisplayName: Refined Wooden Sword
+				Tooltip:
+					'''
+					'Slightly better than before'
+					Shoots a beam that has just enough range to hit enemies
+					'''
+			}
+
+			BraycoeSword: {
+				DisplayName: Hallowed Wood Sword
+				Tooltip:
+					'''
+					'Slay through their very souls'
+					Shoots a beam that vanishes quickly
+					'''
+			}
+
+			BullChainsaw: {
+				Tooltip:
+					'''
+					'Poison Charge'
+					Inflicts Poison to enemies
+					'''
+				DisplayName: Zombie Breaker
+			}
+
+			CrystalNeonSword: {
+				Tooltip:
+					'''
+					Shoots a sword that upon hitting an enemy summons another one that spins in the spot
+					'Slashy slash'
+					'''
+				DisplayName: Crystal Neon Sword
+			}
+
+			DesertAxe: {
+				Tooltip:
+					'''
+					'S@nd'
+					[c/7700AA:Obtainable from killing enemies in the desert]
+					'''
+				DisplayName: Desert Axe
+			}
+
+			DualDesertAxe: {
+				Tooltip:
+					'''
+					'It's coarse and rough and it gets everywhere'
+					Right-click to switch the weapon type
+					'''
+				DisplayName: Dual Desert Axe
+			}
+
+			DualDesertSword: {
+				Tooltip:
+					'''
+					'I don't like sand'
+					Right-click to switch the weapon type
+					'''
+				DisplayName: Dual Desert Sword
+			}
+
+			DualSlashBlade: {
+				Tooltip:
+					'''
+					'Blade mode'
+					Grants 'Cutting Edge', 'Rapid Healing' and 'Wrath' buffs when hitting an enemy
+					Inflicts 'Venom' on enemies
+					'''
+				DisplayName: Dual Slash Blade
+			}
+
+			DualSlashCutter: {
+				Tooltip:
+					'''
+					'Today is friday in california'
+					Grants 'Cutting Edge', 'Rapid Healing' and 'Wrath' buffs when hitting an enemy
+					Inflicts 'Venom' on enemies
+					'''
+				DisplayName: Dual Slash Cutter
+			}
+
+			ElementalSpear: {
+				Tooltip:
+					'''
+					'Organic materials were unharmed durning the making'
+					Shoot petals that when hitting enemies become sun spikeballs
+					Hitting enemies with the spear will create ocean coins that will fall on top of enemies
+					'''
+				DisplayName: Amalgamated Spear
+			}
+
+			Epiphany: {
+				Tooltip:
+					'''
+					'The realization of it's acts awakened great power'
+					Inflicts 'Chilling Flames' to enemies
+					'''
+				DisplayName: Epiphany
+			}
+
+			ExolBlade: {
+				Tooltip: Summons swords from the sides of your cursor
+				DisplayName: Magma's Edge
+			}
+
+			GerdDagger: {
+				Tooltip: Having this in your inventory increases melee speed by [c/66FF66:2%]
+				DisplayName: Survival Sword
+			}
+
+			GerdHeroSword: {
+				Tooltip:
+					'''
+					Shoots swords that over time summon homing swords
+					Increases melee speed and all damage by [c/66FF66:5%] and increases critical chance by [c/66FF66:7%] while in your inventory
+					'''
+				DisplayName: Hero Training Sword
+			}
+
+			GerdOldSword: {
+				Tooltip: Having this in your inventory increases melee speed and all damage by [c/66FF66:3%]
+				DisplayName: Training Sword
+			}
+
+			GerdSpear: {
+				DisplayName: Stella Salutis
+				Tooltip: When hitting enemies with any of the projectiles, grants the player the 'Cutting Edge' buff
+			}
+
+			GerdSword: {
+				Tooltip:
+					'''
+					'There's no shadows without light, but what about light without shadows?'
+					Inflicts 'Crystal Sickness', 'Devilish', and 'Sun Burnt' to enemies
+					'''
+				DisplayName: Umbra del Solei
+			}
+
+			Glaicey: {
+				Tooltip: Inflicts Frostburn to enemies
+				DisplayName: Glaicey
+			}
+
+			InfraRedSpear: {
+				Tooltip:
+					'''
+					'You won't even remember what you used it for'
+					Having over [c/66FF66:50%] HP makes the spear deal double damage
+					Hold up to spin the spear around you, hitting enemies causes them to explode and heals your by [c/66FF66:1%] of your max health
+					'''
+				DisplayName: Infra-Red Spear
+			}
+
+			InfraRedSword: {
+				Tooltip:
+					'''
+					Inflicts Partially Crystalized debuff to enemies
+					On hit with the blade or projectiles creates an explosion
+					[c/DD1166:--Special Melee Weapon--]
+					'''
+				DisplayName: Infra-Red Sword
+			}
+
+			JackSword: {
+				Tooltip:
+					'''
+					'A tamed version of it's wild counterpart'
+					Inflicts Partially Crystalized debuff to enemies
+					[c/DD1166:--Special Melee Weapon--]
+					'''
+				DisplayName: Ancient Sword
+			}
+
+			KizunaScythe: {
+				Tooltip: Will go backwards after a few seconds
+				DisplayName: Kizuna's Scythe
+			}
+
+			LostTime: {
+				Tooltip:
+					'''
+					Shoots blades that inflicts Cursed Inferno and Ichor to enemies
+					Shoots a big slash that explodes when hitting enemies
+					'It's creation took endless centuries'
+					[c/DD1166:--Special Melee Weapon--]
+					'''
+				DisplayName: Lost Time's Blade
+			}
+
+			LuxLunae: {
+				DisplayName: Lux Lunae
+				Tooltip:
+					'''
+					Shoots a beam that when hitting an enemy, grants the player the 'Cutting Edge' and 'Empowered' buffs
+					[c/DD1166:--Special Melee Weapon--]
+					'''
+			}
+
+			MaskedPlagueFlail: {
+				Tooltip:
+					'''
+					Inflicts poison to enemies
+					Hitting enemies shoots Masked Plague Stingers
+					'''
+				DisplayName: Masked Plague's Flail
+			}
+
+			MaskedPlagueSword: {
+				Tooltip: Shoots swords from the sky
+				DisplayName: Masked Plague's Sword
+			}
+
+			MumeikenKyomu: {
+				Tooltip:
+					'''
+					Inflits 'Hellfire' to enemies
+					Shoots homing Phoenixes
+					'Kyomu, the pitch black blade returns all to nothing'
+					[c/DD1166:--Special Melee Weapon--]
+					'''
+				DisplayName: Mumeiken Kyomu
+			}
+
+			NanashiDagger: {
+				Tooltip:
+					'''
+					On hit has a [c/FF4444:5%] chance to cover the screen with the creation that deals massive damage in all the screen
+					'Well, well I'm, I'm gonna make sure, you, you all, I'm gonna... I'mma make sure you... you, I... I'mma do it'
+					'''
+				DisplayName: Nanashi Dagger
+			}
+
+			NeonBlade: {
+				Tooltip:
+					'''
+					Inflits 'Hellfire' to enemies
+					'1000 degrees knife'
+					[c/DD1166:--Special Melee Weapon--]
+					'''
+				DisplayName: Neon Blade
+			}
+
+			OvercooledSpear: {
+				Tooltip:
+					'''
+					'Execute order 26'
+					Inflicts Chillburn to enemies
+					Shoots energy spears that have small homing
+					'''
+				DisplayName: Overcooled Spear
+			}
+
+			PhoenixSword: {
+				Tooltip:
+					'''
+					Inflicts 'Hellfire' to enemies
+					Hitting enemies causes an explosion that deals [c/FF4444:50%] of damage
+					'''
+				DisplayName: Phoenix Sword
+			}
+
+			PrincessTrident: {
+				Tooltip:
+					'''
+					'Bathwater pizza'
+					Inflicts Trident Bite to the player if hitting an enemy directly with the spear
+					'''
+				DisplayName: Atlantis Princess Trident
+			}
+
+			PsycopathAxe: {
+				Tooltip: Throw an axe that spirals arround you
+				DisplayName: Psycopath Axe
+			}
+
+			ShadowSword: {
+				Tooltip:
+					'''
+					'They're not darkness, just the lack of light in you'
+					Leaves a shadow slash that remains in place
+					[c/DD1166:--Special Melee Weapon--]
+					'''
+				DisplayName: Shadow Sword
+			}
+
+			SpazSword: {
+				Tooltip:
+					'''
+					Hitting enemies makes homing eyes fall on top of the enemy and grants you the 'Empowered' buff for 5 seconds
+					The damage of the eyes is [c/FF4444:75%] of the damage dealt
+					'''
+				DisplayName: Spazmatanium Sword
+			}
+
+			TrueBraycoeSword: {
+				DisplayName: True Braycoe Sword
+				Tooltip: ""
+			}
+
+			TrueSpazSword: {
+				Tooltip:
+					'''
+					Shoots blades that inflicts Cursed Inferno and Ichor to enemies
+					'Among all, it just had the best performance'
+					[c/DD1166:--Special Melee Weapon--]
+					'''
+				DisplayName: Lost Time's Sword
+			}
+
+			UltraBlueChainsaw: {
+				Tooltip:
+					'''
+					'I got nothing man'
+					[c/DD1166:--Special Melee Weapon--]
+					'''
+				DisplayName: Ultra-Blue Chainsaw
+			}
+
+			XShotVice: {
+				Tooltip: "'Technology has lead to strange discoveries'"
+				DisplayName: Ultra-Blue Vice
+			}
+
+			AcheronBow: {
+				Tooltip:
+					'''
+					'The parts are more useful like this than being a shield'
+					Shoots a spread of 3 arrows, and an explosive bullet
+					'''
+				DisplayName: Acheron Bow
+			}
+
+			AlloybloodShotgun: {
+				Tooltip: Shoots 6 bullets that can pass through tiles, and an extra one that pierces infinite times as long as the enemy hit isn't a boss
+				DisplayName: Alloyblood Shotgun
+			}
+
+			AluminiumBow: {
+				Tooltip: "'Bet those aliens won't know what hit them'"
+				DisplayName: Aluminium Bow
+			}
+
+			AluminiumGun: {
+				Tooltip:
+					'''
+					'Compressed to burning hot'
+					Has a chance to shoot a special bullet
+					The bullet can pierce 3 times, each hit with an enemy increases it's damage by 10
+					'''
+				DisplayName: Aluminium Gun
+			}
+
+			AluminiumShuriken: {
+				Tooltip: The damage the projectile deals increases by 3 every 0.25 seconds it's on the air
+				DisplayName: Aluminium Shuriken
+			}
+
+			AmalgamatedCannon: {
+				Tooltip: "'An amalgamation of another world's guns, these are the worst parts of other guns in one'"
+				DisplayName: Amalgamate's Cannon
+			}
+
+			AmethystBlaster: {
+				Tooltip:
+					'''
+					'Who thought a gem was a good material to make a gun out of?'
+					Replaces normal bullets for crystal bullets
+					'''
+				DisplayName: Violet Blaster
+			}
+
+			AmethystHandgun: {
+				Tooltip: "'There's no safe mode'"
+				DisplayName: Violet's Handgun
+			}
+
+			AncientRifle: {
+				Tooltip: Replaces most bullets with Infra-Red Bullets that inflict 'Partially Crystalized' on enemies
+				DisplayName: Ancient Rifle
+			}
+
+			BMFG: {
+				Tooltip:
+					'''
+					Shoots a fast high damage energy ray, but hitting enemies wont't allow you to shoot again for some time
+					Uses modules for ammo
+					'''
+				DisplayName: Bio-Mass Force Gun
+			}
+
+			ChargeRifle: {
+				Tooltip: Shoots a burst of 3 bullets and a has a chance to shoot a special one that always goes where you aim
+				DisplayName: Charged Rifle
+			}
+
+			CoreEjectShotgun: {
+				Tooltip:
+					'''
+					Shoots a spread of 10 bullets
+					Right click to shoot an explosive core that explodes dealing triple damage
+					'''
+				DisplayName: Core Eject Shotgun
+			}
+
+			DualBlasterShooter: {
+				Tooltip:
+					'''
+					'Blaster mode'
+					Bullets home into enemies if there's one nearby
+					Shoots a burst of bullets
+					'''
+				DisplayName: Dual Blaster Shooter
+			}
+
+			DualGunShooter: {
+				Tooltip:
+					'''
+					'Shoot!'
+					Bullets home into enemies if there's one nearby
+					'''
+				DisplayName: Dual Gun Shooter
+			}
+
+			DuneSearcherShotgun: {
+				Tooltip: Shoots 5 high velocity bullets, and has a chance to shoot an extra one that explodes when hitting an enemy, and deals [c/66FF66:50%] more damage to enemies
+				DisplayName: Dune Searcher Shotgun
+			}
+
+			Equalizer: {
+				Tooltip:
+					'''
+					'The weight is equal from all sides'
+					When hitting an enemy they will split into 2 other non-bouncing projectiles
+					Projectiles will home into targets
+					'''
+				DisplayName: Equalizer
+			}
+
+			EqualizerArk: {
+				Tooltip:
+					'''
+					'Balance though force'
+					When piercing more than 5 enemies or after some time the projectiles will split into 3 smaller non-homing projectiles with random spread
+					The homing projectile will circle around enemies
+					Has a chance to shoot a secondary projectile which will explode in a small area that deals [c/66FF66:150%] damage
+					'''
+				DisplayName: Ark's Equalizer
+			}
+
+			EqualizerLite: {
+				Tooltip:
+					'''
+					'I think i forgot something...'
+					Projectiles bounce on enemies and tiles if they haven't hit an enemy yet
+					When hitting an enemy they will split into 3 other non-bouncing projectiles
+					'''
+				DisplayName: Equalizer Lite
+			}
+
+			GerdHandgun: {
+				Tooltip:
+					'''
+					Bullets that don't pierce now pierce one time
+					Right-Click to shoot 3 bursts of 2-4 bullets that move extremely quickly but deal only [c/FF4444:80%] of damage
+					'''
+				DisplayName: Ultra-Blue Handgun
+			}
+
+			GerdRocketLauncher: {
+				Tooltip:
+					'''
+					'It's easier modifying things than making them'
+					Increases ranged damage by [c/66FF66:8%] and increases ranged knockback while in the inventory
+					On contact with an enemy the projectile will explode
+					'''
+				DisplayName: Ultra-Blue Rocket Launcher
+			}
+
+			GerdSniper: {
+				Tooltip:
+					'''
+					'U got a problem mate?'
+					Having this in your inventory decreases ranged weapon speed by [c/FF4444:5%] and increases damage by [c/66FF66:10%]
+					Upon hitting an enemy makes the projectile split into 4 energy bolts which home after a bit
+					'''
+				DisplayName: Ultra-Blue Dart Rifle
+			}
+
+			InfraRedMinigun: {
+				Tooltip: Replaces most bullets with Infra-Red Bullets that inflict 'Partially Crystalized' on enemies
+				DisplayName: Infra-Red Minigun
+			}
+
+			JackGun: {
+				Tooltip: Replaces most bullets with Infra-Red Bullets that inflict 'Partially Crystalized' on enemies
+				DisplayName: Infra-Red Gun
+			}
+
+			JackRailcannon: {
+				Tooltip:
+					'''
+					Shoots a fast high damage ray, but hitting enemies wont't allow you to shoot again for some time
+					Uses modules for ammo
+					'''
+				DisplayName: Ancient Railgun
+			}
+
+			JackRailgun: {
+				Tooltip:
+					'''
+					Shoots a fast high damage ray, but hitting enemies wont't allow you to shoot again for some time
+					Uses modules for ammo
+					'''
+				DisplayName: Infra-Red Railgun
+			}
+
+			JackRifle: {
+				Tooltip:
+					'''
+					'Your enemies wish they don't get hit by this'
+					Inflicts 'Partially Crystalized' on enemies, deals massive damage over time
+					'''
+				DisplayName: Infra-Red Rifle
+			}
+
+			MagnumRifle: {
+				Tooltip:
+					'''
+					'Magnum'
+					Shoots a strong piercing bullet
+					'''
+				DisplayName: Magnum Rifle
+			}
+
+			MagnumShooter: {
+				Tooltip:
+					'''
+					'Ready, Fight'
+					Shoots in bursts of 3
+					'''
+				DisplayName: Magnum Shooter
+			}
+
+			MaskedPlagueRifle: {
+				Tooltip: Inflits Poison to enemies
+				DisplayName: Masked Plague Rifle
+			}
+
+			MaskedPlagueShotgun: {
+				Tooltip: Shoots 2 times in a row
+				DisplayName: Masked Plague Shotgun
+			}
+
+			NeonGunblade: {
+				Tooltip: Hitting enemies with the projectile will create 2 more going to the sides of the projectile's direction
+				DisplayName: Neon Gunblade
+			}
+
+			OvercooledNailgun: {
+				Tooltip:
+					'''
+					Slowly overcools and slows down due to the barrels getting clogged with ice
+					Can randomly unclog releasing small bursts of projectiles
+					'''
+				DisplayName: Over-Cooled Nailgun
+			}
+
+			OvercooledRifle: {
+				Tooltip:
+					'''
+					Shoots 1-2 bullets with some spread that move faster than normal bullets
+					Replaces normal bullets with overcooled bullets that inflict Frostburn
+					'''
+				DisplayName: Overcooled Rifle
+			}
+
+			OvercooledSniperRifle: {
+				Tooltip:
+					'''
+					Replaces normal bullets with overcooled bullets that inflict Frostburn
+					Bullets are also far quicker than normal bullets and pierce 3 more enemies(Piercing dosen't work on Chlorophyte bullets)
+					Right-Click to shoot a faster bullet that deals significantly damage and pierces 5 times instead of 3 (Unless you're using Chlorophyte bullets)
+					'''
+				DisplayName: Overcooled Sniper Rifle
+			}
+
+			PressureBuilder: {
+				Tooltip:
+					'''
+					Shoots 6 high velocity bullets that can pierce 3 extra times and an extra one that moves x3 as fast, and deals double damage
+					Deals [c/66FF66:300%] more damage when under [c/FF4444:50%] HP
+					'''
+				DisplayName: Pressure Builder
+			}
+
+			PrismaticRifle: {
+				Tooltip:
+					'''
+					Shoots a piercing and fast damaging shot
+					'Don't let em' think'
+					'''
+				DisplayName: Prismatic Rifle
+			}
+
+			PrismaticSniper: {
+				Tooltip: Shoots a homing and piercing bullet that can pierce 5 enemies
+				DisplayName: Prism Sniper
+			}
+
+			ScarletLauncher: {
+				Tooltip:
+					'''
+					'It can't slow down time sadly'
+					Right-click to shoot a rocket that deals [c/66FF66:200%] damage, that has a longer attack cooldown and moves after a 2/3rd of a second
+					'''
+				DisplayName: Scalet Launcher
+			}
+
+			SpazChargeBow: {
+				Tooltip:
+					'''
+					'Dosen't actually charge it's already charged'
+					Shoots 2 Projectiles in a row
+					Replaces wooden arrows for a special projectile that splits into 3
+					'''
+				DisplayName: Spazmatanium Charge Bow
+			}
+
+			VacuumBuilder: {
+				Tooltip: Shoots 6 high velocity bullets and an extra one that pierces normal enemies, deals [c/66FF66:200%] damage when at full HP
+				DisplayName: Vacuum Builder
+			}
+
+			XShotBow: {
+				Tooltip:
+					'''
+					Increases all ranged weapon speed by [c/66FF66:5%] but decreases crit chance by [c/FF44444:2%]
+					Has a chance to shoot an ultra-blue energy bolt which after some time homes into enemies
+					Upon hitting enemies the arrow projectile will double it's speed
+					'''
+				DisplayName: Ultra-Blue Bow
+			}
+
+			YangGun: {
+				Tooltip:
+					'''
+					'Bad in the Good'
+					Upon hitting an enemy the projectiles will split into 3 more
+					'''
+				DisplayName: Yang Gun
+			}
+
+			YinGun: {
+				Tooltip:
+					'''
+					'Good in the Bad'
+					Upon hitting an enemy the projectiles will go in the oposite direction
+					'''
+				DisplayName: Yin Gun
+			}
+
+			SilentGloves: {
+				Tooltip:
+					'''
+					Right-Click to change attack types: Sword, Katana, Rifle
+					Uses bullets on Rifle mode
+					'O sorrow'
+					'''
+				DisplayName: Silent Gloves
+			}
+
+			AlloybloodWhip: {
+				Tooltip:
+					'''
+					'Do you remember'
+					Inflicts Devilish to enemies
+					Winding up will increase the damage dealt
+					Inflicts 'Devilish' to enemies
+					'''
+				DisplayName: Alloyblood Whip
+			}
+
+			PlanteraWhip: {
+				Tooltip:
+					'''
+					Inflicts Venom to enemies
+					Hitting enemies has a chance for them to shoot thorns in random directions
+					'''
+				DisplayName: Plantera Whip
+			}
+
+			SnapToReality: {
+				Tooltip:
+					'''
+					'Oops there goes gravity'
+					Inflicts 'Chillburn' to enemies
+					When hitting enemies shoots extra waves that inflicts 'Thoughtful' to enemies
+					'''
+				DisplayName: Reality Snapper
+			}
+
+			SunBurntWhip: {
+				Tooltip:
+					'''
+					'Made durning the peak light of the sun shined it's maker's town'
+					Inflicts Sun Burn to enemies and yourself
+					Holding the use button will wind-up and increase the damage it deals until x3 damage
+					'''
+				DisplayName: Sun Burnt Whip
+			}
+
+			AlloybloodCan: {
+				DisplayName: Alloyblood Can
+				Tooltip: ""
+			}
+
+			TenebrisClone: {
+				DisplayName: Tenebris
+				Tooltip: ""
+			}
+
+			AmalgamationCrown: {
+				DisplayName: Amalgamation's Crown
+				Tooltip: ""
+			}
+
+			AmalgamationLeggings: {
+				DisplayName: Amalgamation's Leggings
+				Tooltip: ""
+			}
+
+			AmalgamationShirt: {
+				DisplayName: Amalgamation's Shirt
+				Tooltip: ""
+			}
+
+			ChaosAngelHalo: {
+				DisplayName: Chaos Angel Halo
+				Tooltip: ""
+			}
+
+			ChaosAngelPants: {
+				DisplayName: Chaos Angel Pants
+				Tooltip: ""
+			}
+
+			ChaosAngelShirt: {
+				DisplayName: Chaos Angel Shirt
+				Tooltip: ""
+			}
+
+			GerdBody: {
+				DisplayName: Amalgamate's Chestplate
+				Tooltip: ""
+			}
+
+			GerdHead: {
+				DisplayName: Amalgamate's Mask
+				Tooltip: ""
+			}
+
+			GerdLegs: {
+				DisplayName: Amalgamate's Boots
+				Tooltip: ""
+			}
+
+			IceyBody: {
+				DisplayName: Ice Princess Dress
+				Tooltip: ""
+			}
+
+			IceyLegs: {
+				DisplayName: Ice Princess Skirt
+				Tooltip: ""
+			}
+
+			IceyMask: {
+				DisplayName: Ice Princess Mask
+				Tooltip: ""
+			}
+
+			JackMask: {
+				DisplayName: Acheron Mask
+				Tooltip: ""
+			}
+
+			JackyMask: {
+				DisplayName: Shape Shifter Mask
+				Tooltip: ""
+			}
+
+			SandwaveHat: {
+				DisplayName: Sandwave Hat
+				Tooltip: ""
+			}
+
+			SandwavePants: {
+				DisplayName: Sandwave Pants
+				Tooltip: ""
+			}
+
+			SandwaveShirt: {
+				DisplayName: Sandwave Shirt
+				Tooltip: ""
+			}
+
+			SpazDress: {
+				DisplayName: Spazmatanium's Dress
+				Tooltip: ""
+			}
+
+			SpazHatMask: {
+				DisplayName: Spazmatanium's Hat
+				Tooltip: ""
+			}
+
+			SpazMask: {
+				DisplayName: Spazmatanium's Mask
+				Tooltip: ""
+			}
+
+			SpazThighs: {
+				DisplayName: Spazmatanium's Thighs
+				Tooltip: ""
+			}
+
+			JackStaff: {
+				DisplayName: Infra-Red Staff
+				Tooltip: Makes a ring of projectiles around your cursor
+			}
+
+			InfraRedPickaxe: {
+				DisplayName: Infra-Red Pickaxe
+				Tooltip: Right-click to throw the pickaxe
+			}
+
+			TripleExpressThunder: {
+				DisplayName: Triple Crowd Control
+				Tooltip: After the projectile hits an enemy it will split into 3 projectiles and gain gravity, along of dealing double damage
+			}
+
+			MagmaKnife: {
+				DisplayName: Magma Knife
+				Tooltip: Causes an explosion when hitting enemies
+			}
+
+			MagmaStaff: {
+				DisplayName: Magmatic Staff
+				Tooltip: Shoots 5 fireballs that can pass through blocks
+			}
+
+			PrismaticHammer: {
+				DisplayName: Prismatic Hammer
+				Tooltip: ""
+			}
+
+			HatredBow: {
+				DisplayName: Hatred Bow
+				Tooltip:
+					'''
+					'I know what you are'
+					Shoots arrows in even spread
+					'''
+			}
+
+			HatredGun: {
+				DisplayName: Hatred Gun
+				Tooltip:
+					'''
+					Holding down Right-Click changes the gun mode
+					From semi-auto to manual (with increased damage and piercing)
+					'''
+			}
+
+			Hatred: {
+				Tooltip: Right-Click to change boss types: Trerios, Magma Eye, Jack, Acheron, loop back
+				DisplayName: Hatred
+			}
+
+			BookOfVirtues: {
+				Tooltip:
+					'''
+					Summons wisps to fight for you
+					Wisps orbit around you shooting at close enemies
+					Wisps deal [c/66FF66:0.005%] of an enemy's max HP as damage (minus the damage of the weapon)
+					The minimum damage is increased in hardmode by [c/66FF66:x3], and after beating Moonlord by [c/66FF66:x6]
+					Wisps inflict Frorstburn to enemies
+					'''
+				DisplayName: Book Of Virtues
+			}
+
+			HatefulBlade: {
+				DisplayName: Hateful Blade
+				Tooltip: Shoots a quick piercing slash
+			}
+
+			AluminiumStaff: {
+				Tooltip: Shoots a small homing bolt
+				DisplayName: Aluminium Staff
+			}
+
+			PrismaticMirror: {
+				Tooltip:
+					'''
+					Shoots beams that when hitting an enemy, makes the player get healed by [c/44FF44:1%] of their heath
+					[c/DD1166:--Special Melee Weapon--]
+					'''
+				DisplayName: Prismatic Mirror
+			}
+
+			ThousandSunWrath: {
+				DisplayName: Thousand Sun Wrath
+				Tooltip:
+					'''
+					Summons swords from the sides of your cursor
+					Slashes cause explosions upon hitting an enemy
+					[c/DD1166:--Special Melee Weapon--]
+					'''
+			}
+
+			MagmaticEnchantment: {
+				Tooltip:
+					'''
+					Makes you explode into a rain of fireballs when hit
+					Increases armor penetration by 10%
+					Increases melee and summon damage and attack speed by 5%
+					'Rip and tear them apart'
+					'''
+				DisplayName: Magmatic Enchantment
+			}
+
+			MagmaticBoots: {
+				Tooltip:
+					'''
+					Increases melee and summoner attack speed by 5%
+					Increases movement speed by 15%
+					'''
+				DisplayName: Magmatic Boots
+			}
+
+			MagmaticChestplate: {
+				Tooltip:
+					'''
+					Increases melee damage by 7%
+					Increases summon damage and armor penetration by 5%
+					Increases max minions and sentries by 1
+					'''
+				DisplayName: Magmatic Chestplate
+			}
+
+			MagmaticVisor: {
+				Tooltip:
+					'''
+					Increases melee and summon damage by 2%
+					Increases melee crit chance and summon attack speed by 3%
+					'''
+				DisplayName: Magmatic Visor
+			}
+
+			AncientShuriken: {
+				Tooltip: Inflicts 'Partially Crystalized' to enemies, and damage increases by 5% for every enemy struck
+				DisplayName: Ancient Shuriken
+			}
+
+			OvercooledPistol: {
+				DisplayName: Overcooled Pistol
+				Tooltip: Shoots overcooled bullets that inflict Frost Burn
+			}
+
+			Blasphemy: {
+				DisplayName: Blasphemy
+				Tooltip: ""
+			}
+
+			Heresy: {
+				DisplayName: Heresy
+				Tooltip: "[c/DD1166:--Special Melee Weapon--]"
+			}
+
+			EtherealSawLauncher: {
+				Tooltip: Shoots saws that very quickly deal damage and can bounce off blocks
+				DisplayName: Ethereal Saw Launcher
+			}
+
+			AlloybloodSawLauncher: {
+				DisplayName: Alloyblood Saw Launcher
+				Tooltip: Shoots saws that can bounce off tiles and shoot homing saws if an enemy is close enough
+			}
+
+			Magmathrower: {
+				Tooltip: ""
+				DisplayName: Magmathrower
+			}
+
+			SlabPistol: {
+				DisplayName: Slab Pistol
+				Tooltip: Shoots piercing bullets that hit the enemies multiple times
+			}
+
+			Iceberg: {
+				DisplayName: Iceberg
+				Tooltip: ""
+			}
+
+			LunarNovaAxe: {
+				Tooltip:
+					'''
+					Hitting enemies causes a small burst of energy that hits a second time
+					[c/DD1166:--Special Melee Weapon--]
+					'''
+				DisplayName: Lunar Nova Axe
+			}
+
+			CrownOfGambling: {
+				Tooltip:
+					'''
+					Increases luck by 20%, multiplies damage by x1.5
+					Crit chance is non existent, knockback and defense is halved
+					All projectiles have a 1% chance to deal x20 damage when hitting an enemy
+					'''
+				DisplayName: Crown Of Gambling
+			}
+
+			HopefulFlower: {
+				Tooltip:
+					'''
+					Increases magic and ranged damage by 11%
+					Multiplies attack speed by x1.05
+					Decreases crit chance by 11%
+					Health regen is slower by 20%
+					'''
+				DisplayName: Hopeful Flower
+			}
+
+			GildedMetalSword: {
+				Tooltip:
+					'''
+					'Watch it'
+					Shoots a piercing cut that causes explosions on hit
+					[c/DD1166:--Special Melee Weapon--]
+					'''
+				DisplayName: Gilded Metal Sword
+			}
+		}
+
+		BossChecklist: {
+			Jack: Use an Ancient Drone at day time.
+			Acheron: Talk with the Shape Shifter on hardmode and use the 'Fight!' button.
+			MagmaEye: Talk with the Memer on The Underworld and use the 'Yo' button.
+			Trerios: Use 'Hatred' on it's first mode.
+		}
+
+		TownNPCMood: {
+			ShapeShifter: {
+				Content: This is far more comfortable than being sleeping on some tree.
+				NoHome: I can sleep on a tree, it's not the most comfortable thing tho.
+				FarFromHome: Hmm? Oh im just watching the environment, i am trying to remember where i came from...
+				LoveSpace: Well, this is lonely, but i guess having you makes it better.
+				DislikeCrowded: Man, how many more people are gonna pop out of nowhere to try and sell me dirt...
+				HateCrowded: It's quite annoying just bumping into someone else while im just laying around.
+				LikeBiome: Im not personally a fan of {BiomeName}, but it's still not uncomftable being here.
+				LoveBiome: Living in {BiomeName} is my dream since i've been free to roam arround the world, thanks you!
+				DislikeBiome: Whatever you say about {BiomeName}, it won't make me less uncomfortable in this place.
+				HateBiome: I am living here because you gave me this, but i could never even think of living in {BiomeName}.
+				LoveNPC: Dosen't {NPCName} do such great jobs with hair? I gotta say im jealous, i can't even learn how to fix mine!
+				LikeNPC: Hanging around of {NPCName} is great, many interesting things to talk about pop up always that we meet.
+				DislikeNPC: That {NPCName} dosen't give good vibes to me, but i don't have anything against them.
+				HateNPC: When i tried talking with {NPCName} that little child just threw a fish at my face! Get him out!.
+				LikeNPC_Princess: I doubt {NPCName} could lie about being from royalty, i'd even say she could never lie at all! truly the best companion to have.
+			}
+
+			Memer: {
+				Content: Eh, whatever i have will be nice.
+				NoHome: So no home?
+				FarFromHome: Why am i outside? Touching grass of course.
+				LoveSpace: All empty to stream, now what game to play...
+				DislikeCrowded: So many people to interact with, whatever i'll just go play Elden Ring.
+				HateCrowded: Well this is certanly a bit uncomftable to live in.
+				LikeBiome: Hey, {BiomeName} is not so bad.
+				LoveBiome: What a nice time to chill in the {BiomeName}, don't ya think?
+				DislikeBiome: I am not a fan of being here honestly.
+				HateBiome: I don't like sand, it's coarse and rough.
+				LoveNPC: I looked the 34th rule of terraria, it's pretty nice.
+				LikeNPC: Alright, {NPCName}, where do i start? It's just great to be around.
+				DislikeNPC: I'd like if {NPCName} could just be stuck in MMFTW forever.
+				HateNPC: You know {NPCName}? i'll give em' 3 quarters to get out of my sight.
+				LikeNPC_Princess: The princess {NPCName} will never stop being amazing.
+			}
+		}
+
+		Buffs: {
+			AtlantisTridentBuff: {
+				DisplayName: Trident Bite
+				Description:
+					'''
+					Increases melee attack speed by 7%
+					Increased knockback by 5%
+					'''
+			}
+
+			CuttingEdge: {
+				DisplayName: Cutting Edge
+				Description:
+					'''
+					Increases melee damage by 14% and increases crit chance by 7%
+					Decreases melee knockback by 6%
+					'''
+			}
+
+			Empowered: {
+				DisplayName: Empowered
+				Description:
+					'''
+					Increases damage by 5%
+					Increases crit chance by 3%
+					Increases knockback
+					'''
+			}
+
+			MedkitRegen: {
+				DisplayName: Medkit Regeneration
+				Description: Your health regeneration is increased
+			}
+
+			Oilful: {
+				DisplayName: Oil Smell
+				Description:
+					'''
+					'Don't you love the smell of fresh oil?'
+					Increases crit chance by 5%
+					Increases melee and ranged damage by 6%
+					Increases magic and summon damage by 4%
+					'''
+			}
+
+			PlagueRegen: {
+				DisplayName: Masked Plague Regeneration
+				Description: Your mana regeneration is increased and magic damage is increased by 5%
+			}
+
+			VioletBuff: {
+				DisplayName: Violet's Blessing
+				Description: Increases magic damage and attacks speed by 10% and mana regeneration by 20%
+			}
+
+			ChaosBurnt: {
+				DisplayName: ChaosBurnt.cs
+				Description:
+					'''
+					ChaosBurnt_Debuff_ToolTip_Burn
+					ChaosBurnt_Debuff_ToolTip_Slow
+					ChaosBurnt_Debuff_ToolTip_DefenseDown
+					'''
+			}
+
+			ChillBurn: {
+				DisplayName: Chilling Flames
+				Description:
+					'''
+					Decreases defense by 10
+					Upgrade to Frost Burn
+					'''
+			}
+
+			Cooldown: {
+				DisplayName: Cooldown
+				Description: You cannot use abilities that require a key to be pressed
+			}
+
+			CrystalPlague: {
+				DisplayName: Crystal Plague
+				Description: Slight damage over time
+			}
+
+			DamnSun: {
+				DisplayName: Sun Burnt
+				Description:
+					'''
+					'Your skin burns even in the shadows'
+					Increases summon knockback and movement speed of the player by 5%
+					Killing enemies makes them explode on death (if they share this debuff)
+					'''
+			}
+
+			Devilish: {
+				DisplayName: Devilish
+				Description:
+					'''
+					Deals damage equal to half the enemy's defense
+					Players get damage equal to 5% of their health
+					'''
+			}
+
+			Glimmering: {
+				DisplayName: Crystal Sickness
+				Description: You feel sick by the glow...
+			}
+
+			InfraRedCorrosion: {
+				DisplayName: Infra-Red Corrosion
+				Description:
+					'''
+					'You are exposed to high amounts of Infra-Red energy'
+					Dosen't allow you to reuse Railguns again
+					'''
+			}
+
+			JackyMaskOn: {
+				DisplayName: Shape Shifter Mask
+				Description: "'Your armor now becomes vanity'"
+			}
+
+			Mimir: {
+				DisplayName: Mimir
+				Description: Decreased damage and defence by 10%
+			}
+
+			PainfullyHealed: {
+				DisplayName: Painfully Healed
+				Description:
+					'''
+					'You are fine, but still feel the pain'
+					You cannot regenerate health or use Bloody Medkit
+					You take 25% less damage
+					'''
+			}
+
+			PartiallyCrystallized: {
+				DisplayName: Partially Crystallized
+				Description: You feel awful pain
+			}
+
+			Thoughtful: {
+				DisplayName: Forgor
+				Description:
+					'''
+					Decreases defense by 30
+					'You forgot what you were gonna do'
+					'''
+			}
+
+			BLBook: {
+				DisplayName: BL Books
+				Description: Orbital books which repel enemies
+			}
+
+			BloodFountain: {
+				DisplayName: Blood Overflow
+				Description:
+					'''
+					Increases attack speed by 20% and decreases damage by 15%
+					Increases life regen
+					'''
+			}
+
+			VirtueWisps: {
+				DisplayName: Virtue Wisps
+				Description: Wisps aid you in combat
+			}
+		}
+
+		DamageClasses.Classless.DisplayName: base damage
+
+		NPCs: {
+			Acheron: {
+				DisplayName: Acheron
+
+				BossChecklistIntegration: {
+					EntryName: "{$Mods.GMR.NPCName.Acheron}"
+					SpawnInfo: "{$Mods.GMR.BossChecklist.Acheron}"
+				}
+			}
+
+			AcheronArmClaw.DisplayName: Acheron Claw
+			AcheronArmGun.DisplayName: Acheron Cannon
+
+			Jack: {
+				DisplayName: Jack
+
+				BossChecklistIntegration: {
+					EntryName: "{$Mods.GMR.NPCName.Jack}"
+					SpawnInfo: "{$Mods.GMR.BossChecklist.Jack}"
+				}
+			}
+
+			JackArmClaw.DisplayName: Jack Claw
+			JackArmGun.DisplayName: Jack Cannon
+			JackDrone.DisplayName: Ancient Drone
+			JackBlade.DisplayName: Ancient Blade
+			JackGunDrone.DisplayName: Infra-Red Gun Drone
+
+			Memer: {
+				DisplayName: Memer
+
+				TownNPCMood: {
+					Content: "{$Mods.GMR.TownNPCMood.Memer.Content}"
+					NoHome: "{$Mods.GMR.TownNPCMood.Memer.NoHome}"
+					FarFromHome: "{$Mods.GMR.TownNPCMood.Memer.FarFromHome}"
+					LoveSpace: "{$Mods.GMR.TownNPCMood.Memer.LoveSpace}"
+					DislikeCrowded: "{$Mods.GMR.TownNPCMood.Memer.DislikeCrowded}"
+					HateCrowded: "{$Mods.GMR.TownNPCMood.Memer.HateCrowded}"
+					LoveBiome: "{$Mods.GMR.TownNPCMood.Memer.LoveBiome}"
+					HateBiome: "{$Mods.GMR.TownNPCMood.Memer.HateBiome}"
+					LoveNPC: "{$Mods.GMR.TownNPCMood.Memer.LoveNPC}"
+					LikeNPC: "{$Mods.GMR.TownNPCMood.Memer.LikeNPC}"
+					HateNPC: "{$Mods.GMR.TownNPCMood.Memer.HateNPC}"
+					LikeNPC_Princess: "{$Mods.GMR.TownNPCMood.Memer.LikeNPC_Princess}"
+					Princess_LovesNPC: "{$TownNPCMood_Princess.LoveNPC_GMR/Memer}"
+				}
+
+				Census.SpawnCondition: Defeat Brain of Cthulhu or Eater of Worlds.
+			}
+
+			ShadowSpirit.DisplayName: ???
+
+			ShapeShifter: {
+				DisplayName: Shape Shifter
+
+				TownNPCMood: {
+					Content: "{$Mods.GMR.TownNPCMood.ShapeShifter.Content}"
+					NoHome: "{$Mods.GMR.TownNPCMood.ShapeShifter.NoHome}"
+					FarFromHome: "{$Mods.GMR.TownNPCMood.ShapeShifter.FarFromHome}"
+					LoveSpace: "{$Mods.GMR.TownNPCMood.ShapeShifter.LoveSpace}"
+					DislikeCrowded: "{$Mods.GMR.TownNPCMood.ShapeShifter.DislikeCrowded}"
+					HateCrowded: "{$Mods.GMR.TownNPCMood.ShapeShifter.HateCrowded}"
+					LoveBiome: "{$Mods.GMR.TownNPCMood.ShapeShifter.LoveBiome}"
+					DislikeBiome: "{$Mods.GMR.TownNPCMood.ShapeShifter.DislikeBiome}"
+					LoveNPC: "{$Mods.GMR.TownNPCMood.ShapeShifter.LoveNPC}"
+					LikeNPC: "{$Mods.GMR.TownNPCMood.ShapeShifter.LikeNPC}"
+					HateNPC: "{$Mods.GMR.TownNPCMood.ShapeShifter.HateNPC}"
+					LikeNPC_Princess: "{$Mods.GMR.TownNPCMood.ShapeShifter.LikeNPC_Princess}"
+					Princess_LovesNPC: "{$TownNPCMood_Princess.LoveNPC_GMR/ShapeShifter}"
+				}
+
+				Census.SpawnCondition: Have 300 HP and defeat the Eye of Cthulhu.
+			}
+
+			MagmaEye: {
+				DisplayName: Magma Eye
+
+				BossChecklistIntegration: {
+					EntryName: "{$Mods.GMR.NPCName.MagmaEye}"
+					SpawnInfo: "{$Mods.GMR.BossChecklist.MagmaEye}"
+				}
+			}
+
+			HatredWorm.DisplayName: Hatred Worm
+			HatredWormBody.DisplayName: Hatred Worm Body
+			HatredWormTail.DisplayName: Hatred Worm Tail
+			Trerios.DisplayName: Trerios
+			TreriosBody.DisplayName: Trerios Body
+			TreriosTail.DisplayName: Trerios Tail
+			JackE.DisplayName: Jack E
+			JackEArmClaw.DisplayName: Jack E Arm Claw
+			JackEArmGun.DisplayName: Jack E Arm Gun
+		}
+
+		Projectiles: {
+			ArkBomb.DisplayName: Ark Explosion
+			BoostFlame.DisplayName: Boost Flame
+			AcheronCrate.DisplayName: Infra-Red Crate
+			AcheronSphere.DisplayName: Infra-Red Sphere
+			AlloyCrate.DisplayName: Alloy Crate
+			ExplotionBad.DisplayName: Crate Explosion
+			Explotion.DisplayName: Explosion
+			JackBlastBad.DisplayName: Jack Blast
+			JackBlastFlip.DisplayName: Jack Blast
+			JackClawProj.DisplayName: Jack Claw
+			JackClaw.DisplayName: Jack Claw
+			JackSummon.DisplayName: Ancient Drone
+			InfraRedCrate.DisplayName: Infra-Red Crate
+			JackStaffProj.DisplayName: Infra-Red Bolt
+			PlagueBolt.DisplayName: Plague Bolt
+			PlagueCloackProj.DisplayName: Plague Bolt
+			PrismaticBlade.DisplayName: Prismatic Blade
+			PrismaticSwordDance.DisplayName: Prismatic Sword
+			VioletHeart.DisplayName: Violet Heart
+			AlloybloodDagger.DisplayName: Alloyblood Dagger
+			AlloybloodSpin.DisplayName: Alloyblood Slash
+			AlloyDagger.DisplayName: Alloy Dagger
+			AlloySwordThrow.DisplayName: Alloy Blade
+			AlloySwordThrowMultiplicate.DisplayName: Alloy Blade
+			AmethystSword.DisplayName: Amethyst Sword
+			ArkBlade.DisplayName: Ark Slash
+			BiomeSwordBeam.DisplayName: Biome Sword Beam
+			BLBook.DisplayName: BL Book
+			BLFujoshi.DisplayName: BL Fujoshi
+			BLPsycopathAxe.DisplayName: Psycopath Axe
+			BraycoeSwordBeam.DisplayName: Hallowed Wood Beam
+			BullChainsaw.DisplayName: Bull Chainsaw
+			BullChainsawFlip.DisplayName: Bull Chainsaw Flip
+			DesertAxe.DisplayName: Desert Axe
+			DualDesertAxe.DisplayName: Dual Desert Axe
+			DualDesertSword.DisplayName: Dual Desert Sword
+			EpiphanySlash.DisplayName: Epiphany Slash
+			Epiphany.DisplayName: Epiphany Slash
+			GerdSword.DisplayName: Umbra del Solei
+			JackSword.DisplayName: Jack Sword
+			NeonBlade.DisplayName: Neon Blade
+			UltraBlueChainsaw.DisplayName: Ultra Blue Chainsaw
+			UltraBlueChainsawFlip.DisplayName: Ultra Blue Chainsaw Flip
+			CrystalNeonBlades.DisplayName: Crystal Neon Blades
+			CrystalNeonThrow.DisplayName: Crystal Neon Sword
+			DesertWave.DisplayName: Desert Wave
+			DualSlashBladeThrow.DisplayName: Dual Slash Blade
+			ElementalGolemSpikeball.DisplayName: Elemental Spikeball
+			ElementalOceanCoin.DisplayName: Elemental Coin
+			ElementalPlanteraPetal.DisplayName: Elemental Petal
+			ElementalSpear.DisplayName: Amalgamated Spear
+			GerdBlade.DisplayName: Violet Blade
+			GerdHandle.DisplayName: Violet Handle
+			GerdHeroSwordHoming.DisplayName: Hero Training Sword
+			GerdHeroSwordThrow.DisplayName: Hero Training Sword
+			Glaicy.DisplayName: Glaicy
+			InfraRedPickaxe.DisplayName: Infra-Red Pickaxe
+			JackSwordScythe.DisplayName: Infra-Red Scythe
+			JackSwordThrow.DisplayName: Infra-Red Slash
+			KizunaScythe.DisplayName: Kizuna Scythe
+			MaskedPlagueFlail.DisplayName: Masked Plague's Flail
+			MaskedPlagueGigantSword.DisplayName: Masked Plague's Sword
+			PrincessTrident.DisplayName: Atlantis Princess Trident
+			PrincessTridentEnergy.DisplayName: Trident Energy
+			PsycopathAxe.DisplayName: Psycopath Axe
+			SpazEye.DisplayName: Spazmatanium Eye
+			XShotBlade.DisplayName: Ultra-Blue Sword
+			XShotVice.DisplayName: Ultra-Blue Vice
+			NajaExplotion.DisplayName: Explotion
+			NajaFireball.DisplayName: Volcano Fireball
+			PlagueExplotion.DisplayName: Plague Explosion
+			AluminiumRifleShot.DisplayName: Aluminium Bullet
+			AluminiumShot.DisplayName: Aluminium Bullet
+			AluminiumShuriken.DisplayName: Aluminium Shuriken
+			ArkBullet.DisplayName: Ark Energy Bullet
+			ArkBulletShard.DisplayName: Ark Energy Bullet
+			ArkRocket.DisplayName: Ark Rocket
+			ArkShotgunBullet.DisplayName: Alloyblood Bullet
+			ChargedRocket.DisplayName: Charged Rocket
+			DualShooterBullet.DisplayName: Dual Blast
+			DuneSearcherBullet.DisplayName: Dune Searcher Bullet
+			EqualBullet.DisplayName: Energy Bullet
+			EqualBulletLite.DisplayName: Energy Bullet Lite
+			EqualBulletShard.DisplayName: Energy Bullet
+			EqualBulletShardLite.DisplayName: Energy Bullet
+			GungeonBullet.DisplayName: Energy Bullet
+			GungeonBullet2.DisplayName: Energy Bullet
+			GungeonBulletFlip.DisplayName: Energy Bullet
+			GungeonBulletShard.DisplayName: Energy Bullet
+			GungeonSharpBullet.DisplayName: Energy Bullet
+			IceShuriken.DisplayName: Ice Shuriken
+			JackBullet.DisplayName: Infra-Red Bullet
+			JackShard.DisplayName: Jack Blast
+			Lightning.DisplayName: Thunderblade Lightning
+			MagnumBlast.DisplayName: Magnum Bullet
+			MagnumBullet.DisplayName: Magnum Bullet
+			MaskedPlagueBullet.DisplayName: Masked Plague Bullet
+			NeonGunSlash.DisplayName: Gunblade Slash
+			OvercooledBullet.DisplayName: Overcooled Bullet
+			PrismaticBullet.DisplayName: Prismatic Bullet
+			PrismBullet.DisplayName: Prismatic Bullet
+			CrystalEnergy.DisplayName: Amethyst Energy Ray
+			CrystalRay.DisplayName: Amethyst Ray
+			MaskedPlagueEnergy.DisplayName: Masked Plague Energy Ray
+			MaskedPlagueRay.DisplayName: Masked Plague Ray
+			RailcannonEnergy.DisplayName: Infra-Red Energy Ray
+			RailcannonRay.DisplayName: Infra-Red Ray
+			ScarletRocket.DisplayName: Scarlet Rocket
+			ScarletRocketWait.DisplayName: Scarlet Rocket
+			ShotgunBullet.DisplayName: Shotgun Bullet
+			ShotgunCore.DisplayName: Shotgun Core
+			SpazArrow.DisplayName: Spaz Arrow
+			SpazArrowSplit.DisplayName: Spaz Arrow
+			UltraBlueDart.DisplayName: Ultra Blue Dart
+			UltraBlueRocket.DisplayName: Ultra-Blue Rocket
+			XShotArrow.DisplayName: Ultra-Blue Arrow
+			SandwaveKnife.DisplayName: Sandwave Knife
+			SmallExplotion.DisplayName: Small Explosion
+			StopAura.DisplayName: Aura Effect
+			ChaosAngelSoulHand.DisplayName: Chaos Hand
+			ChaosAngelSoulHand0.DisplayName: Chaos Hand
+			MayAwakeSaw.DisplayName: Scarlet Sawblade
+			MaySaw.DisplayName: Violet Sawblade
+			PlanteraThorn.DisplayName: Plantera Thorn
+			AlloybloodWhip.DisplayName: Alloyblood Whip
+			PlanteraWhip.DisplayName: Plantera Whip
+			SunBurntWhip.DisplayName: Sun Burnt Whip
+			CoreHook.DisplayName: Core Hook
+			XShotEnergy.DisplayName: Ultra-Blue Energy Bolt
+			SpaceDoggoProj.DisplayName: Space Doggo Bolt
+			DualDesertSlash.DisplayName: Dual Desert Slash
+			SnapToReality.DisplayName: Snap To Reality
+			RealitySnap.DisplayName: Reality Slash
+			JackBlastRotate.DisplayName: Acheron Saw
+			JackBlastRotateFlip.DisplayName: Acheron Saw
+			JackBlastSpin.DisplayName: Jack Blast
+			JackMarker.DisplayName: Aura Effect
+			JackRain.DisplayName: Jack Rain
+			JackSlash.DisplayName: Infra-Red Slash
+			InfraRedExplotion.DisplayName: Infra-Red Explosion
+			CrucifixEnergy.DisplayName: Hallowed Energy
+			JackStaffProjFlip.DisplayName: Infra-Red Bolt
+			InfraRedSword.DisplayName: Infra Red Sword
+			MumeikenKyomu.DisplayName: Mumeiken Kyomu
+			KyomuPhoenix.DisplayName: Mumeiken Kyomu
+			JackRifleHeldProj.DisplayName: Jack Rifle Held Proj
+			PrismaticSniperHeldProj.DisplayName: Prismatic Sniper Held Proj
+			SilentGun.DisplayName: Silent Gun
+			AcheronShuriken.DisplayName: Acheron Shuriken
+			PlagueScythe.DisplayName: Plague Scythe
+			CrystalNeonSword.DisplayName: Crystal Neon Sword
+			SilentKatana.DisplayName: Silent Katana
+			SilentSword.DisplayName: Silent Sword
+			InfraRedSpear.DisplayName: Infra-Red Spear
+			InfraRedSpearSpin.DisplayName: Infra-Red Spear
+			JackSwordExplode.DisplayName: Infra-Red Slash
+			NanashiDagger.DisplayName: Nanashi Dagger
+			NanashiSuisei.DisplayName: My Baby!
+			OvercooledSpear.DisplayName: Overcooled Spear
+			OvercooledSpearHoming.DisplayName: Overcooled Spear
+			PrincessTridentEnergyFlip.DisplayName: Trident Energy
+			AncientPickaxe.DisplayName: Ancient Pickaxe
+			ShadowSword.DisplayName: Shadow Sword
+			ShadowSwing.DisplayName: Shadow Slash
+			BackFireball.DisplayName: Back Fireball
+			MagmaBigSword.DisplayName: Magma Big Sword
+			MagmaGreatSword.DisplayName: Magma Great Sword
+			MagmaSword.DisplayName: Magma Sword
+			JackShuriken.DisplayName: Alloy Crate
+			JackExplosion.DisplayName: Ancient Explosion
+			JackExplosiveBullet.DisplayName: Infra-Red Explosive Bullet
+			LostTime.DisplayName: Lost Time's Blade
+			TrueSpazSword.DisplayName: Lost Time's Sword
+			LostTimeBlade.DisplayName: Lost Time's Blade
+			LostTimeSlash.DisplayName: Lost Time's Slash
+			SmallIchorExplotion.DisplayName: Small Ichor Explosion
+			MagmaEdge.DisplayName: Magma's Edge
+			MagmaKnife.DisplayName: Magma Knife
+			GerdSlash.DisplayName: Gerd Slash
+			FallFireball.DisplayName: Fall Fireball
+			FallFireballFriendly.DisplayName: Fall Fireball Friendly
+			PoisonCharge.DisplayName: Poison Charge
+			BullChainsawShoot.DisplayName: Bull Chainsaw Shoot
+			LuxBlade.DisplayName: Lux Blade
+			TearProj.DisplayName: Tear Proj
+			BraycoeExplosion.DisplayName: Braycoe Explosion
+			PrismaticHammer.DisplayName: Prismatic Hammer
+			TrueBraycoeSword.DisplayName: True Braycoe Sword
+			VirtueWisps.DisplayName: Virtue Wisps
+			AstraBlade.DisplayName: Astra Blade
+			BraycoeTrueSlash.DisplayName: Braycoe True Slash
+			AstraLuxProj.DisplayName: Astra Lux Proj
+			LuxLunaeProj.DisplayName: Lux Lunae Proj
+			GerdSpear.DisplayName: Gerd Spear
+			GerdSpearBlade.DisplayName: Gerd Spear Blade
+			HatredSlash.DisplayName: Hatred Slash
+			InfraRedBeam.DisplayName: Infra Red Beam
+			HatredSlashBad.DisplayName: Hatred Slash Bad
+			HatredSpin.DisplayName: Hatred Spin
+			HatredSword.DisplayName: Hatred Sword
+			AcheronSummon.DisplayName: Acheron Summon
+			HatredSummon.DisplayName: Hatred Summon
+			MagmaSummon.DisplayName: Magma Summon
+			AncientBulletHome.DisplayName: Ancient Bullet Home
+			SpazSwordSwing.DisplayName: Spaz Sword Swing
+			AmethystSwordSwing.DisplayName: Amethyst Sword Swing
+			AmethystBeam.DisplayName: Amethyst Beam
+			DualSlashBladeSwing.DisplayName: Dual Slash Blade Swing
+			DualSlashCutterSwing.DisplayName: Dual Slash Cutter Swing
+			ArkBladeSwing.DisplayName: Ark Blade Swing
+			ArkBeam.DisplayName: Ark Beam
+			AluminiumBolt.DisplayName: Aluminium Bolt
+			PrismMirrorProj.DisplayName: Prism Mirror Proj
+			PrismaticBeam.DisplayName: Prismatic Beam
+			ThousandSunWrathProj.DisplayName: Thousand Sun Wrath Proj
+			SunWrathExplosion.DisplayName: Sun Wrath Explosion
+			SunWrathSlash.DisplayName: Sun Wrath Slash
+			DualCutterHitSpark.DisplayName: Dual Cutter Hit Spark
+			DualBladeHitSpark.DisplayName: Dual Blade Hit Spark
+			AncientShuriken.DisplayName: Ancient Shuriken
+			OvercooledPistolHeld.DisplayName: Overcooled Pistol Held
+			OvercooledNailgunHeldProj.DisplayName: Overcooled Nailgun Held Proj
+			BlasphemySwing.DisplayName: Blasphemy Swing
+			BlasphemyCut.DisplayName: Blasphemy Cut
+			Blasphemy.DisplayName: Blasphemy
+			Heresy.DisplayName: Heresy
+			ZombieSlash.DisplayName: Zombie Slash
+			EtherealSawLauncherHeldProj.DisplayName: Ethereal Saw Launcher Held Proj
+			EtherealSaw.DisplayName: Ethereal Saw
+			AcheronShootingRune.DisplayName: Acheron Shooting Rune
+			AcheronBeam.DisplayName: Acheron Beam
+			AcheronOrb.DisplayName: Acheron Orb
+			AlloybloodSaw.DisplayName: Alloyblood Saw
+			AlloybloodSawLauncherHeldProj.DisplayName: Alloyblood Saw Launcher Held Proj
+			MagmaFire.DisplayName: Magma Fire
+			HatredBlade.DisplayName: Hatred Blade
+			SlabPistolHeldProj.DisplayName: Slab Pistol Held Proj
+			SlabBullet.DisplayName: Slab Bullet
+			IcebergProj.DisplayName: Iceberg Proj
+			LunarNovaAxe.DisplayName: Lunar Nova Axe
+			LunarCut.DisplayName: Lunar Cut
+			LunarShine.DisplayName: Lunar Shine
+			GildedMetalSword.DisplayName: Gilded Metal Sword
+			EternalShine.DisplayName: Eternal Shine
+			EternityCut.DisplayName: Eternity Cut
+		}
+
+		Tiles: {
+			JuiceBoxTile.MapEntry: Oil Box
+			TenebrisCloneTile.MapEntry: Tenebris
+		}
+
+		Configs: {
+			ClientConfig: {
+				DisplayName: Client Config
+
+				Headers: {
+					Misc: Misc Header
+					Accessories: Accessories Header
+				}
+
+				EnabledScreenShake: {
+					Label: Screen-Shake
+					Tooltip: ""
+				}
+
+				AlloybloodDagger: {
+					Label: "{$[i:GMR/AlloybloodEnchantment]-Alloyblodd-Dagger}"
+					Tooltip: ""
+				}
+
+				MultiplicateProj: {
+					Label: "{$[i:GMR/DevPlushie]-Multiplicative-Projectiles}"
+					Tooltip: In case you require more frames or it breaks weapons
+				}
+
+				NajaFireball: {
+					Label: "{$[i:GMR/NajaCharm]-Volcano-Charm-Fireballs}"
+					Tooltip: ""
+				}
+			}
+		}
+	}
+}
+
+TownNPCMood_Princess: {
+	LoveNPC_GMR/ShapeShifter: I do wonder how {NPCName} found their way here but they have so many interesting stories of other kingdoms.
+	LoveNPC_GMR/Memer: I enjoy {NPCName}'s company, she's got many jokes to tell and funny tricks to do.
+}
