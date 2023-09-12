@@ -14,7 +14,6 @@ using Terraria.ModLoader.Utilities;
 
 namespace GMR.NPCs.Bosses.Jack
 {
-    [AutoloadBossHead()]
     public class JackDrone : ModNPC
     {
         public bool SummonedBlades;
@@ -41,7 +40,7 @@ namespace GMR.NPCs.Bosses.Jack
             NPC.HitSound = SoundID.NPCHit42;
             NPC.DeathSound = SoundID.NPCDeath14;
             NPC.knockBackResist = 0f;
-            NPC.damage = 8;
+            NPC.damage = 12;
             NPC.aiStyle = 0;
             NPC.noTileCollide = true;
             NPC.noGravity = true;
@@ -58,7 +57,7 @@ namespace GMR.NPCs.Bosses.Jack
         {
             if (spawnInfo.Player.ZoneRockLayerHeight && NPC.downedBoss3)
             {
-                return 0.000025f; //0.0025% chance of spawning on the canverns after Skeletron
+                return 0.000005f; //0.0005% chance of spawning on the canverns after Skeletron
             }
             return 0f;
         }
