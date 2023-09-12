@@ -48,35 +48,6 @@ namespace GMR.Items.Weapons.Melee
 			return player.ownedProjectileCounts[Item.shoot] <= 0;
 		}
 
-		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
-		{
-			Player player = Main.LocalPlayer;
-			Main.spriteBatch.Draw(ModContent.Request<Texture2D>($"{Texture}_Glow", AssetRequestMode.ImmediateLoad).Value, position, frame,
-				Color.White, 0f, origin, scale, SpriteEffects.None, 0f);
-		}
-
-		public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
-		{
-			Player player = Main.LocalPlayer;
-			Texture2D texture = ModContent.Request<Texture2D>($"{Texture}_Glow", AssetRequestMode.ImmediateLoad).Value;
-			spriteBatch.Draw
-			(
-				texture,
-				new Vector2
-				(
-					Item.position.X - Main.screenPosition.X + Item.width * 0.5f,
-					Item.position.Y - Main.screenPosition.Y + Item.height - texture.Height * 0.5f
-				),
-				new Rectangle(0, 0, texture.Width, texture.Height),
-				Color.White,
-				rotation,
-				texture.Size() * 0.5f,
-				scale,
-				SpriteEffects.None,
-				0f
-			);
-		}
-
 		public override void AddRecipes()
 		{
 			Recipe recipe = CreateRecipe();
