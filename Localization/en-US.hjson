@@ -2079,6 +2079,21 @@ Mods: {
 					'''
 				DisplayName: Gilded Metal Sword
 			}
+
+			BrokenMagmaticSword: {
+				Tooltip: "If the sword hits an enemy a fireball will appear above the enemy to attack it again"
+				DisplayName: Broken Magmatic Sword
+			}
+
+			MagmaticSword: {
+				Tooltip:
+					'''
+					Shoots fireballs that home into enemies
+					If the sword hits an enemy a fireball will appear above the enemy to attack it again
+					[c/DD1166:--Special Melee Weapon--]
+					'''
+				DisplayName: Magmatic Sword
+			}
 		}
 
 		BossChecklist: {
@@ -2639,6 +2654,8 @@ Mods: {
 			GildedMetalSword.DisplayName: Gilded Metal Sword
 			EternalShine.DisplayName: Eternal Shine
 			EternityCut.DisplayName: Eternity Cut
+			MagmaticFireball.DisplayName: Magmatic Fireball
+			MagmaticSword.DisplayName: Magmatic Sword
 		}
 
 		Tiles: {
