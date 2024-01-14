@@ -1,6 +1,6 @@
 # Welcome to GMR, The GitHub Repository for Gerd's Lab
-Today, i will teach you how to code in very few steps, you don't have to follow them perfectly, since copy pasting exists!
+Today, i will teach you copy code in very few steps, you don't have to follow them perfectly, since copying and fucking around exists!
 
-This was dead for a few months, at least 3 months, so i've revived it with a few bits of new content.
+I'll update this whenever i feel like it and don't care about the new content being spoiled
 
-- Next Update comes on October.
+- Next Update for the mod comes in May, wait a bit.
