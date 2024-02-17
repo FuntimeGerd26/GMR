@@ -16,6 +16,8 @@ namespace GMR.Projectiles.Ranged
 			DisplayName.SetDefault("Jack Blast");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+			Projectile.AddElement(0);
+			Projectile.AddElement(2);
 		}
 
 		public override void SetDefaults()

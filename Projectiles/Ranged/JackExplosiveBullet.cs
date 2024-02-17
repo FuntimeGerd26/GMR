@@ -18,6 +18,8 @@ namespace GMR.Projectiles.Ranged
 			DisplayName.SetDefault("Infra-Red Explosive Bullet");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+			Projectile.AddElement(0);
+			Projectile.AddElement(2);
 		}
 
 		public override void SetDefaults()

@@ -11,31 +11,36 @@ namespace GMR.Projectiles.Ranged
 {
 	public class DuneSearcherBullet : ModProjectile
 	{
-		public override string Texture => "GMR/Projectiles/PlaceholderProjectile";
+		public override string Texture => "GMR/Projectiles/Ranged/PrismBullet";
 
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Dune Searcher Bullet");
-			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 25;
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 15;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			Projectile.AddElement(0);
+			Projectile.AddElement(3);
 		}
 
 		public override void SetDefaults()
 		{
 			Projectile.width = 10;
 			Projectile.height = 10;
-			Projectile.aiStyle = 0;
+			Projectile.aiStyle = -1;
 			Projectile.friendly = true;
 			Projectile.DamageType = DamageClass.Ranged;
-			Projectile.timeLeft = 600;
-			Projectile.light = 0.75f;
+			Projectile.timeLeft = 1200;
+			Projectile.penetrate = 5;
 			Projectile.ignoreWater = true;
 			Projectile.tileCollide = false;
 			Projectile.extraUpdates = 4;
 			AIType = ProjectileID.Bullet;
 		}
 
-		public override Color? GetAlpha(Color lightColor) => new Color(255, 255, 25, 55);
+		public override Color? GetAlpha(Color lightColor)
+		{
+			return new Color(255, 255, 25, 55);
+		}
 
 		public override void AI()
 		{
@@ -44,9 +49,8 @@ namespace GMR.Projectiles.Ranged
 
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
-			target.AddBuff(ModContent.BuffType<Buffs.Debuffs.DamnSun>(), 300);
 			if (!target.boss)
-				Projectile.damage = (int)(Projectile.damage * 1.5);
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), target.Center, Projectile.velocity, ModContent.ProjectileType<Projectiles.SmallExplotion>(), Projectile.damage / 2, Projectile.knockBack, Main.myPlayer);
 		}
 
 		public override bool PreDraw(ref Color lightColor)
@@ -81,9 +85,9 @@ namespace GMR.Projectiles.Ranged
 
 		public override void Kill(int timeLeft)
 		{
-			// This code and the similar code above in OnTileCollide spawn dust from the tiles collided with. SoundID.Item10 is the bounce sound you hear.
 			Collision.HitTiles(Projectile.position + Projectile.velocity, Projectile.velocity, Projectile.width, Projectile.height);
 			SoundEngine.PlaySound(SoundID.Item62, Projectile.position);
+
 			Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.SmallExplotion>(), Projectile.damage / 2, 0f, Main.myPlayer);
 			int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 64, Projectile.velocity.X * -0.2f,
 				Projectile.velocity.Y * -0.2f, 30, Color.White, 1f);

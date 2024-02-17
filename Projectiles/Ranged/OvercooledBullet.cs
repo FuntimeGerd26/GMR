@@ -19,6 +19,7 @@ namespace GMR.Projectiles.Ranged
 			DisplayName.SetDefault("Overcooled Bullet");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 15;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			Projectile.AddElement(1);
 		}
 
 		public override void SetDefaults()
@@ -47,10 +48,10 @@ namespace GMR.Projectiles.Ranged
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			target.AddBuff(ModContent.BuffType<Buffs.Debuffs.ChillBurn>(), 900);
-			int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 59, Projectile.velocity.X * -0.2f,
+			int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 80, Projectile.velocity.X * -0.2f,
 				Projectile.velocity.Y * -0.2f, 30, Color.White, 1f);
 			Main.dust[dustId].noGravity = false;
-			int dustId3 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 59, Projectile.velocity.X * -0.2f,
+			int dustId3 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 80, Projectile.velocity.X * -0.2f,
 				Projectile.velocity.Y * -0.2f, 30, Color.White, 1f);
 			Main.dust[dustId3].noGravity = false;
 		}
@@ -90,10 +91,10 @@ namespace GMR.Projectiles.Ranged
 			// This code and the similar code above in OnTileCollide spawn dust from the tiles collided with. SoundID.Item10 is the bounce sound you hear.
 			Collision.HitTiles(Projectile.position + Projectile.velocity, Projectile.velocity, Projectile.width, Projectile.height);
 			SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
-			int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 59, Projectile.velocity.X * -0.2f,
+			int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 80, Projectile.velocity.X * -0.2f,
 				Projectile.velocity.Y * -0.2f, 30, Color.White, 1f);
 			Main.dust[dustId].noGravity = false;
-			int dustId3 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 59, Projectile.velocity.X * -0.2f,
+			int dustId3 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 80, Projectile.velocity.X * -0.2f,
 				Projectile.velocity.Y * -0.2f, 30, Color.White, 1f);
 			Main.dust[dustId3].noGravity = false;
 		}

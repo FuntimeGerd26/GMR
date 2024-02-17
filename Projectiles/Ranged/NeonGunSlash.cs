@@ -18,13 +18,15 @@ namespace GMR.Projectiles.Ranged
 			DisplayName.SetDefault("Gunblade Slash");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			Projectile.AddElement(1);
+			Projectile.AddElement(2);
 		}
 
 		public override void SetDefaults()
 		{
-			Projectile.width = 20;
-			Projectile.height = 20;
-			Projectile.aiStyle = 0;
+			Projectile.width = 10;
+			Projectile.height = 10;
+			Projectile.aiStyle = -1;
 			Projectile.friendly = true;
 			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.timeLeft = 300;
@@ -33,7 +35,6 @@ namespace GMR.Projectiles.Ranged
 			Projectile.ignoreWater = true;
 			Projectile.tileCollide = false;
 			Projectile.extraUpdates = 1;
-			AIType = ProjectileID.Bullet;
 			Projectile.usesLocalNPCImmunity = true;
 		}
 
@@ -52,8 +53,9 @@ namespace GMR.Projectiles.Ranged
 			float rotation = MathHelper.ToRadians(90);
 			for (int i = 0; i < numberProjectiles; i++)
 			{
-				Vector2 perturbedSpeed = Projectile.velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * 0.5f;
-				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, perturbedSpeed, Projectile.type, Projectile.damage, Projectile.knockBack, Main.myPlayer);
+				Vector2 perturbedSpeed = Projectile.velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * 0.85f;
+				if (Projectile.ai[0] <= 0)
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, perturbedSpeed, Projectile.type, Projectile.damage, Projectile.knockBack, Main.myPlayer, 1f);
 			}
 		}
 

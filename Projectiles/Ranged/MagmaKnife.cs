@@ -17,6 +17,7 @@ namespace GMR.Projectiles.Ranged
 		{
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			Projectile.AddElement(0);
 		}
 
 		public override void SetDefaults()
@@ -27,7 +28,7 @@ namespace GMR.Projectiles.Ranged
 			Projectile.aiStyle = -1;
 			Projectile.ignoreWater = true;
 			Projectile.timeLeft = 180;
-			Projectile.DamageType = DamageClass.Melee;
+			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.penetrate = -1;
 			Projectile.usesIDStaticNPCImmunity = true;
 			Projectile.idStaticNPCHitCooldown = 15;

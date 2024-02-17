@@ -16,15 +16,15 @@ namespace GMR.Projectiles.Ranged
 			DisplayName.SetDefault("Ice Shuriken");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 1;
+			Projectile.AddElement(1);
 		}
 
 		public override void SetDefaults()
 		{
 			Projectile.width = 30;
 			Projectile.height = 30;
-			Projectile.aiStyle = 2;
+			Projectile.aiStyle = -1;
 			Projectile.friendly = true;
-			Projectile.penetrate = 1;
 			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.penetrate = 3;
 			Projectile.light = 0.5f;
@@ -43,7 +43,13 @@ namespace GMR.Projectiles.Ranged
 				Projectile.damage += 3;
 				Projectile.localAI[0] = 0;
             }
-        }
+
+			if (Projectile.velocity.Length() > 40f)
+				Projectile.velocity /= 4f;
+
+			if (Projectile.velocity.Length() < 20f)
+				Projectile.velocity *= 2f;
+		}
 
 		public override bool PreDraw(ref Color lightColor)
 		{

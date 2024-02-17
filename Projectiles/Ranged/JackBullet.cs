@@ -16,6 +16,8 @@ namespace GMR.Projectiles.Ranged
 			DisplayName.SetDefault("Infra-Red Bullet");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+			Projectile.AddElement(0);
+			Projectile.AddElement(2);
 		}
 
 		public override void SetDefaults()
@@ -26,7 +28,6 @@ namespace GMR.Projectiles.Ranged
 			Projectile.friendly = true;
 			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.timeLeft = 600;
-			Projectile.light = 0.5f; 
 			Projectile.ignoreWater = true;
 			Projectile.tileCollide = true;
 			Projectile.extraUpdates = 1;
@@ -37,6 +38,8 @@ namespace GMR.Projectiles.Ranged
 
 		public override void AI()
 		{
+			Lighting.AddLight(Projectile.Center, new Vector3(1f, 0.5f, 0.5f));
+
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
 		}
 
@@ -56,7 +59,6 @@ namespace GMR.Projectiles.Ranged
 				Color color = Projectile.GetAlpha(lightColor) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
 				Main.EntitySpriteDraw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
 			}
-
 			return true;
 		}
 

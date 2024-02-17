@@ -9,50 +9,45 @@ using Terraria.ModLoader;
 
 namespace GMR.Projectiles.Ranged
 {
-	public class GungeonBulletShard : ModProjectile
+	public class RefinedSpazmataniumBullet : ModProjectile
 	{
 		public override string Texture => "Terraria/Images/Projectile_927";
 
 		public override void SetStaticDefaults()
 		{
-			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 50;
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 20;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
-			Projectile.AddElement(0);
+			Projectile.AddElement(2);
 		}
 
 		public override void SetDefaults()
 		{
-			Projectile.width = 5;
-			Projectile.height = 5;
+			Projectile.width = 4;
+			Projectile.height = 4;
+			Projectile.aiStyle = 0;
 			Projectile.friendly = true;
-			Projectile.penetrate = 2;
 			Projectile.DamageType = DamageClass.Ranged;
-			Projectile.timeLeft = 1200;
+			Projectile.timeLeft = 600;
+			Projectile.penetrate = 3;
 			Projectile.ignoreWater = true;
 			Projectile.tileCollide = true;
-			Projectile.extraUpdates = 14;
+			Projectile.extraUpdates = 24;
+			Projectile.usesLocalNPCImmunity = true;
 		}
 
 		public override void AI()
 		{
-			Lighting.AddLight(Projectile.Center, new Vector3(0.75f, 0.15f, 0.15f));
-
-			if (Projectile.penetrate == 1)
-			{
-				Projectile.alpha += 8;
-				Projectile.velocity *= 0.8f;
-				Projectile.damage = 0;
-			}
-			if (Projectile.alpha >= 255)
-				Projectile.Kill();
+			Lighting.AddLight(Projectile.Center, new Vector3(0f, 1f, 0.25f));
 
 			Projectile.rotation = Projectile.velocity.ToRotation();
 		}
 
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
-			Player player = Main.player[Projectile.owner];
-			player.AddBuff(ModContent.BuffType<Buffs.Buff.YinEmpower>(), 240);
+			target.immune[Projectile.owner] = 0;
+			int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 66, Projectile.velocity.X * 0.7f,
+				Projectile.velocity.Y * -0.5f, 30, new Color(55, 255, 125), 1f);
+			Main.dust[dustId].noGravity = true;
 		}
 
 		public override bool PreDraw(ref Color lightColor)
@@ -63,7 +58,7 @@ namespace GMR.Projectiles.Ranged
 			Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);
 			Vector2 origin2 = rectangle.Size() / 2f;
 
-			Color color26 = new Color(255, 55, 55) * Projectile.Opacity;
+			Color color26 = new Color(55, 255, 125);
 
 			SpriteEffects spriteEffects = SpriteEffects.None;
 
@@ -77,21 +72,17 @@ namespace GMR.Projectiles.Ranged
 				if (max0 < 0)
 					continue;
 				Vector2 value4 = Vector2.Lerp(Projectile.oldPos[(int)i], Projectile.oldPos[max0], 1 - i % 1);
-				float num165 = MathHelper.Lerp(Projectile.oldRot[(int)i], Projectile.oldRot[max0], 1 - i % 1);
 				Main.EntitySpriteDraw(texture2D13, value4 + Projectile.Size / 2f - Main.screenPosition + new Vector2(0, Projectile.gfxOffY),
-					new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, new Vector2(Projectile.scale * 1.5f, Projectile.scale * 0.25f), spriteEffects, 0);
+					new Microsoft.Xna.Framework.Rectangle?(rectangle), color27 * Projectile.Opacity, Projectile.rotation, origin2, new Vector2(Projectile.scale * 1.5f, Projectile.scale * 0.25f), spriteEffects, 0);
 			}
 			return false;
 		}
 
 		public override void Kill(int timeLeft)
 		{
-			Collision.HitTiles(Projectile.position + Projectile.velocity, Projectile.velocity, Projectile.width, Projectile.height);
-			SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
-			Dust dustId = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 60, Projectile.velocity.X * -0.7f, Projectile.velocity.Y * 0.4f, 60, default(Color), 2f);
-			dustId.noGravity = true;
-			Dust dustId3 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 60, Projectile.velocity.X * 0.7f, Projectile.velocity.Y * 0.4f, 60, default(Color), 2f);
-			dustId3.noGravity = true;
+			int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 66, Projectile.velocity.X * 0.7f,
+				Projectile.velocity.Y * -0.5f, 120, new Color(55, 255, 125), 2f);
+			Main.dust[dustId].noGravity = true;
 		}
 	}
 }

@@ -17,6 +17,7 @@ namespace GMR.Projectiles.Ranged
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
 			ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
+			Projectile.AddElement(2);
 		}
 
 		public override void SetDefaults()
@@ -42,7 +43,7 @@ namespace GMR.Projectiles.Ranged
 				var target = Projectile.FindTargetWithinRange(1000f);
 				if (target != null)
 				{
-					Projectile.velocity = Vector2.Lerp(Projectile.velocity, Vector2.Normalize(target.Center - Projectile.Center) * 18f, 0.25f);
+					Projectile.velocity = Vector2.Lerp(Projectile.velocity, Vector2.Normalize(target.Center - Projectile.Center) * 12f, 0.02f);
 				}
 			}
 		}
@@ -75,10 +76,12 @@ namespace GMR.Projectiles.Ranged
 				if (max0 < 0)
 					continue;
 				Vector2 value4 = Vector2.Lerp(Projectile.oldPos[(int)i], Projectile.oldPos[max0], 1 - i % 1);
-				Main.EntitySpriteDraw(texture2D13, value4 + Projectile.Size / 2f - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, Projectile.rotation, origin2, Projectile.scale, effects, 0);
+				Main.EntitySpriteDraw(texture2D13, value4 + Projectile.Size / 2f - Main.screenPosition + new Vector2(0, Projectile.gfxOffY),
+					new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, Projectile.rotation, origin2, new Vector2(Projectile.scale, Projectile.scale * 0.75f), effects, 0);
 			}
 
-			Main.EntitySpriteDraw(texture2D13, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), Projectile.GetAlpha(color26), Projectile.rotation, origin2, Projectile.scale, effects, 0);
+			Main.EntitySpriteDraw(texture2D13, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY),
+				new Microsoft.Xna.Framework.Rectangle?(rectangle), Projectile.GetAlpha(color26), Projectile.rotation, origin2, new Vector2(Projectile.scale, Projectile.scale * 0.75f), effects, 0);
 			return false;
 		}
 

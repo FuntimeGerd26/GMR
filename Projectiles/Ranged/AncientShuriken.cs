@@ -18,6 +18,8 @@ namespace GMR.Projectiles.Ranged
 			DisplayName.SetDefault("Ancient Shuriken");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			Projectile.AddElement(0);
+			Projectile.AddElement(2);
 		}
 
 		public override void SetDefaults()

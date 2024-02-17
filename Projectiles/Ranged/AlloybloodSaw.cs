@@ -15,6 +15,8 @@ namespace GMR.Projectiles.Ranged
 		{
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			Projectile.AddElement(0);
+			Projectile.AddElement(2);
 		}
 
 		public override void SetDefaults()
@@ -96,7 +98,11 @@ namespace GMR.Projectiles.Ranged
 
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
-			Projectile.velocity *= -1.5f;
+			// Limits the bounce number to 3 times
+			if (++Projectile.ai[2] >= 3)
+				return true;
+			else
+				Projectile.velocity *= -1.5f;
 			Collision.HitTiles(Projectile.position + Projectile.velocity, Projectile.velocity, Projectile.width, Projectile.height);
 			SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
 			return false;

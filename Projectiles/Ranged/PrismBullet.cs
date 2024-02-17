@@ -18,6 +18,8 @@ namespace GMR.Projectiles.Ranged
 			DisplayName.SetDefault("Prismatic Bullet");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+			Projectile.AddElement(1);
+			Projectile.AddElement(2);
 		}
 
 		public override void SetDefaults()

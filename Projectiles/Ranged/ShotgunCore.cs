@@ -16,21 +16,21 @@ namespace GMR.Projectiles.Ranged
 			DisplayName.SetDefault("Shotgun Core");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			Projectile.AddElement(3);
 		}
 
 		public override void SetDefaults()
 		{
 			Projectile.width = 10;
 			Projectile.height = 10;
-			Projectile.aiStyle = 0;
+			Projectile.aiStyle = 1;
 			Projectile.friendly = true;
 			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.timeLeft = 600;
-			Projectile.light = 0.10f;
+			Projectile.light = 0.15f;
 			Projectile.ignoreWater = true;
 			Projectile.tileCollide = true;
 			Projectile.extraUpdates = 1;
-			AIType = ProjectileID.RocketI;
 		}
 
 		public override void AI()
@@ -40,22 +40,9 @@ namespace GMR.Projectiles.Ranged
 
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
-			Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity * 0.5f, ModContent.ProjectileType<Projectiles.Explotion>(), Projectile.damage * 2, Projectile.knockBack, Main.myPlayer);
-			target.AddBuff(BuffID.OnFire3, 300);
+			Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<Projectiles.JackExplosion>(), damageDone, Projectile.knockBack, Main.myPlayer);
+			SoundEngine.PlaySound(SoundID.Item62.WithPitchOffset(-1f), Projectile.Center);
 			target.immune[Projectile.owner] = 1;
-			SoundEngine.PlaySound(SoundID.Item62, Projectile.position);
-			int dustId = Dust.NewDust(Projectile.position, Projectile.width / 2, Projectile.height / 2, 186, Projectile.velocity.X * 0.7f,
-				Projectile.velocity.Y * 0.7f, 15, Color.White, 2f);
-			Main.dust[dustId].noGravity = true;
-			int dustId2 = Dust.NewDust(Projectile.position, Projectile.width / 2, Projectile.height / 2, 186, Projectile.velocity.X * 0.7f,
-				Projectile.velocity.Y * -0.7f, 15, Color.White, 2f);
-			Main.dust[dustId2].noGravity = true;
-			int dustId3 = Dust.NewDust(Projectile.position, Projectile.width / 2, Projectile.height / 2, 186, Projectile.velocity.X * -0.7f,
-				Projectile.velocity.Y * 0.7f, 15, Color.White, 2f);
-			Main.dust[dustId3].noGravity = true;
-			int dustId4 = Dust.NewDust(Projectile.position, Projectile.width / 2, Projectile.height / 2, 186, Projectile.velocity.X * -0.7f,
-				Projectile.velocity.Y * -0.7f, 15, Color.White, 2f);
-			Main.dust[dustId4].noGravity = true;
 		}
 
 		public override bool PreDraw(ref Color lightColor)
@@ -89,21 +76,14 @@ namespace GMR.Projectiles.Ranged
 
 		public override void Kill(int timeLeft)
 		{
-			Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity * 0f, ModContent.ProjectileType<Projectiles.Explotion>(), Projectile.damage * 2, Projectile.knockBack, Main.myPlayer);
-			SoundEngine.PlaySound(SoundID.Item62, Projectile.position);
-			Projectile.width = Projectile.height = 100;
-			int dustId = Dust.NewDust(Projectile.position, Projectile.width / 2, Projectile.height / 2, 186, Projectile.velocity.X * 0.7f,
-				Projectile.velocity.Y * 0.7f, 15, Color.White, 2f);
-			Main.dust[dustId].noGravity = true;
-			int dustId2 = Dust.NewDust(Projectile.position, Projectile.width / 2, Projectile.height / 2, 186, Projectile.velocity.X * 0.7f,
-				Projectile.velocity.Y * -0.7f, 15, Color.White, 2f);
-			Main.dust[dustId2].noGravity = true;
-			int dustId3 = Dust.NewDust(Projectile.position, Projectile.width / 2, Projectile.height / 2, 186, Projectile.velocity.X * -0.7f,
-				Projectile.velocity.Y * 0.7f, 15, Color.White, 2f);
-			Main.dust[dustId3].noGravity = true;
-			int dustId4 = Dust.NewDust(Projectile.position, Projectile.width / 2, Projectile.height / 2, 186, Projectile.velocity.X * -0.7f,
-				Projectile.velocity.Y * -0.7f, 15, Color.White, 2f);
-			Main.dust[dustId4].noGravity = true;
+			Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<Projectiles.Explotion>(), Projectile.damage * 2, Projectile.knockBack, Main.myPlayer);
+			SoundEngine.PlaySound(SoundID.Item62, Projectile.Center);
+			Dust dustId = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 6, Projectile.velocity.X * 1.5f, Projectile.velocity.Y * 1.5f, 60, default(Color), 1f);
+			dustId.noGravity = true;
+			Dust dustId2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 6, Projectile.velocity.X * 1.5f, Projectile.velocity.Y * 1.5f, 60, default(Color), 1.5f);
+			dustId2.noGravity = true;
+			Dust dustId3 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 6, Projectile.velocity.X * 1.5f, Projectile.velocity.Y * 1.5f, 60, default(Color), 2.5f);
+			dustId3.noGravity = true;
 		}
 	}
 }

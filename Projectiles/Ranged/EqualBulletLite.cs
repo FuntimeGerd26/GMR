@@ -18,6 +18,7 @@ namespace GMR.Projectiles.Ranged
 			DisplayName.SetDefault("Energy Bullet Lite");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			Projectile.AddElement(0);
 		}
 
 		public override void SetDefaults()
@@ -40,6 +41,9 @@ namespace GMR.Projectiles.Ranged
 		public override void AI()
 		{
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
+
+			Projectile.velocity.Normalize();
+			Projectile.velocity *= 18;
 		}
 
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
@@ -50,25 +54,44 @@ namespace GMR.Projectiles.Ranged
 				float rotation = MathHelper.ToRadians(22f);
 				for (int i = 0; i < numberProjectiles; i++)
 				{
-					Vector2 perturbedSpeed = -Projectile.velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * -1f;
+					Vector2 perturbedSpeed = -Projectile.velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * 0.6f;
 					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, perturbedSpeed, ModContent.ProjectileType<Projectiles.Ranged.EqualBulletShardLite>(), Projectile.damage / 2, Projectile.knockBack, Main.myPlayer);
 					Projectile.ai[1] = 1;
 				}
 			}
-			Projectile.velocity = -Projectile.velocity + 0.5f / Projectile.MaxUpdates * Vector2.Normalize(Projectile.velocity);
 		}
 
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
-			if (Projectile.penetrate > 1)
-			{
-				Projectile.velocity = -Projectile.velocity + 0.5f / Projectile.MaxUpdates * Vector2.Normalize(Projectile.velocity);
-				return false;
-			}
-			else
+			Collision.HitTiles(Projectile.position + Projectile.velocity, Projectile.velocity, Projectile.width, Projectile.height);
+			SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
+
+			// So the projectile can reflect at most 7 times (0-6 times that OnTileCollide runs without the projectile dying, making it 7 bounces)
+			if (Projectile.penetrate <= 1)
 			{
 				return true;
 			}
+			else
+			{
+				// If the projectile hits the left or right side of the tile, reverse the X velocity
+				if (Math.Abs(Projectile.velocity.X - oldVelocity.X) > float.Epsilon)
+				{
+					Projectile.velocity.X = -oldVelocity.X * 1.05f;
+				}
+
+				// If the projectile hits the top or bottom side of the tile, reverse the Y velocity
+				if (Math.Abs(Projectile.velocity.Y - oldVelocity.Y) > float.Epsilon)
+				{
+					Projectile.velocity.Y = -oldVelocity.Y * 1.05f;
+				}
+				Projectile.penetrate--;
+			}
+
+			Dust dustId = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 60, Projectile.velocity.X * 0.7f, Projectile.velocity.Y * 0.7f, 60, default(Color), 2f);
+			dustId.noGravity = true;
+			Dust dustId3 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 60, Projectile.velocity.X * 0.7f, Projectile.velocity.Y * 0.7f, 60, default(Color), 2f);
+			dustId3.noGravity = true;
+			return false;
 		}
 
 		public override Color? GetAlpha(Color lightColor) => new Color(255, 218, 218, 0);

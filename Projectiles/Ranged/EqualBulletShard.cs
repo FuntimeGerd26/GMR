@@ -11,13 +11,14 @@ namespace GMR.Projectiles.Ranged
 {
 	public class EqualBulletShard : ModProjectile
 	{
-		public override string Texture => "GMR/Projectiles/Ranged/GungeonBullet";
+		public override string Texture => "GMR/Projectiles/Ranged/DualShooterBullet";
 
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Energy Bullet");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+			Projectile.AddElement(0);
 		}
 
 		public override void SetDefaults()

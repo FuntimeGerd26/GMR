@@ -16,6 +16,8 @@ namespace GMR.Projectiles.Ranged
 			DisplayName.SetDefault("Scarlet Rocket");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			Projectile.AddElement(0);
+			Projectile.AddElement(2);
 		}
 
 		public override void SetDefaults()
@@ -35,12 +37,16 @@ namespace GMR.Projectiles.Ranged
 		public override void AI()
         {
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90f);
-			Projectile.velocity += 1f / Projectile.MaxUpdates * Vector2.Normalize(Projectile.velocity);
+			var target = Projectile.FindTargetWithinRange(300f);
+			if (target != null)
+			{
+				Projectile.velocity = Vector2.Lerp(Projectile.velocity, Vector2.Normalize(target.Center - Projectile.Center) * 12f, 0.009f);
+			}
 		}
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
-			Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity * 0.75f, ModContent.ProjectileType<Projectiles.Explotion>(), Projectile.damage / 2, Projectile.knockBack, Main.myPlayer);
+			Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity * 0.75f, ModContent.ProjectileType<Projectiles.Explotion>(), damageDone / 2, Projectile.knockBack, Main.myPlayer);
 			SoundEngine.PlaySound(SoundID.Item62, Projectile.position);
 			int dustId = Dust.NewDust(Projectile.position, Projectile.width / 2, Projectile.height / 2, 186, Projectile.velocity.X * 0.7f,
 				Projectile.velocity.Y * 0.7f, 15, Color.White, 2f);
@@ -79,7 +85,7 @@ namespace GMR.Projectiles.Ranged
 
 		public override void Kill(int timeLeft)
 		{
-			Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity * 0f, ModContent.ProjectileType<Projectiles.Explotion>(), Projectile.damage * 2, Projectile.knockBack, Main.myPlayer);
+			Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity * 0f, ModContent.ProjectileType<Projectiles.Explotion>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
 			SoundEngine.PlaySound(SoundID.Item62, Projectile.position);
 			Projectile.width = Projectile.height = 22;
 			int dustId = Dust.NewDust(Projectile.position, Projectile.width / 2, Projectile.height / 2, 186, Projectile.velocity.X * 0.7f,

@@ -18,6 +18,7 @@ namespace GMR.Projectiles.Ranged
 			DisplayName.SetDefault("Aluminium Bullet");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			Projectile.AddElement(1);
 		}
 
 		public override void SetDefaults()
@@ -47,8 +48,8 @@ namespace GMR.Projectiles.Ranged
 				}
 			}
 
-			int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 66, Projectile.velocity.X * 0.7f,
-				Projectile.velocity.Y * -0.5f, 120, Color.White, 1f);
+			int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 66, Projectile.velocity.X * 0.5f,
+				Projectile.velocity.Y * 0.5f, 120, Color.White, 1f);
 			Main.dust[dustId].noGravity = true;
 		}
 

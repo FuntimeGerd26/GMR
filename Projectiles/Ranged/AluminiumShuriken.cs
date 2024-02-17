@@ -18,6 +18,7 @@ namespace GMR.Projectiles.Ranged
 			DisplayName.SetDefault("Aluminium Shuriken");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 1;
+			Projectile.AddElement(1);
 		}
 
 		public override void SetDefaults()

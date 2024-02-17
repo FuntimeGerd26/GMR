@@ -16,6 +16,7 @@ namespace GMR.Projectiles.Ranged
 			DisplayName.SetDefault("Spaz Arrow");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			Projectile.AddElement(3);
 		}
 
 		public override void SetDefaults()

@@ -11,20 +11,21 @@ namespace GMR.Projectiles.Ranged
 {
 	public class EqualBulletShardLite : ModProjectile
 	{
-		public override string Texture => "GMR/Projectiles/Ranged/GungeonBullet";
+		public override string Texture => "GMR/Projectiles/Ranged/DualShooterBullet";
 
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Energy Bullet");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+			Projectile.AddElement(0);
 		}
 
 		public override void SetDefaults()
 		{
 			Projectile.width = 18;
 			Projectile.height = 18;
-			Projectile.aiStyle = 0;
+			Projectile.aiStyle = -1;
 			Projectile.friendly = true;
 			Projectile.penetrate = 2;
 			Projectile.DamageType = DamageClass.Ranged;
@@ -33,13 +34,12 @@ namespace GMR.Projectiles.Ranged
 			Projectile.ignoreWater = true;
 			Projectile.tileCollide = false;
 			Projectile.extraUpdates = 1;
-			AIType = ProjectileID.Bullet;
 			Projectile.usesLocalNPCImmunity = true;
 		}
 
 		public override void AI()
 		{
-				Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
+			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
 		}
 
 		public override Color? GetAlpha(Color lightColor) => new Color(255, 218, 218, 0);

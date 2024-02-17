@@ -18,18 +18,19 @@ namespace GMR.Projectiles.Ranged.Railgun
 			DisplayName.SetDefault("Amethyst Ray");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 60;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			Projectile.AddElement(0);
+			Projectile.AddElement(2);
 		}
 
 		public override void SetDefaults()
 		{
 			Projectile.width = 18;
 			Projectile.height = 18;
-			Projectile.aiStyle = 0;
+			Projectile.aiStyle = -1;
 			Projectile.friendly = true;
 			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.timeLeft = 240;
 			Projectile.penetrate = -1;
-			Projectile.light = 1f;
 			Projectile.ignoreWater = true;
 			Projectile.tileCollide = false;
 			Projectile.extraUpdates = 7;
@@ -40,13 +41,15 @@ namespace GMR.Projectiles.Ranged.Railgun
 
 		public override void AI()
 		{
+			Lighting.AddLight(Projectile.Center, new Vector3(0.6f, 0.3f, 1f));
+
 			var target = Projectile.FindTargetWithinRange(2000f);
 			if (target != null)
 			{
 				Projectile.velocity = Vector2.Lerp(Projectile.velocity, Vector2.Normalize(target.Center - Projectile.Center) * 30f, 0.09f);
 			}
 
-			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90f);
+			Projectile.rotation = Projectile.velocity.ToRotation();
 			if (Projectile.damage < 30)
             {
 				Projectile.Kill();
@@ -65,7 +68,7 @@ namespace GMR.Projectiles.Ranged.Railgun
 				Vector2 perturbedSpeed = Projectile.velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * 1f;
 				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, perturbedSpeed, Projectile.type, (int)(Projectile.damage * 0.75), Projectile.knockBack, Main.myPlayer);
 			}
-			player.AddBuff(ModContent.BuffType<Buffs.Debuffs.InfraRedCorrosion>(), 240);
+			player.AddBuff(ModContent.BuffType<Buffs.Debuffs.InfraRedCorrosion>(), 300);
 		}
 
 		public override Color? GetAlpha(Color lightColor) => Color.White;
@@ -94,7 +97,8 @@ namespace GMR.Projectiles.Ranged.Railgun
 				if (max0 < 0)
 					continue;
 				Vector2 value4 = Vector2.Lerp(Projectile.oldPos[(int)i], Projectile.oldPos[max0], 1 - i % 1);
-				Main.EntitySpriteDraw(texture2D13, value4 + Projectile.Size / 2f - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, Projectile.rotation, origin2, Projectile.scale / 2f, spriteEffects, 0);
+				float num165 = Projectile.oldRot[(int)i];
+				Main.EntitySpriteDraw(texture2D13, value4 + Projectile.Size / 2f - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, Projectile.scale / 2f, spriteEffects, 0);
 			}
 			return false;
 		}

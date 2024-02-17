@@ -9,50 +9,37 @@ using Terraria.ModLoader;
 
 namespace GMR.Projectiles.Ranged
 {
-	public class AncientBulletHome : ModProjectile
+	public class AncientArrow : ModProjectile
 	{
-		public override string Texture => "GMR/Projectiles/Ranged/AncientBullet";
+		public override string Texture => "Terraria/Images/Projectile_41";
 
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Ancient Bullet");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
-			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
 			Projectile.AddElement(0);
 			Projectile.AddElement(2);
 		}
 
 		public override void SetDefaults()
 		{
-			Projectile.width = 6;
-			Projectile.height = 6;
-			Projectile.aiStyle = 0;
+			Projectile.width = 20;
+			Projectile.height = 20;
+			Projectile.aiStyle = 1;
 			Projectile.friendly = true;
 			Projectile.DamageType = DamageClass.Ranged;
-			Projectile.timeLeft = 1200;
+			Projectile.timeLeft = 600;
 			Projectile.ignoreWater = true;
 			Projectile.tileCollide = true;
 			Projectile.extraUpdates = 1;
-			AIType = ProjectileID.Bullet;
 		}
-
-		public override Color? GetAlpha(Color lightColor) => new Color(255, 55, 55, 55);
 
 		public override void AI()
 		{
-			Lighting.AddLight(Projectile.Center, new Vector3(1f, 0.5f, 0.5f));
-			Projectile.rotation = Projectile.velocity.ToRotation();
-
-			var target = Projectile.FindTargetWithinRange(350f);
-			if (target != null)
-			{
-				Projectile.velocity = Vector2.Lerp(Projectile.velocity, Vector2.Normalize(target.Center - Projectile.Center) * 12f, 0.09f);
-			}
-		}
-
-		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
-		{
-			target.AddBuff(ModContent.BuffType<Buffs.Debuffs.PartiallyCrystallized>(), 300);
+			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90f);
+			int dustId = Dust.NewDust(Projectile.position, Projectile.width / 2, Projectile.height / 2, 60, Projectile.velocity.X * 0.7f,
+				Projectile.velocity.Y * 0.7f, 15, Color.White, 2f);
+			Main.dust[dustId].noGravity = true;
 		}
 
 		public override bool PreDraw(ref Color lightColor)
@@ -63,7 +50,7 @@ namespace GMR.Projectiles.Ranged
 			for (int k = 0; k < Projectile.oldPos.Length; k++)
 			{
 				Vector2 drawPos = (Projectile.oldPos[k] - Main.screenPosition) + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
-				Color color = Projectile.GetAlpha(lightColor) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
+				Color color = new Color(255, 185, 200) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
 				Main.EntitySpriteDraw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
 			}
 			return true;
@@ -71,9 +58,16 @@ namespace GMR.Projectiles.Ranged
 
 		public override void Kill(int timeLeft)
 		{
-			// This code and the similar code above in OnTileCollide spawn dust from the tiles collided with. SoundID.Item10 is the bounce sound you hear.
 			Collision.HitTiles(Projectile.position + Projectile.velocity, Projectile.velocity, Projectile.width, Projectile.height);
 			SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
+
+			Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity,
+				ModContent.ProjectileType<Projectiles.InfraRedExplotion>(), Projectile.damage / 4, Projectile.knockBack / 2f, Main.myPlayer);
+
+			Dust dustId = Dust.NewDustDirect(Projectile.position, Projectile.width * 4, Projectile.height * 4, 60, Projectile.velocity.X * 0.4f, Projectile.velocity.Y * 0.4f, 60, default(Color), 2f);
+			dustId.noGravity = true;
+			Dust dustId3 = Dust.NewDustDirect(Projectile.position, Projectile.width * 4, Projectile.height * 4, 60, Projectile.velocity.X * 0.4f, Projectile.velocity.Y * 0.4f, 60, default(Color), 2f);
+			dustId3.noGravity = true;
 		}
 	}
 }

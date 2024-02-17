@@ -18,6 +18,7 @@ namespace GMR.Projectiles.Ranged
 			DisplayName.SetDefault("Aluminium Bullet");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			Projectile.AddElement(1);
 		}
 
 		public override void SetDefaults()

@@ -15,49 +15,57 @@ namespace GMR.Projectiles.Ranged
 
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Slab Gun Bullet");
-			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 40;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			Projectile.AddElement(2);
 		}
 
 		public override void SetDefaults()
 		{
-			Projectile.width = 2;
-			Projectile.height = 2;
-			Projectile.aiStyle = 0;
+			Projectile.width = 6;
+			Projectile.height = 6;
+			Projectile.aiStyle = -1;
 			Projectile.friendly = true;
 			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.timeLeft = 600;
-			Projectile.penetrate = 20;
-			Projectile.light = 0.75f;
+			Projectile.penetrate = 12;
 			Projectile.ignoreWater = true;
 			Projectile.tileCollide = true;
-			Projectile.extraUpdates = 4;
+			Projectile.extraUpdates = 34;
 			Projectile.usesLocalNPCImmunity = true;
+			Projectile.stopsDealingDamageAfterPenetrateHits = true;
+		}
+
+		public override Color? GetAlpha(Color lightColor)
+		{
+			return new Color(125, 185, 255);
 		}
 
 		public override void AI()
 		{
 			Lighting.AddLight(Projectile.Center, new Vector3(0.5f, 0.65f, 1f));
 
-			if (Projectile.timeLeft <= 30)
+			if (Projectile.penetrate <= 1)
 			{
-				Projectile.alpha += 8;
+				Projectile.alpha++;
 				Projectile.velocity *= 0.95f;
+				if (Projectile.alpha >= 255)
+					Projectile.Kill();
 			}
 
 			Projectile.rotation = Projectile.velocity.ToRotation();
-		}
 
-		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+            Projectile.velocity.Normalize();
+			Projectile.velocity *= 3.5f;
+        }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			target.immune[Projectile.owner] = 0;
 			int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 66, Projectile.velocity.X * 0.7f,
-				Projectile.velocity.Y * -0.5f, 30, new Color(125, 185, 255), 2f);
+				Projectile.velocity.Y * -0.5f, 30, new Color(125, 185, 255, 40), 2f);
 			Main.dust[dustId].noGravity = true;
 		}
-
-		public override Color? GetAlpha(Color lightColor) => new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB);
 
 		public override bool PreDraw(ref Color lightColor)
 		{
@@ -84,7 +92,7 @@ namespace GMR.Projectiles.Ranged
 					continue;
 				Vector2 value4 = Vector2.Lerp(Projectile.oldPos[(int)i], Projectile.oldPos[max0], 1 - i % 1);
 				Main.EntitySpriteDraw(texture2D13, value4 + Projectile.Size / 2f - Main.screenPosition + new Vector2(0, Projectile.gfxOffY),
-					new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, Projectile.rotation, origin2, new Vector2(Projectile.scale, Projectile.scale * 0.4f), spriteEffects, 0);
+					new Microsoft.Xna.Framework.Rectangle?(rectangle), color27 * 0.6f * Projectile.Opacity, Projectile.rotation, origin2, new Vector2(Projectile.scale * 1.5f, Projectile.scale * 0.25f), spriteEffects, 0);
 			}
 			return false;
 		}
@@ -92,7 +100,7 @@ namespace GMR.Projectiles.Ranged
 		public override void Kill(int timeLeft)
 		{
 			int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 66, Projectile.velocity.X * 0.7f,
-				Projectile.velocity.Y * -0.5f, 120, new Color(125, 185, 255), 2f);
+				Projectile.velocity.Y * -0.5f, 120, new Color(125, 185, 255, 40), 2f);
 			Main.dust[dustId].noGravity = true;
 		}
 	}

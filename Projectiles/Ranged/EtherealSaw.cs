@@ -13,8 +13,9 @@ namespace GMR.Projectiles.Ranged
 	{
 		public override void SetStaticDefaults()
 		{
-			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			Projectile.AddElement(2);
 		}
 
 		public override void SetDefaults()
@@ -23,7 +24,7 @@ namespace GMR.Projectiles.Ranged
 			Projectile.height = 48;
 			Projectile.aiStyle = -1;
 			Projectile.friendly = true;
-			Projectile.penetrate = 20;
+			Projectile.penetrate = 10;
 			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.timeLeft = 600;
 			Projectile.ignoreWater = true;
@@ -37,18 +38,20 @@ namespace GMR.Projectiles.Ranged
 		{
 			Lighting.AddLight(Projectile.Center, new Vector3(0.2f, 0.5f, 0.85f));
 
-			Projectile.rotation += Projectile.direction * 0.03f * Projectile.velocity.Length();
-			Projectile.width = (int)(48 * Projectile.scale);
-			Projectile.height = (int)(48 * Projectile.scale);
+			Projectile.rotation += -Projectile.direction * 0.3f * Projectile.velocity.Length();
 
 			if (Projectile.scale < 1f)
-				Projectile.scale *= 1.03f;
-		}
+				Projectile.scale += 1.025f;
 
-		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+            Projectile.velocity.Normalize();
+			Projectile.velocity *= 24f;
+        }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
-			Projectile.damage += (int)(Projectile.damage * 0.025f);
-			target.immune[Projectile.owner] = 2;
+			Projectile.damage -= (int)(Projectile.damage * 0.05f);
+			SoundEngine.PlaySound(SoundID.Item22, Projectile.Center);
+			target.immune[Projectile.owner] = 1;
 		}
 
 		public override bool PreDraw(ref Color lightColor)
@@ -81,7 +84,26 @@ namespace GMR.Projectiles.Ranged
 
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
-			Projectile.velocity *= -1.75f;
+			// So the projectile can bounce at most 5 times
+			if (++Projectile.ai[2] >= 6)
+			{
+				return true;
+			}
+			else
+			{
+				// If the projectile hits the left or right side of the tile, reverse the X velocity
+				if (Math.Abs(Projectile.velocity.X - oldVelocity.X) > float.Epsilon)
+				{
+					Projectile.velocity.X = -oldVelocity.X * 1.05f;
+				}
+
+				// If the projectile hits the top or bottom side of the tile, reverse the Y velocity
+				if (Math.Abs(Projectile.velocity.Y - oldVelocity.Y) > float.Epsilon)
+				{
+					Projectile.velocity.Y = -oldVelocity.Y * 1.05f;
+				}
+			}
+
 			Collision.HitTiles(Projectile.position + Projectile.velocity, Projectile.velocity, Projectile.width, Projectile.height);
 			SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
 			return false;
@@ -91,9 +113,6 @@ namespace GMR.Projectiles.Ranged
 		{
 			Collision.HitTiles(Projectile.position + Projectile.velocity, Projectile.velocity, Projectile.width, Projectile.height);
 			SoundEngine.PlaySound(SoundID.Item110, Projectile.position);
-			Projectile.width = Projectile.height = 10;
-			Projectile.position.X -= (float)(Projectile.width / 2);
-			Projectile.position.Y -= (float)(Projectile.height / 2);
 		}
 	}
 }

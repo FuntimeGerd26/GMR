@@ -11,13 +11,15 @@ namespace GMR.Projectiles.Ranged
 {
 	public class ArkShotgunBullet : ModProjectile
 	{
-		public override string Texture => "GMR/Projectiles/Ranged/MagnumBlast";
+		public override string Texture => "GMR/Projectiles/Ranged/ShotgunBullet";
 
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Alloyblood Bullet");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 15;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			Projectile.AddElement(0);
+			Projectile.AddElement(2);
 		}
 
 		public override void SetDefaults()

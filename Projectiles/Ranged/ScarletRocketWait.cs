@@ -16,30 +16,32 @@ namespace GMR.Projectiles.Ranged
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Scarlet Rocket");
-			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			Projectile.AddElement(0);
+			Projectile.AddElement(2);
 		}
 
 		public override void SetDefaults()
 		{
-			Projectile.width = 22;
-			Projectile.height = 22;
+			Projectile.width = 20;
+			Projectile.height = 20;
 			Projectile.aiStyle = 0;
 			Projectile.friendly = true;
 			Projectile.DamageType = DamageClass.Ranged;
-			Projectile.timeLeft = 1200;
+			Projectile.timeLeft = 2400;
 			Projectile.ignoreWater = true;
 			Projectile.tileCollide = true;
-			Projectile.extraUpdates = 1;
+			Projectile.extraUpdates = 4;
 			AIType = ProjectileID.RocketI;
 		}
 
 		public override void AI()
         {
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90f);
-			if (++Projectile.localAI[0] > 40)
+			if (++Projectile.localAI[0] > 0)
 			{
-				Projectile.velocity += 1f / Projectile.MaxUpdates * Vector2.Normalize(Projectile.velocity);
+				Projectile.velocity *= 1.05f;
 			}
 			else
 			{
@@ -49,8 +51,8 @@ namespace GMR.Projectiles.Ranged
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
-			Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity * 0.75f, ModContent.ProjectileType<Projectiles.SmallExplotion>(), Projectile.damage / 2, Projectile.knockBack, Main.myPlayer);
-			Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity * 0.75f, ModContent.ProjectileType<Projectiles.JackExplosion>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
+			Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<Projectiles.JackExplosion>(), damageDone, Projectile.knockBack, Main.myPlayer);
+			Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<Projectiles.SmallExplotion>(), damageDone / 2, Projectile.knockBack, Main.myPlayer);
 			SoundEngine.PlaySound(SoundID.Item62, Projectile.position);
 			int dustId = Dust.NewDust(Projectile.position, Projectile.width / 2, Projectile.height / 2, 186, Projectile.velocity.X * 0.7f,
 				Projectile.velocity.Y * 0.7f, 15, Color.White, 2f);

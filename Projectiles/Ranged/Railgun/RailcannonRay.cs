@@ -18,22 +18,22 @@ namespace GMR.Projectiles.Ranged.Railgun
 			DisplayName.SetDefault("Infra-Red Ray");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 60;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			Projectile.AddElement(0);
+			Projectile.AddElement(2);
 		}
 
 		public override void SetDefaults()
 		{
 			Projectile.width = 18;
 			Projectile.height = 18;
-			Projectile.aiStyle = 0;
+			Projectile.aiStyle = -1;
 			Projectile.friendly = true;
 			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.timeLeft = 1200;
 			Projectile.penetrate = -1;
-			Projectile.light = 1f;
 			Projectile.ignoreWater = true;
 			Projectile.tileCollide = false;
 			Projectile.extraUpdates = 7;
-			AIType = ProjectileID.Bullet;
 			Projectile.scale = 2f;
 			Projectile.usesIDStaticNPCImmunity = true;
 			Projectile.idStaticNPCHitCooldown = 1;
@@ -41,7 +41,8 @@ namespace GMR.Projectiles.Ranged.Railgun
 
 		public override void AI()
 		{
-			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90f);
+			Lighting.AddLight(Projectile.Center, new Vector3(1f, 0.5f, 0.5f));
+			Projectile.rotation = Projectile.velocity.ToRotation();
 		}
 
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
@@ -77,7 +78,8 @@ namespace GMR.Projectiles.Ranged.Railgun
 				if (max0 < 0)
 					continue;
 				Vector2 value4 = Vector2.Lerp(Projectile.oldPos[(int)i], Projectile.oldPos[max0], 1 - i % 1);
-				Main.EntitySpriteDraw(texture2D13, value4 + Projectile.Size / 2f - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, Projectile.rotation, origin2, Projectile.scale / 2f, spriteEffects, 0);
+				float num165 = Projectile.oldRot[(int)i];
+				Main.EntitySpriteDraw(texture2D13, value4 + Projectile.Size / 2f - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, Projectile.scale / 2f, spriteEffects, 0);
 			}
 			return false;
 		}
