@@ -42,14 +42,14 @@ namespace GMR.Items.Armor
 		public override void AddRecipes()
 		{
 				Recipe recipe = CreateRecipe();
-				recipe.AddIngredient(ItemID.PalladiumBar, 28);
+				recipe.AddIngredient(ItemID.OrichalcumBar, 28);
 				recipe.AddIngredient(null, "BossUpgradeCrystal", 5);
 				recipe.AddIngredient(ItemID.Amber);
 				recipe.AddTile(TileID.MythrilAnvil);
 				recipe.Register();
 
 				Recipe recipe2 = CreateRecipe();
-				recipe2.AddIngredient(ItemID.CobaltBar, 28);
+				recipe2.AddIngredient(ItemID.MythrilBar, 28);
 				recipe2.AddIngredient(null, "BossUpgradeCrystal", 5);
 				recipe2.AddIngredient(ItemID.Amber);
 				recipe2.AddTile(TileID.MythrilAnvil);

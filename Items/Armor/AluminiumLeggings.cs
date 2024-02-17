@@ -35,6 +35,7 @@ namespace GMR.Items.Armor
 		{
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(ItemID.CopperBar, 10);
+			recipe.AddIngredient(ItemID.Glass, 18);
 			recipe.AddIngredient(ItemID.FallenStar, 6);
 			recipe.AddIngredient(null, "UpgradeCrystal", 20);
 			recipe.AddTile(TileID.Anvils);
@@ -42,6 +43,7 @@ namespace GMR.Items.Armor
 
 			Recipe recipe2 = CreateRecipe();
 			recipe2.AddIngredient(ItemID.TinBar, 10);
+			recipe2.AddIngredient(ItemID.Glass, 18);
 			recipe2.AddIngredient(ItemID.FallenStar, 6);
 			recipe2.AddIngredient(null, "UpgradeCrystal", 20);
 			recipe2.AddTile(TileID.Anvils);

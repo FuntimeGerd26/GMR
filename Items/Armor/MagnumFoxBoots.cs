@@ -33,16 +33,16 @@ namespace GMR.Items.Armor
 		public override void AddRecipes()
 		{
 			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.TungstenBar, 20);
+			recipe.AddIngredient(ItemID.CrimtaneBar, 20);
 			recipe.AddIngredient(null, "BossUpgradeCrystal", 2);
-			recipe.AddIngredient(ItemID.Ruby, 1);
+			recipe.AddIngredient(ItemID.TissueSample, 5);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 
 			Recipe recipe2 = CreateRecipe();
-			recipe2.AddIngredient(ItemID.SilverBar, 20);
+			recipe2.AddIngredient(ItemID.DemoniteBar, 20);
 			recipe2.AddIngredient(null, "BossUpgradeCrystal", 2);
-			recipe2.AddIngredient(ItemID.Ruby, 1);
+			recipe2.AddIngredient(ItemID.ShadowScale, 5);
 			recipe2.AddTile(TileID.Anvils);
 			recipe2.Register();
 		}

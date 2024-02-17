@@ -34,32 +34,18 @@ namespace GMR.Items.Armor
 		public override void AddRecipes()
 		{
 			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.IronBar, 20);
+			recipe.AddRecipeGroup("IronBar", 20);
 			recipe.AddIngredient(ItemID.RottenChunk, 10);
 			recipe.AddIngredient(null, "BossUpgradeCrystal");
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 
 			Recipe recipe2 = CreateRecipe();
-			recipe2.AddIngredient(ItemID.LeadBar, 20);
-			recipe2.AddIngredient(ItemID.RottenChunk, 10);
+			recipe2.AddRecipeGroup("IronBar", 20);
+			recipe2.AddIngredient(ItemID.Vertebrae, 10);
 			recipe2.AddIngredient(null, "BossUpgradeCrystal");
 			recipe2.AddTile(TileID.Anvils);
 			recipe2.Register();
-
-			Recipe recipe3 = CreateRecipe();
-			recipe3.AddIngredient(ItemID.IronBar, 20);
-			recipe3.AddIngredient(ItemID.Vertebrae, 10);
-			recipe3.AddIngredient(null, "BossUpgradeCrystal");
-			recipe3.AddTile(TileID.Anvils);
-			recipe3.Register();
-
-			Recipe recipe4 = CreateRecipe();
-			recipe4.AddIngredient(ItemID.LeadBar, 20);
-			recipe4.AddIngredient(ItemID.Vertebrae, 10);
-			recipe4.AddIngredient(null, "BossUpgradeCrystal");
-			recipe4.AddTile(TileID.Anvils);
-			recipe4.Register();
 		}
 	}
 }

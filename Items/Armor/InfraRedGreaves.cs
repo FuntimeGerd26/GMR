@@ -44,6 +44,7 @@ namespace GMR.Items.Armor
 		{
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(ItemID.SoulofLight, 10);
+			recipe.AddIngredient(null, "InfraRedBar", 15);
 			recipe.AddIngredient(null, "ScrapFragment", 18);
 			recipe.AddIngredient(null, "BossUpgradeCrystal", 3);
 			recipe.AddIngredient(null, "UpgradeCrystal", 60);

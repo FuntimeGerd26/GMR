@@ -38,16 +38,18 @@ namespace GMR.Items.Armor
 
 		public override void UpdateArmorSet(Player player)
 		{
-			player.setBonus = "Increases max minions by 1\nIncreases all weapon speed by 2%\nIncreases all damage by 2%";
+			player.setBonus = "Increases max minions by 1\nIncreases all weapon speed by 2%\nIncreases all damage by 2%\nAttacks have a chance to shoot a shuriken";
 			player.GetAttackSpeed(DamageClass.Generic) += 0.02f;
 			player.GetDamage(DamageClass.Generic) += 0.02f;
 			player.maxMinions++;
+			player.GPlayer().AlumArmor = Item;
 		}
 
 		public override void AddRecipes()
 		{
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(ItemID.CopperBar, 8);
+			recipe.AddIngredient(ItemID.Glass, 15);
 			recipe.AddIngredient(ItemID.FallenStar, 5);
 			recipe.AddIngredient(null, "UpgradeCrystal", 10);
 			recipe.AddTile(TileID.Anvils);
@@ -55,6 +57,7 @@ namespace GMR.Items.Armor
 
 			Recipe recipe2 = CreateRecipe();
 			recipe2.AddIngredient(ItemID.TinBar, 8);
+			recipe2.AddIngredient(ItemID.Glass, 15);
 			recipe2.AddIngredient(ItemID.FallenStar, 5);
 			recipe2.AddIngredient(null, "UpgradeCrystal", 10);
 			recipe2.AddTile(TileID.Anvils);

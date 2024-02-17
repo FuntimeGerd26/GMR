@@ -52,7 +52,7 @@ namespace GMR.Items.Armor
 		public override void AddRecipes()
 		{
 				Recipe recipe = CreateRecipe();
-				recipe.AddIngredient(ItemID.PalladiumBar, 20);
+				recipe.AddIngredient(ItemID.OrichalcumBar, 20);
 				recipe.AddIngredient(ItemID.Goggles);
 				recipe.AddIngredient(null, "BossUpgradeCrystal", 3);
 				recipe.AddIngredient(ItemID.Amber, 2);
@@ -60,7 +60,7 @@ namespace GMR.Items.Armor
 				recipe.Register();
 
 				Recipe recipe2 = CreateRecipe();
-				recipe2.AddIngredient(ItemID.CobaltBar, 20);
+				recipe2.AddIngredient(ItemID.MythrilBar, 20);
 				recipe2.AddIngredient(ItemID.Goggles);
 				recipe2.AddIngredient(null, "BossUpgradeCrystal", 3);
 				recipe2.AddIngredient(ItemID.Amber, 2);

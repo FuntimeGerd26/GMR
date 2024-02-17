@@ -34,18 +34,11 @@ namespace GMR.Items.Armor
 		public override void AddRecipes()
 		{
 			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.IronBar, 7);
+			recipe.AddRecipeGroup("IronBar", 7);
 			recipe.AddIngredient(ItemID.Amethyst, 3);
 			recipe.AddIngredient(null, "UpgradeCrystal", 25);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
-
-			Recipe recipe2 = CreateRecipe();
-			recipe2.AddIngredient(ItemID.LeadBar, 7);
-			recipe2.AddIngredient(ItemID.Amethyst, 3);
-			recipe2.AddIngredient(null, "UpgradeCrystal", 25);
-			recipe2.AddTile(TileID.Anvils);
-			recipe2.Register();
 		}
 	}
 }
