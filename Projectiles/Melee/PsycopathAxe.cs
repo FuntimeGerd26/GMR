@@ -18,6 +18,7 @@ namespace GMR.Projectiles.Melee
             DisplayName.SetDefault("Psycopath Axe");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+            Projectile.AddElement(3);
         }
 
         public override void SetDefaults()
@@ -31,6 +32,8 @@ namespace GMR.Projectiles.Melee
             Projectile.ignoreWater = true;
             Projectile.tileCollide = false;
             Projectile.extraUpdates = 4;
+            Projectile.usesIDStaticNPCImmunity = true;
+            Projectile.idStaticNPCHitCooldown = 20;
         }
 
         public override void AI()
@@ -40,14 +43,9 @@ namespace GMR.Projectiles.Melee
                 Projectile.velocity = Projectile.velocity;
             }
             else if (++Projectile.ai[0] > 40)
-                Projectile.velocity = Projectile.velocity.RotatedBy(MathHelper.ToRadians(18));
+                Projectile.velocity = Projectile.velocity.RotatedBy(MathHelper.ToRadians(16));
 
             Projectile.rotation += Projectile.spriteDirection * 0.15f;
-        }
-
-        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
-        {
-            target.immune[Projectile.owner] = 5;
         }
 
         public override Color? GetAlpha(Color lightColor) => new Color(125, 125, 0, 125);

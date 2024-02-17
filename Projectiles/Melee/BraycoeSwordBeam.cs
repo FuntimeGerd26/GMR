@@ -15,15 +15,16 @@ namespace GMR.Projectiles.Melee
 
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Hallowed Wood Beam");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 1;
+			Projectile.AddElement(0);
+			Projectile.AddElement(3);
 		}
 
 		public override void SetDefaults()
 		{
-			Projectile.width = 100;
-			Projectile.height = 100;
+			Projectile.width = 50;
+			Projectile.height = 50;
 			Projectile.aiStyle = -1;
 			Projectile.friendly = true;
 			Projectile.DamageType = DamageClass.Melee;
@@ -33,34 +34,47 @@ namespace GMR.Projectiles.Melee
 			Projectile.tileCollide = false;
 			Projectile.scale = 1.1f;
 			Projectile.usesIDStaticNPCImmunity = true;
-			Projectile.idStaticNPCHitCooldown = 10;
+			Projectile.idStaticNPCHitCooldown = 15;
 		}
 
 		public override void AI()
 		{
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(45f);
-			Projectile.velocity *= 0.99f;
 			if (Projectile.alpha > 40 && Projectile.scale > 1f)
             {
-				if (Projectile.scale < 1f)
-					Projectile.scale = 1f;
-				else
-					Projectile.scale += -0.01f;
-			}
-			if (Projectile.width > 90 || Projectile.height > 90)
-			{
-				Projectile.width = 90;
-				Projectile.height = 90;
+				Projectile.scale += -0.001f;
 			}
 
-            Projectile.alpha += 16;
+			if (++Projectile.ai[2] % 30 == 0)
+				Projectile.velocity *= 0.2f;
+			Projectile.velocity *= 1.025f;
+
+			Projectile.alpha += 4;
 			if (Projectile.alpha > 255)
             {
                 Projectile.Kill();
-            }
-        }
+			}
 
-        public override bool PreDraw(ref Color lightColor)
+			int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.SilverFlame, Projectile.velocity.X * 0.5f,
+				Projectile.velocity.Y * 0.5f, 60, new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB), 2f);
+			Main.dust[dustId].noGravity = true;
+		}
+
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+		{
+			Player player = Main.player[Projectile.owner];
+
+			Vector2 projPos = new Vector2(target.Center.X + Main.rand.Next(-30, 30) * 2, target.Center.Y + Main.rand.Next(-30, 30) * 2);
+			Vector2 velocityToTarget = ((new Vector2(target.Center.X, target.Center.Y)) - projPos) * 0.15f;
+			Projectile.NewProjectile(player.GetSource_FromThis(), projPos, velocityToTarget,
+				ModContent.ProjectileType<CoolSwords.BraycoeExplosion>(), Projectile.damage * 2, Projectile.knockBack, Projectile.owner);
+
+			int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.SilverFlame, Projectile.velocity.X * 0.5f,
+				Projectile.velocity.Y * 0.5f, 60, new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB), 2f);
+			Main.dust[dustId].noGravity = true;
+		}
+
+		public override bool PreDraw(ref Color lightColor)
 		{
 			Texture2D texture2D13 = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			int num156 = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Height / Main.projFrames[Projectile.type]; //ypos of lower right corner of sprite to draw
@@ -81,10 +95,12 @@ namespace GMR.Projectiles.Melee
 				if (max0 < 0)
 					continue;
 				Vector2 value4 = Vector2.Lerp(Projectile.oldPos[(int)i], Projectile.oldPos[max0], 1 - i % 1);
-				Main.EntitySpriteDraw(texture2D13, value4 + Projectile.Size / 2f - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27 * Opacity, Projectile.rotation, origin2, Projectile.scale, effects, 0);
+				Main.EntitySpriteDraw(texture2D13, value4 + Projectile.Size / 2f - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle),
+					color27 * 0.5f * Opacity, Projectile.rotation, origin2, Projectile.scale, effects, 0);
 			}
 
-			Main.EntitySpriteDraw(texture2D13, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), Projectile.GetAlpha(color26) * Opacity, Projectile.rotation, origin2, Projectile.scale, effects, 0);
+			Main.EntitySpriteDraw(texture2D13, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle),
+				color26 * 0.85f * Opacity, Projectile.rotation, origin2, Projectile.scale, effects, 0);
 			return false;
 		}
 	}

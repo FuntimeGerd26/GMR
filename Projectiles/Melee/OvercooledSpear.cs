@@ -20,6 +20,8 @@ namespace GMR.Projectiles.Melee
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Overcooled Spear");
+			Projectile.AddElement(1);
+			Projectile.AddElement(3);
 		}
 
 		public override void SetDefaults()

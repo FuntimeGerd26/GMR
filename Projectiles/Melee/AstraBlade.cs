@@ -18,6 +18,8 @@ namespace GMR.Projectiles.Melee
 			DisplayName.SetDefault("Astra Lux Energy");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 25;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 1;
+			Projectile.AddElement(0);
+			Projectile.AddElement(2);
 		}
 
 		public override void SetDefaults()

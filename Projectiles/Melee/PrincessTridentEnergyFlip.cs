@@ -20,6 +20,7 @@ namespace GMR.Projectiles.Melee
 			DisplayName.SetDefault("Trident Energy");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 15;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 1;
+			Projectile.AddElement(1);
 		}
 
 		public override void SetDefaults()

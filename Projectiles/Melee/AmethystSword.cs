@@ -18,6 +18,7 @@ namespace GMR.Projectiles.Melee
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Violet's Sword");
+			Projectile.AddElement(1);
 		}
 
 		public override void SetDefaults()

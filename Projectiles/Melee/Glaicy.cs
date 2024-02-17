@@ -16,6 +16,7 @@ namespace GMR.Projectiles.Melee
 			DisplayName.SetDefault("Glaicy");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 1;
+			Projectile.AddElement(1);
 		}
 
 		public override void SetDefaults()
@@ -33,8 +34,14 @@ namespace GMR.Projectiles.Melee
 
 		public override void AI()
 		{
-			Lighting.AddLight(Projectile.Center, new Vector3(0.5f, 0.5f, 1.25f));
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(45f);
+
+			int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 80, Projectile.velocity.X * 0.75f,
+				Projectile.velocity.Y * 0.75f, 60, default(Color), 0.5f);
+			Main.dust[dustId].noGravity = true;
+			int dustId3 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 80, Projectile.velocity.X * 0.75f,
+				Projectile.velocity.Y * 0.75f, 60, default(Color), 0.5f);
+			Main.dust[dustId3].noGravity = true;
 		}
 
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
@@ -42,6 +49,8 @@ namespace GMR.Projectiles.Melee
 			// 60 frames = 1 second
 			target.AddBuff(BuffID.Frostburn, 900);
 			target.AddBuff(BuffID.Weak, 600);
+			if (Projectile.ai[0] == 0f)
+			Projectile.NewProjectile(Projectile.GetSource_FromAI(), target.Center, Vector2.Zero, Projectile.type, (int)(Projectile.damage / 2), 0f, Projectile.owner, 1f);
 		}
 
 		public override void Kill(int timeleft)
@@ -50,7 +59,7 @@ namespace GMR.Projectiles.Melee
 			Projectile.width = Projectile.height = 30;
 			Projectile.position.X -= (float)(Projectile.width / 2);
 			Projectile.position.Y -= (float)(Projectile.height / 2);
-			int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 67, Projectile.velocity.X * 0.5f,
+			int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 80, Projectile.velocity.X * 0.5f,
 				Projectile.velocity.Y * 0.5f, 60, default(Color), 0.5f);
 			Main.dust[dustId].noGravity = true;
 		}

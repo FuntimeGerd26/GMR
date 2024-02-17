@@ -14,7 +14,8 @@ namespace GMR.Projectiles.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("My Baby!");
+            Projectile.AddElement(0);
+            Projectile.AddElement(3);
         }
 
         public override void SetDefaults()

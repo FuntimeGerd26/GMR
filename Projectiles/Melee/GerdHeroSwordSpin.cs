@@ -9,13 +9,12 @@ using Terraria.ModLoader;
 
 namespace GMR.Projectiles.Melee
 {
-	public class GerdHeroSwordHoming : ModProjectile
+	public class GerdHeroSwordSpin : ModProjectile
 	{
 		public override string Texture => "GMR/Items/Weapons/Melee/GerdHeroSword";
 
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Hero Training Sword");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
 			Projectile.AddElement(3);
@@ -23,36 +22,37 @@ namespace GMR.Projectiles.Melee
 
 		public override void SetDefaults()
 		{
-			Projectile.width = 66;
-			Projectile.height = 66;
+			Projectile.width = 64;
+			Projectile.height = 64;
 			Projectile.aiStyle = -1;
 			Projectile.friendly = true;
-			Projectile.penetrate = 2;
 			Projectile.DamageType = DamageClass.Melee;
-			Projectile.timeLeft = 600;
+			Projectile.timeLeft = 300;
 			Projectile.ignoreWater = true;
 			Projectile.tileCollide = false;
-			Projectile.extraUpdates = 1;
-			Projectile.localNPCHitCooldown = 5;
-			Projectile.usesIDStaticNPCImmunity = true;
 			Projectile.usesLocalNPCImmunity = true;
 		}
 
+		float Angle;
 		public override void AI()
 		{
 			Lighting.AddLight(Projectile.Center, new Vector3(0.25f, 1f, 0.45f));
 
-			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(45f);
+			Player player = Main.player[Projectile.owner];
 
-			var target = Projectile.FindTargetWithinRange(400f);
-			if (target != null)
-			{
-				Projectile.velocity = Vector2.Lerp(Projectile.velocity, Vector2.Normalize(target.Center - Projectile.Center) * 12f, 0.09f);
+			Angle += 4f;
+
+			Projectile.Center = player.MountedCenter + Vector2.One.RotatedBy(MathHelper.ToRadians(player.direction * Angle) + (Math.PI / 4) * (Projectile.ai[0] + 1)) * 64f;
+
+			Vector2 toPlayer = player.MountedCenter - Projectile.Center;
+			Projectile.rotation = toPlayer.ToRotation() + MathHelper.ToRadians(225f);
+
+			if (++Projectile.ai[2] == 300)
+            {
+				Projectile.NewProjectileDirect(player.GetSource_FromThis(), Projectile.Center, (Vector2.UnitX * -6f).RotatedBy(Projectile.rotation - MathHelper.ToRadians(255f)),
+					ModContent.ProjectileType<GerdHeroSwordHoming>(), Projectile.damage * 2, Projectile.knockBack, Main.myPlayer);
+				Projectile.Kill();
 			}
-
-			if (++Projectile.ai[2] % 30 == 0)
-				Projectile.velocity *= 0.25f;
-			Projectile.velocity *= 1.05f;
 		}
 
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
@@ -66,6 +66,19 @@ namespace GMR.Projectiles.Melee
 			int dustId3 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 163, Projectile.velocity.X * 0.5f,
 				Projectile.velocity.Y * 0.2f, 60, default(Color), 1.5f);
 			Main.dust[dustId3].noGravity = true;
+		}
+
+		public override void Kill(int timeLeft)
+		{
+			int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 163, Projectile.velocity.X * 0.5f,
+				Projectile.velocity.Y * 0.2f, 60, default(Color), 1f);
+			Main.dust[dustId].noGravity = true;
+			int dustId3 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 163, Projectile.velocity.X * 0.5f,
+				Projectile.velocity.Y * 0.2f, 60, default(Color), 1.5f);
+			Main.dust[dustId3].noGravity = true;
+
+			SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
+			SoundEngine.PlaySound(SoundID.Item28, Projectile.position);
 		}
 
 		public override bool PreDraw(ref Color lightColor)

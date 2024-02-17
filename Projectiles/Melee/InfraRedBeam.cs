@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -11,160 +12,176 @@ namespace GMR.Projectiles.Melee
 {
 	public class InfraRedBeam : ModProjectile
 	{
-		public override string Texture => "GMR/Items/Weapons/Melee/InfraRedSword";
-
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Infra-Red Beam");
-			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 15;
-			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 1;
+			Projectile.AddElement(0);
+			Projectile.AddElement(2);
 		}
 
 		public override void SetDefaults()
 		{
-			Projectile.width = 100;
-			Projectile.height = 100;
-			Projectile.friendly = true;
+			Projectile.width = 120;
+			Projectile.height = 120;
 			Projectile.aiStyle = -1;
-			Projectile.ignoreWater = true;
-			Projectile.timeLeft = 600;
+			Projectile.friendly = true;
 			Projectile.DamageType = DamageClass.Melee;
-			Projectile.usesIDStaticNPCImmunity = true;
-			Projectile.idStaticNPCHitCooldown = 10;
-			Projectile.scale = 1.1f;
+			Projectile.timeLeft = 1200;
+			Projectile.penetrate = 5;
+			Projectile.ignoreWater = true;
 			Projectile.tileCollide = false;
+			Projectile.extraUpdates = 3;
+			Projectile.stopsDealingDamageAfterPenetrateHits = true;
+			Projectile.usesLocalNPCImmunity = true;
 		}
-
-		public override Color? GetAlpha(Color lightColor) => new Color(255, 55, 55, 0);
 
 		public override void AI()
 		{
-			var target = Projectile.FindTargetWithinRange(400f);
-			if (target != null)
-				Projectile.velocity = Vector2.Lerp(Projectile.velocity, Vector2.Normalize(target.Center - Projectile.Center) * 18f, 0.09f);
-			else if (++Projectile.ai[1] < 20)
-				Projectile.velocity *= 1.01f;
-			else
-				Projectile.velocity *= 0.85f;
+			Lighting.AddLight(Projectile.Center, new Vector3(1f, 0.25f, 0.5f));
 
-			if ((int)Projectile.ai[0] == 0)
-			{
-				Projectile.ai[0]++;
-			}
-
-			if (Projectile.alpha > 40)
-			{
-				if (Projectile.extraUpdates > 0)
-				{
-					Projectile.extraUpdates = 0;
-				}
-				if (Projectile.scale > 1f)
-				{
-					Projectile.scale -= 0.02f;
-					if (Projectile.scale < 1f)
-					{
-						Projectile.scale = 1f;
-					}
-				}
-			}
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(45f);
 
-			Projectile.alpha += 6;
+			if (Projectile.penetrate <= 1)
+			{
+				Projectile.alpha += 8;
+				Projectile.velocity *= 0.95f;
+			}
+			Projectile.alpha += 4;
 			if (Projectile.alpha >= 255)
 			{
 				Projectile.Kill();
 			}
-
-			int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 60, Projectile.velocity.X * 0.5f,
-				Projectile.velocity.Y * 0.2f, 60, new Color(255, 55, 55), 2f);
-			Main.dust[dustId].noGravity = true;
 		}
 
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			Player player = Main.player[Projectile.owner];
-			target.AddBuff(BuffID.OnFire, 600);
-			int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 60, Projectile.velocity.X * 0.5f,
-				Projectile.velocity.Y * 0.2f, 60, new Color(255, 55, 55), 2f);
-			Main.dust[dustId].noGravity = true;
-		}
+			target.AddBuff(ModContent.BuffType<Buffs.Debuffs.PartiallyCrystallized>(), 120);
+			Projectile.velocity *= 0.98f;
 
-		public override void Kill(int timeleft)
-		{
-			int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 60, Projectile.velocity.X * 0.5f,
-				Projectile.velocity.Y * 0.2f, 60, new Color(255, 55, 55), 2f);
+			Vector2 projPos = new Vector2(target.Center.X + Main.rand.Next(-30, 30), target.Center.Y + Main.rand.Next(-30, 30));
+			Vector2 velocityToTarget = ((new Vector2(target.Center.X, target.Center.Y)) - projPos) * 0.15f;
+			Projectile.NewProjectile(Projectile.GetSource_FromAI(), projPos, velocityToTarget, ModContent.ProjectileType<Projectiles.Melee.CyberNeonCut>(),
+				Projectile.damage / 2, Projectile.knockBack / 4f, Projectile.owner);
+
+			if (player.ownedProjectileCounts[ModContent.ProjectileType<Projectiles.InfraRedExplotion>()] < 5)
+			{
+				int p = Projectile.NewProjectile(Projectile.GetSource_FromAI(), target.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.InfraRedExplotion>(), Projectile.damage / 4, Projectile.knockBack / 2f, Projectile.owner);
+			}
+
+			int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 63, Projectile.velocity.X * 0.5f,
+				Projectile.velocity.Y * 0.5f, 60, Color.HotPink, 2f);
 			Main.dust[dustId].noGravity = true;
 		}
 
 		public override bool PreDraw(ref Color lightColor)
 		{
-			var texture = TextureAssets.Projectile[Type].Value;
-			var drawPosition = Projectile.Center;
-			var drawOffset = new Vector2(Projectile.width / 2f, Projectile.height / 2f) - Main.screenPosition;
-			lightColor = Projectile.GetAlpha(lightColor);
-			var frame = texture.Frame(verticalFrames: Main.projFrames[Projectile.type], frameY: Projectile.frame);
-			frame.Height -= 2;
-			var origin = frame.Size() / 2f;
-			float opacity = Projectile.Opacity;
-			int trailLength = ProjectileID.Sets.TrailCacheLength[Type];
-			for (int i = 0; i < trailLength; i++)
+			Texture2D texture2D13 = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
+			int num156 = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Height / Main.projFrames[Projectile.type]; //ypos of lower right corner of sprite to draw
+			int y3 = num156 * Projectile.frame; //ypos of upper left corner of sprite to draw
+			Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);
+			Vector2 origin2 = rectangle.Size() / 2f;
+
+			SpriteEffects spriteEffects = SpriteEffects.None;
+
+			// Main Projectile
+			for (float i = 0; i < ProjectileID.Sets.TrailCacheLength[Projectile.type]; i += 0.5f)
 			{
-				float progress = 1f - 1f / trailLength * i;
-				Main.EntitySpriteDraw(texture, Projectile.oldPos[i] + drawOffset, frame, new Color(255, 55, 55, 0) * progress * opacity, Projectile.oldRot[i], origin, Projectile.scale, SpriteEffects.None, 0);
+				Color color26 = new Color(200, 70, 70) * ((Projectile.oldPos.Length - i) / (float)Projectile.oldPos.Length);
+
+				Color color27 = color26;
+				color27.A = 0;
+				color27 *= (float)(ProjectileID.Sets.TrailCacheLength[Projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[Projectile.type];
+				int max0 = (int)i - 1;
+				if (max0 < 0)
+					continue;
+				Vector2 value4 = Vector2.Lerp(Projectile.oldPos[(int)i], Projectile.oldPos[max0], 1 - i % 1);
+				Main.EntitySpriteDraw(texture2D13, value4 + Projectile.Size / 2f - Main.screenPosition + new Vector2(0, Projectile.gfxOffY),
+					new Microsoft.Xna.Framework.Rectangle?(rectangle), color27 * Projectile.Opacity, Projectile.rotation, origin2, Projectile.scale, spriteEffects, 0);
+			}
+			return false;
+		}
+	}
+
+	public class InfraRedSwordBullet : ModProjectile
+	{
+		public override void SetStaticDefaults()
+		{
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 15;
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 1;
+		}
+
+		public override void SetDefaults()
+		{
+			Projectile.width = 20;
+			Projectile.height = 20;
+			Projectile.aiStyle = -1;
+			Projectile.friendly = true;
+			Projectile.DamageType = DamageClass.Melee;
+			Projectile.timeLeft = 600;
+			Projectile.ignoreWater = true;
+			Projectile.tileCollide = false;
+			Projectile.extraUpdates = 1;
+		}
+
+		public override void AI()
+		{
+			Lighting.AddLight(Projectile.Center, new Vector3(1f, 0.25f, 0.5f));
+
+			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90f);
+			var target = Projectile.FindTargetWithinRange(600f);
+			if (target != null)
+			{
+				Projectile.velocity = Vector2.Lerp(Projectile.velocity, Vector2.Normalize(target.Center - Projectile.Center) * 12f, 0.09f);
 			}
 
-			Main.EntitySpriteDraw(texture, Projectile.position + drawOffset, frame, Projectile.GetAlpha(lightColor) * opacity, Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0);
-
-			var swish = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
-			var swishFrame = swish.Frame(verticalFrames: 1);
-			var swishColor = new Color(255, 55, 55, 0) * opacity;
-			var swishOrigin = swishFrame.Size() / 2;
-			float swishScale = Projectile.scale * 1f;
-			var swishPosition = Projectile.position + drawOffset;
-
-			Main.instance.LoadProjectile(ProjectileID.RainbowCrystalExplosion);
-			var flare = TextureAssets.Projectile[ProjectileID.RainbowCrystalExplosion].Value;
-			var flareOrigin = flare.Size() / 2f;
-			float flareOffset = (swish.Width / 2f - 4f);
-			var flareDirectionNormal = Vector2.Normalize(Projectile.velocity) * flareOffset;
-			float flareDirectionDistance = 200f;
-			float swishRotation = Projectile.rotation;
-			for (int i = 0; i < 1; i++)
+			Projectile.alpha += 3;
+			if (Projectile.alpha >= 255)
 			{
-				Main.EntitySpriteDraw(
-					swish,
-					swishPosition,
-					swishFrame,
-					swishColor,
-					swishRotation,
-					swishOrigin,
-					swishScale, SpriteEffects.None, 0);
+				Projectile.Kill();
+			}
+		}
+
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+		{
+			target.AddBuff(ModContent.BuffType<Buffs.Debuffs.PartiallyCrystallized>(), 120);
+
+			Player player = Main.player[Projectile.owner];
+			if (player.ownedProjectileCounts[ModContent.ProjectileType<Projectiles.InfraRedExplotion>()] < 5)
+			{
+				int p = Projectile.NewProjectile(Projectile.GetSource_FromAI(), target.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.InfraRedExplotion>(), Projectile.damage / 4, Projectile.knockBack / 2f, Projectile.owner);
 			}
 
-			for (int i = 0; i < 2; i++)
-			{
-				for (int j = 0; j < 1; j++)
-				{
-					var flarePosition = (swishRotation + MathHelper.ToRadians(-8f) + 0.6f * (j - 1)).ToRotationVector2() * flareOffset;
-					float flareIntensity = Math.Max(flareDirectionDistance - Vector2.Distance(flareDirectionNormal, flarePosition), 0f) / flareDirectionDistance;
-					Main.EntitySpriteDraw(
-						flare,
-						swishPosition + flarePosition,
-						null,
-						swishColor * flareIntensity * 3f * 0.4f,
-						0f,
-						flareOrigin,
-						new Vector2(swishScale * 0.7f, swishScale * 2f) * flareIntensity, SpriteEffects.None, 0);
+			int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 63, Projectile.velocity.X * 0.5f,
+				Projectile.velocity.Y * 0.5f, 60, Color.HotPink, 2f);
+			Main.dust[dustId].noGravity = true;
+		}
 
-					Main.EntitySpriteDraw(
-						flare,
-						swishPosition + flarePosition,
-						null,
-						swishColor * flareIntensity * 3f * 0.4f,
-						MathHelper.PiOver2,
-						flareOrigin,
-						new Vector2(swishScale * 0.8f, swishScale * 2.5f) * flareIntensity, SpriteEffects.None, 0);
-				}
+		public override bool PreDraw(ref Color lightColor)
+		{
+			Texture2D texture2D13 = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
+			int num156 = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Height / Main.projFrames[Projectile.type]; //ypos of lower right corner of sprite to draw
+			int y3 = num156 * Projectile.frame; //ypos of upper left corner of sprite to draw
+			Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);
+			Vector2 origin2 = rectangle.Size() / 2f;
+
+			SpriteEffects spriteEffects = SpriteEffects.None;
+
+			// Main Projectile
+			for (float i = 0; i < ProjectileID.Sets.TrailCacheLength[Projectile.type]; i += 0.5f)
+			{
+				Color color26 = new Color(200, 70, 70) * ((Projectile.oldPos.Length - i) / (float)Projectile.oldPos.Length);
+
+				Color color27 = color26;
+				color27.A = 0;
+				color27 *= (float)(ProjectileID.Sets.TrailCacheLength[Projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[Projectile.type];
+				int max0 = (int)i - 1;
+				if (max0 < 0)
+					continue;
+				Vector2 value4 = Vector2.Lerp(Projectile.oldPos[(int)i], Projectile.oldPos[max0], 1 - i % 1);
+				Main.EntitySpriteDraw(texture2D13, value4 + Projectile.Size / 2f - Main.screenPosition + new Vector2(0, Projectile.gfxOffY),
+					new Microsoft.Xna.Framework.Rectangle?(rectangle), color27 * Projectile.Opacity, Projectile.rotation, origin2, Projectile.scale, spriteEffects, 0);
 			}
 			return false;
 		}

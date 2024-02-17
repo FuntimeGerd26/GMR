@@ -20,6 +20,7 @@ namespace GMR.Projectiles.Melee
 			DisplayName.SetDefault("Hateful Cut");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 15;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			Projectile.AddElement(0);
 		}
 
 		public override void SetDefaults()

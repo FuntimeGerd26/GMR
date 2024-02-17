@@ -18,21 +18,22 @@ namespace GMR.Projectiles.Melee
 			DisplayName.SetDefault("Alloy Blade");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 2;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 1;
+			Projectile.AddElement(1);
+			Projectile.AddElement(3);
 		}
 
 		public override void SetDefaults()
 		{
 			Projectile.width = 30;
 			Projectile.height = 30;
-			Projectile.aiStyle = 1;
+			Projectile.aiStyle = 0;
 			Projectile.friendly = true;
 			Projectile.DamageType = DamageClass.Melee;
-			Projectile.timeLeft = 300;
+			Projectile.timeLeft = 600;
 			Projectile.penetrate = 2; 
 			Projectile.ignoreWater = true;
 			Projectile.tileCollide = true;
 			Projectile.extraUpdates = 1;
-			AIType = ProjectileID.Bullet;
 			Projectile.usesLocalNPCImmunity = true;
 		}
 
@@ -40,7 +41,12 @@ namespace GMR.Projectiles.Melee
         {
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(45f);
 
-			if (Projectile.damage < 20)
+			if (++Projectile.ai[0] <= 10)
+				Projectile.friendly = false;
+			else
+				Projectile.friendly = true;
+
+			if (Projectile.damage < 5)
             {
 				Projectile.Kill();
 				return;
@@ -49,11 +55,11 @@ namespace GMR.Projectiles.Melee
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
-			float numberProjectiles = 3; //3 shots
+			float numberProjectiles = 2;
 			float rotation = MathHelper.ToRadians(90);
 			for (int i = 0; i < numberProjectiles; i++)
 			{
-				Vector2 perturbedSpeed = Projectile.velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * 1f;
+				Vector2 perturbedSpeed = Projectile.velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * 2f;
 				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, perturbedSpeed, Projectile.type, Projectile.damage / 2, Projectile.knockBack, Main.myPlayer);
 			}
 		}

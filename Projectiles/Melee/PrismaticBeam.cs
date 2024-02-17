@@ -12,12 +12,14 @@ namespace GMR.Projectiles.Melee
 {
 	public class PrismaticBeam : ModProjectile
 	{
-		public override string Texture => "GMR/Items/Weapons/Melee/PrismaticMirror";
+		public override string Texture => "GMR/Projectiles/Melee/SwordHugeSlash";
 
 		public override void SetStaticDefaults()
 		{
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 15;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			Projectile.AddElement(0);
+			Projectile.AddElement(2);
 		}
 
 		public override void SetDefaults()
@@ -43,10 +45,6 @@ namespace GMR.Projectiles.Melee
 				Projectile.ai[0]++;
 			}
 
-			var target = Projectile.FindTargetWithinRange(250f);
-			if (target != null)
-				Projectile.velocity = Vector2.Lerp(Projectile.velocity, Vector2.Normalize(target.Center - Projectile.Center) * 12f, 0.09f);
-
 			if (Projectile.alpha > 40)
 			{
 				if (Projectile.extraUpdates > 0)
@@ -55,22 +53,15 @@ namespace GMR.Projectiles.Melee
 				}
 				if (Projectile.scale > 1f)
 				{
-					Projectile.scale -= 0.01f;
+					Projectile.scale -= 0.001f;
 					if (Projectile.scale < 1f)
 					{
 						Projectile.scale = 1f;
 					}
 				}
 			}
-			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(45f);
+			Projectile.rotation = Projectile.velocity.ToRotation();
 			Projectile.velocity *= 0.99f;
-			int size = 110;
-			bool collding = Collision.SolidCollision(Projectile.position + new Vector2(size / 2f, size / 2f), Projectile.width - size, Projectile.height - size);
-			if (collding)
-			{
-				Projectile.alpha += 8;
-				Projectile.velocity *= 0.8f;
-			}
 			Projectile.alpha += 6;
 			if (Projectile.alpha >= 255)
 			{
@@ -81,7 +72,7 @@ namespace GMR.Projectiles.Melee
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			Player player = Main.player[Projectile.owner];
-			player.Heal((int)(player.statLifeMax * 0.01));
+			player.Heal(2);
 		}
 
 		public override void Kill(int timeleft)
@@ -103,26 +94,27 @@ namespace GMR.Projectiles.Melee
 			Vector2 origin2 = rectangle.Size() / 2f;
 			var opacity = Projectile.Opacity;
 
+			Color color26 = new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB, 25);
+
 			SpriteEffects spriteEffects = SpriteEffects.None;
-			if (Projectile.spriteDirection == -1)
-				spriteEffects = SpriteEffects.FlipHorizontally;
 
-			// Main Projectile
-			for (float i = 0; i < ProjectileID.Sets.TrailCacheLength[Projectile.type]; i += 0.5f)
+			var texture = TextureAssets.Projectile[Type].Value;
+			var drawPosition = Projectile.Center;
+			var drawOffset = new Vector2(Projectile.width / 2f, Projectile.height / 2f) - Main.screenPosition;
+			lightColor = Projectile.GetAlpha(lightColor);
+			var frame = texture.Frame(verticalFrames: Main.projFrames[Projectile.type], frameY: Projectile.frame);
+			frame.Height -= 2;
+			var origin = frame.Size() / 2f;
+			int trailLength = ProjectileID.Sets.TrailCacheLength[Type];
+			for (int i = 0; i < trailLength; i++)
 			{
-				Color color26 = new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB, 25) * ((Projectile.oldPos.Length - i) / (float)Projectile.oldPos.Length);
-
-				Color color27 = color26;
-				color27 *= (float)(ProjectileID.Sets.TrailCacheLength[Projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[Projectile.type];
-				int max0 = (int)i - 1;
-				if (max0 < 0)
-					continue;
-				Vector2 value4 = Vector2.Lerp(Projectile.oldPos[(int)i], Projectile.oldPos[max0], 1 - i % 1);
-				Main.EntitySpriteDraw(texture2D13,  value4 + Projectile.Size / 2f - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle),
-					color27 * opacity, Projectile.rotation, origin2, Projectile.scale, spriteEffects, 0);
-				Main.EntitySpriteDraw(ModContent.Request<Texture2D>($"GMR/Items/Weapons/Melee/PrismaticMirror", AssetRequestMode.ImmediateLoad).Value,
-					value4 + Projectile.Size / 2f - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27 * opacity, Projectile.rotation, origin2, Projectile.scale, spriteEffects, 0);
+				float progress = 1f - 1f / trailLength * i;
+				Main.EntitySpriteDraw(texture, Projectile.oldPos[i] + drawOffset, frame, color26 * progress * opacity, Projectile.oldRot[i], origin, Projectile.scale, SpriteEffects.None, 0);
 			}
+
+			Main.EntitySpriteDraw(texture, Projectile.position + drawOffset, frame, color26 * opacity, Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0);
+			Main.EntitySpriteDraw(GMR.Instance.Assets.Request<Texture2D>("Projectiles/Melee/SwordHugeSlash_Glow", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value,
+				Projectile.position + drawOffset, frame, color26 * 1.05f * opacity, Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0);
 			return false;
 		}
 	}

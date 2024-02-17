@@ -20,6 +20,7 @@ namespace GMR.Projectiles.Melee
 			DisplayName.SetDefault("Blessed Hallow Slash");
 			ProjectileID.Sets.TrailCacheLength[Type] = 10;
 			ProjectileID.Sets.TrailingMode[Type] = 6;
+			Projectile.AddElement(0);
 		}
 
 		public override void SetDefaults()
@@ -36,6 +37,7 @@ namespace GMR.Projectiles.Melee
 			Projectile.idStaticNPCHitCooldown = 30;
 			Projectile.scale = 2.1f;
 			Projectile.tileCollide = false;
+			Projectile.usesLocalNPCImmunity = true;
 		}
 
 		public override Color? GetAlpha(Color lightColor)

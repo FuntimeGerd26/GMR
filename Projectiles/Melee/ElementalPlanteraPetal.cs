@@ -16,6 +16,10 @@ namespace GMR.Projectiles.Melee
 			DisplayName.SetDefault("Elemental Petal");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 1;
+			Projectile.AddElement(0);
+			Projectile.AddElement(1);
+			Projectile.AddElement(2);
+			Projectile.AddElement(3);
 		}
 
 		public override void SetDefaults()

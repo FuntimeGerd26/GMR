@@ -18,6 +18,8 @@ namespace GMR.Projectiles.Melee
 			DisplayName.SetDefault("Masked Plague's Sword");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			Projectile.AddElement(2);
+			Projectile.AddElement(3);
 		}
 
 		public override void SetDefaults()

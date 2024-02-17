@@ -16,6 +16,7 @@ namespace GMR.Projectiles.Melee
 			DisplayName.SetDefault("Crystal Neon Sword");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 1;
+			Projectile.AddElement(2);
 		}
 
 		public override void SetDefaults()

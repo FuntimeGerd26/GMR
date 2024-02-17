@@ -11,19 +11,20 @@ namespace GMR.Projectiles.Melee
 {
 	public class LuxBlade : ModProjectile
 	{
-		public override string Texture => "GMR/Projectiles/Melee/SwordSlashSmall";
+		public override string Texture => "GMR/Projectiles/Melee/SwordHugeSlash";
 
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Lux Cut");
-			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 20;
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			Projectile.AddElement(2);
 		}
 
 		public override void SetDefaults()
 		{
-			Projectile.width = 64;
-			Projectile.height = 64;
+			Projectile.width = 150;
+			Projectile.height = 150;
 			Projectile.aiStyle = -1;
 			Projectile.friendly = true;
 			Projectile.DamageType = DamageClass.Melee;
@@ -34,14 +35,13 @@ namespace GMR.Projectiles.Melee
 			Projectile.tileCollide = false;
 			Projectile.localNPCHitCooldown = 10;
 			Projectile.usesLocalNPCImmunity = true;
-			Projectile.scale = 2f;
 		}
 
 		public override void AI()
 		{
 			Projectile.velocity *= 0.98f;
 			Projectile.light += -0.05f;
-			Projectile.alpha += 8;
+			Projectile.alpha += 7;
 
 			if (Projectile.alpha >= 255)
 			{
@@ -74,23 +74,29 @@ namespace GMR.Projectiles.Melee
 			int y3 = num156 * Projectile.frame; //ypos of upper left corner of sprite to draw
 			Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);
 			Vector2 origin2 = rectangle.Size() / 2f;
+			var opacity = Projectile.Opacity;
+
+			Color color26 = new Color(Main.DiscoR, 155, 255, 25);
 
 			SpriteEffects spriteEffects = SpriteEffects.None;
 
-			// Main Projectile
-			for (float i = 0; i < ProjectileID.Sets.TrailCacheLength[Projectile.type]; i += 0.5f)
+			var texture = TextureAssets.Projectile[Type].Value;
+			var drawPosition = Projectile.Center;
+			var drawOffset = new Vector2(Projectile.width / 2f, Projectile.height / 2f) - Main.screenPosition;
+			lightColor = Projectile.GetAlpha(lightColor);
+			var frame = texture.Frame(verticalFrames: Main.projFrames[Projectile.type], frameY: Projectile.frame);
+			frame.Height -= 2;
+			var origin = frame.Size() / 2f;
+			int trailLength = ProjectileID.Sets.TrailCacheLength[Type];
+			for (int i = 0; i < trailLength; i++)
 			{
-				Color color26 = new Color(Main.DiscoR, 155, 255) * ((Projectile.oldPos.Length - i) / (float)Projectile.oldPos.Length);
-
-				Color color27 = color26;
-				color27.A = 0;
-				color27 *= (float)(ProjectileID.Sets.TrailCacheLength[Projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[Projectile.type];
-				int max0 = (int)i - 1;
-				if (max0 < 0)
-					continue;
-				Vector2 value4 = Vector2.Lerp(Projectile.oldPos[(int)i], Projectile.oldPos[max0], 1 - i % 1);
-				Main.EntitySpriteDraw(texture2D13, value4 + Projectile.Size / 2f - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27 * Projectile.Opacity, Projectile.rotation, origin2, Projectile.scale, spriteEffects, 0);
+				float progress = 1f - 1f / trailLength * i;
+				Main.EntitySpriteDraw(texture, Projectile.oldPos[i] + drawOffset, frame, color26 * progress * opacity, Projectile.oldRot[i], origin, Projectile.scale, SpriteEffects.None, 0);
 			}
+
+			Main.EntitySpriteDraw(texture, Projectile.position + drawOffset, frame, color26 * opacity, Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0);
+			Main.EntitySpriteDraw(GMR.Instance.Assets.Request<Texture2D>("Projectiles/Melee/SwordHugeSlash_Glow", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value,
+				Projectile.position + drawOffset, frame, color26 * 1.05f * opacity, Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0);
 			return false;
 		}
 	}

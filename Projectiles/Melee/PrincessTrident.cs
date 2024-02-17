@@ -25,6 +25,7 @@ namespace GMR.Projectiles.Melee
 			DisplayName.SetDefault("Atlantis Princess Trident");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 15;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			Projectile.AddElement(1);
 		}
 
 		public override void SetDefaults()

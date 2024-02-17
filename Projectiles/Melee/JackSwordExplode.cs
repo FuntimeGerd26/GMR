@@ -18,6 +18,8 @@ namespace GMR.Projectiles.Melee
 			DisplayName.SetDefault("Infra-Red Slash");
 			ProjectileID.Sets.TrailCacheLength[Type] = 30;
 			ProjectileID.Sets.TrailingMode[Type] = 6;
+			Projectile.AddElement(0);
+			Projectile.AddElement(2);
 		}
 
 		public override void SetDefaults()

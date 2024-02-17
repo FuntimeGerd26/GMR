@@ -21,6 +21,8 @@ namespace GMR.Projectiles.Melee
             DisplayName.SetDefault("Infra-Red Spear");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+            Projectile.AddElement(0);
+            Projectile.AddElement(2);
         }
 
         public override void SetDefaults()
@@ -35,7 +37,8 @@ namespace GMR.Projectiles.Melee
             Projectile.ignoreWater = true;
             Projectile.tileCollide = false;
             Projectile.extraUpdates = 9;
-            Projectile.usesLocalNPCImmunity = true;
+            Projectile.usesIDStaticNPCImmunity = true;
+            Projectile.idStaticNPCHitCooldown = 20;
         }
 
         public override void AI()
@@ -65,7 +68,7 @@ namespace GMR.Projectiles.Melee
             player.itemTime = 2;
             player.itemAnimation = 2;
             player.reuseDelay = 10;
-            Projectile.rotation += Projectile.spriteDirection * 12f * 0.03f;
+            Projectile.rotation += Projectile.spriteDirection * 8f * 0.03f;
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)

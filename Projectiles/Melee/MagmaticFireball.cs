@@ -18,6 +18,7 @@ namespace GMR.Projectiles.Melee
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 1;
 			Main.projFrames[Projectile.type] = Main.projFrames[ProjectileID.Flamelash];
+			Projectile.AddElement(0);
 		}
 
 		public override void SetDefaults()
@@ -25,7 +26,6 @@ namespace GMR.Projectiles.Melee
 			Projectile.width = 10;
 			Projectile.height = 10;
 			Projectile.aiStyle = -1;
-			Projectile.penetrate = 2;
 			Projectile.friendly = true;
 			Projectile.DamageType = DamageClass.Melee;
 			Projectile.timeLeft = 600;
@@ -52,7 +52,7 @@ namespace GMR.Projectiles.Melee
 			}
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(-90f);
 
-			for (int i = 0; i < 5; i++)
+			for (int i = 0; i < 2; i++)
 			{
 				Dust dustId = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 6, Projectile.velocity.X, Projectile.velocity.Y, 60, default(Color), 1.5f);
 				dustId.noGravity = true;
@@ -84,7 +84,7 @@ namespace GMR.Projectiles.Melee
 			Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);
 			Vector2 origin2 = rectangle.Size() / 2f;
 			Main.EntitySpriteDraw(texture2D13, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY),
-				new Microsoft.Xna.Framework.Rectangle?(rectangle), Projectile.GetAlpha(lightColor), Projectile.rotation, origin2,
+				new Microsoft.Xna.Framework.Rectangle?(rectangle), Color.White, Projectile.rotation, origin2,
 				Projectile.scale, SpriteEffects.None, 0);
 			return false;
 		}

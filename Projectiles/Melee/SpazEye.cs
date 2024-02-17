@@ -17,15 +17,15 @@ namespace GMR.Projectiles.Melee
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
 			Main.projFrames[Projectile.type] = 4;
+			Projectile.AddElement(3);
 		}
 
 		public override void SetDefaults()
 		{
 			Projectile.width = 14;
 			Projectile.height = 14;
-			Projectile.aiStyle = 0;
+			Projectile.aiStyle = -1;
 			Projectile.friendly = true;
-			Projectile.penetrate = 2;
 			Projectile.DamageType = DamageClass.Melee;
 			Projectile.timeLeft = 600;
 			Projectile.ignoreWater = true;
@@ -39,7 +39,7 @@ namespace GMR.Projectiles.Melee
 			var target = Projectile.FindTargetWithinRange(400f);
 			if (target != null)
 			{
-				Projectile.velocity = Vector2.Lerp(Projectile.velocity, Vector2.Normalize(target.Center - Projectile.Center) * 12f, 0.09f);
+				Projectile.velocity = Vector2.Lerp(Projectile.velocity, Vector2.Normalize(target.Center - Projectile.Center) * 12f, 0.06f);
 			}
 
 			if (++Projectile.frameCounter > 5)
@@ -79,12 +79,6 @@ namespace GMR.Projectiles.Melee
 				Main.EntitySpriteDraw(texture, drawPos, sourceRectangle, color, Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0);
 			}
 			return true;
-		}
-
-		public override void Kill(int timeLeft)
-		{
-			Collision.HitTiles(Projectile.position + Projectile.velocity, Projectile.velocity, Projectile.width, Projectile.height);
-			SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
 		}
 	}
 }

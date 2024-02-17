@@ -39,6 +39,8 @@ namespace GMR.Projectiles.Melee
 			DisplayName.SetDefault("Masked Plague's Flail");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			Projectile.AddElement(2);
+			Projectile.AddElement(3);
 		}
 
 		public override void SetDefaults()

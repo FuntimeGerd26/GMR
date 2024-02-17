@@ -19,6 +19,8 @@ namespace GMR.Projectiles.Melee
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
 			Main.projFrames[Projectile.type] = Main.projFrames[ProjectileID.DD2PhoenixBowShot];
+			Projectile.AddElement(0);
+			Projectile.AddElement(3);
 		}
 
 		public override void SetDefaults()

@@ -21,6 +21,8 @@ namespace GMR.Projectiles.Melee
 		{
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 1;
+			Projectile.AddElement(1);
+			Projectile.AddElement(2);
 		}
 
 		public override void SetDefaults()
@@ -35,6 +37,7 @@ namespace GMR.Projectiles.Melee
 			Projectile.ignoreWater = true;
 			Projectile.tileCollide = false;
 			Projectile.extraUpdates = 1;
+			Projectile.usesLocalNPCImmunity = true;
 		}
 
 		public override void AI()
@@ -53,13 +56,6 @@ namespace GMR.Projectiles.Melee
 			}
 
 			Projectile.rotation = Projectile.velocity.ToRotation();
-
-			int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 264, Projectile.velocity.X * 0f,
-				Projectile.velocity.Y * 0f, 60, default(Color), 1f);
-			Main.dust[dustId].noGravity = true;
-			int dustId3 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 264, Projectile.velocity.X * 0f,
-				Projectile.velocity.Y * 0f, 60, default(Color), 0.75f);
-			Main.dust[dustId3].noGravity = true;
 		}
 
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
@@ -68,13 +64,6 @@ namespace GMR.Projectiles.Melee
 			Projectile.NewProjectile(Projectile.GetSource_FromThis(), new Vector2(target.Center.X + Main.rand.Next(-target.width / 2, target.width / 2), target.Center.Y + Main.rand.Next(-target.height / 2, target.height / 2)),
 				Projectile.velocity * 0f, ModContent.ProjectileType<Projectiles.Melee.LunarShine>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
 			SoundEngine.PlaySound(SoundID.Item30.WithPitchOffset(Main.rand.NextFloat(-0.5f, 0f)).WithVolumeScale(0.25f), Projectile.Center);
-
-			int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 264, Projectile.velocity.X * 0f,
-				Projectile.velocity.Y * 0f, 60, default(Color), 1f);
-			Main.dust[dustId].noGravity = true;
-			int dustId3 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 264, Projectile.velocity.X * 0f,
-				Projectile.velocity.Y * 0f, 60, default(Color), 0.75f);
-			Main.dust[dustId3].noGravity = true;
 		}
 
 		public override bool PreDraw(ref Color lightColor)
@@ -150,7 +139,7 @@ namespace GMR.Projectiles.Melee
 			Projectile.height = 60;
 			Projectile.aiStyle = -1;
 			Projectile.friendly = true;
-			Projectile.DamageType = DamageClass.Melee;
+			Projectile.DamageType = DamageClass.Generic;
 			Projectile.timeLeft = 600;
 			Projectile.penetrate = -1;
 			Projectile.ignoreWater = true;

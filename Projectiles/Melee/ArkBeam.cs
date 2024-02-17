@@ -20,6 +20,8 @@ namespace GMR.Projectiles.Melee
 			DisplayName.SetDefault("Violet's Great Slasher");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			Projectile.AddElement(0);
+			Projectile.AddElement(2);
 		}
 
 		public override void SetDefaults()
@@ -34,6 +36,7 @@ namespace GMR.Projectiles.Melee
 			Projectile.timeLeft = 300;
 			Projectile.ignoreWater = true;
 			Projectile.tileCollide = false;
+			Projectile.usesLocalNPCImmunity = true;
 		}
 
 		private bool DirectionOnSpawn;

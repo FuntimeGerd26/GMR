@@ -37,6 +37,7 @@ namespace GMR.Projectiles.Melee
             Projectile.scale = 1f;
             Projectile.usesIDStaticNPCImmunity = true;
             Projectile.idStaticNPCHitCooldown = 10;
+            Projectile.usesLocalNPCImmunity = true;
         }
 
         public override void SendExtraAI(BinaryWriter writer)

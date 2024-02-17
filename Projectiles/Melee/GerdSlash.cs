@@ -19,6 +19,9 @@ namespace GMR.Projectiles.Melee
 			DisplayName.SetDefault("Umbra Del Slash");
 			ProjectileID.Sets.TrailCacheLength[Type] = 2;
 			ProjectileID.Sets.TrailingMode[Type] = 6;
+			Projectile.AddElement(0);
+			Projectile.AddElement(2);
+			Projectile.AddElement(3);
 		}
 
 		public override void SetDefaults()
@@ -35,15 +38,16 @@ namespace GMR.Projectiles.Melee
 			Projectile.idStaticNPCHitCooldown = 20;
 			Projectile.scale = 1.1f;
 			Projectile.tileCollide = false;
+			Projectile.usesLocalNPCImmunity = true;
 		}
 
-		public override Color? GetAlpha(Color lightColor)
-		{
-			return new Color(40, 120, 200, 0);
-		}
-
+		float DiscoR;
 		public override void AI()
 		{
+			DiscoR = (float)Main.DiscoR / 255f;
+
+			Lighting.AddLight(Projectile.Center, new Vector3(DiscoR, 0.5f, 1f));
+
 			if ((int)Projectile.ai[0] == 0)
 			{
 				Projectile.rotation = Main.rand.NextFloat(MathHelper.TwoPi);
@@ -114,25 +118,27 @@ namespace GMR.Projectiles.Melee
 		public override void Kill(int timeLeft)
 		{
 			float numberProjectiles = 7;
-			float rotation = MathHelper.ToRadians(90f);
 			for (int i = 0; i < numberProjectiles; i++)
 			{
-				Vector2 perturbedSpeed = Projectile.velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * 0.5f;
-				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, perturbedSpeed, ModContent.ProjectileType<Projectiles.Melee.GerdBlade>(), (int)(Projectile.damage * 0.25), Projectile.knockBack, Main.myPlayer);
+				Vector2 projPos = new Vector2(Projectile.Center.X + Main.rand.Next(-Projectile.width / 2, Projectile.width / 2), Projectile.Center.Y + Main.rand.Next(-Projectile.height / 2, Projectile.height / 2));
+
+				Vector2 perturbedSpeed = (Projectile.Center - projPos) * 0.1f;
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), projPos, perturbedSpeed, ModContent.ProjectileType<Projectiles.Melee.GerdBlade>(), (int)(Projectile.damage * 0.25), Projectile.knockBack, Main.myPlayer);
 			}
 
-			if (Projectile.alpha < 200)
+			SoundEngine.PlaySound(SoundID.Item105, Projectile.Center);
+
+			for (int i = 0; i < 10; i++)
 			{
-				for (int i = 0; i < 30; i++)
-				{
-					var d = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.SilverFlame, newColor: new Color(Main.DiscoR, 125, 250, 0), Scale: 2f);
-					d.velocity *= 0.4f;
-					d.velocity += Projectile.velocity * 0.5f;
-					d.rotation = Main.rand.NextFloat(MathHelper.TwoPi);
-					d.scale *= Projectile.scale * 0.6f;
-					d.fadeIn = d.scale + 0.1f;
-					d.noGravity = true;
-				}
+				Dust dustId = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 111, Projectile.velocity.X, Projectile.velocity.Y, 60, default(Color), 1.5f);
+				dustId.noGravity = true;
+				Dust dustId2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 111, -Projectile.velocity.X, -Projectile.velocity.Y, 60, default(Color), 1.5f);
+				dustId2.noGravity = true;
+
+				Dust dustId3 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 164, Projectile.velocity.X, Projectile.velocity.Y, 60, default(Color), 1.5f);
+				dustId3.noGravity = true;
+				Dust dustId4 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 164, -Projectile.velocity.X, -Projectile.velocity.Y, 60, default(Color), 1.5f);
+				dustId4.noGravity = true;
 			}
 		}
 
@@ -159,7 +165,7 @@ namespace GMR.Projectiles.Melee
 			var swishFrame = swish.Frame(verticalFrames: 1);
 			var swishColor = new Color(Main.DiscoR, 125, 250, 0) * opacity;
 			var swishOrigin = swishFrame.Size() / 2;
-			float swishScale = Projectile.scale * 1f;
+			float swishScale = Projectile.scale;
 			var swishPosition = Projectile.position + drawOffset;
 
 			Main.instance.LoadProjectile(ProjectileID.RainbowCrystalExplosion);
@@ -187,6 +193,18 @@ namespace GMR.Projectiles.Melee
 					swishRotation,
 					swishOrigin,
 					swishScale, SpriteEffects.None, 0);
+
+				var circle = GMR.Instance.Assets.Request<Texture2D>("Assets/Images/TwirlThing", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+
+				Main.EntitySpriteDraw(
+					circle,
+					Projectile.Center - Main.screenPosition,
+					null,
+					swishColor,
+					swishRotation,
+					circle.Size() / 2,
+					swishScale * 0.4f, SpriteEffects.None, 0);
+
 
 				for (int j = 0; j < 3; j++)
 				{

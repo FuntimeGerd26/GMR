@@ -19,6 +19,8 @@ namespace GMR.Projectiles.Melee
 			DisplayName.SetDefault("Lost Time's Slash");
 			ProjectileID.Sets.TrailCacheLength[Type] = 10;
 			ProjectileID.Sets.TrailingMode[Type] = 6;
+			Projectile.AddElement(2);
+			Projectile.AddElement(3);
 		}
 
 		public override void SetDefaults()

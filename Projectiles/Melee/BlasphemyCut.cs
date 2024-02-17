@@ -23,36 +23,26 @@ namespace GMR.Projectiles.Melee
 			Projectile.friendly = true;
 			Projectile.DamageType = DamageClass.Melee;
 			Projectile.timeLeft = 300;
-			Projectile.light = 0.75f;
 			Projectile.penetrate = -1;
 			Projectile.ignoreWater = true;
 			Projectile.tileCollide = false;
-			Projectile.localNPCHitCooldown = 15;
+			Projectile.usesIDStaticNPCImmunity = true;
+			Projectile.idStaticNPCHitCooldown = 10;
 			Projectile.usesLocalNPCImmunity = true;
 		}
 
 		public override void AI()
 		{
-			Projectile.velocity *= 0.96f;
+			Lighting.AddLight(Projectile.Center, new Vector3(1f, 0.1f, 0.3f));
 
-			if (Projectile.timeLeft <= 150)
-			{
-				Projectile.light += -0.05f;
-				Projectile.alpha += 16;
-			}
-
+			Projectile.velocity *= 0.999f;
+			Projectile.alpha += 8;
 			if (Projectile.alpha >= 255)
 			{
 				Projectile.Kill();
 			}
 
-			if (Projectile.penetrate == 1)
-			{
-				Projectile.damage = 0;
-				Projectile.alpha += 8;
-			}
-
-			Projectile.rotation = -Projectile.direction * Projectile.velocity.Length() * 4f;
+			Projectile.rotation += 16f * 0.3f * -Projectile.direction;
 		}
 
 		public override Color? GetAlpha(Color lightColor) => new Color(125, 5, 55) * Projectile.Opacity;

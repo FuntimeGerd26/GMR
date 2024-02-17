@@ -18,6 +18,8 @@ namespace GMR.Projectiles.Melee
 			DisplayName.SetDefault("Desert Wave");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 15;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			Projectile.AddElement(0);
+			Projectile.AddElement(3);
 		}
 
 		public override void SetDefaults()
@@ -34,6 +36,7 @@ namespace GMR.Projectiles.Melee
 			Projectile.idStaticNPCHitCooldown = 5;
 			Projectile.scale = 1.1f;
 			Projectile.tileCollide = false;
+			Projectile.usesLocalNPCImmunity = true;
 		}
 
 		public override Color? GetAlpha(Color lightColor) => new Color(200, 120, 40, 0);

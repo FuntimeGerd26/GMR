@@ -17,12 +17,16 @@ namespace GMR.Projectiles.Melee
 
 		// Play a custom swing sound
 		public bool playedSound;
+		public bool shootProj;
+		public bool returning;
 
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Stella Salutis");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 15;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			Projectile.AddElement(1);
+			Projectile.AddElement(2);
 		}
 
 		public override void SetDefaults()
@@ -31,6 +35,7 @@ namespace GMR.Projectiles.Melee
 			Projectile.DamageType = DamageClass.Melee;
 			Projectile.height = 20;
 			Projectile.width = 20;
+			Projectile.usesLocalNPCImmunity = true;
 		}
 
 		public override bool PreAI()
@@ -78,9 +83,10 @@ namespace GMR.Projectiles.Melee
 				Projectile.rotation += Projectile.velocity.ToRotation() + MathHelper.ToRadians(45f);
 			}
 
-			if (Projectile.timeLeft == halfDuration && Main.myPlayer == Projectile.owner)
+			if (Projectile.timeLeft >= halfDuration + 0.1f && !shootProj && Main.myPlayer == Projectile.owner)
 			{
 				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity * 18f, ModContent.ProjectileType<Projectiles.Melee.GerdSpearBlade>(), Projectile.damage, Projectile.knockBack, player.whoAmI);
+				shootProj = true;
 			}
 
 			if (!playedSound && Projectile.timeLeft < halfDuration)

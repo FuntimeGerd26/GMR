@@ -18,6 +18,8 @@ namespace GMR.Projectiles.Melee
 			DisplayName.SetDefault("Lost Time's Blade");
 			ProjectileID.Sets.TrailCacheLength[Type] = 2;
 			ProjectileID.Sets.TrailingMode[Type] = 6;
+			Projectile.AddElement(2);
+			Projectile.AddElement(3);
 		}
 
 		public override void SetDefaults()

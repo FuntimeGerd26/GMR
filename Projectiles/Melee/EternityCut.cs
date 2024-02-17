@@ -19,8 +19,10 @@ namespace GMR.Projectiles.Melee
 
 		public override void SetStaticDefaults()
 		{
-			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 20;
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			Projectile.AddElement(0);
+			Projectile.AddElement(2);
 		}
 
 		public override void SetDefaults()
@@ -35,6 +37,7 @@ namespace GMR.Projectiles.Melee
 			Projectile.ignoreWater = true;
 			Projectile.tileCollide = false;
 			Projectile.extraUpdates = 1;
+			Projectile.usesLocalNPCImmunity = true;
 		}
 
 		public override void AI()

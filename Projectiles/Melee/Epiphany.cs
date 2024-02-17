@@ -19,6 +19,8 @@ namespace GMR.Projectiles.Melee
 			DisplayName.SetDefault("Epiphany Slash");
 			ProjectileID.Sets.TrailCacheLength[Type] = 2;
 			ProjectileID.Sets.TrailingMode[Type] = 6;
+			Projectile.AddElement(1);
+			Projectile.AddElement(2);
 		}
 
 		public override void SetDefaults()
@@ -35,6 +37,7 @@ namespace GMR.Projectiles.Melee
 			Projectile.idStaticNPCHitCooldown = 20;
 			Projectile.scale = 1.1f;
 			Projectile.tileCollide = false;
+			Projectile.usesLocalNPCImmunity = true;
 		}
 
 		public override Color? GetAlpha(Color lightColor)
@@ -140,15 +143,19 @@ namespace GMR.Projectiles.Melee
 			var origin = frame.Size() / 2f;
 			float opacity = Projectile.Opacity;
 			int trailLength = ProjectileID.Sets.TrailCacheLength[Type];
+			SpriteEffects spriteEffects = SpriteEffects.FlipVertically;
+			if (Projectile.direction == -1)
+				spriteEffects = SpriteEffects.None;
 			for (int i = 0; i < trailLength; i++)
 			{
 				float progress = 1f - 1f / trailLength * i;
-				Main.EntitySpriteDraw(texture, Projectile.oldPos[i] + drawOffset, frame, new Color(20, 80, 175, 10) * progress * opacity, Projectile.oldRot[i], origin, Projectile.scale, SpriteEffects.None, 0);
+				Main.EntitySpriteDraw(texture, Projectile.oldPos[i] + drawOffset, frame, new Color(20, 80, 175, 10) * progress * opacity, Projectile.oldRot[i], origin, Projectile.scale, spriteEffects, 0);
 			}
 
-			Main.EntitySpriteDraw(texture, Projectile.position + drawOffset, frame, Projectile.GetAlpha(lightColor) * opacity, Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0);
+			Main.EntitySpriteDraw(texture, Projectile.position + drawOffset, frame, Projectile.GetAlpha(lightColor) * opacity, Projectile.rotation, origin, Projectile.scale, spriteEffects, 0);
 
 			var swish = GMR.Instance.Assets.Request<Texture2D>("Projectiles/Melee/SwordHalfSpin", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+			var swish2 = GMR.Instance.Assets.Request<Texture2D>("Projectiles/Melee/SwordHalfSpinLight", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 			var swishFrame = swish.Frame(verticalFrames: 1);
 			var swishColor = new Color(40, 120, 200, 0) * opacity;
 			var swishOrigin = swishFrame.Size() / 2;
@@ -171,7 +178,7 @@ namespace GMR.Projectiles.Melee
 					swishColor,
 					swishRotation,
 					swishOrigin,
-					swishScale, SpriteEffects.None, 0);
+					swishScale, spriteEffects, 0);
 				Main.EntitySpriteDraw(
 					swish,
 					swishPosition,
@@ -179,30 +186,25 @@ namespace GMR.Projectiles.Melee
 					swishColor,
 					swishRotation,
 					swishOrigin,
-					swishScale, SpriteEffects.None, 0);
+					swishScale, spriteEffects, 0);
 
-				for (int j = 0; j < 3; j++)
-				{
-					var flarePosition = (swishRotation + MathHelper.ToRadians(180f) + 0.6f * (j - 1)).ToRotationVector2() * flareOffset;
-					float flareIntensity = Math.Max(flareDirectionDistance - Vector2.Distance(flareDirectionNormal, flarePosition), 0f) / flareDirectionDistance;
-					Main.EntitySpriteDraw(
-						flare,
-						swishPosition + flarePosition,
-						null,
-						swishColor * flareIntensity * 3f * 0.4f,
-						0f,
-						flareOrigin,
-						new Vector2(swishScale * 0.7f, swishScale * 2f) * flareIntensity, SpriteEffects.None, 0);
+				Main.EntitySpriteDraw(
+					swish2,
+					swishPosition,
+					swishFrame,
+					swishColor * 1.3f,
+					swishRotation,
+					swishOrigin,
+					swishScale, spriteEffects, 0);
+				Main.EntitySpriteDraw(
+					swish2,
+					swishPosition,
+					swishFrame,
+					swishColor * 1.3f,
+					swishRotation,
+					swishOrigin,
+					swishScale, spriteEffects, 0);
 
-					Main.EntitySpriteDraw(
-						flare,
-						swishPosition + flarePosition,
-						null,
-						swishColor * flareIntensity * 3f * 0.4f,
-						MathHelper.PiOver2,
-						flareOrigin,
-						new Vector2(swishScale * 0.8f, swishScale * 2.5f) * flareIntensity, SpriteEffects.None, 0);
-				}
 			}
 			return false;
 		}

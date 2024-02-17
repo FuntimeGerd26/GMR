@@ -9,27 +9,25 @@ using Terraria.ModLoader;
 
 namespace GMR.Projectiles.Melee
 {
-    public class InfraRedSpear : ModProjectile
+    public class NanashiSword : ModProjectile
     {
 		// Define the range of the Spear Projectile. These are overrideable properties, in case you'll want to make a class inheriting from this one.
-		protected virtual float HoldoutRangeMin => 85f;
-		protected virtual float HoldoutRangeMax => 195f;
-
-		public bool playedSound;
+		protected virtual float HoldoutRangeMin => 70f;
+		protected virtual float HoldoutRangeMax => 110f;
 
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Infra-Red Spear");
-			Projectile.AddElement(0);
-			Projectile.AddElement(2);
+			Projectile.AddElement(3);
 		}
 
 		public override void SetDefaults()
 		{
 			Projectile.CloneDefaults(ProjectileID.Spear); // Clone the default values for a vanilla spear. Spear specific values set for width, height, aiStyle, friendly, penetrate, tileCollide, scale, hide, ownerHitCheck, and melee.
 			Projectile.DamageType = DamageClass.Melee;
-			Projectile.height = 70;
-			Projectile.width = 70;
+			Projectile.height = 40;
+			Projectile.width = 40;
+			Projectile.usesIDStaticNPCImmunity = true;
+			Projectile.idStaticNPCHitCooldown = 10;
 		}
 
 		public override bool PreAI()
@@ -76,23 +74,15 @@ namespace GMR.Projectiles.Melee
 				// If sprite is facing right, rotate 45 degrees
 				Projectile.rotation += Projectile.velocity.ToRotation() + MathHelper.ToRadians(45f);
 			}
-
-			if (Projectile.timeLeft < 2 && Main.myPlayer == Projectile.owner)
-			{
-				Projectile.NewProjectile(Projectile.GetSource_FromThis(), player.Center, Projectile.velocity * 18f, ModContent.ProjectileType<Projectiles.Melee.JackSwordExplode>(), Projectile.damage, Projectile.knockBack, player.whoAmI);
-			}
-
-			if (!playedSound && Projectile.timeLeft < halfDuration)
-			{
-				playedSound = true;
-				SoundEngine.PlaySound(GMR.GetSounds("Items/Melee/swordSwoosh", 7, 0.66f, 0f, 0.2f).WithPitchOffset(Main.rand.NextFloat(0.5f)), Projectile.Center);
-			}
 			return false; // Don't execute vanilla AI.
 		}
 
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
-		{
-			target.AddBuff(ModContent.BuffType<Buffs.Debuffs.PartiallyCrystallized>(), 900);
+        {
+			Player player = Main.player[Projectile.owner];
+			target.AddBuff(BuffID.Poisoned, 180);
+			if (Main.rand.NextBool(400))
+			  Projectile.NewProjectile(Projectile.GetSource_FromThis(), player.Center, Projectile.velocity, ModContent.ProjectileType<Projectiles.Melee.NanashiSuisei>(), (int)(Projectile.damage * 30), Projectile.knockBack, player.whoAmI);
 		}
 	}
 }

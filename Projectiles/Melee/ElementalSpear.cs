@@ -19,6 +19,10 @@ namespace GMR.Projectiles.Melee
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Amalgamated Spear");
+			Projectile.AddElement(0);
+			Projectile.AddElement(1);
+			Projectile.AddElement(2);
+			Projectile.AddElement(3);
 		}
 
 		public override void SetDefaults()

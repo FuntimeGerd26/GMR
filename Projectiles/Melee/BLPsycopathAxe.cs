@@ -21,6 +21,7 @@ namespace GMR.Projectiles.Melee
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+            Projectile.AddElement(3);
         }
 
         public override void SetDefaults()
@@ -37,6 +38,7 @@ namespace GMR.Projectiles.Melee
             Projectile.scale = 1.5f;
             Projectile.usesIDStaticNPCImmunity = true;
             Projectile.idStaticNPCHitCooldown = 5;
+            Projectile.usesLocalNPCImmunity = true;
         }
 
         public override void SendExtraAI(BinaryWriter writer)

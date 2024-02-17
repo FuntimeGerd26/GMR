@@ -18,21 +18,23 @@ namespace GMR.Projectiles.Melee
 			DisplayName.SetDefault("Stella Salutis");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 20;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			Projectile.AddElement(1);
+			Projectile.AddElement(2);
 		}
 
 		public override void SetDefaults()
 		{
 			Projectile.width = 20;
 			Projectile.height = 20;
-			Projectile.aiStyle = 0;
+			Projectile.aiStyle = -1;
 			Projectile.friendly = true;
 			Projectile.DamageType = DamageClass.Melee;
-			Projectile.timeLeft = 120;
+			Projectile.timeLeft = 300;
 			Projectile.light = 0.5f;
 			Projectile.penetrate = -1;
 			Projectile.ignoreWater = true;
 			Projectile.tileCollide = false;
-			Projectile.localNPCHitCooldown = 10;
+			Projectile.localNPCHitCooldown = 15;
 			Projectile.usesLocalNPCImmunity = true;
 		}
 
@@ -40,7 +42,7 @@ namespace GMR.Projectiles.Melee
 		{
 			Projectile.rotation = Projectile.velocity.ToRotation();
 			Projectile.alpha += 16;
-			Projectile.velocity *= 0.99f;
+			Projectile.velocity *= 0.95f;
 			if (Projectile.alpha >= 255)
 				Projectile.Kill();
 		}
@@ -53,6 +55,7 @@ namespace GMR.Projectiles.Melee
 			player.AddBuff(ModContent.BuffType<Buffs.Buff.CuttingEdge>(), 600);
 		}
 
+		float scaleX;
 		public override bool PreDraw(ref Color lightColor)
 		{
 			Texture2D texture2D13 = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
@@ -61,6 +64,7 @@ namespace GMR.Projectiles.Melee
 			Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);
 			Vector2 origin2 = rectangle.Size() / 2f;
 			float opacity = Projectile.Opacity;
+			scaleX += 0.1f;
 
 			Color color26 = new Color(Main.DiscoR, 125, 255, 25);
 
@@ -74,7 +78,8 @@ namespace GMR.Projectiles.Melee
 				if (max0 < 0)
 					continue;
 				Vector2 value4 = Vector2.Lerp(Projectile.oldPos[(int)i], Projectile.oldPos[max0], 1 - i % 1);
-				Main.spriteBatch.Draw(texture2D13, value4 + Projectile.Size / 2f - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), null, color27 * opacity, Projectile.rotation, origin2, scale, SpriteEffects.None, 0);
+				Main.spriteBatch.Draw(texture2D13, value4 + Projectile.Size / 2f - Main.screenPosition + new Vector2(0, Projectile.gfxOffY),
+					null, color27 * opacity, Projectile.rotation + MathHelper.ToRadians(180f), origin2, new Vector2(scale * 2f * (1f - scaleX), scale * 0.45f), SpriteEffects.None, 0);
 			}
 			return false;
 		}

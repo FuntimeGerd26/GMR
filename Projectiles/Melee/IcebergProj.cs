@@ -14,11 +14,11 @@ namespace GMR.Projectiles.Melee
 
 		// Define the range of the Spear Projectile. These are overrideable properties, in case you'll want to make a class inheriting from this one.
 		protected virtual float HoldoutRangeMin => 30f;
-		protected virtual float HoldoutRangeMax => 160f;
+		protected virtual float HoldoutRangeMax => 140f;
 
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Iceberg");
+			Projectile.AddElement(1);
 		}
 
 		public override void SetDefaults()
@@ -71,11 +71,12 @@ namespace GMR.Projectiles.Melee
 
 			if (Projectile.timeLeft < 2 && Main.myPlayer == Projectile.owner)
 			{
-				Projectile.NewProjectile(Projectile.GetSource_FromThis(), player.Center, Projectile.velocity * 8f, ModContent.ProjectileType<Projectiles.Melee.Glaicy>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), player.MountedCenter, Projectile.velocity * 8f, ModContent.ProjectileType<Projectiles.Melee.Glaicy>(),
+					Projectile.damage, Projectile.knockBack, Main.myPlayer, 1f);
 			}
 
-			int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 67, Projectile.velocity.X * 0.75f,
-				Projectile.velocity.Y * 0.75f, 60, default(Color), 2f);
+			int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 80, Projectile.velocity.X * 0.75f,
+				Projectile.velocity.Y * 0.75f, 60, default(Color), 0.5f);
 			Main.dust[dustId].noGravity = true;
 
 			return false; // Don't execute vanilla AI.
@@ -83,11 +84,11 @@ namespace GMR.Projectiles.Melee
 
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
-			int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 67, Projectile.velocity.X * 0.5f,
-				Projectile.velocity.Y * 0.75f, 60, default(Color), 2f);
+			int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 80, Projectile.velocity.X * 0.5f,
+				Projectile.velocity.Y * 0.75f, 60, default(Color), 1f);
 			Main.dust[dustId].noGravity = true;
-			int dustId3 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 67, Projectile.velocity.X * 0.75f,
-				Projectile.velocity.Y * 0.5f, 60, default(Color), 1.5f);
+			int dustId3 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 80, Projectile.velocity.X * 0.75f,
+				Projectile.velocity.Y * 0.5f, 60, default(Color), 0.5f);
 			Main.dust[dustId3].noGravity = true;
 		}
 	}

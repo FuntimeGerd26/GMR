@@ -18,6 +18,8 @@ namespace GMR.Projectiles.Melee
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Ark Blade");
+			Projectile.AddElement(0);
+			Projectile.AddElement(2);
 		}
 
 		public override void SetDefaults()
@@ -33,6 +35,7 @@ namespace GMR.Projectiles.Melee
 			Projectile.ignoreWater = true;
 			Projectile.tileCollide = false;
 			Projectile.localNPCHitCooldown = 30;
+			Projectile.usesIDStaticNPCImmunity = true;
 			Projectile.usesLocalNPCImmunity = true;
 		}
 
