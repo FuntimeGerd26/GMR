@@ -22,6 +22,8 @@ namespace GMR.Items.Weapons.Melee
 			Tooltip.SetDefault($"Inflicts 'Devilish' to enemies\nHeals you by 0.5% of health when hitting an enemy\n[c/DD1166:--Special Melee Weapon--]");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(0);
+			Item.AddElement(2);
 		}
 
 		public override void SetDefaults()

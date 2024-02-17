@@ -18,6 +18,10 @@ namespace GMR.Items.Weapons.Melee
 			ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
 			ItemID.Sets.Spears[Item.type] = true;
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(0);
+			Item.AddElement(1);
+			Item.AddElement(2);
+			Item.AddElement(3);
 		}
 
 		public override void SetDefaults()

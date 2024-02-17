@@ -13,6 +13,7 @@ namespace GMR.Items.Weapons.Melee
 		public override void SetStaticDefaults()
 		{
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(0);
 		}
 
 		public override void SetDefaults()
@@ -20,14 +21,14 @@ namespace GMR.Items.Weapons.Melee
 			Item.width = 54;
 			Item.height = 52;
 			Item.rare = 2;
-			Item.useTime = 18;
-			Item.useAnimation = 18;
+			Item.useTime = 22;
+			Item.useAnimation = 22;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.value = Item.sellPrice(silver: 95);
 			Item.autoReuse = true;
 			Item.UseSound = SoundID.Item1;
 			Item.DamageType = DamageClass.Melee;
-			Item.damage = 34;
+			Item.damage = 30;
 			Item.crit = 0;
 			Item.knockBack = 2.25f;
 		}

@@ -28,6 +28,8 @@ namespace GMR.Items.Weapons.Melee
             Tooltip.SetDefault($"'It's coarse and rough and it gets everywhere'\nHitting enemies will cause explosions\n[c/DD1166:--Special Melee Weapon--]");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1; //Count of items to research
+			Item.AddElement(0);
+			Item.AddElement(3);
 		}
 
         public override void SetDefaults()

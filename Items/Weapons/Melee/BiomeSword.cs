@@ -16,32 +16,33 @@ namespace GMR.Items.Weapons.Melee
 			Tooltip.SetDefault("'Slightly better than before'\nShoots a beam that has just enough range to hit enemies");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(3);
 		}
 
 		public override void SetDefaults()
 		{
-			Item.width = 52;
-			Item.height = 52;
+			Item.width = 48;
+			Item.height = 48;
 			Item.rare = 1;
-			Item.useTime = 22;
-			Item.useAnimation = 22;
+			Item.useTime = 24;
+			Item.useAnimation = 24;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.value = Item.sellPrice(silver: 5);
 			Item.autoReuse = true;
 			Item.UseSound = SoundID.Item1;
 			Item.DamageType = DamageClass.Melee;
 			Item.damage = 10;
-			Item.crit = 2;
-			Item.knockBack = 0.5f;
+			Item.crit = -2;
+			Item.knockBack = 2f;
 			Item.shoot = ModContent.ProjectileType<Projectiles.Melee.BiomeSwordBeam>();
-			Item.shootSpeed = 8f;
+			Item.shootSpeed = 6f;
 		}
 
 		public override void AddRecipes()
 		{
 			Recipe recipe = CreateRecipe();
-			recipe.AddRecipeGroup("Wood", 7);
-			recipe.AddIngredient(null, "BossUpgradeCrystal");
+			recipe.AddRecipeGroup("Wood", 15);
+			recipe.AddIngredient(null, "UpgradeCrystal", 20);
 			recipe.AddTile(TileID.HeavyWorkBench);
 			recipe.Register();
 		}

@@ -20,6 +20,8 @@ namespace GMR.Items.Weapons.Melee
 			ItemID.Sets.Spears[Item.type] = true;
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(0);
+			Item.AddElement(2);
 		}
 
 		public override void SetDefaults()

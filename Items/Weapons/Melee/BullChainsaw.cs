@@ -25,18 +25,20 @@ namespace GMR.Items.Weapons.Melee
 			Tooltip.SetDefault("'Poison Charge'\nInflicts Poison to enemies\n[c/DD1166:--Special Melee Weapon--]");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(1);
+			Item.AddElement(3);
 		}
 
 		public override void SetDefaults()
 		{
 			Item.DefaultToDopeSword<Projectiles.Melee.CoolSwords.BullChainsaw>(28);
 			Item.useTime /= 2;
-			Item.SetWeaponValues(42, 3.5f, 15);
+			Item.SetWeaponValues(18, 5f, 4);
 			Item.width = 78;
 			Item.height = 78;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.value = Item.sellPrice(silver: 270);
-			Item.rare = 2;
+			Item.rare = 1;
 			Item.autoReuse = true;
 			Item.reuseDelay = 2;
 		}

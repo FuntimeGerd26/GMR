@@ -16,6 +16,7 @@ namespace GMR.Items.Weapons.Melee
 			Tooltip.SetDefault("'Not only shouldn't you be holding it, but it somehow isn't falling apart'\nShoots close range homing projectiles\nInflicts 'Crystal Sickness' to enemies");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(1);
 		}
 
 		public override void SetDefaults()
@@ -63,7 +64,7 @@ namespace GMR.Items.Weapons.Melee
 			recipe.AddIngredient(ItemID.HallowedBar, 10);
 			recipe.AddIngredient(ItemID.SoulofLight, 16);
 			recipe.AddIngredient(ItemID.PearlstoneBlock, 45);
-			recipe.AddTile(TileID.MythrilAnvil);
+			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}
 	}

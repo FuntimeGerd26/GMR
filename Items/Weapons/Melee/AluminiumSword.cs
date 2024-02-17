@@ -15,6 +15,7 @@ namespace GMR.Items.Weapons.Melee
 			Tooltip.SetDefault("'I've got no idea'");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(-1);
 		}
 
 		public override void SetDefaults()
@@ -22,16 +23,16 @@ namespace GMR.Items.Weapons.Melee
 			Item.width = 58;
 			Item.height = 58;
 			Item.rare = 1;
-			Item.useTime = 18;
-			Item.useAnimation = 18;
+			Item.useTime = 16;
+			Item.useAnimation = 16;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.value = Item.sellPrice(silver: 60);
 			Item.autoReuse = true;
 			Item.UseSound = SoundID.Item1;
 			Item.DamageType = DamageClass.Melee;
-			Item.damage = 17;
-			Item.crit = 4;
-			Item.knockBack = 3f;
+			Item.damage = 10;
+			Item.crit = 0;
+			Item.knockBack = 4f;
 		}
 
 		public override void AddRecipes()

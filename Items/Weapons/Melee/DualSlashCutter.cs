@@ -13,9 +13,8 @@ namespace GMR.Items.Weapons.Melee
 	{
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("'Today is friday in california'\nGrants 'Rapid Healing' and 'Wrath' buffs when hitting an enemy\nInflicts 'Venom' on enemies");
-
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(2);
 		}
 
 		public override void SetDefaults()
@@ -23,24 +22,36 @@ namespace GMR.Items.Weapons.Melee
 			Item.width = 72;
 			Item.height = 70;
 			Item.rare = 4;
-			Item.useTime = 16;
-			Item.useAnimation = 16;
-			Item.useStyle = ItemUseStyleID.Swing;
+			Item.useTime = 18;
+			Item.useAnimation = 18;
+			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.value = Item.sellPrice(silver: 125);
 			Item.autoReuse = true;
+			Item.noMelee = true;
 			Item.UseSound = SoundID.Item1;
 			Item.DamageType = DamageClass.Melee;
-			Item.damage = 75;
-			Item.crit = 8;
-			Item.knockBack = 2f;
+			Item.damage = 60;
+			Item.crit = 0;
+			Item.knockBack = 4.5f;
 			Item.noMelee = true;
-			Item.shoot = ModContent.ProjectileType<Projectiles.Melee.DualSlashCutterSwing>();
+			Item.noUseGraphic = true;
+			Item.shoot = ModContent.ProjectileType<Projectiles.Melee.SpecialSwords.DualSlashCutterSwing>();
 			Item.shootSpeed = 6f;
 		}
 
-		public override bool CanUseItem(Player player)
+		float flipSwingDir;
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
-			return player.ownedProjectileCounts[Item.shoot] <= 0;
+			if (flipSwingDir == 0f)
+				flipSwingDir = 1f;
+			flipSwingDir *= -1f;
+
+			if (flipSwingDir >= 1f)
+				type = ModContent.ProjectileType<Projectiles.Melee.SpecialSwords.DualSlashCutterSwing>();
+			if (flipSwingDir <= -1f)
+				type = ModContent.ProjectileType<Projectiles.Melee.SpecialSwords.DualSlashCutterSwingFlip>();
+			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, player.direction * player.gravDir, player.itemAnimationMax);
+			return false;
 		}
 
 		public override void AddRecipes()
@@ -50,7 +61,7 @@ namespace GMR.Items.Weapons.Melee
 			recipe.AddIngredient(ItemID.SoulofNight, 22);
 			recipe.AddIngredient(ItemID.SoulofLight, 18);
 			recipe.AddIngredient(null, "BossUpgradeCrystal", 3);
-			recipe.AddTile(TileID.MythrilAnvil);
+			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 
 			Recipe recipeAlt = CreateRecipe();
@@ -58,11 +69,12 @@ namespace GMR.Items.Weapons.Melee
 			recipeAlt.AddIngredient(ItemID.SoulofNight, 22);
 			recipeAlt.AddIngredient(ItemID.SoulofLight, 18);
 			recipeAlt.AddIngredient(null, "BossUpgradeCrystal", 3);
-			recipeAlt.AddTile(TileID.MythrilAnvil);
+			recipeAlt.AddTile(TileID.Anvils);
 			recipeAlt.Register();
 
 			Recipe recipe2 = CreateRecipe();
 			recipe2.AddIngredient(null, "DualGunShooter");
+			recipe2.AddTile(TileID.Anvils);
 			recipe2.Register();
 		}
 	}

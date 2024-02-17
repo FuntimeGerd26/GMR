@@ -19,6 +19,8 @@ namespace GMR.Items.Weapons.Melee
 			ItemID.Sets.Spears[Item.type] = true;
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(1);
+			Item.AddElement(2);
 		}
 
 		public override void SetDefaults()
@@ -27,7 +29,7 @@ namespace GMR.Items.Weapons.Melee
 			Item.value = Item.buyPrice(silver: 300); 
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.useTime = 7;
-			Item.useAnimation = 14;
+			Item.useAnimation = 7;
 			Item.UseSound = SoundID.Item7;
 			Item.autoReuse = true; 
 			Item.damage = 78;

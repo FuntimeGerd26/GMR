@@ -15,13 +15,15 @@ namespace GMR.Items.Weapons.Melee
 			Tooltip.SetDefault("Inflits 'Hellfire' to enemies\nShoots homing Phoenixes\n'Kyomu, the pitch black blade returns all to nothing'\n[c/DD1166:--Special Melee Weapon--]");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(0);
+			Item.AddElement(3);
 		}
 
 		public override void SetDefaults()
 		{
-			Item.DefaultToDopeSword<Projectiles.Melee.CoolSwords.MumeikenKyomu>(22);
+			Item.DefaultToDopeSword<Projectiles.Melee.CoolSwords.MumeikenKyomu>(20);
 			Item.useTime /= 4;
-			Item.SetWeaponValues(30, 2f, 7);
+			Item.SetWeaponValues(18, 5f, 2);
 			Item.width = 74;
 			Item.height = 78;
 			Item.useStyle = ItemUseStyleID.Swing;

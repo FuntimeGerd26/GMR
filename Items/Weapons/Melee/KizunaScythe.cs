@@ -15,6 +15,7 @@ namespace GMR.Items.Weapons.Melee
 			Tooltip.SetDefault("Will chase after enemies if they're close enough");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(2);
 		}
 
 		public override void SetDefaults()

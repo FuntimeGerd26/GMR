@@ -22,6 +22,7 @@ namespace GMR.Items.Weapons.Melee
 			Tooltip.SetDefault($"Shoots a beam that when hitting an enemy, grants the player the 'Cutting Edge' and 'Empowered' buffs\n[c/DD1166:--Special Melee Weapon--]");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(2);
 		}
 
 		public override void SetDefaults()
@@ -51,6 +52,7 @@ namespace GMR.Items.Weapons.Melee
 		public override void AddRecipes()
 		{
 			Recipe recipe = CreateRecipe();
+			recipe.AddIngredient(null, "InfraRedBar", 35);
 			recipe.AddIngredient(ItemID.HallowedBar, 18);
 			recipe.AddIngredient(ItemID.SoulofLight, 20);
 			recipe.AddIngredient(ItemID.SoulofFright, 12);

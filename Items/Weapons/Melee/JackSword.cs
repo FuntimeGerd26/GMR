@@ -16,14 +16,16 @@ namespace GMR.Items.Weapons.Melee
 			Tooltip.SetDefault("'A tamed version of it's wild counterpart'\nInflicts Partially Crystalized debuff to enemies\n[c/DD1166:--Special Melee Weapon--]");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(0);
+			Item.AddElement(2);
 		}
 
 		public override void SetDefaults()
 		{
 			Item.DefaultToDopeSword<Projectiles.Melee.CoolSwords.JackSword>(20);
 			Item.useTime /= 2;
-			Item.SetWeaponValues(42, 3f, 5);
-			Item.crit = 4;
+			Item.SetWeaponValues(20, 5f, 5);
+			Item.crit = -2;
 			Item.width = 64;
 			Item.height = 78;
 			Item.useStyle = ItemUseStyleID.Swing;

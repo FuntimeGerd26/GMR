@@ -16,21 +16,22 @@ namespace GMR.Items.Weapons.Melee
 			Tooltip.SetDefault("Summons swords from the sides of your cursor");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(0);
 		}
 
 		public override void SetDefaults()
 		{
-			Item.damage = 40;
+			Item.damage = 26;
 			Item.useTime = 38;
 			Item.useAnimation = 38;
 			Item.width = 78;
 			Item.height = 118;
 			Item.useStyle = ItemUseStyleID.Swing;
-			Item.rare = 3;
+			Item.rare = 2;
 			Item.value = Item.sellPrice(silver: 280);
 			Item.DamageType = DamageClass.Melee;
-			Item.crit = 8;
-			Item.knockBack = 1.5f;
+			Item.crit = 0;
+			Item.knockBack = 8f;
 			Item.shoot = ModContent.ProjectileType<Projectiles.Melee.MagmaEdge>();
 			Item.shootSpeed = 18f;
 			Item.autoReuse = true;

@@ -16,35 +16,36 @@ namespace GMR.Items.Weapons.Melee
 			Tooltip.SetDefault("'Slay through their very souls'\nShoots a beam that vanishes quickly");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(0);
+			Item.AddElement(3);
 		}
 
 		public override void SetDefaults()
 		{
-			Item.width = 106;
-			Item.height = 106;
+			Item.width = 58;
+			Item.height = 58;
 			Item.rare = 4;
 			Item.useTime = 18;
 			Item.useAnimation = 18;
 			Item.useStyle = ItemUseStyleID.Swing;
-			Item.value = Item.sellPrice(silver: 164);
+			Item.value = Item.sellPrice(silver: 214);
 			Item.autoReuse = true;
 			Item.UseSound = SoundID.Item1;
 			Item.DamageType = DamageClass.Melee;
-			Item.damage = 58;
-			Item.crit = 4;
-			Item.knockBack = 1.5f;
+			Item.damage = 38;
+			Item.crit = 0;
+			Item.knockBack = 2f;
 			Item.shoot = ModContent.ProjectileType<Projectiles.Melee.BraycoeSwordBeam>();
-			Item.shootSpeed = 12f;
+			Item.shootSpeed = 8f;
 		}
 
 		public override void AddRecipes()
 		{
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(null, "BiomeSword");
-			recipe.AddIngredient(ItemID.PearlwoodSword);
-			recipe.AddIngredient(ItemID.BreakerBlade);
+			recipe.AddIngredient(ItemID.SoulofLight, 12);
 			recipe.AddIngredient(null, "BossUpgradeCrystal", 4);
-			recipe.AddTile(TileID.MythrilAnvil);
+			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}
 	}

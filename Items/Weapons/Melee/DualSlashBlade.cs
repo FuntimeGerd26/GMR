@@ -16,6 +16,7 @@ namespace GMR.Items.Weapons.Melee
 			Tooltip.SetDefault($"'Blade mode'\nGrants 'Cutting Edge', 'Rapid Healing' and 'Wrath' buffs when hitting an enemy\nInflicts Venom on enemies");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1; //Count of items to research
+			Item.AddElement(2);
 		}
 
 		public override void SetDefaults()
@@ -23,24 +24,28 @@ namespace GMR.Items.Weapons.Melee
 			Item.width = 78;
 			Item.height = 86;
 			Item.rare = 8;
-			Item.useTime = 18;
-			Item.useAnimation = 18;
+			Item.useTime = 16;
+			Item.useAnimation = 16;
 			Item.useStyle = ItemUseStyleID.Swing;
-			Item.value = Item.sellPrice(silver: 125);
+			Item.value = Item.sellPrice(silver: 325);
 			Item.autoReuse = true;
 			Item.UseSound = SoundID.Item1;
 			Item.DamageType = DamageClass.Melee;
-			Item.damage = 85;
+			Item.damage = 88;
 			Item.noMelee = true;
 			Item.crit = 8;
-			Item.shoot = ModContent.ProjectileType<Projectiles.Melee.DualSlashBladeSwing>();
+			Item.knockBack = 6f;
+			Item.shoot = ModContent.ProjectileType<Projectiles.Melee.SpecialSwords.DualSlashBladeSwing>();
 			Item.shootSpeed = 6f;
-			Item.knockBack = 4f;
 		}
 
-		public override bool CanUseItem(Player player)
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
-			return player.ownedProjectileCounts[Item.shoot] <= 0;
+			Projectile.NewProjectile(source, position, velocity * 0, type, damage,
+				knockback, player.whoAmI, player.direction * player.gravDir, player.itemAnimationMax);
+			Projectile.NewProjectile(source, position, velocity * 0, ModContent.ProjectileType<Projectiles.Melee.SpecialSwords.DualSlashCutterSwing>(), 0,
+				knockback, player.whoAmI, player.direction * player.gravDir, player.itemAnimationMax);
+			return false;
 		}
 
 		public override void AddRecipes()
@@ -54,6 +59,7 @@ namespace GMR.Items.Weapons.Melee
 
 			Recipe recipe2 = CreateRecipe();
 			recipe2.AddIngredient(null, "DualBlasterShooter");
+			recipe2.AddTile(TileID.MythrilAnvil);
 			recipe2.Register();
 		}
 	}

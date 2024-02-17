@@ -35,13 +35,16 @@ namespace GMR.Items.Weapons.Melee
 			Tooltip.SetDefault($"Shoots homing projectiles\nInflicts 'Crystal Sickness', 'Devilish', and 'Sun Burnt' to enemies\n'There's no shadows without light, but what about light without shadows?'\n[c/DD1166:--Special Melee Weapon--]");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(0);
+			Item.AddElement(2);
+			Item.AddElement(3);
 		}
 
 		public override void SetDefaults()
 		{
 			Item.DefaultToDopeSword<Projectiles.Melee.CoolSwords.GerdSword>(18);
 			Item.useTime /= 2;
-			Item.SetWeaponValues(60, 4f, 14);
+			Item.SetWeaponValues(56, 4f, 14);
 			Item.width = 110;
 			Item.height = 110;
 			Item.useStyle = ItemUseStyleID.Swing;

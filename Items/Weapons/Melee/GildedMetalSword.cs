@@ -15,6 +15,8 @@ namespace GMR.Items.Weapons.Melee
 			Tooltip.SetDefault("'Watch it'\nShoots a piercing cut that causes explosions on hit\n[c/DD1166:--Special Melee Weapon--]");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(0);
+			Item.AddElement(2);
 		}
 
 		public override void SetDefaults()
@@ -23,8 +25,8 @@ namespace GMR.Items.Weapons.Melee
 			Item.useTime /= 2;
 			Item.SetWeaponValues(48, 2f, 0);
 			Item.crit = 4;
-			Item.width = 54;
-			Item.height = 68;
+			Item.width = 66;
+			Item.height = 80;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.value = Item.sellPrice(silver: 225);
 			Item.rare = 4;

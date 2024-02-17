@@ -16,6 +16,8 @@ namespace GMR.Items.Weapons.Melee
 			Tooltip.SetDefault("Shoots swords from the sky");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(2);
+			Item.AddElement(3);
 		}
 
 		public override void SetDefaults()
@@ -75,7 +77,7 @@ namespace GMR.Items.Weapons.Melee
 			recipe.AddIngredient(ItemID.Bone, 30);
 			recipe.AddRecipeGroup("GMR:AnyGem", 7);
 			recipe.AddIngredient(ItemID.SoulofNight, 14);
-			recipe.AddTile(TileID.MythrilAnvil);
+			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}
 	}

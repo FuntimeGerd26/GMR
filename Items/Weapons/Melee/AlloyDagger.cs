@@ -16,6 +16,8 @@ namespace GMR.Items.Weapons.Melee
 			Tooltip.SetDefault("Throws a dagger at enemies");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(2);
+			Item.AddElement(3);
 		}
 
 		public override void SetDefaults()
@@ -23,20 +25,20 @@ namespace GMR.Items.Weapons.Melee
 			Item.width = 44;
 			Item.height = 44;
 			Item.rare = 1;
-			Item.useTime = 16;
-			Item.useAnimation = 16;
+			Item.useTime = 20;
+			Item.useAnimation = 20;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.value = Item.sellPrice(silver: 50);
 			Item.autoReuse = false;
 			Item.UseSound = SoundID.Item7;
 			Item.DamageType = DamageClass.Melee;
-			Item.damage = 20;
-			Item.crit = 4;
-			Item.knockBack = 1f;
+			Item.damage = 15;
+			Item.crit = 0;
+			Item.knockBack = 5f;
 			Item.noUseGraphic = true;
 			Item.noMelee = true;
 			Item.shoot = ModContent.ProjectileType<Projectiles.Melee.AlloyDagger>();
-			Item.shootSpeed = 6f;
+			Item.shootSpeed = 8f;
 		}
 
 		public override void AddRecipes()

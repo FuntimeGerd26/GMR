@@ -15,6 +15,8 @@ namespace GMR.Items.Weapons.Melee
 			Tooltip.SetDefault("Inflicts 'Devilish' to enemies");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(0);
+			Item.AddElement(2);
 		}
 
 		public override void SetDefaults()

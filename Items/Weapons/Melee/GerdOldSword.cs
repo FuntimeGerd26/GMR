@@ -16,29 +16,30 @@ namespace GMR.Items.Weapons.Melee
 			Tooltip.SetDefault("Having this in your inventory increases melee speed and all damage by 3%");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(-1);
 		}
 
 		public override void SetDefaults()
 		{
 			Item.width = 70;
 			Item.height = 70;
-			Item.rare = 2;
-			Item.useTime = 18;
-			Item.useAnimation = 18;
+			Item.rare = 1;
+			Item.useTime = 20;
+			Item.useAnimation = 20;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.value = Item.sellPrice(silver: 75);
 			Item.autoReuse = true;
 			Item.UseSound = SoundID.Item1;
 			Item.DamageType = DamageClass.Melee;
-			Item.damage = 20;
-			Item.crit = 4;
-			Item.knockBack = 2f;
+			Item.damage = 16;
+			Item.crit = 0;
+			Item.knockBack = 5f;
 		}
 
 		public override void UpdateInventory(Player player)
 		{
-			player.GetAttackSpeed(DamageClass.Melee) += 0.03f;
-			player.GetDamage(DamageClass.Generic) += 0.03f;
+			player.GetAttackSpeed(DamageClass.Melee) += 0.02f;
+			player.GetDamage(DamageClass.Melee) += 0.02f;
 		}
 
 		public override void AddRecipes()

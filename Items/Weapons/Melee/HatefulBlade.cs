@@ -15,6 +15,7 @@ namespace GMR.Items.Weapons.Melee
 			Tooltip.SetDefault("Shoots a quick piercing slash");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(0);
 		}
 
 		public override void SetDefaults()

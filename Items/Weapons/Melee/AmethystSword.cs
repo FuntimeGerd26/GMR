@@ -16,6 +16,7 @@ namespace GMR.Items.Weapons.Melee
 			Tooltip.SetDefault("'You can't hold it'\nInflicts Crystal Sickness to enemies");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(1);
 		}
 
 		public override void SetDefaults()
@@ -30,17 +31,9 @@ namespace GMR.Items.Weapons.Melee
 			Item.autoReuse = true;
 			Item.UseSound = SoundID.Item1;
 			Item.DamageType = DamageClass.Melee;
-			Item.damage = 16;
+			Item.damage = 20;
 			Item.crit = 4;
-			Item.noMelee = true;
-			Item.shoot = ModContent.ProjectileType<Projectiles.Melee.AmethystSwordSwing>();
-			Item.shootSpeed = 2f;
 			Item.knockBack = 1.25f;
-		}
-
-		public override bool CanUseItem(Player player)
-		{
-			return player.ownedProjectileCounts[Item.shoot] <= 0;
 		}
 
 		public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)

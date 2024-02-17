@@ -12,23 +12,22 @@ namespace GMR.Items.Weapons.Melee
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Infra-Red Sword");
-			Tooltip.SetDefault("Inflicts Partially Crystalized debuff to enemies\nOn hit with the blade or projectiles creates an explosion\n[c/DD1166:--Special Melee Weapon--]");
-
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(0);
+			Item.AddElement(2);
 		}
 
 		public override void SetDefaults()
 		{
-			Item.DefaultToDopeSword<Projectiles.Melee.CoolSwords.InfraRedSword>(35);
-			Item.useTime /= 3;
-			Item.SetWeaponValues(47, 2f, 4);
-			Item.crit = 10;
-			Item.width = 104;
-			Item.height = 104;
+			Item.DefaultToDopeSword<Projectiles.Melee.CoolSwords.InfraRedSword>(30);
+			Item.useTime /= 2;
+			Item.SetWeaponValues(66, 6f, 6);
+			Item.crit = -2;
+			Item.width = 126;
+			Item.height = 126;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.value = Item.sellPrice(silver: 270);
-			Item.rare = 4;
+			Item.rare = 5;
 			Item.autoReuse = true;
 			Item.reuseDelay = 1;
 		}
@@ -47,11 +46,12 @@ namespace GMR.Items.Weapons.Melee
 		{
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(null, "GerdOldSword");
+			recipe.AddIngredient(null, "NeonSaber");
 			recipe.AddIngredient(ItemID.SoulofNight, 28);
-			recipe.AddRecipeGroup("GMR:AnyGem", 8);
-			recipe.AddIngredient(null, "UpgradeCrystal", 45);
-			recipe.AddIngredient(null, "ScrapFragment", 18);
-			recipe.AddTile(TileID.MythrilAnvil);
+			recipe.AddIngredient(null, "BossUpgradeCrystal", 4);
+			recipe.AddIngredient(null, "ScrapFragment", 20);
+			recipe.AddIngredient(null, "InfraRedBar", 12);
+			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}
 	}

@@ -16,21 +16,23 @@ namespace GMR.Items.Weapons.Melee
 			Tooltip.SetDefault($" Right-click to throw a dagger that can randomly multiplicate when hitting an enemy");
 			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Item.type] = true;
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(2);
+			Item.AddElement(3);
 		}
 
 		public override void SetDefaults()
 		{
-			Item.damage = 38;
-			Item.useTime = 14;
-			Item.useAnimation = 14;
+			Item.damage = 32;
+			Item.useTime = 25;
+			Item.useAnimation = 25;
 			Item.width = 68;
 			Item.height = 68;
-			Item.rare = 2;
+			Item.rare = 3;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.value = Item.sellPrice(silver: 100);
 			Item.DamageType = DamageClass.Melee;
-			Item.crit = 4;
-			Item.knockBack = 2f;
+			Item.crit = 0;
+			Item.knockBack = 4f;
 			Item.autoReuse = true;
 		}
 
@@ -46,7 +48,7 @@ namespace GMR.Items.Weapons.Melee
 				Item.noMelee = true;
 				Item.UseSound = SoundID.Item7;
 				Item.shoot = ModContent.ProjectileType<Projectiles.Melee.AlloySwordThrow>();
-				Item.shootSpeed = 6f;
+				Item.shootSpeed = 8f;
 				Item.noUseGraphic = true;
 			}
 			else
@@ -72,8 +74,9 @@ namespace GMR.Items.Weapons.Melee
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(null, "GerdOldSword");
 			recipe.AddIngredient(null, "AlloyDagger");
+			recipe.AddIngredient(ItemID.HellstoneBar, 10);
 			recipe.AddIngredient(null, "AlloyBox");
-			recipe.AddIngredient(null, "UpgradeCrystal", 40);
+			recipe.AddIngredient(null, "BossUpgradeCrystal", 3);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}

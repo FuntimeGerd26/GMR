@@ -8,33 +8,35 @@ using Terraria.ModLoader;
 
 namespace GMR.Items.Weapons.Melee
 {
-	public class Iceberg : ModItem
+	public class NanashiSword : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Nanashi Sword");
+			Tooltip.SetDefault("On hit has a 5% chance to cover the screen with the creation that deals massive damage in all the screen\n'Well, well I'm, I'm gonna make sure, you, you all, I'm gonna... I'mma make sure you... you, I... I'mma do it'");
+
 			ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
 			ItemID.Sets.Spears[Item.type] = true;
-
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-			Item.AddElement(1);
+			Item.AddElement(3);
 		}
 
 		public override void SetDefaults()
 		{
-			Item.rare = 3;
-			Item.value = Item.buyPrice(silver: 125);
-			Item.useStyle = ItemUseStyleID.Shoot;
-			Item.useTime = 22;
-			Item.useAnimation = 22;
-			Item.UseSound = SoundID.Item7;
-			Item.autoReuse = true; 
-			Item.damage = 20;
-			Item.knockBack = 5f;
+			Item.rare = 5;
+			Item.value = Item.sellPrice(silver: 210);
+			Item.useStyle = ItemUseStyleID.Rapier;
+			Item.useAnimation = 10;
+			Item.useTime = 10;
+			Item.UseSound = SoundID.Item1;
+			Item.autoReuse = true;
+			Item.damage = 30;
+			Item.knockBack = 3f;
 			Item.noUseGraphic = true;
 			Item.DamageType = DamageClass.Melee;
 			Item.noMelee = true;
-			Item.shootSpeed = 18f;
-			Item.shoot = ModContent.ProjectileType<Projectiles.Melee.IcebergProj>();
+			Item.shootSpeed = 6f;
+			Item.shoot = ModContent.ProjectileType<Projectiles.Melee.NanashiSword>();
 		}
 
 		public override bool CanUseItem(Player player)
@@ -48,17 +50,20 @@ namespace GMR.Items.Weapons.Melee
 			{
 				SoundEngine.PlaySound(Item.UseSound.Value, player.Center);
 			}
+
 			return null;
+		}
+
+		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+		{
+			velocity = velocity.RotatedByRandom(MathHelper.ToRadians(10));
 		}
 
 		public override void AddRecipes()
 		{
 			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.IceBlock, 30);
-			recipe.AddIngredient(ItemID.SnowBlock, 40);
-			recipe.AddIngredient(ItemID.Bone, 45);
-			recipe.AddRecipeGroup("GMR:AnyGem", 5);
-			recipe.AddTile(TileID.Anvils);
+			recipe.AddIngredient(1365); // WoF Trophy
+			recipe.AddTile(220); // Solidifier
 			recipe.Register();
 		}
 	}

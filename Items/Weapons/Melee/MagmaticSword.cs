@@ -20,7 +20,8 @@ namespace GMR.Items.Weapons.Melee
         public override void SetStaticDefaults()
         {
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-		}
+            Item.AddElement(0);
+        }
 
         public override void SetDefaults()
         {
@@ -53,7 +54,7 @@ namespace GMR.Items.Weapons.Melee
             recipe.AddIngredient(ItemID.HellstoneBar, 20);
             recipe.AddIngredient(ItemID.SoulofNight, 22);
             recipe.AddIngredient(null, "BossUpgradeCrystal", 3);
-            recipe.AddTile(TileID.MythrilAnvil);
+            recipe.AddTile(TileID.Anvils);
             recipe.Register();
         }
     }

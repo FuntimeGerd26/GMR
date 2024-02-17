@@ -16,7 +16,9 @@ namespace GMR.Items.Weapons.Melee
                 "\nInflicts 'Chilling Flames' and 'Thoughtful' to enemies\n[c/DD1166:--Special Melee Weapon--]");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-		}
+            Item.AddElement(1);
+            Item.AddElement(2);
+        }
 
         public override void SetDefaults()
         {

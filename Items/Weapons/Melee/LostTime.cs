@@ -35,6 +35,8 @@ namespace GMR.Items.Weapons.Melee
 			Tooltip.SetDefault($"Shoots blades that inflicts Cursed Inferno and Ichor to enemies\nShoots a big slash that explodes when hitting enemies\n'It's creation took endless centuries'\n[c/DD1166:--Special Melee Weapon--]");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(2);
+			Item.AddElement(3);
 		}
 
 		public override void SetDefaults()
@@ -68,7 +70,7 @@ namespace GMR.Items.Weapons.Melee
 			recipe.AddIngredient(null, "InfraRedSword");
 			recipe.AddIngredient(null, "Epiphany");
 			recipe.AddIngredient(ItemID.SoulofFright, 12);
-			recipe.AddIngredient(3467, 26); // Luminite Bars
+			recipe.AddIngredient(ItemID.LunarBar, 26);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 		}

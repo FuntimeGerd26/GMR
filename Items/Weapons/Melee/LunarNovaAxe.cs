@@ -22,7 +22,9 @@ namespace GMR.Items.Weapons.Melee
             Tooltip.SetDefault("Hitting enemies causes a small burst that hits a second time\n[c/DD1166:--Special Melee Weapon--]");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1; //Count of items to research
-		}
+            Item.AddElement(1);
+            Item.AddElement(2);
+        }
 
         public override void SetDefaults()
         {

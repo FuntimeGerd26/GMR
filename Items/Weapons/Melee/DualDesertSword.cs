@@ -28,6 +28,8 @@ namespace GMR.Items.Weapons.Melee
 			Tooltip.SetDefault($"'I don't like sand'\nShoot an infinitelly piercing projectile that gains 25% damage every time it hits an enemy\n[c/DD1166:--Special Melee Weapon--]");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1; //Count of items to research
+			Item.AddElement(0);
+			Item.AddElement(3);
 		}
 
         public override void SetDefaults()
