@@ -43,7 +43,6 @@ namespace GMR
 		public Item JackExpert;
 		public Item DevPlush;
 		public bool DevInmune;
-		public bool AmalgamInmune;
 		public Item Thunderblade;
 		public bool BLBook;
 		public bool MayDress;
@@ -71,7 +70,7 @@ namespace GMR
 
 		#endregion
 
-		#region Debuffs
+		#region Buffs / Debuffs
 
 		public bool Glimmering;
 		public bool Thoughtful;
@@ -80,14 +79,18 @@ namespace GMR
 		public bool Devilish;
 		public int DevilishDamage;
 		public bool DamnSun;
-		
+		public bool YinEmpower;
+		public bool YangEmpower;
+		public bool IllusionOfLove;
+
 		#endregion
 
 		#region Enchantment Stuff
 
-		public Item AlumEnch;
+		public Item AlumArmor;
 		public Item AlloybloodEnch;
 		public bool AmalgamateEnch;
+		public Item IcePrincessEnch;
 
 		#endregion
 
@@ -117,7 +120,6 @@ namespace GMR
 			JackExpert = null;
 			DevPlush = null;
 			DevInmune = false;
-			AmalgamInmune = false;
 			Thunderblade = null;
 			BLBook = false;
 			MayDress = false;
@@ -139,13 +141,18 @@ namespace GMR
 			MaskedPlagueCloak = null;
 			ChaosSoul = false;
 			AwakeMayDress = false;
-			AlumEnch = null;
+			AlumArmor = null;
 			AlloybloodEnch = null;
 			AncientCore = null;
 			AncientBullets = null;
 			MagmaSet = false;
 			BullSet = false;
 			GambleCrown = null;
+			YinEmpower = false;
+			YangEmpower = false;
+			IcePrincessEnch = null;
+			AmalgamateEnch = false;
+			IllusionOfLove = false;
 		}
 
 		public override void UpdateDead()
@@ -153,7 +160,6 @@ namespace GMR
 			JackExpert = null;
 			DevPlush = null;
 			DevInmune = false;
-			AmalgamInmune = false;
 			Thunderblade = null;
 			BLBook = false;
 			MayDress = false;
@@ -175,13 +181,18 @@ namespace GMR
 			MaskedPlagueCloak = null;
 			ChaosSoul = false;
 			AwakeMayDress = false;
-			AlumEnch = null;
+			AlumArmor = null;
 			AlloybloodEnch = null;
 			AncientCore = null;
 			AncientBullets = null;
 			MagmaSet = false;
 			BullSet = false;
 			GambleCrown = null;
+			YinEmpower = false;
+			YangEmpower = false;
+			IcePrincessEnch = null;
+			AmalgamateEnch = false;
+			IllusionOfLove = false;
 		}
 
 		public void UpdateItemFields()
@@ -242,6 +253,7 @@ namespace GMR
 
 			if (PainHeal && Player.lifeRegen > 0)
 				Player.lifeRegen = 0;
+
 			if (Devilish)
 			{
 				DevilishDamage = Player.statLifeMax2 / 20;
@@ -251,23 +263,10 @@ namespace GMR
 
 		public override void PostHurt(Player.HurtInfo info)
 		{
-			if (!DevInmune || !AmalgamInmune || !AwakeMayDress)
-			{
-				return; //Is this for using usual frames if not having these?
-			}
-
 			// Don't apply extra immunity time to pvp damage (like vanilla)
 			if (!info.PvP && DevInmune)
 			{
-				Player.AddImmuneTime(info.CooldownCounter, 120);
-			}
-			if (!info.PvP && AwakeMayDress)
-            {
-				Player.AddImmuneTime(info.CooldownCounter, 180);
-            }
-			if (!info.PvP && AmalgamInmune)
-			{
-				Player.AddImmuneTime(info.CooldownCounter, 240);
+				Player.AddImmuneTime(info.CooldownCounter, 120); // Cooldown ID, in this case, -1 (General) and Cooldown Time, 120 (2 seconds)
 			}
 
 			if (MagmaSet)
@@ -314,6 +313,11 @@ namespace GMR
 			{
 				Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.Explotion>(), 100, 3f, Main.myPlayer);
 			}
+
+			if (!DevInmune || !AwakeMayDress)
+			{
+				return; //Is this for using usual frames
+			}
 		}
 
 		public override void ModifyHitByProjectile(Projectile proj, ref Player.HurtModifiers modifiers)
@@ -330,75 +334,169 @@ namespace GMR
 
 			void ClassOnlyEffects()
 			{
-				if (item.damage > 0 && AlumEnch != null)
+				if (item.shoot == 0 && item.damage > 0 || item.shoot != 0 && item.damage > 0)
 				{
-					if (Main.rand.NextBool(2))
-						Projectile.NewProjectile(Player.GetSource_Accessory(AlumEnch), position, velocity * 2, ModContent.ProjectileType<Projectiles.Ranged.AluminiumShuriken>(), (int)(damage * 1.5), knockback, player.whoAmI);
-				}
-
-				if (player.HeldItem?.DamageType?.CountsAsClass(DamageClass.Melee) == true) // If the damage class is melee, Check for the armor set being true 
-				{
-					if (AmalgamateEnch && item.useTime > 5 && item.useTime < 120 && item.damage > 0)
-						Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<Projectiles.Melee.CoolSwords.NeonBlade>(), damage, knockback, Main.myPlayer);
-
-					if (BoostSet != null && item.damage > 0)
-						Projectile.NewProjectile(source, position, velocity * 3f, ModContent.ProjectileType<Projectiles.BoostFlame>(), damage / 2, knockback / 2, Main.myPlayer);
-
-					if (Main.rand.NextBool(4) && NajaCharm != null && item.damage > 0)
-						Projectile.NewProjectile(Player.GetSource_Accessory(NajaCharm), position, velocity / 2, ModContent.ProjectileType<Projectiles.NajaFireball>(), damage, knockback, Main.myPlayer);
-
-					if (AlloybloodEnch != null && item.damage > 0)
-						Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<Projectiles.Melee.AlloybloodDagger>(), damage, knockback, Main.myPlayer);
-				}
-
-				if (player.HeldItem?.DamageType?.CountsAsClass(DamageClass.Ranged) == true)
-				{					
-					if (MagnumSet != null)
+					// Aluminium Armor is special like that
+					if (AlumArmor != null)
 					{
-						velocity = velocity * 2f;
-						base.Shoot(item, source, position, velocity, type, damage, knockback);
+						if (Main.rand.NextBool(2))
+							Projectile.NewProjectile(Player.GetSource_Accessory(AlumArmor), position, velocity * 2, ModContent.ProjectileType<Projectiles.Ranged.AluminiumShuriken>(), (int)(damage * 1.5), knockback, player.whoAmI);
 					}
 
-					if (AluminiumCharm != null && item.damage > 0)
-						Projectile.NewProjectile(Player.GetSource_Accessory(AluminiumCharm), position, velocity, ModContent.ProjectileType<Projectiles.Ranged.AluminiumShot>(), damage / 2, knockback / 2, Main.myPlayer);
-
-					if (Main.rand.NextBool(5) && ChargedArm != null && item.damage > 0)
+					#region Warrior
+					if (player.HeldItem?.DamageType?.CountsAsClass(DamageClass.Melee) == true) // If the damage class is melee, Check for the armor set being true 
 					{
-						SoundEngine.PlaySound(SoundID.Item36, Player.position);
-						Projectile.NewProjectile(Player.GetSource_Accessory(ChargedArm), position, velocity, ModContent.ProjectileType<Projectiles.Ranged.ChargedRocket>(), damage * 2, 4f, Main.myPlayer);
+						if (BoostSet != null)
+							Projectile.NewProjectile(source, position, velocity * 3f, ModContent.ProjectileType<Projectiles.BoostFlame>(), damage / 2, knockback / 2, Main.myPlayer);
+
+						if (Main.rand.NextBool(4) && NajaCharm != null)
+							Projectile.NewProjectile(Player.GetSource_Accessory(NajaCharm), position, velocity / 2, ModContent.ProjectileType<Projectiles.NajaFireball>(), damage, knockback, Main.myPlayer);
+
+						if (AlloybloodEnch != null)
+							Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<Projectiles.Melee.AlloybloodDagger>(), damage, knockback, Main.myPlayer);
 					}
-					if (Main.rand.NextBool(4) && AncientCore != null && item.damage > 0 && item.useAmmo == AmmoID.Bullet)
+					#endregion
+
+					#region Ranger
+					if (player.HeldItem?.DamageType?.CountsAsClass(DamageClass.Ranged) == true)
 					{
-						SoundEngine.PlaySound(SoundID.Item41, Player.position);
-						Projectile.NewProjectile(Player.GetSource_Accessory(AncientCore), position, velocity, ModContent.ProjectileType<Projectiles.Ranged.JackExplosiveBullet>(), damage / 2, knockback / 2, Main.myPlayer);
+						if (MagnumSet != null)
+						{
+							velocity = velocity * 2f;
+							base.Shoot(item, source, position, velocity, type, damage, knockback);
+						}
+
+						if (AluminiumCharm != null)
+							Projectile.NewProjectile(Player.GetSource_Accessory(AluminiumCharm), position, velocity, ModContent.ProjectileType<Projectiles.Ranged.AluminiumShot>(), damage / 2, knockback / 2, Main.myPlayer);
+
+						if (Main.rand.NextBool(5) && ChargedArm != null && item.damage > 0)
+						{
+							SoundEngine.PlaySound(SoundID.Item36, Player.position);
+							Projectile.NewProjectile(Player.GetSource_Accessory(ChargedArm), position, velocity, ModContent.ProjectileType<Projectiles.Ranged.ChargedRocket>(), damage * 2, 4f, Main.myPlayer);
+						}
+						if (Main.rand.NextBool(4) && AncientCore != null && item.damage > 0 && item.useAmmo == AmmoID.Bullet)
+						{
+							SoundEngine.PlaySound(SoundID.Item41, Player.position);
+							Projectile.NewProjectile(Player.GetSource_Accessory(AncientCore), position, velocity, ModContent.ProjectileType<Projectiles.Ranged.JackExplosiveBullet>(), damage / 2, knockback / 2, Main.myPlayer);
+						}
+						if (Main.rand.NextBool(6) && AncientBullets != null && item.damage > 0 && item.useAmmo == AmmoID.Bullet)
+						{
+							SoundEngine.PlaySound(SoundID.Item41, Player.position);
+							Projectile.NewProjectile(Player.GetSource_Accessory(AncientBullets), position, velocity / 2, ModContent.ProjectileType<Projectiles.Ranged.JackBullet>(), damage / 2, knockback / 2, Main.myPlayer);
+						}
 					}
-					if (Main.rand.NextBool(6) && AncientBullets != null && item.damage > 0 && item.useAmmo == AmmoID.Bullet)
+					#endregion
+
+					#region Mage
+					if (player.HeldItem?.DamageType?.CountsAsClass(DamageClass.Magic) == true)
 					{
-						SoundEngine.PlaySound(SoundID.Item41, Player.position);
-						Projectile.NewProjectile(Player.GetSource_Accessory(AncientBullets), position, velocity / 2, ModContent.ProjectileType<Projectiles.Ranged.JackBullet>(), damage / 2, knockback / 2, Main.myPlayer);
+						if (Main.rand.NextBool(4) && NajaCharm != null)
+							Projectile.NewProjectile(Player.GetSource_Accessory(NajaCharm), position, velocity / 2, ModContent.ProjectileType<Projectiles.NajaFireball>(), damage, knockback, Main.myPlayer);
+
+						if (MaskedPlagueCloak != null)
+							Projectile.NewProjectile(Player.GetSource_Accessory(MaskedPlagueCloak), position, velocity / 2, ModContent.ProjectileType<Projectiles.Magic.PlagueCloackProj>(), damage, knockback, Main.myPlayer);
 					}
-				}
+					#endregion
 
-				if (player.HeldItem?.DamageType?.CountsAsClass(DamageClass.Magic) == true)
-				{
-					if (Main.rand.NextBool(4) && NajaCharm != null && item.damage > 0)
-						Projectile.NewProjectile(Player.GetSource_Accessory(NajaCharm), position, velocity / 2, ModContent.ProjectileType<Projectiles.NajaFireball>(), damage, knockback, Main.myPlayer);
+					#region Summoner
+					if (player.HeldItem?.DamageType?.CountsAsClass(DamageClass.Summon) == true)
+					{
+						if (Main.rand.NextBool(4) && NajaCharm != null )
+							Projectile.NewProjectile(Player.GetSource_Accessory(NajaCharm), position, velocity / 2, ModContent.ProjectileType<Projectiles.NajaFireball>(), damage, knockback, Main.myPlayer);
 
-					if (MaskedPlagueCloak != null && item.damage > 0)
-						Projectile.NewProjectile(Player.GetSource_Accessory(MaskedPlagueCloak), position, velocity / 2, ModContent.ProjectileType<Projectiles.Magic.PlagueCloackProj>(), damage, knockback, Main.myPlayer);
-				}
+						if (MaskedPlagueCloak != null )
+							Projectile.NewProjectile(Player.GetSource_Accessory(MaskedPlagueCloak), position, velocity / 2, ModContent.ProjectileType<Projectiles.Magic.PlagueCloackProj>(), damage, knockback, Main.myPlayer);
+					}
+					#endregion
 
-				if (player.HeldItem?.DamageType?.CountsAsClass(DamageClass.Summon) == true)
-				{
-					if (Main.rand.NextBool(4) && NajaCharm != null && item.damage > 0)
-						Projectile.NewProjectile(Player.GetSource_Accessory(NajaCharm), position, velocity / 2, ModContent.ProjectileType<Projectiles.NajaFireball>(), damage, knockback, Main.myPlayer);
+					#region Volcano Charm Fireball
+					if (player.HeldItem?.DamageType?.CountsAsClass(DamageClass.Ranged) != true && Main.rand.NextBool(4) && NajaCharm != null)
+					{
+						Vector2 target = Main.screenPosition + new Vector2(Main.mouseX, Main.mouseY);
+						// Loop these functions 2 times.
+						for (int i = 0; i < 2; i++)
+						{
+							position = player.Center - new Vector2(Main.rand.NextFloat(401) * player.direction, 600f);
+							position.Y -= 100 * i;
+							Vector2 heading = target - position;
 
-					if (MaskedPlagueCloak != null && item.damage > 0)
-						Projectile.NewProjectile(Player.GetSource_Accessory(MaskedPlagueCloak), position, velocity / 2, ModContent.ProjectileType<Projectiles.Magic.PlagueCloackProj>(), damage, knockback, Main.myPlayer);
+							if (heading.Y < 0f)
+							{
+								heading.Y *= -1f;
+							}
+
+							if (heading.Y < 20f)
+							{
+								heading.Y = 20f;
+							}
+
+							heading.Normalize();
+							heading *= velocity.Length();
+							Projectile.NewProjectile(Player.GetSource_Accessory(NajaCharm), position, heading, ModContent.ProjectileType<Projectiles.NajaFireball>(), damage, knockback, Main.myPlayer);
+						}
+
+						// Two times again
+						for (int x = 0; x < 2; x++)
+						{
+							// Shoot under the player
+							position = player.Center + new Vector2(Main.rand.NextFloat(401) * player.direction, 600f);
+							position.Y += 100 * x;
+							Vector2 heading = target - position;
+
+							if (heading.Y > 0f)
+							{
+								heading.Y *= -1f;
+							}
+
+							if (heading.Y > 20f)
+							{
+								heading.Y = -20f;
+							}
+
+							heading.Normalize();
+							heading *= velocity.Length();
+							Projectile.NewProjectile(Player.GetSource_Accessory(NajaCharm), position, heading, ModContent.ProjectileType<Projectiles.NajaFireball>(), damage, knockback, Main.myPlayer);
+						}
+					}
+                    #endregion
+
+                    #region Ice Princess Shuriken
+                    if (Main.rand.NextBool(3) && IcePrincessEnch != null)
+					{
+						Vector2 target = Main.screenPosition + new Vector2(Main.mouseX, Main.mouseY);
+						float ceilingLimit = target.Y;
+						if (ceilingLimit > player.Center.Y - 200f)
+						{
+							ceilingLimit = player.Center.Y - 200f;
+						}
+
+						// Loop these functions 2 times.
+						for (int i = 0; i < 2; i++)
+						{
+							position = player.Center - new Vector2(Main.rand.NextFloat(350) * player.direction, 600f);
+							position.Y -= 100 * i;
+							Vector2 heading = target - position;
+
+							if (heading.Y < 0f)
+							{
+								heading.Y *= -1f;
+							}
+
+							if (heading.Y < 20f)
+							{
+								heading.Y = 20f;
+							}
+
+							heading.Normalize();
+							heading *= velocity.Length();
+							Projectile.NewProjectile(Player.GetSource_Accessory(IcePrincessEnch), position, heading, ModContent.ProjectileType<Projectiles.Ranged.IceShuriken>(), damage / 2, knockback, Main.myPlayer);
+						}
+					}
+					#endregion
 				}
 			}
 
-			if (item.damage > 0 && DevPlush != null) //If the weapon's damage deals over 0 damage and Has the accessory on
+            if (item.damage > 0 && DevPlush != null) //If the weapon's damage deals over 0 damage and Has the accessory on
 			{
 				if (Main.rand.NextBool(3)) // 1 in 3 (33%)
 				{
@@ -412,8 +510,6 @@ namespace GMR
 					}
 
 					Projectile.NewProjectile(Player.GetSource_Accessory(DevPlush), position, velocity, ModContent.ProjectileType<Projectiles.Ranged.JackClaw>(), damage, knockback, player.whoAmI);
-					ClassOnlyEffects();
-					return base.Shoot(item, source, position, velocity, type, damage, knockback);
 				}
 			}
 			ClassOnlyEffects(); // Run the code for the class only effects

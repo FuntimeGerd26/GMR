@@ -1,22 +1,25 @@
 [c/D500EA:<Gerd's] [c/4CBAB7:Lab>]
-This mod only aims to add content, with no clear specific goal
+This mod only aims to add content, with no clear specific goal. Yeah, that's it.
+
+You may find references to multiple inside jokes, games, shows, people, etc.
 
 Current Progress:
-- 30+ Weapons
-- 8 Armors
-- Over 100 items
-- 2 Town NPCs
-- 4 Bosses
+- 134 Weapons for your enjoyment across progression
+- 10 Armors to defend from foes or friends
+- 2 Town NPCs you'll meet through your journey
+- 3 Bosses to defeat and loot
 
-Themes made by:
-- Trerios: zenovia.
-- Magma Eye: Yuri 0
-- Jack: Spectra
-- Acheron: Spectra
+Contributiors: ([c/D500EA:Directly] or [c/4CBAB7:Indirectly] influencing the mod)
+- [c/D500EA:Spectra] (Created the theme for Jack)
+- [c/D500EA:extra] (Sound effects for Acheron and Jack, along some weapon sound effects)
+- [c/4CBAB7:Rockman Zeta] (Play Shards of Atheria, some code taken from his mods to help make this one)
+- [c/4CBAB7:Nalyddd & Aequus team] (As an open source mod, some parts of code have been taken to create things you see in it)
+- [c/4CBAB7:Kerm] (R.I.P Pellucid mod, may Radiant mod succeed, custom gun code & visuals from Pellucid)
+- [c/D500EA:Spazmatanium, An Agent of Chaos, icey, Snith Nord Darth Bathrobe] (Very good friends, i began modding thanks to wanting to make something for us to play)
+- [c/D500EA:Ebon & Braycoe] (Modder friends, they have been helpful in very niche issues, along ideas and inspiration)
+- [c/D500EA:Y'all who have given feedback on the mod], it helps me see bugs i didn't find or think of durning development.
+
+And of course, You for reading all of this, or not, that you play the mod is enough for me.
 
 For suggestions, bug reports or questions join the discord server (Accessible though homepage button)
-or you can make a new discussion in the workshop page if you don't have a discord account
-
-
-Play Aequus Mod
-It has cool stuff, i may have taken some code from it to make a few things in this mod
+or you can make a new discussion in the workshop page if you don't have a discord account or don't want to make one.

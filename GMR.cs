@@ -1,5 +1,7 @@
-using Microsoft.Xna.Framework.Graphics;
+using Humanizer;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -37,7 +39,7 @@ namespace GMR
     public class GMR : Mod
     {
         public const string SoundsPath = "GMR/Sounds/";
-        //internal static ModKeybind ChargedArmKey;
+        internal static ModKeybind UniqueKeybind;
 
         public const string ModName = nameof(GMR);
 
@@ -54,7 +56,16 @@ namespace GMR
 
         public override void Load()
         {
-            //ChargedArmKey = KeybindLoader.RegisterKeybind(this, "Charged Rocket Arm", "F");
+            UniqueKeybind = KeybindLoader.RegisterKeybind(this, "Special Key", "G");
+        }
+
+        public static bool Eternity()
+        {
+            if (ModLoader.TryGetMod("FargowiltasSouls", out Mod souls))
+            {
+                return (bool)souls.Call("EternityMode");
+            }
+            return false;
         }
 
         public override void PostSetupContent()
@@ -66,9 +77,19 @@ namespace GMR
                 foundMod.Call("TownNPCCondition", ModContent.NPCType<Memer>(), "Defeat Brain of Cthulhu or Eater of Worlds.");
             }
 
-            if (ModLoader.TryGetMod("Fargowiltas", out Mod foundFargo))
+            // For when I do add an individual summon item for each boss instead of all relying on Hatred
+            /*if (ModLoader.TryGetMod("Fargowiltas", out Mod foundFargo))
             {
                 foundFargo.Call("AddSummon", 6.5f, ModContent.ItemType<JackDroneOld>(), () => GerdWorld.downedJack, 50000);
+            }*/
+        }
+
+        public static void TryElementCall(params object[] args)
+        {
+            if (ModLoader.TryGetMod("BattleNetworkElements", out Mod BNElem))
+            {
+                var em = ModLoader.GetMod("BattleNetworkElements");
+                em.Call(args);
             }
         }
 
@@ -93,8 +114,8 @@ namespace GMR
         }
     }
 
-    // If this dosen't work im gonna kill you nalyd
-    internal class ModSupport<TMod> : ModSystem where TMod : ModSupport<TMod>
+    // PS: Waiting till this whole thing breaks, nvm it already did
+    /*internal class ModSupport<TMod> : ModSystem where TMod : ModSupport<TMod>
     {
         public static Mod Instance { get; private set; }
         public static string ModName => typeof(TMod).Name;
@@ -219,11 +240,9 @@ namespace GMR
 
             LogBossEntries();
         }
-    }
-} // PS: It worked, now waiting till it breaks because of a random TMod update that changed absolutelly nothing but how this works specifically
+    }*/
 
-namespace GMR
-{
+
     internal class LocalizationRewriter : ModSystem
     {
         public override void PostSetupContent()

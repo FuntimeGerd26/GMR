@@ -47,6 +47,26 @@ namespace GMR
             return player.GetModPlayer<GerdPlayer>();
         }
 
+        public static void AddElement(this Item item, int elementID)
+        {
+            GMR.TryElementCall("assignElement", item, elementID);
+        }
+
+        public static void AddElement(this Projectile projectile, int elementID)
+        {
+            GMR.TryElementCall("assignElement", projectile, elementID);
+        }
+
+        public static void AddElement(this NPC npc, int elementID)
+        {
+            GMR.TryElementCall("assignElement", npc, elementID);
+        }
+
+        public static void ElementMultipliers(this NPC npc, float[] multipliers)
+        {
+            GMR.TryElementCall("assignElement", npc, multipliers);
+        }
+
         public static int FindClosestHostileNPC(Vector2 location, float detectionRange, bool lineCheck = false)
         {
             NPC closestNpc = null;

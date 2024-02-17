@@ -26,9 +26,6 @@ namespace GMR
 
         public static int boss = -1;
 
-        public int originalDefense;
-        public bool FirstTick;
-
         public bool Glimmering;
         public bool Thoughtful;
         public bool PartialCrystal;
@@ -37,6 +34,7 @@ namespace GMR
         public bool ChillBurn;
         public bool PlagueCrystal;
         public bool ChaosBurnt;
+        public bool IllusionOfBeingLoved;
 
         public static int gerdBoss = -1;
 
@@ -50,6 +48,7 @@ namespace GMR
             ChillBurn = false;
             PlagueCrystal = false;
             ChaosBurnt = false;
+            IllusionOfBeingLoved = false;
         }
 
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
@@ -73,11 +72,42 @@ namespace GMR
                 {
                     #region Enemies
                     case 48: // Harpy
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Accessories.ThunderbladeCharm>(), 40));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Accessories.ThunderbladeCharm>(), 50));
                         break;
-                        
+
+                    case 327: // Pumpking
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Accessories.CrownOfGambling>(), 25));
+                        break;
+                    case 325: // Mourning Wood
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Accessories.CrownOfGambling>(), 50));
+                        break;
+                    case 345: // Ice Queen
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Accessories.CrownOfGambling>(), 25));
+                        break;
+                    case 344: // Everscream
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Accessories.CrownOfGambling>(), 50));
+                        break;
+                    case 346: // Santa-NK1
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Accessories.CrownOfGambling>(), 50));
+                        break;
+                    case 392: // Martian Saucer
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Accessories.CrownOfGambling>(), 50));
+                        break;
+                    case 551: // Betsy
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Accessories.CrownOfGambling>(), 25));
+                        break;
+                    case 576: // Ogre
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Accessories.CrownOfGambling>(), 50));
+                        break;
+                    case 577: // Ogre (Post Golem)
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Accessories.CrownOfGambling>(), 50));
+                        break;
+                    case 618: // Dreadnautilus
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Accessories.CrownOfGambling>(), 50));
+                        break;
+
                     #endregion
-                        
+
                     // Lunar Nova Axe
                     #region Hallowed Enemies
                     case 75: // Pixie
@@ -110,7 +140,6 @@ namespace GMR
 
                     #endregion
 
-                        
                     // Silent Gloves
                     #region Underworld Enemies
                     case 60: // Hellbat
@@ -286,7 +315,6 @@ namespace GMR
 
                     case NPCID.BrainofCthulhu:
                         npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Misc.Materials.UpgradeCrystal>(), 1, 4, 6));
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.Blasphemy>(), 100));
                         break;
 
                     case NPCID.EaterofWorldsHead:
@@ -295,7 +323,6 @@ namespace GMR
                         LeadingConditionRule lastEater = new LeadingConditionRule(new Conditions.LegacyHack_IsABoss());
                         lastEater.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Misc.Materials.BossUpgradeCrystal>()));
                         lastEater.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Misc.Materials.UpgradeCrystal>(), 1, 4, 6));
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.Blasphemy>(), 100));
                         npcLoot.Add(lastEater);
                         break;
 
@@ -308,8 +335,8 @@ namespace GMR
                         break;
 
                     case NPCID.WallofFlesh:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.NanashiDagger>(), 10));
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Accessories.HopefulFlower>(), 8));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.NanashiSword>(), 10));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Accessories.HopefulFlower>(), 8)); // Just to make it easier for future me or wiki makers, This is 12.5% chance to drop
                         npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Misc.Materials.UpgradeCrystal>(), 1, 4, 6));
                         break;
 
@@ -384,12 +411,6 @@ namespace GMR
                 boss = npc.whoAmI;
             bool retval = base.PreAI(npc);
 
-            if (!FirstTick)
-            {
-                originalDefense = npc.defense;
-                FirstTick = true;
-            }
-
             return retval;
         }
 
@@ -397,41 +418,44 @@ namespace GMR
         {
             if (ChaosBurnt)
             {
-                npc.defense = originalDefense / 2;
                 npc.velocity = npc.velocity * 0.75f;
-            }
-
-            if (Thoughtful)
-            {
-                if (npc.defense >= 30)
-                    npc.defense += -30;
-                else
-                    npc.defense = 0;
-            }
-
-            if (ChillBurn)
-            {
-                if (npc.defense >= 10)
-                    npc.defense += -10;
-                else
-                    npc.defense = 0;
             }
         }
 
-        public override bool PreKill(NPC npc)
+        // Just in case, y'know?
+        /*public override bool PreKill(NPC npc)
         {
             Player player = Main.player[Main.myPlayer];
+            return true;
+        }*/
+
+        public override void ModifyHitByItem(NPC npc, Player player, Item item, ref NPC.HitModifiers modifiers)
+        {
             GerdPlayer modPlayer = player.GetModPlayer<GerdPlayer>();
 
-            if (modPlayer.DamnSun && npc.boss && player.ownedProjectileCounts[ModContent.ProjectileType<Projectiles.Explotion>()] < 10)
+            if (Main.rand.NextBool(3) && modPlayer.DamnSun && npc.boss)
             {
-                Projectile.NewProjectile(player.GetSource_Misc(""), npc.Center, new Vector2(0f, 0f), ModContent.ProjectileType<Projectiles.Explotion>(), npc.damage * 2, 2f, player.whoAmI, npc.lifeMax / 3);
+                Projectile.NewProjectile(player.GetSource_Misc(""), npc.Center, new Vector2(0f, 0f), ModContent.ProjectileType<Projectiles.Explotion>(), npc.damage * 2, 2f, player.whoAmI);
             }
-            else if (modPlayer.DamnSun && player.ownedProjectileCounts[ModContent.ProjectileType<Projectiles.SmallExplotion>()] < 10)
+            else if (Main.rand.NextBool(3) && modPlayer.DamnSun)
             {
-                Projectile.NewProjectile(player.GetSource_Misc(""), npc.Center, new Vector2(0f, 0f), ModContent.ProjectileType<Projectiles.Explotion>(), npc.damage * 2, 2f, player.whoAmI, npc.lifeMax / 3);
+                Projectile.NewProjectile(player.GetSource_Misc(""), npc.Center, new Vector2(0f, 0f), ModContent.ProjectileType<Projectiles.SmallExplotion>(), npc.damage * 2, 2f, player.whoAmI);
             }
-            return true;
+        }
+
+        public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref NPC.HitModifiers modifiers)
+        {
+            Player player = Main.player[projectile.owner];
+            GerdPlayer modPlayer = player.GetModPlayer<GerdPlayer>();
+
+            if (Main.rand.NextBool(3) && npc.HasBuff(ModContent.BuffType<Buffs.Debuffs.DamnSun>()) && npc.boss)
+            {
+                Projectile.NewProjectile(player.GetSource_Misc(""), npc.Center, new Vector2(0f, 0f), ModContent.ProjectileType<Projectiles.Explotion>(), npc.damage * 2, 2f, player.whoAmI);
+            }
+            else if (Main.rand.NextBool(3) && npc.HasBuff(ModContent.BuffType<Buffs.Debuffs.DamnSun>()))
+            {
+                Projectile.NewProjectile(player.GetSource_Misc(""), npc.Center, new Vector2(0f, 0f), ModContent.ProjectileType<Projectiles.SmallExplotion>(), npc.damage * 2, 2f, player.whoAmI);
+            }
         }
 
         public override void UpdateLifeRegen(NPC npc, ref int damage)
@@ -558,6 +582,11 @@ namespace GMR
             if (ChaosBurnt)
             {
                 drawColor = Color.Orange;
+            } 
+
+            if (IllusionOfBeingLoved)
+            {
+                drawColor = Color.Red;
             }
         }
     }

@@ -56,6 +56,15 @@ namespace GMR
 			else
 				target.takenDamageMultiplier = 1f;
 
+			if (player.GPlayer().IllusionOfLove && projectile.friendly)
+			{
+				player.AddBuff(ModContent.BuffType<Buffs.Buff.IllusionOfLove>(), 180);
+				target.AddBuff(ModContent.BuffType<Buffs.Debuffs.IllusionOfBeingLoved>(), 180);
+			}
+
+			if (target.HasBuff(ModContent.BuffType<Buffs.Debuffs.IllusionOfBeingLoved>()))
+				target.takenDamageMultiplier = 1.1f;
+
 			if (player.GPlayer().MaskedPlagueCloak != null && projectile.friendly && projectile.DamageType?.CountsAsClass(DamageClass.Magic) == true && Main.rand.NextBool(10))
 				player.Heal((int)(player.statLifeMax * 0.01));
 		}
