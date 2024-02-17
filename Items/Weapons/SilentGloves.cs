@@ -30,7 +30,9 @@ namespace GMR.Items.Weapons
 		{
 			Tooltip.SetDefault($" Right-Click to change attack types: Sword, Katana, Rifle\nUses bullets on Rifle mode\n'O sorrow'");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-		}
+            Item.AddElement(1);
+            Item.AddElement(2);
+        }
 
 		public override void SetDefaults()
 		{
@@ -211,6 +213,7 @@ namespace GMR.Items.Weapons
             Vector2 recoil;
 
             bool shotBullets;
+            int shotspeed;
             public override void AI()
             {
                 if (Main.MouseWorld.X < Player.Center.X)
@@ -229,9 +232,18 @@ namespace GMR.Items.Weapons
                     Vector2 shoulderPosition = Player.ShoulderPosition();
                     directionToMouse = Player.ShoulderDirectionToMouse(ref shoulderPosition, 4f);
                     Projectile.Center = shoulderPosition;
+
+                    float attackBuffs = (Player.GetAttackSpeed(DamageClass.Ranged) + Player.GetAttackSpeed(DamageClass.Generic) + Player.GetAttackSpeed(DamageClass.Melee)) * 0.5f;
+                    if (attackBuffs < 1f)
+                        attackBuffs = 1f;
+
                     if (Player.controlUseItem)
                     {
-                        if (++ChannelTime % 20 == 0)
+                        shotspeed = (int)((Player.HeldItem.useTime) / attackBuffs);
+                        if (shotspeed < 1)
+                            shotspeed = 1;
+
+                        if (++ChannelTime % shotspeed == 0)
                             shotBullets = false;
                     }
 

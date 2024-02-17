@@ -32,10 +32,9 @@ namespace GMR.Items.Weapons.Magic
 
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Akira's Space Staff");
-			Tooltip.SetDefault("Shoots 8 orbiting space energy that will chase enemies after a few seconds");
 			Item.staff[Item.type] = true;
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(2);
 		}
 
 		public override void SetDefaults()
@@ -43,9 +42,8 @@ namespace GMR.Items.Weapons.Magic
 			Item.width = 78;
 			Item.height = 78;
 			Item.rare = 4;
-			Item.useTime = 20;
+			Item.useTime = 60;
             Item.useAnimation = 60;
-			Item.reuseDelay = 120;
             Item.useStyle = ItemUseStyleID.Shoot;
 			Item.value = Item.sellPrice(silver: 350);
 			Item.autoReuse = true;

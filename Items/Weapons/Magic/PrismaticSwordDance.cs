@@ -23,6 +23,8 @@ namespace GMR.Items.Weapons.Magic
 			Tooltip.SetDefault("Shoots homing swords");
 			Item.staff[Item.type] = true;
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(0);
+			Item.AddElement(2);
 		}
 
 		public override void SetDefaults()

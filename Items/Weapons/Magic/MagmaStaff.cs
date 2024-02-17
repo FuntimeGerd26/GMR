@@ -16,6 +16,7 @@ namespace GMR.Items.Weapons.Magic
 			Tooltip.SetDefault("Shoots 5 fireballs that can pass through blocks");
 			Item.staff[Item.type] = true;
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(0);
 		}
 
 		public override void SetDefaults()

@@ -18,6 +18,7 @@ namespace GMR.Items.Weapons.Magic
 			DisplayName.SetDefault("Infra-Red Tome");
 			Tooltip.SetDefault("Creates a crate that stops moving after a second, that on hit with enemies explodes into 4 Infra-Red Beams");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(0);
 		}
 
 		public override void SetDefaults()
@@ -32,7 +33,7 @@ namespace GMR.Items.Weapons.Magic
 			Item.autoReuse = true;
 			Item.UseSound = SoundID.Item43;
 			Item.DamageType = DamageClass.Magic;
-			Item.damage = 28;
+			Item.damage = 18;
 			Item.crit = 12;
 			Item.knockBack = 3f;
 			Item.noMelee = true;

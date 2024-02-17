@@ -15,6 +15,7 @@ namespace GMR.Items.Weapons.Summoner.Whips
 		{
 			Tooltip.SetDefault("'Made durning the peak light of the sun shined on it's maker's town'\nWhen hitting enemies causes an explosion\nInflicts Sun Burn to enemies and yourself");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(0);
 		}
 
 		public override void SetDefaults()

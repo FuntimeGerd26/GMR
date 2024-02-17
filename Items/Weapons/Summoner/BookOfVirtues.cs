@@ -20,11 +20,13 @@ namespace GMR.Items.Weapons.Summoner
 				"\nDamage is increased in hardmode by [c/66FF66:x3], and after beating Moonlord by [c/66FF66:x6]\nWisps inflict Frorstburn to enemies");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 			ItemID.Sets.GamepadWholeScreenUseRange[Type] = true;
+			Item.AddElement(0);
+			Item.AddElement(1);
 		}
 
 		public override void SetDefaults()
 		{
-			Item.damage = 10;
+			Item.damage = 1;
 			Item.DamageType = DamageClass.Summon;
 			Item.mana = 10;
 			Item.width = 26;

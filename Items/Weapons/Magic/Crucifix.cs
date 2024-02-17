@@ -15,6 +15,7 @@ namespace GMR.Items.Weapons.Magic
 			DisplayName.SetDefault("The Crucifix");
 			Tooltip.SetDefault("Shoots hallowed energy in random directions that after some time home into enemies");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(0);
 		}
 
 		public override void SetDefaults()

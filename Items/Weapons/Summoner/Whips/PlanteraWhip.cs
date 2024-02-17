@@ -16,6 +16,7 @@ namespace GMR.Items.Weapons.Summoner.Whips
 			Tooltip.SetDefault("Inflicts Venom to enemies" +
 			$"\n Hitting enemies has a chance for them to shoot thorns in random directions");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(3);
 		}
 
 		public override void SetDefaults()

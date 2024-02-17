@@ -15,6 +15,8 @@ namespace GMR.Items.Weapons.Summoner.Whips
 		{
 			Tooltip.SetDefault($" Inflicts 'Devilish' to enemies\n'Do you remember'");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(0);
+			Item.AddElement(2);
 		}
 
 		public override void SetDefaults()

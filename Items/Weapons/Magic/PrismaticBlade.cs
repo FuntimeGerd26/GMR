@@ -23,6 +23,8 @@ namespace GMR.Items.Weapons.Magic
 			Tooltip.SetDefault("Shoots homing swords\nHas a chance to throw swords from the sky and below the player");
 			Item.staff[Item.type] = true;
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(0);
+			Item.AddElement(2);
 		}
 
 		public override void SetDefaults()
@@ -37,13 +39,13 @@ namespace GMR.Items.Weapons.Magic
 			Item.autoReuse = true;
 			Item.UseSound = SoundID.Item43;
 			Item.DamageType = DamageClass.Magic;
-			Item.damage = 46;
+			Item.damage = 48;
 			Item.crit = 4;
 			Item.knockBack = 2f;
 			Item.noMelee = true;
 			Item.shoot = ModContent.ProjectileType<Projectiles.Magic.PrismaticBlade>();
-			Item.shootSpeed = 12f;
-			Item.mana = 3;
+			Item.shootSpeed = 32f;
+			Item.mana = 4;
 		}
 
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
@@ -118,6 +120,11 @@ namespace GMR.Items.Weapons.Magic
 			return new Vector2(-20, 20);
 		}
 
+		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+		{
+			position += Vector2.Normalize(velocity);
+		}
+
 		public override Color? GetAlpha(Color lightColor)
 		{
 			return new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB);
@@ -148,6 +155,7 @@ namespace GMR.Items.Weapons.Magic
 		{
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(null, "PrismaticSwordDance");
+			recipe.AddIngredient(null, "InfraRedBar", 30);
 			recipe.AddIngredient(ItemID.Ectoplasm, 18);
 			recipe.AddIngredient(ItemID.SoulofFlight, 25);
 			recipe.AddIngredient(ItemID.Diamond, 5);

@@ -16,6 +16,8 @@ namespace GMR.Items.Weapons.Magic
 			Tooltip.SetDefault("Shoots 3 plague bolts that home into enemies, inflict poison and can go through blocks");
 			Item.staff[Item.type] = true;
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(2);
+			Item.AddElement(3);
 		}
 
 		public override void SetDefaults()
@@ -30,7 +32,7 @@ namespace GMR.Items.Weapons.Magic
 			Item.autoReuse = true;
 			Item.UseSound = SoundID.Item43;
 			Item.DamageType = DamageClass.Magic;
-			Item.damage = 16;
+			Item.damage = 14;
 			Item.crit = 4;
 			Item.knockBack = 6f;
 			Item.noMelee = true;
@@ -61,6 +63,7 @@ namespace GMR.Items.Weapons.Magic
 		{
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(ItemID.Feather, 18);
+			recipe.AddIngredient(ItemID.Bone, 20);
 			recipe.AddIngredient(ItemID.Silk, 20);
 			recipe.AddRecipeGroup("GMR:AnyGem", 7);
 			recipe.AddIngredient(null, "UpgradeCrystal", 20);

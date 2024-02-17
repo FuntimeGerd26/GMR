@@ -15,6 +15,7 @@ namespace GMR.Items.Weapons.Magic
 			Tooltip.SetDefault("Shoots a small homing bolt");
 			Item.staff[Item.type] = true;
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(1);
 		}
 
 		public override void SetDefaults()

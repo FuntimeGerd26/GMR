@@ -26,6 +26,7 @@ namespace GMR.Items.Weapons.Magic
 			Tooltip.SetDefault("Shoots a homing heart that inflicts 'Glimmering' to enemies" +
 				$"\n Right-Click will give you 'Violet's Blessing' for a minute and shoot a faster and stronger heart, uses 50 mana\n'It is written in.. Spanish?'");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(-1);
 		}
 
 		public override void SetDefaults()

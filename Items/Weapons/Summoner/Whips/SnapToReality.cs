@@ -17,6 +17,7 @@ namespace GMR.Items.Weapons.Summoner.Whips
 			Tooltip.SetDefault("'Oops there goes gravity'\nInflicts 'Chillburn' to enemies" +
 			$"\n Shoots an extra wave that inflicts 'Thoughtful' to enemies");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(2);
 		}
 
 		public override void SetDefaults()
@@ -28,6 +29,8 @@ namespace GMR.Items.Weapons.Summoner.Whips
 			Item.useStyle = ItemUseStyleID.HoldUp;
 			Item.DefaultToWhip(ModContent.ProjectileType<Projectiles.Summon.Whips.SnapToReality>(), 68, 2, 4);
 			Item.shootSpeed = 6f;
+			Item.useTime /= 2;
+			Item.useAnimation /= 2;
 		}
 
 		public override bool MeleePrefix()
@@ -38,13 +41,14 @@ namespace GMR.Items.Weapons.Summoner.Whips
 		public override void AddRecipes()
 		{
 			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.SoulofMight, 14);
-			recipe.AddIngredient(ItemID.SoulofLight, 18);
 			recipe.AddIngredient(ItemID.SpectreBar, 28);
-			recipe.AddIngredient(null, "HardmodeUpgradeCrystal", 3);
+			recipe.AddIngredient(ItemID.SoulofLight, 18);
+			recipe.AddIngredient(ItemID.SoulofFright, 14);
+			recipe.AddIngredient(ItemID.SoulofMight, 14);
+			recipe.AddIngredient(ItemID.SoulofSight, 14);
+			recipe.AddIngredient(null, "HardmodeUpgradeCrystal", 2);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}
-
 	}
 }
