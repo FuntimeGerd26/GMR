@@ -19,6 +19,7 @@ namespace GMR.Projectiles.Melee
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Ultra-Blue Vice");
+			Projectile.AddElement(2);
 		}
 
 		public override void SetDefaults()

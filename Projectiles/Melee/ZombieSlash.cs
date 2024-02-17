@@ -18,6 +18,8 @@ namespace GMR.Projectiles.Melee
 			DisplayName.SetDefault("Zombie Break");
 			ProjectileID.Sets.TrailCacheLength[Type] = 30;
 			ProjectileID.Sets.TrailingMode[Type] = 6;
+			Projectile.AddElement(1);
+			Projectile.AddElement(3);
 		}
 
 		public override void SetDefaults()
