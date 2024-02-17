@@ -17,6 +17,8 @@ namespace GMR.Projectiles
         {
             DisplayName.SetDefault("Plague Explosion");
             Main.projFrames[Projectile.type] = Main.projFrames[ProjectileID.LunarFlare];
+            Projectile.AddElement(1);
+            Projectile.AddElement(2);
         }
 
         public override void SetDefaults()
@@ -32,13 +34,13 @@ namespace GMR.Projectiles
             Projectile.ignoreWater = true;
             Projectile.tileCollide = false;
             Projectile.usesIDStaticNPCImmunity = true;
-            Projectile.idStaticNPCHitCooldown = 10;
+            Projectile.idStaticNPCHitCooldown = 1;
             Projectile.scale = 2f;
         }
 
         public override void AI()
         {
-            Projectile.velocity = Projectile.velocity * 0f;
+            Projectile.velocity = Vector2.Zero;
 
             if (++Projectile.frameCounter > 2)
             {

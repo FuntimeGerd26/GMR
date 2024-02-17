@@ -18,6 +18,7 @@ namespace GMR.Projectiles
             DisplayName.SetDefault("Boost Flame");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 20;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+            Projectile.AddElement(0);
         }
 
         public override void SetDefaults()
@@ -37,7 +38,7 @@ namespace GMR.Projectiles
         public override void AI()
         {
             Projectile.rotation = Projectile.velocity.ToRotation();
-            Projectile.velocity *= 1.025f;
+            Projectile.velocity *= 1.0125f;
 
             int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 6, Projectile.velocity.X * 0.7f,
                 Projectile.velocity.Y * 0.4f, 120, default(Color), 2f);
@@ -71,7 +72,8 @@ namespace GMR.Projectiles
                 if (max0 < 0)
                     continue;
                 Vector2 value4 = Vector2.Lerp(Projectile.oldPos[(int)i], Projectile.oldPos[max0], 1 - i % 1);
-                Main.spriteBatch.Draw(texture2D13, value4 + Projectile.Size / 2f - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), null, color27 * opacity, Projectile.rotation, origin2, scale, SpriteEffects.None, 0);
+                Main.spriteBatch.Draw(texture2D13, value4 + Projectile.Size / 2f - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), null, color27 * opacity, Projectile.rotation,
+                    origin2, new Vector2(Projectile.scale * 0.45f, Projectile.scale * 1.25f), SpriteEffects.None, 0);
             }
             return false;
         }

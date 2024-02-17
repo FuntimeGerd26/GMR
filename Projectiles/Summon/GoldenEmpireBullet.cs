@@ -7,56 +7,71 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace GMR.Projectiles.Magic
+namespace GMR.Projectiles.Summon
 {
-	public class PlagueBolt : ModProjectile
+	public class GoldenEmpireBullet : ModProjectile
 	{
 		public override string Texture => "Terraria/Images/Projectile_927";
 
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Plague Bolt");
-			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 30;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
 			Projectile.AddElement(2);
-			Projectile.AddElement(3);
 		}
 
 		public override void SetDefaults()
 		{
-			Projectile.width = 12;
-			Projectile.height = 12;
-			Projectile.aiStyle = 0;
+			Projectile.width = 10;
+			Projectile.height = 10;
+			Projectile.aiStyle = -1;
 			Projectile.friendly = true;
-			Projectile.DamageType = DamageClass.Magic;
+			Projectile.penetrate = 3;
+			Projectile.DamageType = DamageClass.Summon;
 			Projectile.timeLeft = 600;
-			Projectile.light = 0.25f; 
+			Projectile.penetrate = 3;
 			Projectile.ignoreWater = true;
 			Projectile.tileCollide = false;
-			Projectile.extraUpdates = 4;
-			AIType = ProjectileID.Bullet;
+			Projectile.extraUpdates = 1;
+			Projectile.localNPCHitCooldown = 10;
+			Projectile.usesLocalNPCImmunity = true;
 		}
 
 		public override void AI()
 		{
-			Projectile.rotation = Projectile.velocity.ToRotation();
+			Lighting.AddLight(Projectile.Center, new Vector3(0f, 0.45f, 1f));
+
 			var target = Projectile.FindTargetWithinRange(400f);
 			if (target != null)
 			{
-				Projectile.velocity = Vector2.Lerp(Projectile.velocity, Vector2.Normalize(target.Center - Projectile.Center) * 10f, 0.09f);
+				Projectile.velocity = Vector2.Lerp(Projectile.velocity, Vector2.Normalize(target.Center - Projectile.Center) * 10f, 0.06f);
 			}
+
+			Projectile.rotation = Projectile.velocity.ToRotation();
+
+			if (ModLoader.TryGetMod("FargowiltasSouls", out Mod mutantMod))
+				mutantMod.Call("SummonCrit", true);
 		}
 
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
-			Player player = Main.player[Projectile.owner];
-			player.AddBuff(ModContent.BuffType<Buffs.Buff.PlagueRegen>(), 600);
-			int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 163, Projectile.velocity.X * 0.5f,
+			target.AddBuff(ModContent.BuffType<Buffs.Debuffs.ChillBurn>(), 600);
+			target.AddBuff(ModContent.BuffType<Buffs.Debuffs.Thoughtful>(), 600);
+			int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 68, Projectile.velocity.X * 0.5f,
 				Projectile.velocity.Y * 0.2f, 60, default(Color), 2f);
 			Main.dust[dustId].noGravity = true;
 		}
 
-		public override Color? GetAlpha(Color lightColor) => new Color(116, 234, 204, 125);
+		public override void Kill(int timeleft)
+		{
+			Projectile.position = Projectile.Center;
+			Projectile.width = Projectile.height = 40;
+			Projectile.position.X -= (float)(Projectile.width / 2);
+			Projectile.position.Y -= (float)(Projectile.height / 2);
+			int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 68, Projectile.velocity.X * 0.5f,
+				Projectile.velocity.Y * 0.2f, 60, default(Color), 2f);
+			Main.dust[dustId].noGravity = true;
+		}
 
 		public override bool PreDraw(ref Color lightColor)
 		{
@@ -66,11 +81,9 @@ namespace GMR.Projectiles.Magic
 			Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);
 			Vector2 origin2 = rectangle.Size() / 2f;
 
-			Color color26 = new Color(116, 234, 204, 125);
+			Color color26 = new Color(70, 140, 255, 26);
 
 			SpriteEffects spriteEffects = SpriteEffects.None;
-			if (Projectile.spriteDirection == -1)
-				spriteEffects = SpriteEffects.FlipHorizontally;
 
 			// Main Projectile
 			for (float i = 0; i < ProjectileID.Sets.TrailCacheLength[Projectile.type]; i += 0.5f)
@@ -82,7 +95,9 @@ namespace GMR.Projectiles.Magic
 				if (max0 < 0)
 					continue;
 				Vector2 value4 = Vector2.Lerp(Projectile.oldPos[(int)i], Projectile.oldPos[max0], 1 - i % 1);
-				Main.EntitySpriteDraw(texture2D13, value4 + Projectile.Size / 2f - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, Projectile.rotation, origin2, Projectile.scale, spriteEffects, 0);
+				float num165 = Projectile.oldRot[(int)i];
+				Main.EntitySpriteDraw(texture2D13, value4 + Projectile.Size / 2f - Main.screenPosition + new Vector2(0, Projectile.gfxOffY),
+					new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, new Vector2(Projectile.scale, Projectile.scale * 0.4f), spriteEffects, 0);
 			}
 			return false;
 		}

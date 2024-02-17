@@ -18,6 +18,7 @@ namespace GMR.Projectiles.Magic
 		{
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			Projectile.AddElement(0);
 		}
 
 		public override void SetDefaults()

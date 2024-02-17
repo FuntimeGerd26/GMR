@@ -17,6 +17,8 @@ namespace GMR.Projectiles
         {
             DisplayName.SetDefault("Ark Explosion");
             Main.projFrames[Projectile.type] = Main.projFrames[ProjectileID.LunarFlare];
+            Projectile.AddElement(0);
+            Projectile.AddElement(2);
         }
 
         public override void SetDefaults()
@@ -31,13 +33,13 @@ namespace GMR.Projectiles
             Projectile.ignoreWater = true;
             Projectile.tileCollide = false;
             Projectile.usesIDStaticNPCImmunity = true;
-            Projectile.idStaticNPCHitCooldown = 20;
+            Projectile.idStaticNPCHitCooldown = 1;
             Projectile.scale = 2f;
         }
 
         public override void AI()
         {
-            Projectile.velocity = Projectile.velocity * 0f;
+            Projectile.velocity = Vector2.Zero;
 
             if (++Projectile.frameCounter > 2)
             {
@@ -53,7 +55,6 @@ namespace GMR.Projectiles
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(BuffID.OnFire3, 600);
-            target.immune[Projectile.owner] = 1;
             int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 6, Projectile.velocity.X * 0.7f,
                 Projectile.velocity.Y * 0.4f, 120, default(Color), 2f);
             Main.dust[dustId].noGravity = true;

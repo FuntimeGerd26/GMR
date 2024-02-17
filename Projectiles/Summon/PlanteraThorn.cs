@@ -16,6 +16,7 @@ namespace GMR.Projectiles.Summon
 			DisplayName.SetDefault("Plantera Thorn");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 1;
+			Projectile.AddElement(3);
 		}
 
 		public override void SetDefaults()
@@ -24,7 +25,7 @@ namespace GMR.Projectiles.Summon
 			Projectile.height = 14;
 			Projectile.aiStyle = 0;
 			Projectile.friendly = true;
-			Projectile.DamageType = DamageClass.Melee;
+			Projectile.DamageType = DamageClass.Summon;
 			Projectile.penetrate = 3;
 			Projectile.timeLeft = 600; 
 			Projectile.ignoreWater = true;
@@ -37,6 +38,9 @@ namespace GMR.Projectiles.Summon
 		public override void AI()
 		{
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(45f);
+
+			if (ModLoader.TryGetMod("FargowiltasSouls", out Mod mutantMod))
+				mutantMod.Call("SummonCrit", true);
 		}
 
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)

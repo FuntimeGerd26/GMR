@@ -17,6 +17,8 @@ namespace GMR.Projectiles
         {
             DisplayName.SetDefault("Small Ichor Explosion");
             Main.projFrames[Projectile.type] = Main.projFrames[ProjectileID.LunarFlare];
+            Projectile.AddElement(0);
+            Projectile.AddElement(1);
         }
 
         public override void SetDefaults()
@@ -31,7 +33,7 @@ namespace GMR.Projectiles
             Projectile.tileCollide = false;
             Projectile.localNPCHitCooldown = 0;
             Projectile.usesIDStaticNPCImmunity = true;
-            Projectile.idStaticNPCHitCooldown = 20;
+            Projectile.idStaticNPCHitCooldown = 5;
             Projectile.scale = 1f;
         }
 

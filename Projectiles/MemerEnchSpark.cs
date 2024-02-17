@@ -1,33 +1,32 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.IO;
 using Terraria;
 using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace GMR.Projectiles
 {
-    public class NajaFireball : ModProjectile
+	public class MemerEnchSpark : ModProjectile
 	{
-		public override string Texture => "Terraria/Images/Projectile_34";
+		public override string Texture => "GMR/Empty";
 
 		public override void SetStaticDefaults()
 		{
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 1;
-			Main.projFrames[Projectile.type] = Main.projFrames[ProjectileID.Flamelash];
-			Projectile.AddElement(0);
+			Projectile.AddElement(2);
 		}
 
 		public override void SetDefaults()
 		{
-			Projectile.width = 10;
-			Projectile.height = 10;
+			Projectile.width = 5;
+			Projectile.height = 5;
 			Projectile.aiStyle = -1;
 			Projectile.friendly = true;
-			Projectile.DamageType = DamageClass.Generic;
+			Projectile.DamageType = DamageClass.Melee;
 			Projectile.timeLeft = 600;
 			Projectile.ignoreWater = true;
 			Projectile.tileCollide = false;
@@ -36,44 +35,32 @@ namespace GMR.Projectiles
 
 		public override void AI()
 		{
-			var target = Projectile.FindTargetWithinRange(600f);
+			var target = Projectile.FindTargetWithinRange(200f);
 			if (target != null)
 			{
-				Projectile.velocity = Vector2.Lerp(Projectile.velocity, Vector2.Normalize(target.Center - Projectile.Center) * 12f, 0.09f);
+				Projectile.velocity = Vector2.Lerp(Projectile.velocity, Vector2.Normalize(target.Center - Projectile.Center) * 8f, 0.06f);
 			}
-
-			if (++Projectile.frameCounter > 2)
-			{
-				Projectile.frameCounter = 0;
-				if (++Projectile.frame >= Main.projFrames[Projectile.type])
-				{
-					Projectile.frame = 0;
-				}
-			}
-			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(-90f);
 
 			for (int i = 0; i < 2; i++)
 			{
-				Dust dustId = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 6, Projectile.velocity.X, Projectile.velocity.Y, 60, default(Color), 1.5f);
+				Dust dustId = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 61, Projectile.velocity.X, Projectile.velocity.Y, 60, default(Color), 1.5f);
 				dustId.noGravity = true;
 			}
 		}
 
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
-			target.AddBuff(BuffID.OnFire, 180);
-			int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 6, Projectile.velocity.X * 0.5f,
-				Projectile.velocity.Y * 0.5f, 60, default(Color), 0.5f);
-			Main.dust[dustId].noGravity = true;
+			target.AddBuff(BuffID.CursedInferno, 180);
+			Dust dustId = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 61, Projectile.velocity.X, Projectile.velocity.Y, 60, default(Color), 0.5f);
+			dustId.noGravity = true;
 		}
 
 		public override void Kill(int timeLeft)
 		{
 			Collision.HitTiles(Projectile.position + Projectile.velocity, Projectile.velocity, Projectile.width, Projectile.height);
 			SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
-			int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 6, Projectile.velocity.X * 0.5f,
-				Projectile.velocity.Y * 0.5f, 60, default(Color), 0.5f);
-			Main.dust[dustId].noGravity = true;
+			Dust dustId = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 61, Projectile.velocity.X, Projectile.velocity.Y, 60, default(Color), 0.5f);
+			dustId.noGravity = true;
 		}
 
 		public override bool PreDraw(ref Color lightColor)

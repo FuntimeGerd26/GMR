@@ -18,6 +18,7 @@ namespace GMR.Projectiles.Bosses.Worms
 			DisplayName.SetDefault("Hateful Blade");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			Projectile.AddElement(0);
 		}
 
 		public override void SetDefaults()

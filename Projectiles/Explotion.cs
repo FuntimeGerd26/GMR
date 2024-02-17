@@ -17,6 +17,7 @@ namespace GMR.Projectiles
         {
             DisplayName.SetDefault("Explosion");
             Main.projFrames[Projectile.type] = Main.projFrames[ProjectileID.LunarFlare];
+            Projectile.AddElement(0);
         }
 
         public override void SetDefaults()
@@ -31,13 +32,24 @@ namespace GMR.Projectiles
             Projectile.ignoreWater = true;
             Projectile.tileCollide = false;
             Projectile.usesIDStaticNPCImmunity = true;
-            Projectile.idStaticNPCHitCooldown = 20;
+            Projectile.idStaticNPCHitCooldown = 5;
             Projectile.scale = 2f;
         }
 
         public override void AI()
         {
-            Projectile.velocity = Projectile.velocity * 0f;
+            Projectile.velocity = Vector2.Zero;
+
+            if (Projectile.localAI[0] == 0)
+            {
+                Projectile.localAI[0] = 1;
+
+                for (int i = 0; i < 20; i++)
+                {
+                    Dust dustId = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 6, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-3f, 3f), 60, default(Color), 1f);
+                    dustId.noGravity = true;
+                }
+            }
 
             if (++Projectile.frameCounter > 2)
             {

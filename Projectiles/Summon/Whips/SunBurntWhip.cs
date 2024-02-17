@@ -14,6 +14,7 @@ namespace GMR.Projectiles.Summon.Whips
 		{
 			// This makes the projectile use whip collision detection and allows flasks to be applied to it.
 			ProjectileID.Sets.IsAWhip[Type] = true;
+			Projectile.AddElement(0);
 		}
 
 		public override void SetDefaults()
@@ -31,8 +32,6 @@ namespace GMR.Projectiles.Summon.Whips
 			Player player = Main.player[Main.myPlayer];
 			player.AddBuff(ModContent.BuffType<Buffs.Debuffs.DamnSun>(), 300);
 			target.AddBuff(ModContent.BuffType<Buffs.Debuffs.DamnSun>(), 300);
-			if (player.ownedProjectileCounts[ModContent.ProjectileType<Projectiles.SmallExplotion>()] < 1)
-				Projectile.NewProjectile(player.GetSource_FromThis(), target.Center, new Vector2(0f, 0f), ModContent.ProjectileType<Projectiles.SmallExplotion>(), Projectile.damage / 2, Projectile.knockBack, Main.myPlayer);
 
 			Main.player[Projectile.owner].MinionAttackTargetNPC = target.whoAmI;
 		}

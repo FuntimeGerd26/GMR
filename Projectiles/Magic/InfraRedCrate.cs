@@ -16,6 +16,8 @@ namespace GMR.Projectiles.Magic
 			DisplayName.SetDefault("Infra-Red Crate");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			Projectile.AddElement(0);
+			Projectile.AddElement(2);
 		}
 
 		public override void SetDefaults()
@@ -46,7 +48,7 @@ namespace GMR.Projectiles.Magic
 				Projectile.rotation = 0f + MathHelper.ToRadians(-90f); ;
 			}
 
-			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90f);
+			Projectile.rotation = Projectile.velocity.ToRotation();
 		}
 
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)

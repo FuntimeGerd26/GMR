@@ -35,7 +35,7 @@ namespace GMR.Projectiles.Bosses
 			AIType = ProjectileID.Bullet;
 		}
 
-		public override Color? GetAlpha(Color lightColor) => new Color(255, 55, 55, 25);
+		public override Color? GetAlpha(Color lightColor) => new Color(255, 55, 85, 5);
 
 		public override bool? CanDamage()
 		{
@@ -44,18 +44,13 @@ namespace GMR.Projectiles.Bosses
 
 		public override void AI()
 		{
+			Lighting.AddLight(Projectile.Center, new Vector3(0.8f, 0.15f, 0.5f));
+
 			Projectile.rotation += 0.25f;
 
 			if (++Projectile.localAI[0] > 60)
 			{
-				if (Projectile.velocity.Y > 0f || Projectile.velocity.Y < 0f)
-				{
-					Projectile.velocity.Y = 0f;
-				}
-				if (Projectile.velocity.X > 0f || Projectile.velocity.X < 0f)
-				{
-                    Projectile.velocity.X = 0f;
-                }
+				Projectile.velocity = Vector2.Zero;
             }
 		}
 
@@ -75,11 +70,11 @@ namespace GMR.Projectiles.Bosses
 
 		public override void Kill(int timeleft)
 		{
-			float numberProjectiles = 4;
+			float numberProjectiles = 8;
 			for (int i = 0; i < numberProjectiles; i++)
 			{
 				Vector2 perturbedSpeed = Vector2.UnitX.RotatedBy(2 * Math.PI / numberProjectiles * i) * 2f;
-				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, perturbedSpeed, ModContent.ProjectileType<Projectiles.Bosses.JackBlastBad>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, perturbedSpeed, ModContent.ProjectileType<Projectiles.Bosses.JackBlastFlip>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
 			}
 		}
 	}

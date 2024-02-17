@@ -17,6 +17,7 @@ namespace GMR.Projectiles
         {
             DisplayName.SetDefault("Small Explosion");
             Main.projFrames[Projectile.type] = Main.projFrames[ProjectileID.LunarFlare];
+            Projectile.AddElement(0);
         }
 
         public override void SetDefaults()
@@ -31,13 +32,13 @@ namespace GMR.Projectiles
             Projectile.tileCollide = false;
             Projectile.localNPCHitCooldown = 0;
             Projectile.usesIDStaticNPCImmunity = true;
-            Projectile.idStaticNPCHitCooldown = 20;
+            Projectile.idStaticNPCHitCooldown = 5;
             Projectile.scale = 1f;
         }
 
         public override void AI()
         {
-            Projectile.velocity = Projectile.velocity * 0f;
+            Projectile.velocity = Vector2.Zero;
 
             if (Projectile.localAI[0] == 0)
             {
@@ -46,26 +47,8 @@ namespace GMR.Projectiles
                 SoundEngine.PlaySound(SoundID.Item14, Projectile.Center);
                 for (int i = 0; i < 20; i++)
                 {
-                    int dust = Dust.NewDust(Projectile.position, Projectile.width,
-                        Projectile.height, 6, 0f, 0f, 100, default(Color), 1f);
-                    Main.dust[dust].velocity *= 1.4f;
-                }
-                for (int i = 0; i < 30; i++)
-                {
-                    int d = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 6, 0f, 0f, 0, default(Color), 1.5f);
-                    Main.dust[d].noGravity = true;
-                    Main.dust[d].noLight = true;
-                    Main.dust[d].velocity *= 4f;
-                }
-                for (int i = 0; i < 20; i++)
-                {
-                    int dust = Dust.NewDust(Projectile.position, Projectile.width,
-                        Projectile.height, 6, 0f, 0f, 100, default(Color), 1.5f);
-                    Main.dust[dust].noGravity = true;
-                    Main.dust[dust].velocity *= 7f;
-                    dust = Dust.NewDust(Projectile.position, Projectile.width,
-                        Projectile.height, 6, 0f, 0f, 100, default(Color), 0.5f);
-                    Main.dust[dust].velocity *= 3f;
+                    Dust dustId = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 6, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-3f, 3f), 60, default(Color), 1f);
+                    dustId.noGravity = true;
                 }
             }
 

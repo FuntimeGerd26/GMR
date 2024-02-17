@@ -62,6 +62,9 @@ namespace GMR.Projectiles.Summon
 
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(45);
 			Projectile.spriteDirection = Projectile.direction;
+
+			if (ModLoader.TryGetMod("FargowiltasSouls", out Mod mutantMod))
+				mutantMod.Call("SummonCrit", true);
 		}
 
 		// Finding the closest NPC to attack within maxDetectDistance range

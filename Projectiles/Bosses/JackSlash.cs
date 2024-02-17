@@ -18,6 +18,8 @@ namespace GMR.Projectiles.Bosses
 			DisplayName.SetDefault("Infra-Red Slash");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			Projectile.AddElement(0);
+			Projectile.AddElement(2);
 		}
 
 		public override void SetDefaults()
@@ -36,11 +38,11 @@ namespace GMR.Projectiles.Bosses
 
 		public override void AI()
 		{
+			Lighting.AddLight(Projectile.Center, new Vector3(0.8f, 0.15f, 0.5f));
+
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90f);
 			Projectile.velocity *= 1.05f;
 		}
-
-		public override Color? GetAlpha(Color lightColor) => new Color(255, 55, 55, 155);
 
 		public override bool PreDraw(ref Color lightColor)
 		{
@@ -50,7 +52,7 @@ namespace GMR.Projectiles.Bosses
 			Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);
 			Vector2 origin2 = rectangle.Size() / 2f;
 
-			Color color26 = new Color(255, 55, 55, 155);
+			Color color26 = new Color(255, 55, 85, 5);
 
 			SpriteEffects effects = Projectile.direction == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 

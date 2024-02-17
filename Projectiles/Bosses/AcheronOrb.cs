@@ -9,6 +9,7 @@ using Terraria.ModLoader;
 
 namespace GMR.Projectiles.Bosses
 {
+	// Not much of an orb now but whatever
 	public class AcheronOrb : ModProjectile
 	{
 		public override string Texture => "GMR/Projectiles/GlowSprite";
@@ -17,32 +18,32 @@ namespace GMR.Projectiles.Bosses
 
 		public override void SetStaticDefaults()
 		{
-			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			Projectile.AddElement(0);
+			Projectile.AddElement(2);
 		}
 
 		public override void SetDefaults()
 		{
-			Projectile.width = 50;
-			Projectile.height = 50;
+			Projectile.width = 5;
+			Projectile.height = 5;
 			Projectile.aiStyle = -1;
 			Projectile.hostile = true;
 			Projectile.timeLeft = 900;
-			Projectile.light = 0.75f;
 			Projectile.ignoreWater = true;
 			Projectile.tileCollide = false;
-			Projectile.scale = 0.25f;
 		}
 
 		public override void AI()
 		{
-			if (--Projectile.timeLeft < 880)
+			if (--Projectile.timeLeft < 860)
 			{
 				for (int i = 0; i < Main.maxPlayers; i++)
 				{
 					Rectangle hitbox = Projectile.Hitbox;
 
-					int maxDistance = 1000;
+					int maxDistance = 1200;
 
 					Rectangle areaCheck;
 
@@ -57,7 +58,7 @@ namespace GMR.Projectiles.Bosses
 
 
 					Vector2 targetPlayer = player.Center;
-					Projectile.velocity = Vector2.Lerp(Projectile.velocity, Vector2.Normalize(targetPlayer - Projectile.Center) * 8f, 0.09f);
+					Projectile.velocity = Vector2.Lerp(Projectile.velocity, Vector2.Normalize(targetPlayer - Projectile.Center) * 7.5f, 0.09f);
 				}
 			}
 			else
@@ -74,7 +75,9 @@ namespace GMR.Projectiles.Bosses
 				Projectile.Kill();
 			}
 
-			Projectile.rotation += 18f * 0.03f;
+			Projectile.rotation = Projectile.velocity.ToRotation();
+
+			Lighting.AddLight(Projectile.Center, new Vector3(0.75f, 0.15f, 0.5f));
 		}
 
 		public override bool PreDraw(ref Color lightColor)
@@ -84,23 +87,23 @@ namespace GMR.Projectiles.Bosses
 			int y3 = num156 * Projectile.frame; //ypos of upper left corner of sprite to draw
 			Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);
 			Vector2 origin2 = rectangle.Size() / 2f;
-			var opacity = Projectile.Opacity;
 
-			Color color26 = new Color(255, 55, 55, 0) * opacity;
+			Color color26 = new Color(255, 55, 125) * Projectile.Opacity;
 
 			SpriteEffects spriteEffects = SpriteEffects.None;
 
 			// Main Projectile
 			for (float i = 0; i < ProjectileID.Sets.TrailCacheLength[Projectile.type]; i += 0.5f)
 			{
-				Color color27 = Color.Lerp(color26, Color.Transparent, (float)Math.Cos(Projectile.ai[0]) / 3 + 0.3f);
+				Color color27 = color26;
 				color27.A = 0;
 				color27 *= (float)(ProjectileID.Sets.TrailCacheLength[Projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[Projectile.type];
 				int max0 = (int)i - 1;
 				if (max0 < 0)
 					continue;
 				Vector2 value4 = Vector2.Lerp(Projectile.oldPos[(int)i], Projectile.oldPos[max0], 1 - i % 1);
-				Main.EntitySpriteDraw(texture2D13, value4 + Projectile.Size / 2f - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, Projectile.rotation, origin2, Projectile.scale, spriteEffects, 0);
+				Main.EntitySpriteDraw(texture2D13, value4 + Projectile.Size / 2f - Main.screenPosition + new Vector2(0, Projectile.gfxOffY),
+					new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, Projectile.rotation, origin2, Projectile.scale * 0.1f, spriteEffects, 0);
 			}
 			return false;
 		}

@@ -18,6 +18,7 @@ namespace GMR.Projectiles.Summon
 			DisplayName.SetDefault("Tear");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			Projectile.AddElement(1);
 		}
 
 		public override void SetDefaults()
@@ -39,6 +40,9 @@ namespace GMR.Projectiles.Summon
 		public override void AI()
 		{
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
+
+			if (ModLoader.TryGetMod("FargowiltasSouls", out Mod mutantMod))
+				mutantMod.Call("SummonCrit", true);
 		}
 
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)

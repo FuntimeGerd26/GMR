@@ -14,6 +14,8 @@ namespace GMR.Projectiles.Summon.Whips
 		{
 			// This makes the projectile use whip collision detection and allows flasks to be applied to it.
 			ProjectileID.Sets.IsAWhip[Type] = true;
+			Projectile.AddElement(0);
+			Projectile.AddElement(2);
 		}
 
 		public override void SetDefaults()

@@ -11,7 +11,7 @@ namespace GMR.Projectiles.Bosses
 {
 	public class JackRain : ModProjectile
 	{
-		public override string Texture => "GMR/Projectiles/TinkererProj";
+		public override string Texture => "GMR/Assets/Images/JackRitual";
 
 		public override void SetStaticDefaults()
 		{
@@ -26,11 +26,11 @@ namespace GMR.Projectiles.Bosses
 			Projectile.height = 40;
 			Projectile.friendly = true;
 			Projectile.timeLeft = 360;
-			Projectile.alpha = 0;
 			Projectile.light = 0.75f;
 			Projectile.ignoreWater = true;
 			Projectile.tileCollide = false;
 			Projectile.extraUpdates = 1;
+			Projectile.scale = 1.1f;
 		}
 
 		public override bool? CanDamage()
@@ -40,6 +40,8 @@ namespace GMR.Projectiles.Bosses
 
 		public override void AI()
 		{
+			Lighting.AddLight(Projectile.Center, new Vector3(0.8f, 0.15f, 0.5f));
+
 			if (++Projectile.ai[1] > 40 && ++Projectile.ai[0] % 15 == 0)
 			{
 				float numberProjectiles = 2;
@@ -51,12 +53,15 @@ namespace GMR.Projectiles.Bosses
 			}
 			Projectile.velocity = Vector2.Zero;
 
+			if (Projectile.scale > 0.5f)
+				Projectile.scale = +0.01f;
+
 			int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 60, Projectile.velocity.X * 0.5f,
 				Projectile.velocity.Y * 0.5f, 15, Color.White, 2f);
 			Main.dust[dustId].noGravity = true;
 		}
 
-		public override Color? GetAlpha(Color lightColor) => new Color(255, 55, 55, 55);
+		public override Color? GetAlpha(Color lightColor) => new Color(255, 55, 85, 5);
 
 		public override bool PreDraw(ref Color lightColor)
 		{

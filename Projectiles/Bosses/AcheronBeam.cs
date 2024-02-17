@@ -18,6 +18,12 @@ namespace GMR.Projectiles.Bosses
 	{
 		public override string Texture => "GMR/Empty";
 
+		public override void SetStaticDefaults()
+		{
+			Projectile.AddElement(0);
+			Projectile.AddElement(2);
+		}
+
 		public override void SetDefaults()
 		{
 			Projectile.width = 380;

@@ -7,6 +7,7 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using GMR.NPCs.Bosses.Jack;
+using GMR.NPCs.Bosses.Jack.Eternity;
 
 namespace GMR.Projectiles
 {
@@ -57,16 +58,30 @@ namespace GMR.Projectiles
 
 		public override void Kill(int timeLeft)
 		{
-			Player player= Main.player[Projectile.owner];
-			if (Main.dayTime && !NPC.AnyNPCs(ModContent.NPCType<Jack>()))
+			Player player = Main.player[Projectile.owner];
+			if (GMR.Eternity() == true)
 			{
-				SoundEngine.PlaySound(SoundID.Roar, player.position);
-
-				int type = ModContent.NPCType<Jack>();
-				int spawnX = (int)player.position.X + player.width / 2;
-				int spawnY = (int)player.position.Y + player.height / 2 - 700;
-				NPC.NewNPC(player.GetSource_FromThis(), spawnX, spawnY, type, player.whoAmI, -1f, -1f, -1f, -1f);
-				Projectile.netUpdate = true;
+				if (!NPC.AnyNPCs(ModContent.NPCType<JackE>()))
+				{
+					int type = ModContent.NPCType<JackE>();
+					int spawnX = (int)player.position.X + player.width / 2;
+					int spawnY = (int)player.position.Y + player.height / 2 - 700;
+					NPC.NewNPC(player.GetSource_FromThis(), spawnX, spawnY, type, player.whoAmI, -1f, -1f, -1f, -1f);
+					SoundEngine.PlaySound(SoundID.Roar, player.position);
+					Projectile.netUpdate = true;
+				}
+			}
+			else
+			{
+				if (!NPC.AnyNPCs(ModContent.NPCType<Jack>()))
+				{
+					int type = ModContent.NPCType<Jack>();
+					int spawnX = (int)player.position.X + player.width / 2;
+					int spawnY = (int)player.position.Y + player.height / 2 - 700;
+					NPC.NewNPC(player.GetSource_FromThis(), spawnX, spawnY, type, player.whoAmI, -1f, -1f, -1f, -1f);
+					SoundEngine.PlaySound(SoundID.Roar, player.position);
+					Projectile.netUpdate = true;
+				}
 			}
 			int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 60, Projectile.velocity.X * 0.5f,
 				Projectile.velocity.Y * 0.2f, 60, default(Color), 2f);

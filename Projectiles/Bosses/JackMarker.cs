@@ -39,6 +39,8 @@ namespace GMR.Projectiles.Bosses
 
 		public override void AI()
 		{
+			Lighting.AddLight(Projectile.Center, new Vector3(0.8f, 0.15f, 0.5f));
+
 			Projectile.rotation += 0.015f;
 			Projectile.velocity = Vector2.Zero;
 		}

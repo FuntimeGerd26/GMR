@@ -16,6 +16,7 @@ namespace GMR.Projectiles.Magic
 			DisplayName.SetDefault("Violet Heart");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			Projectile.AddElement(-1);
 		}
 
 		public override void SetDefaults()

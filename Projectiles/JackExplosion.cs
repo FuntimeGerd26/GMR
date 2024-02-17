@@ -17,6 +17,8 @@ namespace GMR.Projectiles
         {
             DisplayName.SetDefault("Ancient Explosion");
             Main.projFrames[Projectile.type] = Main.projFrames[ProjectileID.LunarFlare];
+            Projectile.AddElement(0);
+            Projectile.AddElement(2);
         }
 
         public override void SetDefaults()
@@ -30,13 +32,24 @@ namespace GMR.Projectiles
             Projectile.ignoreWater = true;
             Projectile.tileCollide = false;
             Projectile.usesIDStaticNPCImmunity = true;
-            Projectile.idStaticNPCHitCooldown = 20;
+            Projectile.idStaticNPCHitCooldown = 1;
             Projectile.scale = 2f;
         }
 
         public override void AI()
         {
-            Projectile.velocity = Projectile.velocity * 0f;
+            Projectile.velocity = Vector2.Zero;
+
+            if (Projectile.localAI[0] == 0)
+            {
+                Projectile.localAI[0] = 1;
+
+                for (int i = 0; i < 20; i++)
+                {
+                    Dust dustId = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 60, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-3f, 3f), 60, default(Color), 1f);
+                    dustId.noGravity = true;
+                }
+            }
 
             if (++Projectile.frameCounter > 2)
             {
@@ -52,19 +65,10 @@ namespace GMR.Projectiles
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(BuffID.OnFire3, 120);
-            int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 6, Projectile.velocity.X * 0.7f,
-                Projectile.velocity.Y * 0.4f, 120, default(Color), 2f);
-            Main.dust[dustId].noGravity = true;
-            int dustId3 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 6, Projectile.velocity.X * -0.7f,
-                Projectile.velocity.Y * 0.4f, 120, default(Color), 2f);
-            Main.dust[dustId3].noGravity = true;
-        }
-
-        public override Color? GetAlpha(Color lightColor)
-        {
-            Color color = new Color(255, 25, 125, 55);
-            color.A = 55;
-            return color;
+            Dust dustId = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 60, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-3f, 3f), 60, default(Color), 1f);
+            dustId.noGravity = true;
+            Dust dustId2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 60, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-3f, 3f), 60, default(Color), 1f);
+            dustId2.noGravity = true;
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -75,8 +79,7 @@ namespace GMR.Projectiles
             Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);
             Vector2 origin2 = rectangle.Size() / 2f;
             Main.EntitySpriteDraw(texture2D13, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY),
-                new Microsoft.Xna.Framework.Rectangle?(rectangle), new Color(255, 25, 125, 55), Projectile.rotation, origin2,
-                Projectile.scale, SpriteEffects.None, 0);
+                new Microsoft.Xna.Framework.Rectangle?(rectangle), new Color(255, 25, 125, 55), Projectile.rotation, origin2, Projectile.scale, SpriteEffects.None, 0);
             return false;
         }
     }

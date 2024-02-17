@@ -16,6 +16,8 @@ namespace GMR.Projectiles.Bosses
 			DisplayName.SetDefault("Jack Blast");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+			Projectile.AddElement(0);
+			Projectile.AddElement(2);
 		}
 
 		public override void SetDefaults()
@@ -33,10 +35,12 @@ namespace GMR.Projectiles.Bosses
 			AIType = ProjectileID.Bullet;
 		}
 
-		public override Color? GetAlpha(Color lightColor) => new Color(255, 55, 55, 25);
+		public override Color? GetAlpha(Color lightColor) => new Color(255, 55, 85, 5);
 
 		public override void AI()
 		{
+			Lighting.AddLight(Projectile.Center, new Vector3(0.8f, 0.15f, 0.5f));
+
 			Projectile.velocity += 0.25f / Projectile.MaxUpdates * Vector2.Normalize(Projectile.velocity);
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
 		}

@@ -18,6 +18,8 @@ namespace GMR.Projectiles.Bosses
 			DisplayName.SetDefault("Acheron Saw");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+			Projectile.AddElement(0);
+			Projectile.AddElement(2);
 		}
 
 		public override void SetDefaults()
@@ -43,10 +45,12 @@ namespace GMR.Projectiles.Bosses
 				return false;
 		}
 
-		public override Color? GetAlpha(Color lightColor) => new Color(255, 55, 55, 25);
+		public override Color? GetAlpha(Color lightColor) => new Color(255, 55, 85, 5);
 
-        public override void AI()
+		public override void AI()
 		{
+			Lighting.AddLight(Projectile.Center, new Vector3(0.8f, 0.15f, 0.5f));
+
 			Projectile.rotation += 0.045f;
 			Projectile.velocity = Projectile.velocity.RotatedBy(MathHelper.ToRadians(2f));
         }

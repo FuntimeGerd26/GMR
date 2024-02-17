@@ -11,13 +11,15 @@ namespace GMR.Projectiles.Magic
 {
 	public class PlagueCloackProj : ModProjectile
 	{
-		public override string Texture => "GMR/Projectiles/PlagueProjectile";
+		public override string Texture => "Terraria/Images/Projectile_927";
 
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Plague Bolt");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			Projectile.AddElement(2);
+			Projectile.AddElement(3);
 		}
 
 		public override void SetDefaults()
@@ -51,11 +53,11 @@ namespace GMR.Projectiles.Magic
 				// If found, change the velocity of the projectile and turn it in the direction of the target
 				// Use the SafeNormalize extension method to avoid NaNs returned by Vector2.Normalize when the vector is zero
 				Projectile.velocity = (closestNPC.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * projSpeed;
-				Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90f);
+				Projectile.rotation = Projectile.velocity.ToRotation();
 			}
 			else
 			{
-				Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90f);
+				Projectile.rotation = Projectile.velocity.ToRotation();
 				AIType = ProjectileID.Bullet;
 			}
 			int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 163, Projectile.velocity.X * 0.5f,
@@ -102,7 +104,6 @@ namespace GMR.Projectiles.Magic
 
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
-			Player player = Main.player[Projectile.owner];
 			target.AddBuff(ModContent.BuffType<Buffs.Debuffs.CrystalPlague>(), 600);
 			int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 163, Projectile.velocity.X * 0.5f,
 				Projectile.velocity.Y * 0.2f, 60, default(Color), 2f);
@@ -120,23 +121,23 @@ namespace GMR.Projectiles.Magic
 			Vector2 origin2 = rectangle.Size() / 2f;
 
 			Color color26 = new Color(116, 234, 204, 125);
-			color26 = Projectile.GetAlpha(color26);
 
-			SpriteEffects effects = SpriteEffects.None;
+			SpriteEffects spriteEffects = SpriteEffects.None;
+			if (Projectile.spriteDirection == -1)
+				spriteEffects = SpriteEffects.FlipHorizontally;
 
+			// Main Projectile
 			for (float i = 0; i < ProjectileID.Sets.TrailCacheLength[Projectile.type]; i += 0.5f)
 			{
 				Color color27 = color26;
+				color27.A = 0;
 				color27 *= (float)(ProjectileID.Sets.TrailCacheLength[Projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[Projectile.type];
-				int max0 = (int)i - 1;//Math.Max((int)i - 1, 0);
+				int max0 = (int)i - 1;
 				if (max0 < 0)
 					continue;
 				Vector2 value4 = Vector2.Lerp(Projectile.oldPos[(int)i], Projectile.oldPos[max0], 1 - i % 1);
-				float num165 = MathHelper.Lerp(Projectile.oldRot[(int)i], Projectile.oldRot[max0], 1 - i % 1);
-				Main.EntitySpriteDraw(texture2D13, value4 + Projectile.Size / 2f - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, Projectile.scale, effects, 0);
+				Main.EntitySpriteDraw(texture2D13, value4 + Projectile.Size / 2f - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, Projectile.rotation, origin2, Projectile.scale, spriteEffects, 0);
 			}
-
-			Main.EntitySpriteDraw(texture2D13, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), Projectile.GetAlpha(color26), Projectile.rotation, origin2, Projectile.scale, effects, 0);
 			return false;
 		}
 	}

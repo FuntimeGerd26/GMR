@@ -9,7 +9,7 @@ namespace GMR.Projectiles.Summon
     {
         public override void SetStaticDefaults()
         {
-            Main.projPet[Type] = true;
+            //Main.projPet[Type] = true;
             ProjectileID.Sets.MinionTargettingFeature[Type] = true;
             ProjectileID.Sets.MinionSacrificable[Type] = true;
             ProjectileID.Sets.CultistIsResistantTo[Type] = true;

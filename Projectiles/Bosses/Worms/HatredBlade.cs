@@ -17,6 +17,7 @@ namespace GMR.Projectiles.Bosses.Worms
 		{
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			Projectile.AddElement(0);
 		}
 
 		public override void SetDefaults()

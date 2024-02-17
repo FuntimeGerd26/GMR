@@ -19,6 +19,7 @@ namespace GMR.Projectiles.Magic
 			DisplayName.SetDefault("Hallowed Energy");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 15;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			Projectile.AddElement(0);
 		}
 
 		public override void SetDefaults()

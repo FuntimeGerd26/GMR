@@ -18,6 +18,8 @@ namespace GMR.Projectiles
 			DisplayName.SetDefault("Sandwave Knife");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 20;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			Projectile.AddElement(0);
+			Projectile.AddElement(3);
 		}
 
 		public override void SetDefaults()

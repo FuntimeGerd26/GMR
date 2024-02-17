@@ -23,6 +23,8 @@ namespace GMR.Projectiles.Summon
             ProjectileID.Sets.TrailingMode[Type] = 0;
             ProjectileID.Sets.TrailCacheLength[Type] = 4;
             Main.projFrames[Projectile.type] = Main.projFrames[ProjectileID.DesertDjinnCurse];
+            Projectile.AddElement(0);
+            Projectile.AddElement(1);
         }
 
         public override void SetDefaults()
@@ -52,7 +54,8 @@ namespace GMR.Projectiles.Summon
             Projectile.localAI[1] = reader.ReadSingle();
         }
 
-        private int BossesDowned;
+        int damage;
+        int BossesDowned;
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
@@ -76,11 +79,11 @@ namespace GMR.Projectiles.Summon
             else if (Main.hardMode) BossesDowned = 3;
             else BossesDowned = 1;
 
-            var target = Projectile.FindTargetWithinRange(1000f);
-            if (target != null)
+            var target = Projectile.FindTargetWithinRange(1000);
+            if (target != null && Projectile.FindTargetWithLineOfSight(1000f) != null)
             {
                 Vector2 Aim = Projectile.DirectionTo(target.Center) * 8f;
-                int damage = (int)(target.lifeMax * 0.005f);
+                damage = (int)(target.lifeMax * 0.005f);
                 if (damage < 10)
                     damage = 10;
                 if (++ShootTimer % 60 == 0)
@@ -88,6 +91,8 @@ namespace GMR.Projectiles.Summon
                     Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Aim, ModContent.ProjectileType<Projectiles.Summon.TearProj>(), damage * BossesDowned, Projectile.knockBack, Main.myPlayer);
                 }
             }
+
+            Projectile.damage = damage;
 
             if (Projectile.localAI[0] == 0)
             {
@@ -120,6 +125,9 @@ namespace GMR.Projectiles.Summon
 
             Projectile.direction = Projectile.spriteDirection;
             Projectile.rotation = 0f;
+
+            if (ModLoader.TryGetMod("FargowiltasSouls", out Mod mutantMod))
+                mutantMod.Call("SummonCrit", true);
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)

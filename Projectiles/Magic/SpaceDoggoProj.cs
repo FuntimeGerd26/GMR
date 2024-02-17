@@ -21,6 +21,7 @@ namespace GMR.Projectiles.Magic
             DisplayName.SetDefault("Space Doggo Bolt");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+            Projectile.AddElement(2);
         }
 
         public override void SetDefaults()

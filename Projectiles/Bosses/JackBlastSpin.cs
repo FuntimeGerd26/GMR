@@ -19,6 +19,8 @@ namespace GMR.Projectiles.Bosses
 			DisplayName.SetDefault("Jack Blast");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+			Projectile.AddElement(0);
+			Projectile.AddElement(2);
 		}
 
 		public override void SetDefaults()
@@ -45,11 +47,13 @@ namespace GMR.Projectiles.Bosses
 				return false;
 		}
 
-		public override Color? GetAlpha(Color lightColor) => new Color(255, 55, 55, 25);
+		public override Color? GetAlpha(Color lightColor) => new Color(255, 55, 85, 5);
 
-        public override void AI()
-        {
-            Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(45f);
+		public override void AI()
+		{
+			Lighting.AddLight(Projectile.Center, new Vector3(0.8f, 0.15f, 0.5f));
+
+			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(45f);
 
 			if (++Projectile.ai[0] == 120)
 			{
@@ -72,7 +76,7 @@ namespace GMR.Projectiles.Bosses
 			}
 
 
-			if (!NPC.AnyNPCs(ModContent.NPCType<AcheronArmGun>()) && !NPC.AnyNPCs(ModContent.NPCType<AcheronArmClaw>()) && !NPC.AnyNPCs(ModContent.NPCType<JackArmGun>()) && !NPC.AnyNPCs(ModContent.NPCType<JackArmClaw>()))
+			if (!NPC.AnyNPCs(ModContent.NPCType<AcheronArmGun>()) && !NPC.AnyNPCs(ModContent.NPCType<AcheronArmClaw>()))
 				Projectile.timeLeft += -20000;
 
 			if (!NPC.AnyNPCs(ModContent.NPCType<Jack>()) && !NPC.AnyNPCs(ModContent.NPCType<Acheron>()))

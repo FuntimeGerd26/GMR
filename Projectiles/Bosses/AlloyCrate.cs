@@ -16,6 +16,8 @@ namespace GMR.Projectiles.Bosses
 			DisplayName.SetDefault("Alloy Crate");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			Projectile.AddElement(0);
+			Projectile.AddElement(2);
 		}
 
 		public override void SetDefaults()
@@ -38,8 +40,12 @@ namespace GMR.Projectiles.Bosses
 			return false; // Set to false since the projectile will most likely hit the player otherwise
 		}
 
+		public override Color? GetAlpha(Color lightColor) => new Color(255, 55, 85, 5);
+
 		public override void AI()
 		{
+			Lighting.AddLight(Projectile.Center, new Vector3(0.8f, 0.15f, 0.5f));
+
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
 
 			if (++Projectile.localAI[0] > 60)
@@ -80,7 +86,7 @@ namespace GMR.Projectiles.Bosses
 			{
 				Vector2 perturbedSpeed = Vector2.UnitX.RotatedBy(2 * Math.PI / numberProjectiles * i) * 2f;
 				if(Main.masterMode)
-					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, perturbedSpeed, ModContent.ProjectileType<Projectiles.Bosses.JackBlastBad>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, perturbedSpeed, ModContent.ProjectileType<Projectiles.Bosses.JackBlastBad>(), Projectile.damage * 2, Projectile.knockBack, Main.myPlayer);
 			}
 		}
 	}

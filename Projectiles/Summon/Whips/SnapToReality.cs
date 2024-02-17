@@ -14,6 +14,7 @@ namespace GMR.Projectiles.Summon.Whips
 		{
 			// This makes the projectile use whip collision detection and allows flasks to be applied to it.
 			ProjectileID.Sets.IsAWhip[Type] = true;
+			Projectile.AddElement(2);
 		}
 
 		public override void SetDefaults()
@@ -22,8 +23,8 @@ namespace GMR.Projectiles.Summon.Whips
 			Projectile.DefaultToWhip();
 
 			// use these to change from the vanilla defaults
-			Projectile.WhipSettings.Segments = 34;
-			Projectile.WhipSettings.RangeMultiplier = 1.25f;
+			Projectile.WhipSettings.Segments = 40;
+			Projectile.WhipSettings.RangeMultiplier = 1.6f;
 		}
 
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
@@ -31,11 +32,12 @@ namespace GMR.Projectiles.Summon.Whips
 			Player player = Main.player[Main.myPlayer];
 			target.AddBuff(ModContent.BuffType<Buffs.Debuffs.ChillBurn>(), 600);
 			Vector2 velocity = Projectile.velocity;
-			int ProjectileCount = 2;
+			int ProjectileCount = 3;
 			for (int i = 0; i < ProjectileCount; i++)
 			{
-				if (player.ownedProjectileCounts[ModContent.ProjectileType<Projectiles.Summon.Whips.RealitySnap>()] < 6)
-					Projectile.NewProjectile(Projectile.GetSource_FromThis(), target.Center, velocity.RotatedByRandom(MathHelper.ToRadians(90)), ModContent.ProjectileType<Projectiles.Summon.Whips.RealitySnap>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), target.Center + new Vector2(target.width, 0f).RotatedBy(velocity.ToRotation()),
+					velocity.RotatedByRandom(MathHelper.ToRadians(45)), ModContent.ProjectileType<Projectiles.Summon.Whips.RealitySnap>(),
+					(int)(Projectile.damage * 0.8), Projectile.knockBack, Main.myPlayer);
 			}
 			Main.player[Projectile.owner].MinionAttackTargetNPC = target.whoAmI;
 		}
