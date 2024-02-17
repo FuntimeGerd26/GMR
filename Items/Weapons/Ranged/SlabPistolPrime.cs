@@ -16,35 +16,32 @@ using GMR.Projectiles.Ranged;
 
 namespace GMR.Items.Weapons.Ranged
 {
-	public class SlabPistol : ModItem
+	public class SlabPistolPrime : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Ultra-Blue Pistol");
-			Tooltip.SetDefault("Slowly speeds up every time it's fired");
-
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
             Item.AddElement(2);
         }
 
 		public override void SetDefaults()
 		{
-			Item.width = 64;
-			Item.height = 40;
-			Item.rare = 5;
-			Item.useTime = 80;
-			Item.useAnimation = 80;
+			Item.width = 68;
+			Item.height = 50;
+			Item.rare = 8;
+			Item.useTime = 60;
+			Item.useAnimation = 60;
             Item.useStyle = ItemUseStyleID.Shoot;
-			Item.value = Item.sellPrice(silver: 155);
+			Item.value = Item.sellPrice(silver: 465);
 			Item.autoReuse = true;
 			Item.UseSound = SoundID.Item41;
 			Item.DamageType = DamageClass.Ranged;
-			Item.damage = 58;
+			Item.damage = 80;
 			Item.crit = -3;
 			Item.knockBack = 0.5f;
             Item.noUseGraphic = true;
             Item.noMelee = true;
-			Item.shoot = ModContent.ProjectileType<SlabPistolHeldProj>();
+			Item.shoot = ModContent.ProjectileType<SlabPistolPrimeHeldProj>();
 			Item.shootSpeed = 12f;
 		}
 
@@ -71,18 +68,19 @@ namespace GMR.Items.Weapons.Ranged
         public override void AddRecipes()
 		{
 			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(null, "GerdHandgun");
-			recipe.AddIngredient(ItemID.SoulofNight, 20);
-			recipe.AddIngredient(ItemID.HallowedBar, 18);
-            recipe.AddIngredient(null, "InfraRedBar", 10);
-            recipe.AddIngredient(null, "HardmodeUpgradeCrystal");
+			recipe.AddIngredient(ItemID.VenusMagnum);
+			recipe.AddIngredient(null, "PrimePlating", 2);
+			recipe.AddIngredient(ItemID.BeetleHusk, 20);
+            recipe.AddIngredient(null, "InfraRedBar", 40);
+            recipe.AddIngredient(ItemID.SoulofNight, 24);
+            recipe.AddIngredient(null, "HardmodeUpgradeCrystal", 3);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 		}
 	}
 
     // Disclaimer: I have no idea how this works, All code using this is possible thanks to Pellucid Mod
-    public class SlabPistolHeldProj : ModProjectile, IDrawable
+    public class SlabPistolPrimeHeldProj : ModProjectile, IDrawable
     {
         public int ChannelTime = 1;
         public override string Texture => base.Texture.Replace("HeldProj", string.Empty);
@@ -130,6 +128,15 @@ namespace GMR.Items.Weapons.Ranged
                     Projectile.knockBack,
                     Projectile.owner);
 
+                Projectile.NewProjectile(
+                    Projectile.GetSource_FromThis(),
+                    from,
+                    velocity * 4f,
+                    ModContent.ProjectileType<GutterBullet>(),
+                    Projectile.damage,
+                    Projectile.knockBack,
+                    Projectile.owner);
+
                 SoundEngine.PlaySound(SoundID.Item41, Projectile.Center);
                 Player.GetModPlayer<GerdPlayer>().ShakeScreen(3, 0.35f);
             }
@@ -151,7 +158,7 @@ namespace GMR.Items.Weapons.Ranged
             else if (Main.MouseWorld.X > Player.Center.X)
                 Player.direction = 1;
 
-            if (Player.dead || !Player.controlUseItem || Player.HeldItem.type != ItemType<SlabPistol>())
+            if (Player.dead || !Player.controlUseItem || Player.HeldItem.type != ItemType<SlabPistolPrime>())
             {
                 Projectile.Kill();
                 return;
@@ -163,15 +170,15 @@ namespace GMR.Items.Weapons.Ranged
                 directionToMouse = Player.ShoulderDirectionToMouse(ref shoulderPosition, 4f);
                 Projectile.Center = shoulderPosition;
 
-                float attackBuffs = (Player.GetAttackSpeed(DamageClass.Ranged) + Player.GetAttackSpeed(DamageClass.Generic)) * 0.5f;
+                float attackBuffs = (Player.GetAttackSpeed(DamageClass.Ranged) + Player.GetAttackSpeed(DamageClass.Generic));
                 if (attackBuffs < 1f)
                     attackBuffs = 1f;
 
                 if (Player.controlUseItem)
                 {
                     shotspeed = (int)((Player.HeldItem.useTime) / attackBuffs);
-                    if (shotspeed < 10)
-                        shotspeed = 10;
+                    if (shotspeed < 5)
+                        shotspeed = 5;
 
                     if (++ChannelTime % shotspeed == 0)
                         shotBullets = false;
@@ -214,7 +221,7 @@ namespace GMR.Items.Weapons.Ranged
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Type].Value;
-            Vector2 normOrigin = new Vector2(4f, 18f) + Vector2.UnitX * recoil.X;
+            Vector2 normOrigin = new Vector2(4f, 24f) + Vector2.UnitX * recoil.X;
 
             int num156 = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Height / Main.projFrames[Projectile.type];
             int y3 = num156 * Projectile.frame;
@@ -247,7 +254,7 @@ namespace GMR.Items.Weapons.Ranged
                 muzzleFlash,
                 MuzzlePosition - Main.screenPosition,
                 null,
-                Color.Lerp(Color.Blue, Color.Cyan, MuzzleFlashAlpha) * MuzzleFlashAlpha,
+                Color.Lerp(Color.Orange, Color.Yellow, MuzzleFlashAlpha) * MuzzleFlashAlpha,
                 muzzleRot,
                 muzzleOrigin,
                 MuzzleSize(MuzzleFlashAlpha),

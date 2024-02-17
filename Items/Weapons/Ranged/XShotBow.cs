@@ -16,26 +16,27 @@ namespace GMR.Items.Weapons.Ranged
 			Tooltip.SetDefault("Increases all ranged weapon speed by 5% but decreases crit chance by 2%\nHas a chance to shoot an ultra-blue energy bolt which splits in 3\nUpon hitting enemies the projectiles will double their speed");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(2);
 		}
 
 		public override void SetDefaults()
 		{
-			Item.width = 38;
-			Item.height = 56;
+			Item.width = 34;
+			Item.height = 48;
 			Item.rare = 4;
-			Item.useTime = 30;
-			Item.useAnimation = 30;
+			Item.useTime = 28;
+			Item.useAnimation = 28;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.value = Item.sellPrice(silver: 120);
 			Item.autoReuse = true;
 			Item.UseSound = SoundID.Item5;
 			Item.DamageType = DamageClass.Ranged;
-			Item.damage = 50;
+			Item.damage = 55;
 			Item.crit = 4;
 			Item.knockBack = 3f;
 			Item.noMelee = true;
 			Item.shoot = ModContent.ProjectileType<Projectiles.Ranged.XShotArrow>();
-			Item.shootSpeed = 12f;
+			Item.shootSpeed = 18f;
 			Item.useAmmo = AmmoID.Arrow;
 		}
 
@@ -54,9 +55,12 @@ namespace GMR.Items.Weapons.Ranged
 		{
 			if (type == ProjectileID.WoodenArrowFriendly)
 			{
-				type = Main.rand.Next(new int[] { ModContent.ProjectileType<Projectiles.Ranged.XShotArrow>(), ModContent.ProjectileType<Projectiles.Ranged.XShotArrow>(), ModContent.ProjectileType<Projectiles.XShotEnergy>()});
-				SoundEngine.PlaySound(SoundID.Item5, player.position);
-				velocity = velocity.RotatedByRandom(MathHelper.ToRadians(5));
+				if (Main.rand.NextBool(3))
+					type = ModContent.ProjectileType<Projectiles.XShotEnergy>();
+				else
+					type = ModContent.ProjectileType<Projectiles.Ranged.XShotArrow>();
+
+				position.Y = position.Y + 4;
 			}
 		}
 

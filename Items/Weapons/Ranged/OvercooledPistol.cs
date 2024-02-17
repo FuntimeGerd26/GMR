@@ -22,27 +22,29 @@ namespace GMR.Items.Weapons.Ranged
 			Tooltip.SetDefault($"Shoots overcooled bullets");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-		}
+            Item.AddElement(1);
+            Item.AddElement(2);
+        }
 
 		public override void SetDefaults()
 		{
 			Item.width = 48;
 			Item.height = 24;
-			Item.rare = 2;
-			Item.useTime = 10;
-			Item.useAnimation = 10;
+			Item.rare = 1;
+			Item.useTime = 20;
+			Item.useAnimation = 20;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.value = Item.sellPrice(silver: 140);
 			Item.autoReuse = true;
             Item.UseSound = new SoundStyle("GMR/Sounds/Items/Ranged/BulletShot1") { Volume = 0.5f, PitchVariance = 0.2f, };
             Item.DamageType = DamageClass.Ranged;
-			Item.damage = 20;
-			Item.crit = 4;
-			Item.knockBack = 2f;
+			Item.damage = 15;
+			Item.crit = 0;
+			Item.knockBack = 8f;
 			Item.noMelee = true;
 			Item.noUseGraphic = true;
 			Item.shoot = ProjectileType<OvercooledPistolHeld>();
-			Item.shootSpeed = 12f;
+			Item.shootSpeed = 18f;
             Item.useAmmo = AmmoID.Bullet;
 		}
 
@@ -71,31 +73,19 @@ namespace GMR.Items.Weapons.Ranged
         {
             Recipe recipe = CreateRecipe();
             recipe.AddIngredient(ItemID.TheUndertaker);
-            recipe.AddIngredient(ItemID.SilverBar, 14);
+            recipe.AddIngredient(ItemID.TissueSample, 14);
+            recipe.AddIngredient(ItemID.IceBlock, 40);
             recipe.AddIngredient(null, "BossUpgradeCrystal", 3);
             recipe.AddTile(TileID.Anvils);
             recipe.Register();
 
             Recipe recipe2 = CreateRecipe();
-            recipe2.AddIngredient(ItemID.TheUndertaker);
-            recipe2.AddIngredient(ItemID.TungstenBar, 14);
+            recipe2.AddIngredient(ItemID.Musket);
+            recipe2.AddIngredient(ItemID.ShadowScale, 14);
+            recipe2.AddIngredient(ItemID.IceBlock, 40);
             recipe2.AddIngredient(null, "BossUpgradeCrystal", 3);
             recipe2.AddTile(TileID.Anvils);
             recipe2.Register();
-
-            Recipe recipe3 = CreateRecipe();
-            recipe3.AddIngredient(ItemID.Musket);
-            recipe3.AddIngredient(ItemID.SilverBar, 14);
-            recipe3.AddIngredient(null, "BossUpgradeCrystal", 3);
-            recipe3.AddTile(TileID.Anvils);
-            recipe3.Register();
-
-            Recipe recipe4 = CreateRecipe();
-            recipe4.AddIngredient(ItemID.Musket);
-            recipe4.AddIngredient(ItemID.TungstenBar, 14);
-            recipe4.AddIngredient(null, "BossUpgradeCrystal", 3);
-            recipe4.AddTile(TileID.Anvils);
-            recipe4.Register();
         }
     }
 
@@ -185,7 +175,7 @@ namespace GMR.Items.Weapons.Ranged
                 directionToMouse = Player.ShoulderDirectionToMouse(ref shoulderPosition, 4f);
                 Projectile.Center = shoulderPosition;
 
-                float attackBuffs = (Player.GetAttackSpeed(DamageClass.Ranged) + Player.GetAttackSpeed(DamageClass.Generic)) * 0.25f;
+                float attackBuffs = (Player.GetAttackSpeed(DamageClass.Ranged) + Player.GetAttackSpeed(DamageClass.Generic)) * 1.1f;
 
                 if (Player.controlUseItem)
                 {
@@ -212,7 +202,7 @@ namespace GMR.Items.Weapons.Ranged
                     shotBullets = true;
 
                     int bulletCount = 1;
-                    ShootBullets(bulletType, bulletCount, MuzzlePosition, directionToMouse * 12f);
+                    ShootBullets(bulletType, bulletCount, MuzzlePosition, directionToMouse * 18f);
 
                     recoil += new Vector2(8f, Main.rand.NextFloat(0, 0.2f));
                 }

@@ -19,6 +19,7 @@ namespace GMR.Items.Weapons.Ranged
 				"\nDeals [c/66FF66:300%] more damage when under [c/FF4444:50%] HP");
 			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Item.type] = true;
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(3);
 		}
 
 		public override void SetDefaults()
@@ -74,14 +75,14 @@ namespace GMR.Items.Weapons.Ranged
 		public override void AddRecipes()
 		{
 			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.AsphaltBlock, 40);
+			recipe.AddIngredient(null, "ScrapFragment", 20);
 			recipe.AddIngredient(ItemID.CobaltBar, 28);
 			recipe.AddIngredient(null, "UpgradeCrystal", 60);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 
 			Recipe recipe2 = CreateRecipe();
-			recipe2.AddIngredient(ItemID.AsphaltBlock, 40);
+			recipe2.AddIngredient(null, "ScrapFragment", 20);
 			recipe2.AddIngredient(ItemID.PalladiumBar, 28);
 			recipe2.AddIngredient(null, "UpgradeCrystal", 60);
 			recipe2.AddTile(TileID.MythrilAnvil);

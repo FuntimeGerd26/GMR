@@ -16,6 +16,7 @@ namespace GMR.Items.Weapons.Ranged
 			Tooltip.SetDefault($"'Dosen't actually charge, it's already charged'\nShoots 2 Projectiles in a row\n Replaces wooden arrows for a special projectile that splits into 3");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(3);
 		}
 
 		public override void SetDefaults()
@@ -23,19 +24,19 @@ namespace GMR.Items.Weapons.Ranged
 			Item.width = 30;
 			Item.height = 66;
 			Item.rare = 2;
-			Item.useTime = 25;
-			Item.useAnimation = 25;
+			Item.useTime = 30;
+			Item.useAnimation = 30;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.value = Item.sellPrice(silver: 130);
 			Item.autoReuse = true;
 			Item.UseSound = SoundID.Item5;
 			Item.DamageType = DamageClass.Ranged;
-			Item.damage = 35;
+			Item.damage = 25;
 			Item.crit = 4;
-			Item.knockBack = 4f;
+			Item.knockBack = 8f;
 			Item.noMelee = true;
 			Item.shoot = ProjectileID.WoodenArrowFriendly;
-			Item.shootSpeed = 12f;
+			Item.shootSpeed = 18f;
 			Item.useAmmo = AmmoID.Arrow;
 		}
 
@@ -60,7 +61,7 @@ namespace GMR.Items.Weapons.Ranged
 			recipe.AddIngredient(null, "AluminiumBow");
 			recipe.AddRecipeGroup("IronBar", 25); // Iron/Lead
 			recipe.AddIngredient(ItemID.Silk, 6);
-			recipe.AddIngredient(null, "UpgradeCrystal", 20);
+			recipe.AddIngredient(null, "BossUpgradeCrystal");
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}

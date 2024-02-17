@@ -24,7 +24,9 @@ namespace GMR.Items.Weapons.Ranged
 			Tooltip.SetDefault($" Shoots a homing and piercing bullet that can pierce 5 enemies");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-		}
+            Item.AddElement(1);
+            Item.AddElement(2);
+        }
 
 		public override void SetDefaults()
 		{
@@ -78,7 +80,8 @@ namespace GMR.Items.Weapons.Ranged
 		{
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(null, "PrismaticRifle");
-			recipe.AddIngredient(ItemID.Ectoplasm, 32);
+            recipe.AddIngredient(null, "InfraRedBar", 24);
+            recipe.AddIngredient(ItemID.Ectoplasm, 32);
             recipe.AddRecipeGroup("Wood", 28);
             recipe.AddIngredient(ItemID.Diamond, 6);
 			recipe.AddIngredient(null, "HardmodeUpgradeCrystal", 2);

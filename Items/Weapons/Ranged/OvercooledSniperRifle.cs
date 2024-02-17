@@ -17,6 +17,7 @@ namespace GMR.Items.Weapons.Ranged
 				$"\n Right-Click to shoot a faster bullet that deals significantly damage and pierces 5 times instead of 3 (Unless you're using Chlorophyte bullets)");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(1);
 		}
 
 		public override void SetDefaults()
@@ -116,6 +117,7 @@ namespace GMR.Items.Weapons.Ranged
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(null, "ChargeRifle");
 			recipe.AddIngredient(ItemID.SoulofNight, 12);
+			recipe.AddIngredient(null, "InfraRedBar", 8);
 			recipe.AddIngredient(ItemID.HallowedBar, 22);
 			recipe.AddIngredient(ItemID.FrostCore);
 			recipe.AddIngredient(null, "BossUpgradeCrystal", 5);

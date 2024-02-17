@@ -15,6 +15,7 @@ namespace GMR.Items.Weapons.Ranged
 			Tooltip.SetDefault("'Good in the Bad'\nUpon hitting an enemy the projectiles will go in the oposite direction");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(0);
 		}
 
 		public override void SetDefaults()
@@ -29,12 +30,12 @@ namespace GMR.Items.Weapons.Ranged
 			Item.autoReuse = true;
 			Item.UseSound = SoundID.Item41;
 			Item.DamageType = DamageClass.Ranged;
-			Item.damage = 46;
-			Item.crit = 7;
-			Item.knockBack = 2f;
+			Item.damage = 30;
+			Item.crit = 6;
+			Item.knockBack = 8f;
 			Item.noMelee = true;
 			Item.shoot = ModContent.ProjectileType<Projectiles.Ranged.GungeonBulletFlip>();
-			Item.shootSpeed = 35f;
+			Item.shootSpeed = 16f;
 			Item.useAmmo = AmmoID.Bullet;
 		}
 
@@ -45,18 +46,11 @@ namespace GMR.Items.Weapons.Ranged
 
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
 		{
-			if (type == ProjectileID.Bullet || type == ProjectileID.MeteorShot || type == ProjectileID.CrystalBullet || type == ProjectileID.CursedBullet || type == ProjectileID.IchorBullet || type == ProjectileID.ChlorophyteBullet || type == ProjectileID.BulletHighVelocity || type == ProjectileID.VenomBullet || type == ProjectileID.PartyBullet || type == ProjectileID.NanoBullet || type == ProjectileID.ExplosiveBullet || type == ProjectileID.GoldenBullet || type == ProjectileID.MoonlordBullet)
+			if (player.GPlayer().YinEmpower == true)
 			{
-				float numberProjectiles = 3;
-				float rotation = MathHelper.ToRadians(20);
-				position += Vector2.Normalize(velocity);
-				for (int i = 0; i < numberProjectiles; i++)
-				{
-					Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1)));
-					Projectile.NewProjectile(Item.GetSource_FromThis(), position, perturbedSpeed, ModContent.ProjectileType<Projectiles.Ranged.GungeonBulletFlip>(), damage, knockback, player.whoAmI);
-					type = 0;
-				}
+				damage *= 2;
 			}
+			type = ModContent.ProjectileType<Projectiles.Ranged.GungeonBulletFlip>();
 		}
 	}
 }

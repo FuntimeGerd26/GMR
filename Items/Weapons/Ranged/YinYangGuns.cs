@@ -12,41 +12,44 @@ using Terraria.GameContent.Creative;
 using Microsoft.Xna.Framework.Graphics;
 using static Terraria.ModLoader.ModContent;
 using GMR;
-using GMR.Projectiles.Ranged;
 
 namespace GMR.Items.Weapons.Ranged
 {
-	public class SlabPistol : ModItem
-	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Ultra-Blue Pistol");
-			Tooltip.SetDefault("Slowly speeds up every time it's fired");
-
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-            Item.AddElement(2);
+	public class YinYangGuns : ModItem
+    {
+        public override void SetStaticDefaults()
+        {
+            ItemID.Sets.ItemsThatAllowRepeatedRightClick[Item.type] = true;
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            Item.AddElement(0);
         }
 
 		public override void SetDefaults()
-		{
-			Item.width = 64;
-			Item.height = 40;
-			Item.rare = 5;
-			Item.useTime = 80;
-			Item.useAnimation = 80;
+        {
+            Item.width = 48;
+            Item.height = 28;
+            Item.rare = 2;
+            Item.useTime = 38;
+            Item.useAnimation = 38;
             Item.useStyle = ItemUseStyleID.Shoot;
-			Item.value = Item.sellPrice(silver: 155);
-			Item.autoReuse = true;
-			Item.UseSound = SoundID.Item41;
-			Item.DamageType = DamageClass.Ranged;
-			Item.damage = 58;
-			Item.crit = -3;
-			Item.knockBack = 0.5f;
-            Item.noUseGraphic = true;
+            Item.value = Item.sellPrice(silver: 75);
+            Item.autoReuse = true;
+            Item.UseSound = SoundID.Item41;
+            Item.DamageType = DamageClass.Ranged;
+            Item.damage = 30;
+            Item.crit = 6;
+            Item.knockBack = 8f;
             Item.noMelee = true;
-			Item.shoot = ModContent.ProjectileType<SlabPistolHeldProj>();
-			Item.shootSpeed = 12f;
-		}
+            Item.noUseGraphic = true;
+			Item.shoot = ProjectileType<YinYangGunsHeld>();
+            Item.shootSpeed = 16f;
+            Item.useAmmo = AmmoID.Bullet;
+        }
+
+        public override bool AltFunctionUse(Player player)
+        {
+            return true;
+        }
 
         public override bool CanUseItem(Player player)
         {
@@ -54,38 +57,34 @@ namespace GMR.Items.Weapons.Ranged
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
-        {
-            Projectile.NewProjectile(
-                source,
-                position,
-                velocity,
-                Item.shoot,
-                damage,
-                knockback,
-                player.whoAmI
-                );
+		{
+            if (player.altFunctionUse == 2)
+            {
+                Projectile.NewProjectile(source, position, velocity, Item.shoot, damage, knockback, player.whoAmI, 1f);
+            }
+            else
+            {
+                Projectile.NewProjectile(source, position, velocity, Item.shoot, damage, knockback, player.whoAmI, 2f);
+            }
 
             return false;
         }
 
         public override void AddRecipes()
-		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(null, "GerdHandgun");
-			recipe.AddIngredient(ItemID.SoulofNight, 20);
-			recipe.AddIngredient(ItemID.HallowedBar, 18);
-            recipe.AddIngredient(null, "InfraRedBar", 10);
-            recipe.AddIngredient(null, "HardmodeUpgradeCrystal");
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
-		}
-	}
+        {
+            Recipe recipe = CreateRecipe();
+            recipe.AddIngredient(null, "YinGun");
+            recipe.AddIngredient(null, "YangGun");
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
+        }
+    }
 
-    // Disclaimer: I have no idea how this works, All code using this is possible thanks to Pellucid Mod
-    public class SlabPistolHeldProj : ModProjectile, IDrawable
+    // Disclaimer: I have no idea how this works, All code using this is possible thanks to Radiant Mod
+    public class YinYangGunsHeld : ModProjectile, IDrawable
     {
-        public int ChannelTime = 1;
-        public override string Texture => base.Texture.Replace("HeldProj", string.Empty);
+        public int ChannelTime;
+        public override string Texture => "GMR/Empty";
         public override void SetDefaults()
         {
             Projectile.width = 8;
@@ -96,15 +95,15 @@ namespace GMR.Items.Weapons.Ranged
             Projectile.tileCollide = false;
             Projectile.friendly = false;
             Projectile.hostile = false;
-            Projectile.timeLeft = 999;
-            if (Projectile.extraUpdates > 0 || Projectile.extraUpdates < 0)
-                Projectile.extraUpdates = 0;
+            Projectile.timeLeft = 30;
+            if (Projectile.extraUpdates > 1 || Projectile.extraUpdates < 1)
+                Projectile.extraUpdates = 1;
         }
 
         int bulletType;
         public override void OnSpawn(IEntitySource source)
         {
-            if (source is EntitySource_ItemUse_WithAmmo itemSource)
+            if (source is EntitySource_ItemUse_WithAmmo itemSource && itemSource.Item.type == ItemType<YinYangGuns>())
             {
                 bulletType = ContentSamples.ItemsByType[itemSource.AmmoItemIdUsed].shoot;
             }
@@ -115,29 +114,45 @@ namespace GMR.Items.Weapons.Ranged
         }
 
         ref float MuzzleFlashAlpha => ref Projectile.ai[1];
-        Vector2 MuzzlePosition => Projectile.Center + directionToMouse * 44f;
+        Vector2 MuzzlePosition => Projectile.Center + directionToMouse * 42f;
 
+        Player Player => Main.player[Projectile.owner];
+
+        int damage;
         private void ShootBullets(int bulletType, int amount, Vector2 from, Vector2 velocity)
         {
+            if (Projectile.ai[0] == 1f)
+                bulletType = ModContent.ProjectileType<Projectiles.Ranged.GungeonBulletFlip>();
+            else if (Projectile.ai[0] == 2f)
+                bulletType = ModContent.ProjectileType<Projectiles.Ranged.GungeonBullet>();
+
+            damage = Projectile.damage;
+
+            if (Player.GPlayer().YinEmpower == true && Projectile.ai[0] == 1f)
+            {
+                damage = damage * 2;
+            }
+
+            if (Player.GPlayer().YangEmpower == true && Projectile.ai[0] == 2f)
+            {
+                damage = damage * 2;
+            }
+
             for (int i = 0; i < amount; i++)
             {
                 Projectile.NewProjectile(
                     Projectile.GetSource_FromThis(),
                     from,
                     velocity,
-                    ModContent.ProjectileType<SlabBullet>(),
-                    Projectile.damage,
+                    bulletType,
+                    damage,
                     Projectile.knockBack,
                     Projectile.owner);
 
                 SoundEngine.PlaySound(SoundID.Item41, Projectile.Center);
-                Player.GetModPlayer<GerdPlayer>().ShakeScreen(3, 0.35f);
             }
-
             MuzzleFlashAlpha = 1f;
         }
-
-        Player Player => Main.player[Projectile.owner];
 
         Vector2 directionToMouse;
         Vector2 recoil;
@@ -151,7 +166,7 @@ namespace GMR.Items.Weapons.Ranged
             else if (Main.MouseWorld.X > Player.Center.X)
                 Player.direction = 1;
 
-            if (Player.dead || !Player.controlUseItem || Player.HeldItem.type != ItemType<SlabPistol>())
+            if (Player.dead || !Player.ItemAnimationActive || Player.HeldItem.type != ItemType<YinYangGuns>())
             {
                 Projectile.Kill();
                 return;
@@ -163,28 +178,14 @@ namespace GMR.Items.Weapons.Ranged
                 directionToMouse = Player.ShoulderDirectionToMouse(ref shoulderPosition, 4f);
                 Projectile.Center = shoulderPosition;
 
-                float attackBuffs = (Player.GetAttackSpeed(DamageClass.Ranged) + Player.GetAttackSpeed(DamageClass.Generic)) * 0.5f;
-                if (attackBuffs < 1f)
-                    attackBuffs = 1f;
-
-                if (Player.controlUseItem)
-                {
-                    shotspeed = (int)((Player.HeldItem.useTime) / attackBuffs);
-                    if (shotspeed < 10)
-                        shotspeed = 10;
-
-                    if (++ChannelTime % shotspeed == 0)
-                        shotBullets = false;
-                }
-
                 if (!shotBullets)
                 {
                     shotBullets = true;
 
                     int bulletCount = 1;
-                    ShootBullets(bulletType, bulletCount, MuzzlePosition, directionToMouse * 12f);
+                    ShootBullets(bulletType, bulletCount, MuzzlePosition, directionToMouse * 8f);
 
-                    recoil += new Vector2(4f, Main.rand.NextFloat(0.01f, 0.2f));
+                    recoil += new Vector2(4f, Main.rand.NextFloat(0.05f, 0.2f));
                 }
             }
 
@@ -213,17 +214,18 @@ namespace GMR.Items.Weapons.Ranged
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D texture = TextureAssets.Projectile[Type].Value;
-            Vector2 normOrigin = new Vector2(4f, 18f) + Vector2.UnitX * recoil.X;
+            Texture2D texture = ModContent.Request<Texture2D>($"GMR/Items/Weapons/Ranged/YangGun", AssetRequestMode.ImmediateLoad).Value;
+            if (Projectile.ai[0] == 1f)
+                texture = ModContent.Request<Texture2D>($"GMR/Items/Weapons/Ranged/YinGun", AssetRequestMode.ImmediateLoad).Value;
+            else if (Projectile.ai[0] == 2f)
+                texture = ModContent.Request<Texture2D>($"GMR/Items/Weapons/Ranged/YangGun", AssetRequestMode.ImmediateLoad).Value;
 
-            int num156 = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Height / Main.projFrames[Projectile.type];
-            int y3 = num156 * Projectile.frame;
-            Rectangle rectangle = new Rectangle(0, y3, texture.Width, num156);
+            Vector2 normOrigin = new Vector2(-8f, 10f) + Vector2.UnitX * recoil.X;
 
             Main.EntitySpriteDraw(
                 texture,
                 Projectile.Center - Main.screenPosition,
-                new Microsoft.Xna.Framework.Rectangle?(rectangle),
+                null,
                 lightColor,
                 Projectile.rotation + (Player.direction == -1 ? MathHelper.Pi : 0),
                 Player.direction == -1 ? new Vector2(texture.Width - normOrigin.X, normOrigin.Y) : normOrigin,
@@ -238,7 +240,7 @@ namespace GMR.Items.Weapons.Ranged
         public void Draw(Color lightColor)
         {
             Texture2D muzzleFlash = Request<Texture2D>("GMR/Assets/Images/MuzzleFlash", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            Vector2 muzzleOrigin = muzzleFlash.Size() * 0.5f + Vector2.UnitX * 68;
+            Vector2 muzzleOrigin = muzzleFlash.Size() * 0.5f + Vector2.UnitX * 40;
             float muzzleRot = directionToMouse.ToRotation() + MathHelper.Pi;
 
             static Vector2 MuzzleSize(float flashAlpha) => 0.6f * new Vector2(1, 1 + MathF.Pow(flashAlpha, 2) * 0.4f) * flashAlpha;
@@ -247,7 +249,7 @@ namespace GMR.Items.Weapons.Ranged
                 muzzleFlash,
                 MuzzlePosition - Main.screenPosition,
                 null,
-                Color.Lerp(Color.Blue, Color.Cyan, MuzzleFlashAlpha) * MuzzleFlashAlpha,
+                Color.Lerp(Color.Red, Color.Orange, MuzzleFlashAlpha) * MuzzleFlashAlpha,
                 muzzleRot,
                 muzzleOrigin,
                 MuzzleSize(MuzzleFlashAlpha),

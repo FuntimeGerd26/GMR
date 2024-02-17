@@ -17,6 +17,7 @@ namespace GMR.Items.Weapons.Ranged
 			$"\nReplaces normal bullets with overcooled bullets that inflict Chillburn");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(1);
 		}
 
 		public override void SetDefaults()
@@ -69,6 +70,7 @@ namespace GMR.Items.Weapons.Ranged
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(null, "ChargeRifle");
 			recipe.AddIngredient(ItemID.SoulofNight, 18);
+			recipe.AddIngredient(null, "InfraRedBar", 8);
 			recipe.AddIngredient(ItemID.HallowedBar, 14);
 			recipe.AddIngredient(ItemID.FrostCore);
 			recipe.AddIngredient(null, "BossUpgradeCrystal", 4);

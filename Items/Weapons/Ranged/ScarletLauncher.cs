@@ -12,36 +12,35 @@ namespace GMR.Items.Weapons.Ranged
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Scalet Launcher");
-			Tooltip.SetDefault($"'It can't slow down time sadly'\n Right-click to shoot a rocket that deals 200% damage, that stays still for a second" +
-				"\nThis projectile also creates a second explosion");
 			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Item.type] = true;
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(0);
+			Item.AddElement(2);
 		}
 
 		public override void SetDefaults()
 		{
-			Item.width = 58;
-			Item.height = 28;
-			Item.rare = 2;
+			Item.width = 90;
+			Item.height = 42;
+			Item.rare = 5;
 			Item.useTime = 60;
 			Item.useAnimation = 60;
 			Item.useStyle = ItemUseStyleID.Shoot;
-			Item.value = Item.sellPrice(silver: 160);
+			Item.value = Item.sellPrice(silver: 195);
 			Item.autoReuse = true;
 			Item.UseSound = SoundID.Item61;
 			Item.DamageType = DamageClass.Ranged;
-			Item.damage = 28;
-			Item.crit = 8;
+			Item.damage = 40;
+			Item.crit = 4;
 			Item.knockBack = 2f;
 			Item.noMelee = true;
 			Item.shoot = ModContent.ProjectileType<Projectiles.Ranged.ScarletRocket>();
-			Item.shootSpeed = 1f;
+			Item.shootSpeed = 12f;
 		}
 
 		public override Vector2? HoldoutOffset()
 		{
-			return new Vector2(-3, -2);
+			return new Vector2(-10, -4);
 		}
 
 		public override bool AltFunctionUse(Player player)
@@ -60,10 +59,10 @@ namespace GMR.Items.Weapons.Ranged
 			}
 			else
 			{
-				Item.useTime = 60;
-				Item.useAnimation = 60;
+				Item.useTime = 20;
+				Item.useAnimation = 20;
 				Item.shoot = ModContent.ProjectileType<Projectiles.Ranged.ScarletRocket>();
-				Item.shootSpeed = 12f;
+				Item.shootSpeed = 18f;
 			}
 			return true;
 		}
@@ -73,30 +72,26 @@ namespace GMR.Items.Weapons.Ranged
 			if (player.altFunctionUse == 2)
             {
 				Projectile.NewProjectile(Item.GetSource_FromThis(), position, Vector2.Zero, ModContent.ProjectileType<Projectiles.StopAura>(), 0, 0f, player.whoAmI);
-				damage = damage * 2;
+				damage = damage * 4;
 			}
-			else
-			{
-			}
+			else { }
 		}
 
 		public override void AddRecipes()
 		{
 			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.StarCannon);
 			recipe.AddIngredient(ItemID.FlareGun);
 			recipe.AddIngredient(ItemID.IllegalGunParts);
-			recipe.AddIngredient(ItemID.CrimtaneBar, 14);
-			recipe.AddIngredient(null, "BossUpgradeCrystal", 3);
+			recipe.AddIngredient(ItemID.CobaltBar, 18);
+			recipe.AddIngredient(null, "BossUpgradeCrystal", 5);
 			recipe.AddTile(TileID.Anvils);
             recipe.Register();
 
 			Recipe recipe2 = CreateRecipe();
-			recipe2.AddIngredient(ItemID.StarCannon);
 			recipe2.AddIngredient(ItemID.FlareGun);
 			recipe2.AddIngredient(ItemID.IllegalGunParts);
-			recipe2.AddIngredient(ItemID.DemoniteBar, 14);
-			recipe2.AddIngredient(null, "BossUpgradeCrystal", 3);
+			recipe2.AddIngredient(ItemID.PalladiumBar, 18);
+			recipe2.AddIngredient(null, "BossUpgradeCrystal", 5);
 			recipe2.AddTile(TileID.Anvils);
 			recipe2.Register();
 		}
