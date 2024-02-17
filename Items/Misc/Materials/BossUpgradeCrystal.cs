@@ -24,7 +24,8 @@ namespace GMR.Items.Misc.Materials
 			Item.height = 22;
 			Item.rare = 1;
 			Item.maxStack = 99999;
-			Item.value = Item.sellPrice(silver: 40);
+			Item.value = Item.sellPrice(silver: 50);
+			Item.buyPrice(gold: 5);
 		}
 
 		public override void AddRecipes()

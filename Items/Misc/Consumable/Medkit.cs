@@ -14,8 +14,7 @@ namespace GMR.Items.Misc.Consumable
 		{
 			Tooltip.SetDefault("Increases health regeneration for 20 seconds");
 
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
-			ItemID.Sets.SortingPriorityBossSpawns[Type] = 12; // This helps sort inventory know that this is a boss summoning Item.
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 30;
 		}
 
 		public override void SetDefaults()

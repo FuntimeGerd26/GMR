@@ -25,6 +25,7 @@ namespace GMR.Items.Misc.Materials
 			Item.rare = 4;
 			Item.maxStack = 99999;
 			Item.value = Item.sellPrice(silver: 60);
+			Item.buyPrice(gold: 30);
 		}
 
 		public override void AddRecipes()
@@ -35,7 +36,7 @@ namespace GMR.Items.Misc.Materials
 			recipe.Register();
 
 			Recipe recipe2 = CreateRecipe();
-			recipe2.AddIngredient(null, "UpgradeCrystal", 40);
+			recipe2.AddIngredient(null, "UpgradeCrystal", 400);
 			recipe2.AddTile(TileID.MythrilAnvil);
 			recipe2.Register();
 

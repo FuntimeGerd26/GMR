@@ -19,7 +19,7 @@ namespace GMR.Items.Misc.Modules
 
 		public override void SetDefaults()
 		{
-			Item.damage = 70; // The damage for projectiles isn't actually 70, it actually is the damage combined with the projectile and the item together
+			Item.damage = 200; // The damage for projectiles isn't actually 70, it actually is the damage combined with the projectile and the item together
 			Item.DamageType = DamageClass.Ranged; // What type of damage does this ammo affect?
 			Item.width = 18;
 			Item.height = 30;

@@ -24,6 +24,7 @@ namespace GMR.Items.Misc.Materials
 			Item.rare = 1;
 			Item.maxStack = 999;
 			Item.value = Item.sellPrice(silver: 100);
+			Item.buyPrice(gold: 4);
 		}
 
 		public override void AddRecipes()

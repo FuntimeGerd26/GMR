@@ -51,14 +51,10 @@ namespace GMR.Items.Misc
                 if (BossType < 3)
                     BossType++;
                 else
-                    BossType = 0;
+                    BossType = 1;
 
                 Rectangle displayPoint = new Rectangle(player.Hitbox.Center.X, player.Hitbox.Center.Y - player.height / 4, 2, 2);
-                if (BossType == 0)
-                {
-                    CombatText.NewText(displayPoint, new Color(255, 55, 55), "Trerios");
-                }
-                else if (BossType == 1)
+                if (BossType == 1)
                 {
                     CombatText.NewText(displayPoint, new Color(255, 205, 55), "Magma Eye");
                 }
@@ -71,10 +67,6 @@ namespace GMR.Items.Misc
                     CombatText.NewText(displayPoint, new Color(255, 105, 185), "Acheron");
                 }
                 return false;
-            }
-            else if (BossType == 0) // Trerios
-            {
-                Item.shoot = ModContent.ProjectileType<Projectiles.HatredSummon>();
             }
             else if (NPC.downedBoss2 && BossType == 1) // Magma Eye (After Brain of Cthulhu/Eater of World)
             {
@@ -104,11 +96,7 @@ namespace GMR.Items.Misc
 
         public override Color? GetAlpha(Color lightColor)
         {
-            if (BossType == 0) // Trerios
-            {
-                return new Color(255, 55, 55);
-            }
-            else if (BossType == 1) // Magma Eye
+            if (BossType == 1) // Magma Eye
             {
                 return new Color(255, 205, 55);
             }
