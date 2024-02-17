@@ -24,6 +24,7 @@ namespace GMR.Buffs.Debuffs
         public override void Update(NPC npc, ref int buffIndex)
         {
             npc.GetGlobalNPC<GerdGlobalNPC>().Thoughtful = true;
+            npc.defense = npc.defDefense - 30;
         }
     }
 }
