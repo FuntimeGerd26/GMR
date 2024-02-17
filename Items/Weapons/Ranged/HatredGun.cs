@@ -18,6 +18,7 @@ namespace GMR.Items.Weapons.Ranged
 			Tooltip.SetDefault("Holding down Right-Click changes the gun mode\nFrom semi-auto to manual (with increased damage and piercing)");
 			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Item.type] = true;
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(2);
 		}
 
 		public override void SetDefaults()

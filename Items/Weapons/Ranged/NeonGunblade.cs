@@ -16,6 +16,8 @@ namespace GMR.Items.Weapons.Ranged
 			Tooltip.SetDefault("Hitting enemies will make the projectile split into 3 other ones");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(1);
+			Item.AddElement(2);
 		}
 
 		public override void SetDefaults()
@@ -31,7 +33,7 @@ namespace GMR.Items.Weapons.Ranged
 			Item.autoReuse = true;
 			Item.UseSound = SoundID.Item15;
 			Item.DamageType = DamageClass.Ranged;
-			Item.damage = 60;
+			Item.damage = 34;
 			Item.crit = 14;
 			Item.knockBack = 3f;
 			Item.shoot = ModContent.ProjectileType<Projectiles.Ranged.NeonGunSlash>();
@@ -59,7 +61,7 @@ namespace GMR.Items.Weapons.Ranged
 			recipe.AddIngredient(ItemID.SoulofLight, 18);
 			recipe.AddIngredient(ItemID.GoldBar, 8);
 			recipe.AddIngredient(ItemID.IllegalGunParts);
-			recipe.AddTile(TileID.MythrilAnvil);
+			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 
 			Recipe recipe2 = CreateRecipe();
@@ -67,7 +69,7 @@ namespace GMR.Items.Weapons.Ranged
 			recipe2.AddIngredient(ItemID.SoulofLight, 18);
 			recipe2.AddIngredient(ItemID.PlatinumBar, 8);
 			recipe2.AddIngredient(ItemID.IllegalGunParts);
-			recipe2.AddTile(TileID.MythrilAnvil);
+			recipe2.AddTile(TileID.Anvils);
 			recipe2.Register();
 
 			Recipe recipe3 = CreateRecipe();
@@ -75,7 +77,7 @@ namespace GMR.Items.Weapons.Ranged
 			recipe3.AddIngredient(ItemID.SoulofLight, 18);
 			recipe3.AddIngredient(ItemID.GoldBar, 8);
 			recipe3.AddIngredient(ItemID.IllegalGunParts);
-			recipe3.AddTile(TileID.MythrilAnvil);
+			recipe3.AddTile(TileID.Anvils);
 			recipe3.Register();
 
 			Recipe recipe4 = CreateRecipe();
@@ -83,7 +85,7 @@ namespace GMR.Items.Weapons.Ranged
 			recipe4.AddIngredient(ItemID.SoulofLight, 18);
 			recipe4.AddIngredient(ItemID.PlatinumBar, 8);
 			recipe4.AddIngredient(ItemID.IllegalGunParts);
-			recipe4.AddTile(TileID.MythrilAnvil);
+			recipe4.AddTile(TileID.Anvils);
 			recipe4.Register();
 		}
 	}

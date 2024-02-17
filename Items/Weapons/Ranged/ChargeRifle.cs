@@ -16,12 +16,13 @@ namespace GMR.Items.Weapons.Ranged
 			Tooltip.SetDefault("Shoots a burst of 6 bullets, normal bullets move faster");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(2);
 		}
 
 		public override void SetDefaults()
 		{
-			Item.width = 80;
-			Item.height = 30;
+			Item.width = 102;
+			Item.height = 44;
 			Item.rare = 4;
 			Item.useTime = 4;
             Item.useAnimation = 14;
@@ -31,30 +32,26 @@ namespace GMR.Items.Weapons.Ranged
 			Item.autoReuse = true;
 			Item.UseSound = SoundID.Item11;
 			Item.DamageType = DamageClass.Ranged;
-			Item.damage = 42;
+			Item.damage = 32;
 			Item.crit = 4;
-			Item.knockBack = 1.5f;
+			Item.knockBack = 4f;
 			Item.noMelee = true;
 			Item.shoot = ProjectileID.Bullet;
-			Item.shootSpeed = 6f;
+			Item.shootSpeed = 8f;
 			Item.useAmmo = AmmoID.Bullet;
 		}
 
 		public override Vector2? HoldoutOffset()
 		{
-			return new Vector2(-20, -4);
+			return new Vector2(-38, -8);
 		}
 
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
 		{
+			position.Y = position.Y - 8;
 			velocity = velocity.RotatedByRandom(MathHelper.ToRadians(6));
-			for (int i = 0; i < 1; i++)
-			{
-				int p = Projectile.NewProjectile(player.GetSource_FromThis(), position, velocity, type, damage, knockback, player.whoAmI);
-				if (type == ProjectileID.Bullet)
-					Main.projectile[p].extraUpdates += 2;
-			}
-			type = 0;
+			if (type == ProjectileID.Bullet)
+				velocity *= 2;
 			SoundEngine.PlaySound(SoundID.Item11, player.Center);
 		}
 

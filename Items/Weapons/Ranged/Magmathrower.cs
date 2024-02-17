@@ -17,6 +17,7 @@ namespace GMR.Items.Weapons.Ranged
 			Tooltip.SetDefault("Inflicts 'On Fire!' to enemies");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(0);
 		}
 
 		public override void SetDefaults()
@@ -24,19 +25,19 @@ namespace GMR.Items.Weapons.Ranged
 			Item.width = 88;
 			Item.height = 34;
 			Item.rare = 3;
-			Item.useTime = 5;
-			Item.useAnimation = 5;
+			Item.useTime = 8;
+			Item.useAnimation = 48;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.value = Item.sellPrice(silver: 185);
 			Item.autoReuse = true;
 			Item.UseSound = SoundID.Item34;
 			Item.DamageType = DamageClass.Ranged;
-			Item.damage = 15;
-			Item.crit = 1;
-			Item.knockBack = 0.1f;
+			Item.damage = 12;
+			Item.crit = -3;
+			Item.knockBack = 6f;
 			Item.noMelee = true;
-			Item.shoot = ModContent.ProjectileType<Projectiles.Ranged.MagmaFire>();
-			Item.shootSpeed = 18f;
+			Item.shoot = ProjectileID.Flames;
+			Item.shootSpeed = 5f;
 			Item.useAmmo = AmmoID.Gel;
 		}
 

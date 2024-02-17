@@ -16,6 +16,8 @@ namespace GMR.Items.Weapons.Ranged
 			Tooltip.SetDefault($" Shoots 6 bullets that can pass through tiles, and an extra one that pierces infinite times as long as the enemy hit isn't a boss");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(0);
+			Item.AddElement(2);
 		}
 
 		public override void SetDefaults()
@@ -48,6 +50,7 @@ namespace GMR.Items.Weapons.Ranged
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
 		{
 			int NumProjectiles = 6; // The humber of projectiles that this gun will shoot.
+			position.Y = position.Y - 4;
 
 			for (int i = 0; i < NumProjectiles; i++)
 			{

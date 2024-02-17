@@ -22,23 +22,24 @@ namespace GMR.Items.Weapons.Ranged
 			Tooltip.SetDefault("Shoots saws that very quickly deal damage and can bounce off blocks");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-		}
+            Item.AddElement(2);
+        }
 
 		public override void SetDefaults()
 		{
 			Item.width = 70;
 			Item.height = 32;
-			Item.rare = 4;
-			Item.useTime = 40;
-			Item.useAnimation = 40;
+			Item.rare = 6;
+			Item.useTime = 50;
+			Item.useAnimation = 50;
             Item.reuseDelay = 2;
             Item.useStyle = ItemUseStyleID.Shoot;
 			Item.value = Item.sellPrice(silver: 185);
 			Item.autoReuse = true;
 			Item.UseSound = SoundID.Item99;
 			Item.DamageType = DamageClass.Ranged;
-			Item.damage = 70;
-			Item.crit = 0;
+			Item.damage = 52;
+			Item.crit = 5;
 			Item.knockBack = 0.5f;
             Item.noUseGraphic = true;
             Item.noMelee = true;
@@ -69,20 +70,11 @@ namespace GMR.Items.Weapons.Ranged
         public override void AddRecipes()
 		{
 			Recipe recipe = CreateRecipe();
-            recipe.AddIngredient(ItemID.TitaniumBar, 8);
-            recipe.AddIngredient(ItemID.Bone, 48);
+            recipe.AddIngredient(ItemID.HallowedBar, 12);
             recipe.AddIngredient(ItemID.SoulofLight, 18);
-			recipe.AddIngredient(null, "BossUpgradeCrystal", 5);
+			recipe.AddIngredient(null, "BossUpgradeCrystal", 8);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
-
-            Recipe recipe2 = CreateRecipe();
-            recipe2.AddIngredient(ItemID.AdamantiteBar, 8);
-            recipe2.AddIngredient(ItemID.Bone, 48);
-            recipe2.AddIngredient(ItemID.SoulofLight, 18);
-            recipe2.AddIngredient(null, "BossUpgradeCrystal", 5);
-            recipe2.AddTile(TileID.MythrilAnvil);
-            recipe2.Register();
         }
 	}
 
@@ -137,6 +129,7 @@ namespace GMR.Items.Weapons.Ranged
                     Projectile.owner);
 
                 SoundEngine.PlaySound(SoundID.Item99, Projectile.Center);
+                SoundEngine.PlaySound(SoundID.Item23, Projectile.Center);
                 Player.GetModPlayer<GerdPlayer>().ShakeScreen(2, 0.45f);
             }
 

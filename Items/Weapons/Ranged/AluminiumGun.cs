@@ -16,6 +16,7 @@ namespace GMR.Items.Weapons.Ranged
 			Tooltip.SetDefault($"'Compressed to burning hot'\n Has a chance to shoot a special bullet\nThe bullet can pierce 3 times, each hit with an enemy increases it's damage by 10");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(1);
 		}
 
 		public override void SetDefaults()
@@ -23,19 +24,19 @@ namespace GMR.Items.Weapons.Ranged
 			Item.width = 48;
 			Item.height = 30;
 			Item.rare = 1;
-			Item.useTime = 38;
-            Item.useAnimation = 38;
+			Item.useTime = 30;
+            Item.useAnimation = 30;
             Item.useStyle = ItemUseStyleID.Shoot;
 			Item.value = Item.sellPrice(silver: 40);
 			Item.autoReuse = true;
 			Item.UseSound = SoundID.Item11;
 			Item.DamageType = DamageClass.Ranged;
-			Item.damage = 8;
-			Item.crit = 10;
-			Item.knockBack = 1f;
+			Item.damage = 10;
+			Item.crit = 2;
+			Item.knockBack = 6f;
 			Item.noMelee = true;
 			Item.shoot = ProjectileID.Bullet;
-			Item.shootSpeed = 6f;
+			Item.shootSpeed = 8f;
 			Item.useAmmo = AmmoID.Bullet;
 		}
 

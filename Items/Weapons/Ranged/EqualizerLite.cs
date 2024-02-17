@@ -25,6 +25,7 @@ namespace GMR.Items.Weapons.Ranged
 			Tooltip.SetDefault($"'I think i forgot something...'\n Projectiles bounce on enemies and tiles if they haven't hit an enemy yet\n When hitting an enemy they will split into 3 other non-bouncing projectiles");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(0);
 		}
 
 		public override void SetDefaults()
@@ -56,6 +57,7 @@ namespace GMR.Items.Weapons.Ranged
 
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
 		{
+			position.Y = position.Y - 6;
 			if (type == ProjectileID.Bullet)
 			{
 				type = ModContent.ProjectileType<Projectiles.Ranged.EqualBulletLite>();
@@ -88,7 +90,7 @@ namespace GMR.Items.Weapons.Ranged
 			recipe.AddIngredient(null, "AlloyBox");
 			recipe.AddIngredient(ItemID.SoulofNight, 12);
 			recipe.AddIngredient(ItemID.CobaltBar, 14);
-			recipe.AddTile(TileID.MythrilAnvil);
+			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 
 			Recipe recipe2 = CreateRecipe();
@@ -97,8 +99,24 @@ namespace GMR.Items.Weapons.Ranged
 			recipe2.AddIngredient(null, "AlloyBox");
 			recipe2.AddIngredient(ItemID.SoulofNight, 12);
 			recipe2.AddIngredient(ItemID.PalladiumBar, 14);
-			recipe2.AddTile(TileID.MythrilAnvil);
+			recipe2.AddTile(TileID.Anvils);
 			recipe2.Register();
+
+			Recipe recipe3 = CreateRecipe();
+			recipe3.AddIngredient(null, "YinYangGuns");
+			recipe3.AddIngredient(null, "AlloyBox");
+			recipe3.AddIngredient(ItemID.SoulofNight, 12);
+			recipe3.AddIngredient(ItemID.CobaltBar, 14);
+			recipe3.AddTile(TileID.Anvils);
+			recipe3.Register();
+
+			Recipe recipe4 = CreateRecipe();
+			recipe4.AddIngredient(null, "YinYangGuns");
+			recipe4.AddIngredient(null, "AlloyBox");
+			recipe4.AddIngredient(ItemID.SoulofNight, 12);
+			recipe4.AddIngredient(ItemID.PalladiumBar, 14);
+			recipe4.AddTile(TileID.Anvils);
+			recipe4.Register();
 		}
 	}
 }

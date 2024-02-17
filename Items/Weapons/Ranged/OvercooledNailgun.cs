@@ -23,7 +23,9 @@ namespace GMR.Items.Weapons.Ranged
 			Tooltip.SetDefault("Slowly overcools and slows down due to the barrels getting clogged with ice\nCan randomly unclog releasing small bursts of projectiles");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-		}
+            Item.AddElement(1);
+            Item.AddElement(2);
+        }
 
 		public override void SetDefaults()
 		{
@@ -71,7 +73,8 @@ namespace GMR.Items.Weapons.Ranged
 		{
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(ItemID.Megashark);
-			recipe.AddIngredient(ItemID.SoulofNight, 35);
+            recipe.AddIngredient(null, "InfraRedBar", 14);
+            recipe.AddIngredient(ItemID.SoulofNight, 35);
 			recipe.AddIngredient(ItemID.FrostCore);
 			recipe.AddIngredient(null, "BossUpgradeCrystal", 10);
 			recipe.AddTile(TileID.MythrilAnvil);
@@ -165,6 +168,8 @@ namespace GMR.Items.Weapons.Ranged
                 Projectile.Center = shoulderPosition;
 
                 float attackBuffs = (Player.GetAttackSpeed(DamageClass.Ranged) + Player.GetAttackSpeed(DamageClass.Generic)) * 0.5f;
+                if (attackBuffs < 1f)
+                    attackBuffs = 1f;
 
                 if (Player.controlUseItem)
                 {

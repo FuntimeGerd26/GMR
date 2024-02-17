@@ -16,6 +16,8 @@ namespace GMR.Items.Weapons.Ranged
 			Tooltip.SetDefault("Inflicts 'Partially Crystalized' to enemies, and damage increases by 5% for every enemy struck");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(0);
+			Item.AddElement(2);
 		}
 
 		public override void SetDefaults()
@@ -32,7 +34,7 @@ namespace GMR.Items.Weapons.Ranged
 			Item.noMelee = true;
 			Item.UseSound = SoundID.Item7;
 			Item.DamageType = DamageClass.Ranged;
-			Item.damage = 48;
+			Item.damage = 38;
 			Item.crit = 4;
 			Item.knockBack = 2f;
 			Item.shoot = ModContent.ProjectileType<Projectiles.Ranged.AncientShuriken>();

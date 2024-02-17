@@ -16,6 +16,7 @@ namespace GMR.Items.Weapons.Ranged
 			Tooltip.SetDefault("The damage the projectile deals increases by 3 every 0.25 seconds it's on the air");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(1);
 		}
 
 		public override void SetDefaults()
@@ -32,7 +33,7 @@ namespace GMR.Items.Weapons.Ranged
 			Item.noMelee = true;
 			Item.UseSound = SoundID.Item7;
 			Item.DamageType = DamageClass.Ranged;
-			Item.damage = 20;
+			Item.damage = 10;
 			Item.crit = 4;
 			Item.knockBack = 3f;
 			Item.shoot = ModContent.ProjectileType<Projectiles.Ranged.AluminiumShuriken>();

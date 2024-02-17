@@ -17,6 +17,8 @@ namespace GMR.Items.Weapons.Ranged
 			Tooltip.SetDefault($" Replaces most bullets with Infra-Red Bullets that inflict 'Partially Crystalized' on enemies");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(0);
+			Item.AddElement(2);
 		}
 
 		public override void SetDefaults()
@@ -59,7 +61,7 @@ namespace GMR.Items.Weapons.Ranged
 		public override void AddRecipes()
 		{
 			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(null, "ScrapFragment", 36);
+			recipe.AddIngredient(null, "InfraRedBar", 20);
 			recipe.AddIngredient(ItemID.HallowedBar, 28);
 			recipe.AddIngredient(ItemID.SoulofSight, 18);
 			recipe.AddIngredient(null, "BossUpgradeCrystal", 5);

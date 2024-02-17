@@ -16,6 +16,8 @@ namespace GMR.Items.Weapons.Ranged
 			Tooltip.SetDefault($" Shoots bullets that inflits Poison to enemies");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(2);
+			Item.AddElement(3);
 		}
 
 		public override void SetDefaults()
@@ -51,7 +53,7 @@ namespace GMR.Items.Weapons.Ranged
 			for (int i = 0; i < NumProjectiles; i++)
 			{
 				// Rotate the velocity randomly by 30 degrees at max.
-				Vector2 newVelocity = velocity.RotatedByRandom(MathHelper.ToRadians(8));
+				Vector2 newVelocity = velocity.RotatedByRandom(MathHelper.ToRadians(12));
 
 				// Decrease velocity randomly for nicer visuals.
 				newVelocity *= 1f - Main.rand.NextFloat(0.5f);

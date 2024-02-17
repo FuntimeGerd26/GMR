@@ -16,6 +16,7 @@ namespace GMR.Items.Weapons.Ranged
 			Tooltip.SetDefault("'There's no safe mode'");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(2);
 		}
 
 		public override void SetDefaults()
@@ -23,19 +24,19 @@ namespace GMR.Items.Weapons.Ranged
 			Item.width = 42;
 			Item.height = 22;
 			Item.rare = 2;
-			Item.useTime = 10;
-            Item.useAnimation = 10;
+			Item.useTime = 30;
+            Item.useAnimation = 30;
             Item.useStyle = ItemUseStyleID.Shoot;
 			Item.value = Item.sellPrice(silver: 50);
 			Item.autoReuse = false;
-			Item.UseSound = new SoundStyle($"{nameof(GMR)}/Sounds/Items/Ranged/BulletShotHeavy") { Volume = 0.25f, };
+			Item.UseSound = new SoundStyle($"{nameof(GMR)}/Sounds/Items/Ranged/BulletShotHeavy") { Volume = 0.15f, };
 			Item.DamageType = DamageClass.Ranged;
-			Item.damage = 10;
-			Item.crit = 4;
-			Item.knockBack = 3f;
+			Item.damage = 12;
+			Item.crit = -2;
+			Item.knockBack = 5f;
 			Item.noMelee = true;
 			Item.shoot = ProjectileID.Bullet;
-			Item.shootSpeed = 6f;
+			Item.shootSpeed = 8f;
 			Item.useAmmo = AmmoID.Bullet;
 		}
 

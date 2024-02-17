@@ -12,10 +12,8 @@ namespace GMR.Items.Weapons.Ranged
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Core Eject Shotgun");
-			Tooltip.SetDefault($" Shoots a spread of 10 bullets, along a special one\n Right click to shoot an explosive core that explodes dealing triple damage");
-
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(3);
 		}
 
 		public override void SetDefaults()
@@ -23,15 +21,16 @@ namespace GMR.Items.Weapons.Ranged
 			Item.width = 62;
 			Item.height = 26;
 			Item.rare = 5;
-			Item.useTime = 30;
-            Item.useAnimation = 30;
-            Item.useStyle = ItemUseStyleID.Shoot;
-			Item.value = Item.sellPrice(silver: 165);
+			Item.useTime = 25;
+			Item.useAnimation = 25;
+			Item.reuseDelay = 40;
+			Item.useStyle = ItemUseStyleID.Shoot;
+			Item.value = Item.sellPrice(silver: 265);
 			Item.autoReuse = true;
 			Item.UseSound = SoundID.Item36;
 			Item.DamageType = DamageClass.Ranged;
-			Item.damage = 40;
-			Item.crit = 4;
+			Item.damage = 20;
+			Item.crit = 10;
 			Item.knockBack = 4f;
 			Item.noMelee = true;
 			Item.shoot = ModContent.ProjectileType<Projectiles.Ranged.ShotgunBullet>();
@@ -55,14 +54,12 @@ namespace GMR.Items.Weapons.Ranged
 			{
 				Item.reuseDelay = 80;
 				Item.shoot = ModContent.ProjectileType<Projectiles.Ranged.ShotgunCore>();
-				Item.shootSpeed = 12f;
 				Item.UseSound = SoundID.Item61;
 			}
 			else
 			{
-				Item.reuseDelay = 20;
+				Item.reuseDelay = 40;
 				Item.shoot = ProjectileID.Bullet;
-				Item.shootSpeed = 16f;
 				Item.UseSound = SoundID.Item36;
 			}
 			return true;
@@ -70,20 +67,30 @@ namespace GMR.Items.Weapons.Ranged
 
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
+			position.Y = position.Y - 8;
 			if (player.altFunctionUse == 2)
 			{
-				Projectile.NewProjectileDirect(source, position, velocity, ModContent.ProjectileType<Projectiles.Ranged.ShotgunCore>(), damage * 3, knockback, player.whoAmI);
-				return false;
+				Projectile.NewProjectileDirect(source, position, velocity * 0.8f, ModContent.ProjectileType<Projectiles.Ranged.ShotgunCore>(), damage, knockback, player.whoAmI);
+				SoundEngine.PlaySound(SoundID.Item36.WithPitchOffset(-0.1f), player.position);
 			}
 			else
 			{
-				for (int i = 0; i < 10; i++)
+				for (int i = 0; i < 6; i++)
 				{
-					int p = Projectile.NewProjectile(source, position, velocity.RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f)), type, damage, knockback, player.whoAmI);
+					// Rotate the velocity randomly between 5 degrees.
+					Vector2 newVelocity = velocity.RotatedByRandom(MathHelper.ToRadians(5f));
+
+					// Decrease velocity randomly for nicer visuals.
+					newVelocity *= 1f - Main.rand.NextFloat(0.5f);
+
+					int p = Projectile.NewProjectile(source, position, newVelocity, type, damage, knockback, player.whoAmI);
+					Main.projectile[p].penetrate += 2;
+					Main.projectile[p].usesIDStaticNPCImmunity = true;
+					if (Main.projectile[p].idStaticNPCHitCooldown == null)
+						Main.projectile[p].idStaticNPCHitCooldown = 5;
 				}
-				Projectile.NewProjectileDirect(source, position, velocity, ModContent.ProjectileType<Projectiles.Ranged.ShotgunBullet>(), damage * 2, knockback, player.whoAmI);
-				SoundEngine.PlaySound(SoundID.Item36, player.position);
-				return false; // Return false because we don't want tModLoader to shoot projectile
+				Projectile.NewProjectileDirect(source, position, velocity * 2f, ModContent.ProjectileType<Projectiles.Ranged.ShotgunBullet>(), damage * 2, knockback * 2f, player.whoAmI);
+				SoundEngine.PlaySound(SoundID.Item36.WithPitchOffset(-0.25f), player.position);
 			}
 
 			return false;

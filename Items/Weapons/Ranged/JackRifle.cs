@@ -23,7 +23,9 @@ namespace GMR.Items.Weapons.Ranged
                 "\nInflicts 'Partially Crystalized' on enemies, deals massive damage over time\n[c/44FFAA:This item uses special code and might break]");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-		}
+            Item.AddElement(0);
+            Item.AddElement(2);
+        }
 
 		public override void SetDefaults()
 		{
@@ -177,7 +179,7 @@ namespace GMR.Items.Weapons.Ranged
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Type].Value;
-            Vector2 normOrigin = new Vector2(14f, 10f) + Vector2.UnitX * recoil.X;
+            Vector2 normOrigin = new Vector2(18f, 12f) + Vector2.UnitX * recoil.X;
 
             Main.EntitySpriteDraw(
                 texture,

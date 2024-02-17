@@ -22,7 +22,9 @@ namespace GMR.Items.Weapons.Ranged
 			Tooltip.SetDefault("Shoots saws that very quickly deal damage and can bounce off blocks");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-		}
+            Item.AddElement(0);
+            Item.AddElement(2);
+        }
 
 		public override void SetDefaults()
 		{

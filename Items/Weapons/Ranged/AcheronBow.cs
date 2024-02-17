@@ -16,6 +16,8 @@ namespace GMR.Items.Weapons.Ranged
 			Tooltip.SetDefault($"'The parts are more useful like this than being a shield'\n Shoots a spread of 3 arrows, and an explosive bullet");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(0);
+			Item.AddElement(2);
 		}
 
 		public override void SetDefaults()

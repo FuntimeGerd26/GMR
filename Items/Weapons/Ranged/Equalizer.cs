@@ -25,6 +25,7 @@ namespace GMR.Items.Weapons.Ranged
 			Tooltip.SetDefault($"'The weight is equal from all sides'\n When hitting an enemy they will split into 2 other non-bouncing projectiles\n Projectiles will home into targets");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(0);
 		}
 
 		public override void SetDefaults()
@@ -56,10 +57,11 @@ namespace GMR.Items.Weapons.Ranged
 
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
 		{
+			position.Y = position.Y - 6;
 			if (type == ProjectileID.Bullet || type == ProjectileID.MeteorShot || type == ProjectileID.CrystalBullet || type == ProjectileID.CursedBullet || type == ProjectileID.IchorBullet || type == ProjectileID.ChlorophyteBullet || type == ProjectileID.BulletHighVelocity || type == ProjectileID.VenomBullet || type == ProjectileID.PartyBullet || type == ProjectileID.NanoBullet || type == ProjectileID.ExplosiveBullet || type == ProjectileID.GoldenBullet || type == ProjectileID.MoonlordBullet)
 			{
-					type = ModContent.ProjectileType<Projectiles.Ranged.EqualBullet>();
-					SoundEngine.PlaySound(SoundID.Item41, player.position);
+				type = ModContent.ProjectileType<Projectiles.Ranged.EqualBullet>();
+				SoundEngine.PlaySound(SoundID.Item41, player.position);
 			}
 		}
 
@@ -84,9 +86,9 @@ namespace GMR.Items.Weapons.Ranged
 		{
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(null, "EqualizerLite");
-			recipe.AddIngredient(null, "SpecialUpgradeCrystal");
 			recipe.AddIngredient(ItemID.HallowedBar, 22);
 			recipe.AddIngredient(null, "BossUpgradeCrystal", 7);
+			recipe.AddIngredient(null, "SpecialUpgradeCrystal");
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 		}

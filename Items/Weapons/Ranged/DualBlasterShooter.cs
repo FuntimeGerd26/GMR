@@ -17,6 +17,7 @@ namespace GMR.Items.Weapons.Ranged
 			Tooltip.SetDefault("'Blaster mode'\nBullets home into enemies\nShoots a burst of bullets");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(2);
 		}
 
 		public override void SetDefaults()
@@ -28,12 +29,12 @@ namespace GMR.Items.Weapons.Ranged
 			Item.useAnimation = 14;
 			Item.reuseDelay = 24;
 			Item.useStyle = ItemUseStyleID.Shoot;
-			Item.value = Item.sellPrice(silver: 125);
+			Item.value = Item.sellPrice(silver: 325);
 			Item.autoReuse = true;
 			Item.UseSound = SoundID.Item41;
 			Item.DamageType = DamageClass.Ranged;
-			Item.damage = 78;
-			Item.crit = 8;
+			Item.damage = 82;
+			Item.crit = 2;
 			Item.knockBack = 7f;
 			Item.noMelee = true;
 			Item.shoot = ModContent.ProjectileType<Projectiles.Ranged.DualShooterBullet>();
@@ -48,6 +49,7 @@ namespace GMR.Items.Weapons.Ranged
 
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
 		{
+			position.Y = position.Y - 4;
 			if (type == ProjectileID.Bullet || type == ProjectileID.MeteorShot || type == ProjectileID.CrystalBullet || type == ProjectileID.CursedBullet || type == ProjectileID.IchorBullet || type == ProjectileID.ChlorophyteBullet || type == ProjectileID.BulletHighVelocity || type == ProjectileID.VenomBullet || type == ProjectileID.PartyBullet || type == ProjectileID.NanoBullet || type == ProjectileID.ExplosiveBullet || type == ProjectileID.GoldenBullet || type == ProjectileID.MoonlordBullet)
 			{
 				type = ModContent.ProjectileType<Projectiles.Ranged.DualShooterBullet>();
@@ -66,6 +68,7 @@ namespace GMR.Items.Weapons.Ranged
 
 			Recipe recipe2 = CreateRecipe();
 			recipe2.AddIngredient(null, "DualSlashBlade");
+			recipe2.AddTile(TileID.MythrilAnvil);
 			recipe2.Register();
 		}
 	}

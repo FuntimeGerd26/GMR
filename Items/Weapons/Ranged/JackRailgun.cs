@@ -16,6 +16,8 @@ namespace GMR.Items.Weapons.Ranged
 			Tooltip.SetDefault($" Shoots a fast high damage ray, but hitting enemies wont't allow you to shoot again for some time\nUses modules for ammo");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(0);
+			Item.AddElement(2);
 		}
 
 		public override void SetDefaults()
@@ -29,8 +31,8 @@ namespace GMR.Items.Weapons.Ranged
 			Item.value = Item.sellPrice(silver: 275);
 			Item.UseSound = new SoundStyle($"{nameof(GMR)}/Sounds/Items/Ranged/Railgun");
 			Item.DamageType = DamageClass.Ranged;
-			Item.damage = 65;
-			Item.crit = 15;
+			Item.damage = 350;
+			Item.crit = 46;
 			Item.knockBack = 3f;
 			Item.noMelee = true;
 			Item.autoReuse = true;
@@ -54,6 +56,8 @@ namespace GMR.Items.Weapons.Ranged
 
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
 		{
+			position.Y = position.Y - 6;
+
 			foreach (Item item in player.inventory)
 			{
 				if (!player.HasBuff(ModContent.BuffType<Buffs.Debuffs.InfraRedCorrosion>()))
@@ -70,6 +74,7 @@ namespace GMR.Items.Weapons.Ranged
 					{
 						type = ModContent.ProjectileType<Projectiles.Ranged.Railgun.RailcannonRay>();
 					}
+					SoundEngine.PlaySound(GMR.GetSounds("Items/Ranged/railgunVariant", 2, 1f, 0f, 0.75f), player.Center);
 				}
 				else
 				{
@@ -86,6 +91,7 @@ namespace GMR.Items.Weapons.Ranged
 			recipe.AddRecipeGroup("GMR:AnyGem", 3);
 			recipe.AddIngredient(null, "BossUpgradeCrystal", 5);
 			recipe.AddIngredient(null, "ScrapFragment", 20);
+			recipe.AddIngredient(null, "InfraRedBar", 32);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 		}

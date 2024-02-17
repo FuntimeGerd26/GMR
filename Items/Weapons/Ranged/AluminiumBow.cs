@@ -16,6 +16,7 @@ namespace GMR.Items.Weapons.Ranged
 			Tooltip.SetDefault("'Bet those aliens won't know what hit them'");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(1);
 		}
 
 		public override void SetDefaults()
@@ -30,9 +31,9 @@ namespace GMR.Items.Weapons.Ranged
 			Item.autoReuse = true;
 			Item.UseSound = SoundID.Item5;
 			Item.DamageType = DamageClass.Ranged;
-			Item.damage = 10;
+			Item.damage = 8;
 			Item.crit = 4;
-			Item.knockBack = 3f;
+			Item.knockBack = 5f;
 			Item.noMelee = true;
 			Item.shoot = ProjectileID.WoodenArrowFriendly;
 			Item.shootSpeed = 8f;

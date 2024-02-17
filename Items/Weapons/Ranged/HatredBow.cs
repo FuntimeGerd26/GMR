@@ -16,6 +16,7 @@ namespace GMR.Items.Weapons.Ranged
 			Tooltip.SetDefault("'I know what you are'\nShoots arrows in even spread");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(0);
 		}
 
 		public override void SetDefaults()

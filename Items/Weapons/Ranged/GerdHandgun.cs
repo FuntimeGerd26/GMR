@@ -17,27 +17,27 @@ namespace GMR.Items.Weapons.Ranged
 				$"\nRight-Click to shoot 3 bursts of 2-4 bullets with increased velocity but deal only 60% of damage");
 			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Item.type] = true;
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(2);
 		}
 
 		public override void SetDefaults()
 		{
-			Item.width = 48;
-			Item.height = 26;
-			Item.rare = 4;
+			Item.width = 50;
+			Item.height = 30;
+			Item.rare = 3;
+			Item.useTime = 22;
+            Item.useAnimation = 22;
 			Item.reuseDelay = 0;
-			Item.useTime = 16;
-            Item.useAnimation = 16;
-            Item.useStyle = ItemUseStyleID.Shoot;
+			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.value = Item.sellPrice(silver: 150);
 			Item.autoReuse = true;
 			Item.UseSound = SoundID.Item11;
 			Item.DamageType = DamageClass.Ranged;
-			Item.damage = 62;
-			Item.crit = 4;
-			Item.knockBack = 2.5f;
+			Item.damage = 40;
+			Item.knockBack = 10f;
 			Item.noMelee = true;
 			Item.shoot = ProjectileID.Bullet;
-			Item.shootSpeed = 6f;
+			Item.shootSpeed = 18f;
 			Item.useAmmo = AmmoID.Bullet;
 		}
 
@@ -55,48 +55,54 @@ namespace GMR.Items.Weapons.Ranged
 		{
 			if (player.altFunctionUse == 2)
 			{
-				Item.reuseDelay = 24;
-				Item.useTime = 3;
+				Item.reuseDelay = 30;
+				Item.useTime = 2;
 				Item.useAnimation = 12;
+				Item.crit = -3;
 			}
 			else
 			{
 				Item.reuseDelay = 0;
-				Item.useTime = 16;
-				Item.useAnimation = 16;
+				Item.useTime = 22;
+				Item.useAnimation = 22;
+				Item.crit = 2;
 			}
 			return true;
 		}
-
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
 		{
+			position.Y = position.Y - 4;
+
 			if (player.altFunctionUse == 2)
 			{
-				int ProjectileCount = 2 + Main.rand.Next(2);
-				for (int i = 0; i < ProjectileCount; i++)
-				{               
-					// Rotate the velocity randomly by 10 degrees at max.
-					Vector2 newVelocity = velocity.RotatedByRandom(MathHelper.ToRadians(10));
+				Vector2 newVelocity = velocity.RotatedByRandom(MathHelper.ToRadians(6f));
 
-					// Decrease velocity randomly for nicer visuals.
-					newVelocity *= 1f - Main.rand.NextFloat(0.75f);
-
+				for (int i = 0; i < 1; i++)
+				{
 					// Create a projectile.
-					int p = Projectile.NewProjectile(player.GetSource_FromThis(), position, newVelocity, type, (int)(damage * 0.6), knockback, player.whoAmI);
-					Main.projectile[p].extraUpdates += 10;
-					Main.projectile[p].penetrate += 1;
-					Main.projectile[p].usesLocalNPCImmunity = true;
+					int p = Projectile.NewProjectile(player.GetSource_FromThis(), position, newVelocity, type, (int)(damage * 0.4), knockback, player.whoAmI);
+					Main.projectile[p].extraUpdates += 5;
 					SoundEngine.PlaySound(SoundID.Item11, player.position);
+				}
+				for (int y = 0; y < 1; y++)
+				{
+					Dust dustId = Dust.NewDustDirect(position, 2, 2, 66, newVelocity.X / 2, newVelocity.Y / 2, 30, new Color(125, 185, 255), 0.5f);
+					dustId.noGravity = true;
 				}
 			}
 			else
 			{
 				for (int i = 0; i < 1; i++)
                 {
-                    int p = Projectile.NewProjectile(player.GetSource_FromThis(), position, velocity * 1.5f, type, damage, knockback, player.whoAmI);
+                    int p = Projectile.NewProjectile(player.GetSource_FromThis(), position, velocity, type, damage, knockback, player.whoAmI);
 					if (Main.projectile[p].penetrate == 1)
 	                    Main.projectile[p].penetrate += 1;
 					Main.projectile[p].usesLocalNPCImmunity = true;
+				}
+				for (int y = 0; y < 4; y++)
+				{
+					Dust dustId = Dust.NewDustDirect(position, 2, 2, 66, velocity.X / 2, velocity.Y / 2, 30, new Color(125, 185, 255), 0.5f);
+					dustId.noGravity = true;
 				}
 			}
 			type = 0;
@@ -105,32 +111,20 @@ namespace GMR.Items.Weapons.Ranged
 		public override void AddRecipes()
 		{
 			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.TheUndertaker);
-			recipe.AddIngredient(ItemID.SoulofNight, 30);
-			recipe.AddIngredient(ItemID.CobaltBar, 15);
-			recipe.AddTile(TileID.MythrilAnvil);
+			recipe.AddIngredient(ItemID.FlintlockPistol);
+			recipe.AddIngredient(ItemID.SoulofNight, 14);
+			recipe.AddIngredient(ItemID.CobaltBar, 30);
+			recipe.AddIngredient(null, "BossUpgradeCrystal", 7);
+			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 
 			Recipe recipe2 = CreateRecipe();
-			recipe2.AddIngredient(ItemID.TheUndertaker);
-			recipe2.AddIngredient(ItemID.SoulofNight, 30);
-			recipe2.AddIngredient(ItemID.PalladiumBar, 15);
-			recipe2.AddTile(TileID.MythrilAnvil);
+			recipe2.AddIngredient(ItemID.FlintlockPistol);
+			recipe2.AddIngredient(ItemID.SoulofNight, 14);
+			recipe2.AddIngredient(ItemID.PalladiumBar, 30);
+			recipe2.AddIngredient(null, "BossUpgradeCrystal", 7);
+			recipe2.AddTile(TileID.Anvils);
 			recipe2.Register();
-
-			Recipe recipe3 = CreateRecipe();
-			recipe3.AddIngredient(ItemID.Musket);
-			recipe3.AddIngredient(ItemID.SoulofNight, 30);
-			recipe3.AddIngredient(ItemID.CobaltBar, 15);
-			recipe3.AddTile(TileID.MythrilAnvil);
-			recipe3.Register();
-
-			Recipe recipe4 = CreateRecipe();
-			recipe4.AddIngredient(ItemID.Musket);
-			recipe4.AddIngredient(ItemID.SoulofNight, 30);
-			recipe4.AddIngredient(ItemID.PalladiumBar, 15);
-			recipe4.AddTile(TileID.MythrilAnvil);
-			recipe4.Register();
 		}
 	}
 }

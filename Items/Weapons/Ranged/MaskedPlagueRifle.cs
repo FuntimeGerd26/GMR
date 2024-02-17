@@ -16,6 +16,8 @@ namespace GMR.Items.Weapons.Ranged
 			Tooltip.SetDefault($" Shoots bullets that inflits Poison to enemies");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.AddElement(2);
+			Item.AddElement(3);
 		}
 
 		public override void SetDefaults()
@@ -31,9 +33,9 @@ namespace GMR.Items.Weapons.Ranged
 			Item.autoReuse = true;
 			Item.UseSound = SoundID.Item11;
 			Item.DamageType = DamageClass.Ranged;
-			Item.damage = 12;
-			Item.crit = 4;
-			Item.knockBack = 3f;
+			Item.damage = 14;
+			Item.crit = 0;
+			Item.knockBack = 8f;
 			Item.noMelee = true;
 			Item.shoot = ModContent.ProjectileType<Projectiles.Ranged.MaskedPlagueBullet>();
 			Item.shootSpeed = 6f;
