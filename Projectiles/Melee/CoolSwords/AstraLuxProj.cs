@@ -20,6 +20,8 @@ namespace GMR.Projectiles.Melee.CoolSwords
             DisplayName.SetDefault("Astra Lux");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 15;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+            Projectile.AddElement(0);
+            Projectile.AddElement(2);
         }
 
         public override void SetDefaults()

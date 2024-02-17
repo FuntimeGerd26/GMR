@@ -65,7 +65,7 @@ namespace GMR.Projectiles.Melee.CoolSwords
                     speed = Vector2.Normalize(speed) * 800;
 
                 float numberProjectiles = 3;
-                float rotation = MathHelper.ToRadians(45f);
+                float rotation = MathHelper.ToRadians(15f);
                 for (int i = 0; i < numberProjectiles; i++)
                 {
                     Vector2 perturbedSpeed = Vector2.Normalize(speed).RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * 24f;

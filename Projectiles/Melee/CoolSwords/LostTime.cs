@@ -16,6 +16,8 @@ namespace GMR.Projectiles.Melee.CoolSwords
             DisplayName.SetDefault("Lost Time's Blade");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+            Projectile.AddElement(2);
+            Projectile.AddElement(3);
         }
 
         public override void SetDefaults()

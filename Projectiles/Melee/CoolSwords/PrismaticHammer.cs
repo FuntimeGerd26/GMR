@@ -1,11 +1,15 @@
+using System;
+using System.IO;
+using ReLogic.Content;
+using Terraria;
+using Terraria.ID;
+using Terraria.Audio;
+using Terraria.ModLoader;
+using Terraria.GameContent;
+using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using Terraria;
-using Terraria.Audio;
-using Terraria.GameContent;
-using Terraria.ID;
-using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
 
 namespace GMR.Projectiles.Melee.CoolSwords
 {
@@ -17,6 +21,8 @@ namespace GMR.Projectiles.Melee.CoolSwords
         {
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 40;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+            Projectile.AddElement(0);
+            Projectile.AddElement(2);
         }
 
         public override void SetDefaults()
@@ -102,7 +108,13 @@ namespace GMR.Projectiles.Melee.CoolSwords
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Player player = Main.player[Projectile.owner];
-            target.AddBuff(BuffID.Frostburn, 600);
+            Color disco = new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB);
+            int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 66, Projectile.velocity.X * 0.7f,
+                Projectile.velocity.Y * -0.5f, 30, disco, 1.5f);
+            Main.dust[dustId].noGravity = true;
+
+            Projectile.NewProjectile(Projectile.GetSource_FromThis(), new Vector2(target.Center.X + Main.rand.Next(-target.width / 2, target.width / 2), target.Center.Y + Main.rand.Next(-target.height / 2, target.height / 2)),
+                Vector2.Zero, ModContent.ProjectileType<PrismaticSpark>(), 0, 0f, Main.myPlayer);
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -122,11 +134,7 @@ namespace GMR.Projectiles.Melee.CoolSwords
             }
             var origin = new Vector2(0f, texture.Height);
 
-            foreach (var v in GerdHelper.CircularVector(4, Main.GlobalTimeWrappedHourly))
-            {
-                Main.EntitySpriteDraw(texture, drawCoords + v * 2f * Projectile.scale, null, Color.White, Projectile.rotation, origin, Projectile.scale, effects, 0);
-            }
-
+            Main.EntitySpriteDraw(texture, handPosition - Main.screenPosition, null, Color.White, Projectile.rotation, origin, Projectile.scale, effects, 0);
             Main.EntitySpriteDraw(texture, handPosition - Main.screenPosition, null, drawColor, Projectile.rotation, origin, Projectile.scale, effects, 0);
 
             if (AnimProgress > 0.35f && AnimProgress < 0.75f)
@@ -144,6 +152,51 @@ namespace GMR.Projectiles.Melee.CoolSwords
                 Main.EntitySpriteDraw(swish, swishLocation, null, swishColor.UseA(0), r + MathHelper.PiOver2, swishOrigin, Projectile.scale * 1.5f, effects, 0);
             }
             return false;
+        }
+
+        public class PrismaticSpark : ModProjectile, IDrawable
+        {
+            public override string Texture => "GMR/Empty";
+
+            public override void SetDefaults()
+            {
+                Projectile.width = 5;
+                Projectile.height = 5;
+                Projectile.aiStyle = -1;
+                Projectile.timeLeft = 600;
+                Projectile.ignoreWater = true;
+                Projectile.tileCollide = false;
+                Projectile.extraUpdates = 9;
+            }
+
+            public override void AI()
+            {
+                Projectile.alpha += 2;
+                if (Projectile.alpha >= 255)
+                {
+                    Projectile.Kill();
+                }
+                Projectile.rotation += MathHelper.ToRadians(0.2f);
+            }
+
+            public override bool PreDraw(ref Color lightColor)
+            {
+                return false;
+            }
+
+            DrawLayer IDrawable.DrawLayer => DrawLayer.AfterProjectiles;
+            public void Draw(Color lightColor)
+            {
+                Player player = Main.player[Projectile.owner];
+                Texture2D flash = Request<Texture2D>("GMR/Assets/Images/Flash01", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                Vector2 flashOrigin = flash.Size() / 2f;
+                Color disco = new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB) * 1.3f;
+
+                Main.EntitySpriteDraw(flash, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), null, disco * Projectile.Opacity,
+                    Projectile.rotation, flashOrigin, Projectile.scale * 0.75f, SpriteEffects.None, 0);
+                Main.EntitySpriteDraw(flash, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), null, disco * Projectile.Opacity,
+                    Projectile.rotation + MathHelper.ToRadians(90f), flashOrigin, Projectile.scale * 0.75f, SpriteEffects.None, 0);
+            }
         }
     }
 }

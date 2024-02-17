@@ -11,12 +11,18 @@ namespace GMR.Projectiles.Melee.CoolSwords
 {
     public class GildedMetalSword : CoolSwordBase
     {
+        public override void SetStaticDefaults()
+        {
+            Projectile.AddElement(0);
+            Projectile.AddElement(2);
+        }
+
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Projectile.width = 68;
-            Projectile.height = 68;
-            hitboxOutwards = 68;
+            Projectile.width = 80;
+            Projectile.height = 80;
+            hitboxOutwards = 80;
             rotationOffset = -MathHelper.PiOver4 * 3f;
             Projectile.extraUpdates = 14;
         }
@@ -54,7 +60,7 @@ namespace GMR.Projectiles.Melee.CoolSwords
                 Vector2 velocity = AngleVector * Projectile.velocity.Length() * 18f;
                 Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center,
                     velocity,
-                    ModContent.ProjectileType<Projectiles.Melee.EternityCut>(), (int)(Projectile.damage * 0.75f), Projectile.knockBack / 4f, Projectile.owner);
+                    ModContent.ProjectileType<Projectiles.Melee.EternityCut>(), (int)(Projectile.damage * 0.4f), Projectile.knockBack / 4f, Projectile.owner);
 
                 if (modPlayer.InfraRedSet != null)
                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, AngleVector * Projectile.velocity.Length() * 12f, ModContent.ProjectileType<Projectiles.Melee.JackSwordExplode>(), (int)(Projectile.damage * 0.75f), Projectile.knockBack / 4f, Projectile.owner);

@@ -11,6 +11,10 @@ namespace GMR.Projectiles.Melee.CoolSwords
 {
     public class UltraBlueChainsaw : CoolSwordBase
     {
+        public override void SetStaticDefaults()
+        {
+            Projectile.AddElement(2);
+        }
 
         public override void SetDefaults()
         {
@@ -43,7 +47,7 @@ namespace GMR.Projectiles.Melee.CoolSwords
             if (!playedSound && AnimProgress > 0.4f)
             {
                 playedSound = true;
-                SoundEngine.PlaySound(SoundID.Item1, Projectile.Center);
+                SoundEngine.PlaySound(SoundID.Item23, Projectile.Center);
             }
         }
 

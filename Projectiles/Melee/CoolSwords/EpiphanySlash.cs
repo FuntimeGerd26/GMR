@@ -13,6 +13,12 @@ namespace GMR.Projectiles.Melee.CoolSwords
     {
         public override string Texture => "GMR/Items/Weapons/Melee/Epiphany";
 
+        public override void SetStaticDefaults()
+        {
+            Projectile.AddElement(1);
+            Projectile.AddElement(2);
+        }
+
         public override void SetDefaults()
         {
             base.SetDefaults();

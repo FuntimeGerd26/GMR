@@ -13,6 +13,12 @@ namespace GMR.Projectiles.Melee.CoolSwords
     {
         public override string Texture => "GMR/Items/Weapons/Melee/InfraRedSword";
 
+        public override void SetStaticDefaults()
+        {
+            Projectile.AddElement(0);
+            Projectile.AddElement(2);
+        }
+
         public override void SetDefaults()
         {
             base.SetDefaults();
@@ -45,7 +51,8 @@ namespace GMR.Projectiles.Melee.CoolSwords
             if (!playedSound && AnimProgress > 0.4f)
             {
                 playedSound = true;
-                SoundEngine.PlaySound(GMR.GetSounds("Items/Melee/swordSwoosh", 7, 0.66f, 0f, 0.2f).WithPitchOffset(-0.5f), Projectile.Center);
+                SoundEngine.PlaySound(GMR.GetSounds("Items/Melee/swordSwoosh", 7, 0.66f, 0f, 0.2f).WithPitchOffset(-0.75f), Projectile.Center);
+                SoundEngine.PlaySound(SoundID.Item15.WithPitchOffset(-0.5f), Projectile.Center);
             }
         }
 
@@ -55,19 +62,19 @@ namespace GMR.Projectiles.Melee.CoolSwords
             GerdPlayer modPlayer = player.GetModPlayer<GerdPlayer>();
             if (progress == 0.5f && Main.myPlayer == Projectile.owner)
             {
-                Vector2 velocity = AngleVector * Projectile.velocity.Length() * 10f;
-                float numberProjectiles = 6;
-                float rotation = MathHelper.ToRadians(45f + Main.rand.NextFloat(-10f, 10f));
-                for (int i = 0; i < numberProjectiles; i++)
+                Vector2 velocity = AngleVector * Projectile.velocity.Length() * 12f;
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, velocity, ModContent.ProjectileType<Projectiles.Melee.InfraRedBeam>(),
+                   Projectile.damage, Projectile.knockBack / 2f, Projectile.owner);
+
+                for (int i = 0; i < 3; i++)
                 {
-                    Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * 1f;
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, perturbedSpeed, ModContent.ProjectileType<Projectiles.Melee.InfraRedBeam>(),
-                        (int)(Projectile.damage * 0.75f), Projectile.knockBack / 4f, Projectile.owner);
+                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, velocity.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-35f, 35f))),
+                        ModContent.ProjectileType<Projectiles.Melee.InfraRedSwordBullet>(), (int)(Projectile.damage * 0.75f), Projectile.knockBack / 2f, Main.myPlayer);
                 }
 
                 if (modPlayer.InfraRedSet != null)
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, AngleVector * Projectile.velocity.Length() * 12f, ModContent.ProjectileType<Projectiles.Melee.JackSwordThrow>(),
-                        (int)(Projectile.damage * 0.75f), Projectile.knockBack / 4f, Projectile.owner);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, AngleVector * Projectile.velocity.Length() * 12f,
+                        ModContent.ProjectileType<Projectiles.Melee.JackSwordThrow>(), (int)(Projectile.damage * 0.75f), Projectile.knockBack / 4f, Projectile.owner);
             }
         }
 
@@ -90,7 +97,7 @@ namespace GMR.Projectiles.Melee.CoolSwords
         }
         public override float GetVisualOuter(float progress, float swingProgress)
         {
-            /*if (progress > 0.8f)
+            if (progress > 0.8f)
             {
                 float p = 1f - (1f - progress) / 0.2f;
                 Projectile.alpha = (int)(p * 255);
@@ -101,7 +108,7 @@ namespace GMR.Projectiles.Melee.CoolSwords
                 float p = 1f - (progress) / 0.35f;
                 Projectile.alpha = (int)(p * 255);
                 return -10f * p;
-            }*/
+            }
             return 0f;
         }
 
@@ -110,7 +117,7 @@ namespace GMR.Projectiles.Melee.CoolSwords
             target.AddBuff(ModContent.BuffType<Buffs.Debuffs.PartiallyCrystallized>(), 120);
 
             Player player = Main.player[Projectile.owner];
-            if (player.ownedProjectileCounts[ModContent.ProjectileType<Projectiles.InfraRedExplotion>()] < 1)
+            if (player.ownedProjectileCounts[ModContent.ProjectileType<Projectiles.InfraRedExplotion>()] < 5)
             {
                 int p = Projectile.NewProjectile(Projectile.GetSource_FromAI(), target.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.InfraRedExplotion>(), Projectile.damage / 4, Projectile.knockBack / 2f, Projectile.owner);
             }
@@ -165,7 +172,7 @@ namespace GMR.Projectiles.Melee.CoolSwords
                 var swishColor = new Color(255, 110, 110, 125) * intensity * intensity * Projectile.Opacity * 0.5f;
                 float r = BaseAngleVector.ToRotation() + ((AnimProgress - 0.45f) / 0.2f * 2f - 1f) * -swingDirection * 0.6f;
                 var swishLocation = Main.player[Projectile.owner].Center - Main.screenPosition + r.ToRotationVector2() * (size - 20f) * Projectile.scale;
-                Main.EntitySpriteDraw(swish, swishLocation, null, swishColor.UseA(0), r + MathHelper.PiOver2, swishOrigin, Projectile.scale * 2f, effects, 0);
+                Main.EntitySpriteDraw(swish, swishLocation, null, swishColor.UseA(0), r + MathHelper.PiOver2, swishOrigin, Projectile.scale, effects, 0);
             }
 
             return false;

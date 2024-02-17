@@ -16,6 +16,11 @@ namespace GMR.Projectiles.Melee.CoolSwords
         public override string Texture => "GMR/Items/Weapons/Melee/TrueBraycoeSword";
         public float colorProgress;
 
+        public override void SetStaticDefaults()
+        {
+            Projectile.AddElement(0);
+        }
+
         public override void SetDefaults()
         {
             base.SetDefaults();
@@ -52,7 +57,7 @@ namespace GMR.Projectiles.Melee.CoolSwords
             if (!playedSound && AnimProgress > 0.4f)
             {
                 playedSound = true;
-                SoundEngine.PlaySound(GMR.GetSounds("Items/Melee/swordSwoosh", 7, 0.66f, 0f, 0.2f).WithPitchOffset(0.25f), Projectile.Center);
+                SoundEngine.PlaySound(GMR.GetSounds("Items/Melee/swordSwoosh", 7, 0.66f, 0f, 0.2f).WithPitchOffset(0.5f), Projectile.Center);
             }
         }
 

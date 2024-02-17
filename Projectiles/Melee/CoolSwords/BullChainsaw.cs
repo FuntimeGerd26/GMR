@@ -13,6 +13,12 @@ namespace GMR.Projectiles.Melee.CoolSwords
     {
         public override string Texture => "GMR/Items/Weapons/Melee/BullChainsaw";
 
+        public override void SetStaticDefaults()
+        {
+            Projectile.AddElement(1);
+            Projectile.AddElement(3);
+        }
+
         public override void SetDefaults()
         {
             base.SetDefaults();

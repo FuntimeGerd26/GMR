@@ -16,6 +16,12 @@ namespace GMR.Projectiles.Melee.CoolSwords
         public override string Texture => "GMR/Items/Weapons/Melee/PrismaticMirror";
         public float colorProgress;
 
+        public override void SetStaticDefaults()
+        {
+            Projectile.AddElement(0);
+            Projectile.AddElement(2);
+        }
+
         public override void SetDefaults()
         {
             base.SetDefaults();

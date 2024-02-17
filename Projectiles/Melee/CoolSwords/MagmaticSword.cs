@@ -13,6 +13,11 @@ namespace GMR.Projectiles.Melee.CoolSwords
     {
         public override string Texture => "GMR/Items/Weapons/Melee/MagmaticSword";
 
+        public override void SetStaticDefaults()
+        {
+            Projectile.AddElement(0);
+        }
+
         public override void SetDefaults()
         {
             base.SetDefaults();
@@ -62,7 +67,7 @@ namespace GMR.Projectiles.Melee.CoolSwords
                 Vector2 velocity = AngleVector * Projectile.velocity.Length() * 24f;
                 for (int i = 0; i < 2; i++)
                 {
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-25f, 25f))) * 8f,
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-10f, 10f))) * 8f,
                         ModContent.ProjectileType<Projectiles.Melee.MagmaticFireball>(), (int)(Projectile.damage * 0.75f), Projectile.knockBack / 2f, Projectile.owner);
                 }
 

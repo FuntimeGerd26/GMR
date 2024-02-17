@@ -11,6 +11,12 @@ namespace GMR.Projectiles.Melee.CoolSwords
 {
     public class LunarNovaAxe : CoolSwordBase
     {
+        public override void SetStaticDefaults()
+        {
+            Projectile.AddElement(1);
+            Projectile.AddElement(2);
+        }
+
         public override void SetDefaults()
         {
             base.SetDefaults();

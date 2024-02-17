@@ -15,6 +15,8 @@ namespace GMR.Projectiles.Melee.CoolSwords
         {
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+            Projectile.AddElement(1);
+            Projectile.AddElement(2);
         }
 
         public override void SetDefaults()

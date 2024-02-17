@@ -18,6 +18,9 @@ namespace GMR.Projectiles.Melee.CoolSwords
             DisplayName.SetDefault("Umbra del Solei");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+            Projectile.AddElement(0);
+            Projectile.AddElement(2);
+            Projectile.AddElement(3);
         }
 
         public override void SetDefaults()
@@ -46,8 +49,9 @@ namespace GMR.Projectiles.Melee.CoolSwords
             return Color.White;
         }
 
+        float DiscoR;
         public override void AI()
-        {
+        {   
             base.AI();
             Player player = Main.player[Projectile.owner];
             if (Main.player[Projectile.owner].itemAnimation <= 1)
@@ -59,6 +63,9 @@ namespace GMR.Projectiles.Melee.CoolSwords
                 playedSound = true;
                 SoundEngine.PlaySound(GMR.GetSounds("Items/Melee/swordSwoosh", 7, 0.66f, 0f, 0.2f).WithPitchOffset(0.5f), Projectile.Center);
             }
+
+            DiscoR = (float)Main.DiscoR / 255f;
+            Lighting.AddLight(Projectile.Center, new Vector3(DiscoR, 0.5f, 1f));
         }
 
         public override void UpdateSwing(float progress, float interpolatedSwingProgress)
@@ -67,7 +74,7 @@ namespace GMR.Projectiles.Melee.CoolSwords
             GerdPlayer modPlayer = player.GetModPlayer<GerdPlayer>();
             if (progress == 0.5f && Main.myPlayer == Projectile.owner)
             {
-                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity * 8f, ModContent.ProjectileType<Projectiles.Melee.GerdSlash>(), (int)(Projectile.damage * 0.8f), Projectile.knockBack / 2f, Main.myPlayer);
+                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity * 16f, ModContent.ProjectileType<Projectiles.Melee.GerdSlash>(), (int)(Projectile.damage * 0.8f), Projectile.knockBack / 2f, Main.myPlayer);
 
                 if (modPlayer.InfraRedSet != null)
                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, AngleVector * Projectile.velocity.Length() * 9f, ModContent.ProjectileType<Projectiles.Melee.JackSwordThrow>(), (int)(Projectile.damage * 0.75f), Projectile.knockBack / 4f, Projectile.owner);
