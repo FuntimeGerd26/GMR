@@ -18,6 +18,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ModLoader.IO;
 using Terraria.ModLoader.Utilities;
 using static Terraria.ModLoader.ModContent;
+using GMR;
 
 namespace GMR.NPCs.Bosses.MagmaEye
 {
@@ -41,19 +42,20 @@ namespace GMR.NPCs.Bosses.MagmaEye
                 PortraitPositionYOverride = 1.2f,
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
+            NPC.AddElement(0);
         }
 
         public override void SetDefaults()
         {
             NPC.width = 80;
             NPC.height = 80;
-            NPC.lifeMax = 10500;
-            NPC.defense = 4;
+            NPC.lifeMax = 4150;
+            NPC.defense = 5;
             NPC.HitSound = SoundID.NPCHit41;
             NPC.DeathSound = SoundID.NPCDeath10;
             NPC.knockBackResist = 0f;
             NPC.value = Item.buyPrice(gold: 4);
-            NPC.damage = 28;
+            NPC.damage = 30;
             NPC.aiStyle = -1;
             NPC.noTileCollide = true;
             NPC.noGravity = true;
@@ -71,6 +73,12 @@ namespace GMR.NPCs.Bosses.MagmaEye
             BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheUnderworld,
             new FlavorTextBestiaryInfoElement("An entity born from perfectly positioned rocks and lava, it was worshipped as a statue to an unknown god supposedly in charge of the infinite heat of the underworld."),
             });
+        }
+
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+        {
+            cooldownSlot = ImmunityCooldownID.Bosses; // use the boss immunity cooldown counter, to prevent ignoring boss attacks by taking damage from other sources
+            return true;
         }
 
         public override void AI()
@@ -91,7 +99,7 @@ namespace GMR.NPCs.Bosses.MagmaEye
 
             var center = NPC.Center;
             float lifePercentage = NPC.life / (float)NPC.lifeMax;
-            if (lifePercentage > 0.8f && !Main.masterMode)
+            if (lifePercentage > 0.8f && !Main.masterMode) // Fakeout Phase
             {
                 NPC.TargetClosest(faceTarget: false);
                 if (!NPC.HasValidTarget)
@@ -142,7 +150,7 @@ namespace GMR.NPCs.Bosses.MagmaEye
                     }
                 }
             }
-            else
+            else // Full Boss
             {
                 NPC.TargetClosest(faceTarget: false);
                 if (!NPC.HasValidTarget)
@@ -162,7 +170,7 @@ namespace GMR.NPCs.Bosses.MagmaEye
                     NPC.velocity = Vector2.Lerp(NPC.velocity, Vector2.Normalize(gotoPosition - center) * 12f, 0.0137f);
                 }
 
-                if (AI4 == 0)
+                if (AI4 == 0) // Basic AI (Homing Fireballs)
                 {
                     NPC.rotation = NPC.velocity.X * 0.0314f;
                     NPC.ai[1]++;
@@ -188,7 +196,7 @@ namespace GMR.NPCs.Bosses.MagmaEye
                         }
                     }
                 }
-                else if ((int)AI4 == 1)
+                else if ((int)AI4 == 1) //Horizontal Wall
                 {
                     if (NPC.ai[1] == 0f)
                     {
@@ -216,7 +224,7 @@ namespace GMR.NPCs.Bosses.MagmaEye
                         NPC.ai[1] = 0f;
                     }
                 }
-                else if ((int)AI4 == 2)
+                else if ((int)AI4 == 2) // Sword "Ring" (Any attack with ring in the name just means it's many evenly spread projectiles around the boss)
                 {
                     if (NPC.ai[1] == 0f)
                     {
@@ -238,7 +246,7 @@ namespace GMR.NPCs.Bosses.MagmaEye
                         NPC.ai[1] = 0f;
                     }
                 }
-                else if ((int)AI4 == 3)
+                else if ((int)AI4 == 3) // Homing Fireballs Ring
                 {
                     NPC.velocity *= 0.0137f;
                     if (NPC.ai[1] == 0f)
@@ -262,7 +270,7 @@ namespace GMR.NPCs.Bosses.MagmaEye
                         NPC.ai[1] = 0f;
                     }
                 }
-                else if ((int)AI4 == 4)
+                else if ((int)AI4 == 4) // Vertical Walls
                 {
                     NPC.rotation = NPC.velocity.X * 0.0314f;
                     if (NPC.ai[1] == 0f)
@@ -291,7 +299,7 @@ namespace GMR.NPCs.Bosses.MagmaEye
                         NPC.ai[1] = 0f;
                     }
                 }
-                else if ((int)AI4 == 5)
+                else if ((int)AI4 == 5) // Above Player, Rain projectiles
                 {
                     NPC.Center = target.Center - 300 * Vector2.UnitY;
 
@@ -327,7 +335,7 @@ namespace GMR.NPCs.Bosses.MagmaEye
                         NPC.ai[3] = 0f;
                     }
                 }
-                else if ((int)AI4 == 6)
+                else if ((int)AI4 == 6) // Chase Player, Shoot homing fireballs in expert
                 {
                     NPC.velocity = Vector2.Lerp(NPC.velocity, Vector2.Normalize(target.Center - center) * 6f, 0.075f);
                     NPC.dontTakeDamage = true;
@@ -354,6 +362,12 @@ namespace GMR.NPCs.Bosses.MagmaEye
                                 Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * 2f;
                                 Projectile.NewProjectile(NPC.GetSource_FromThis(), center, perturbedSpeed, ModContent.ProjectileType<FallFireball>(), NPC.damage, 1f, Main.myPlayer);
                             }
+
+                            if (Main.expertMode)
+                            {
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), center, Vector2.Normalize(center - target.Center).RotatedBy(Main.rand.NextFloat(-0.1f, 0.1f)) * 11f,
+                                    ModContent.ProjectileType<BackFireball>(), NPC.damage, 1f, Main.myPlayer);
+                            }
                         }
                     }
                     NPC.ai[1]++;
@@ -364,7 +378,7 @@ namespace GMR.NPCs.Bosses.MagmaEye
                         NPC.ai[3] = 0f;
                     }
                 }
-                else if ((int)AI4 == 7)
+                else if ((int)AI4 == 7) // Basic AI (Homing Fireballs)
                 {
                     NPC.dontTakeDamage = false;
 
@@ -393,7 +407,7 @@ namespace GMR.NPCs.Bosses.MagmaEye
                         NPC.ai[3] = 0f;
                     }
                 }
-                else if ((int)AI4 == 8)
+                else if ((int)AI4 == 8) // Swords Ring
                 {
                     NPC.Center = center;
                     NPC.velocity *= 0.0137f;
@@ -435,7 +449,7 @@ namespace GMR.NPCs.Bosses.MagmaEye
                         NPC.ai[3] = 0f;
                     }
                 }
-                else
+                else // Big Spinning Sword Ring
                 {
                     NPC.rotation = NPC.velocity.X * 0.0314f;
                     NPC.velocity *= 0.0137f;
@@ -477,13 +491,23 @@ namespace GMR.NPCs.Bosses.MagmaEye
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            //npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<ExampleBossBag>()));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Misc.Consumable.DGPCrate>(), 20));
-            int[] drops = { ModContent.ItemType<Items.Weapons.Melee.ExolBlade>(), ModContent.ItemType<Items.Weapons.Ranged.Magmathrower>(), ModContent.ItemType<Items.Weapons.Ranged.MagmaKnife>(),
-                ModContent.ItemType<Items.Weapons.Magic.MagmaStaff>(), ItemID.Heart };
+            LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 
-            npcLoot.Add(ItemDropRule.OneFromOptions(1, drops));
-            npcLoot.Add(ItemDropRule.Common(ItemID.Hellstone, 1, 20, 38));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Misc.Consumable.DGPCrate>(), 20));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.ExolBlade>(), 10));
+            int[] drops = { ModContent.ItemType<Items.Weapons.Melee.BrokenMagmaticSword>(), ModContent.ItemType<Items.Weapons.Ranged.Magmathrower>(), ModContent.ItemType<Items.Weapons.Ranged.MagmaKnife>(),
+                ModContent.ItemType<Items.Weapons.Magic.MagmaStaff>() };
+
+            notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, drops));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.Hellstone, 1, 20, 38));
+
+            if (ModLoader.TryGetMod("MagicStorage", out Mod magicStorage) && !GerdWorld.downedMagmaEye)
+            {
+                npcLoot.Add(ItemDropRule.Common(magicStorage.Find<ModItem>("ShadowDiamond").Type));
+            }
+
+            npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<Items.Misc.Consumable.MagmaEyeTreasureBag>()));
+            npcLoot.Add(notExpertRule);
         }
 
         public override void OnKill()

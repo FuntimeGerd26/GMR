@@ -21,16 +21,12 @@ using static Terraria.ModLoader.ModContent;
 
 namespace GMR.NPCs.Bosses.Worms
 {
-	[AutoloadBossHead()]
+	// No longer a boss btw
 	internal class Trerios : WormHead
 	{
 		public override int BodyType => ModContent.NPCType<TreriosBody>();
 
 		public override int TailType => ModContent.NPCType<TreriosTail>();
-
-		public int AI4;
-		public int AI5;
-		public int AI6;
 
 		public override void SetStaticDefaults()
 		{
@@ -47,7 +43,7 @@ namespace GMR.NPCs.Bosses.Worms
 				PortraitPositionYOverride = -12f
 			};
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, drawModifier);
-			Main.npcFrameCount[Type] = 3;
+			NPC.AddElement(0);
 		}
 
 		public override void SetDefaults()
@@ -56,15 +52,10 @@ namespace GMR.NPCs.Bosses.Worms
 			NPC.CloneDefaults(NPCID.DiggerHead);
 			NPC.width = 92;
 			NPC.height = 92;
-			NPC.lifeMax = 3850;
-			NPC.damage = 28;
+			NPC.lifeMax = 400;
+			NPC.damage = 40;
 			NPC.aiStyle = -1;
-			NPC.boss = true;
-			NPC.npcSlots = 10f;
-			if (!Main.dedServ)
-			{
-				Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Bosses/Trerios");
-			}
+			NPC.npcSlots = 1f;
 		}
 
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -73,19 +64,27 @@ namespace GMR.NPCs.Bosses.Worms
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 				// Sets the spawning conditions of this NPC that is listed in the bestiary.
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Underground,
-				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns,
 
 				// Sets the description of this NPC that is listed in the bestiary.
-				new FlavorTextBestiaryInfoElement("Born from the hatred and sprite of a higher entity, it feasts on souls that have no aim.")
+				new FlavorTextBestiaryInfoElement("Born from the hatred of a mad scientist, it fuels itself eating any organic material it comes across. It can also eat inorganic things to repair itself, but only on cases of extreme danger.")
 			});
+		}
+
+		public override float SpawnChance(NPCSpawnInfo spawnInfo)
+		{
+			if (spawnInfo.Player.ZoneDirtLayerHeight)
+			{
+				return 0.0125f; //1.25% chance of spawning on the underground, not the caverns
+			}
+			return 0f;
 		}
 
 		public override void Init()
 		{
 			// Set the segment variance
 			// If you want the segment length to be constant, set these two properties to the same value
-			MinSegmentLength = 26;
-			MaxSegmentLength = 26;
+			MinSegmentLength = 28;
+			MaxSegmentLength = 34;
 
 			CommonWormInit(this);
 		}
@@ -98,123 +97,6 @@ namespace GMR.NPCs.Bosses.Worms
 			worm.Acceleration = 0.075f;
 		}
 
-		public override void AI()
-		{
-			if (!NPC.AnyNPCs(ModContent.NPCType<TreriosBody>()) && !NPC.AnyNPCs(ModContent.NPCType<TreriosTail>()))
-			{
-				NPC.life += -2000;
-				NPC.netUpdate = true;
-			}
-
-				Player target = Main.player[NPC.target];
-
-			switch ((int)NPC.ai[0])
-			{
-				case -1:
-					NPC.ai[0]++;
-					break;
-
-				case 0:
-					NPC.ai[0]++;
-					break;
-
-				case 1:
-					if (++NPC.ai[1] == 1)
-					{
-						NPC.netUpdate = true;
-
-						SoundEngine.PlaySound(SoundID.Roar, NPC.Center);
-					}
-					if (++NPC.ai[2] % 200 == 0)
-					{
-						NPC.netUpdate = true;
-						if (Main.netMode != NetmodeID.MultiplayerClient)
-						{
-							SoundEngine.PlaySound(SoundID.Roar, NPC.Center);
-							int type = ModContent.ProjectileType<Projectiles.Bosses.Worms.HatredBlade>();
-							for (int i = 0; i < 4; i++)
-							{
-								SoundEngine.PlaySound(SoundID.Item12, NPC.Center);
-
-								Vector2 position = target.Center + 250 * Vector2.UnitX - 250 * Vector2.UnitY;
-								Vector2 position1 = target.Center - 250 * Vector2.UnitX + 250 * Vector2.UnitY;
-								Vector2 position2 = target.Center - 250 * Vector2.UnitY - 250 * Vector2.UnitX;
-								Vector2 position3 = target.Center + 250 * Vector2.UnitY + 250 * Vector2.UnitX;
-								Projectile.NewProjectile(NPC.GetSource_FromThis(), position, (target.Center - position) * 0.02f, type, NPC.damage, 1f, Main.myPlayer);
-								Projectile.NewProjectile(NPC.GetSource_FromThis(), position1, (target.Center - position1) * 0.02f, type, NPC.damage, 1f, Main.myPlayer);
-								Projectile.NewProjectile(NPC.GetSource_FromThis(), position2, (target.Center - position2) * 0.02f, type, NPC.damage, 1f, Main.myPlayer);
-								Projectile.NewProjectile(NPC.GetSource_FromThis(), position3, (target.Center - position3) * 0.02f, type, NPC.damage, 1f, Main.myPlayer);
-							}
-						}
-					}
-					if (++NPC.ai[1] > 600)
-					{
-						NPC.TargetClosest();
-						NPC.ai[0]++;
-						NPC.ai[1] = 0;
-						NPC.ai[2] = 0;
-						NPC.netUpdate = true;
-					}
-					break;
-
-				case 2:
-					if (++NPC.ai[1] == 1)
-					{
-						NPC.netUpdate = true;
-
-						SoundEngine.PlaySound(SoundID.Roar, NPC.Center);
-					}
-					if (++NPC.ai[2] % 300 == 0)
-					{
-						NPC.netUpdate = true;
-
-						SoundEngine.PlaySound(SoundID.Roar, NPC.Center);
-						float x = 1500f;
-						float y = 1300f;
-						int amount = 20;
-						var posX = target.position.X + target.width / 2f - x / 2f;
-						var posY = target.position.Y + target.height / 2f;
-						float xAdd = x / (amount / 2);
-						int type = ModContent.ProjectileType<Projectiles.Bosses.Worms.HatredBlade>();
-						for (int i = 0; i < amount; i++)
-						{
-							SoundEngine.PlaySound(SoundID.Item12, NPC.Center);
-							Projectile.NewProjectile(NPC.GetSource_FromThis(), new Vector2(posX + xAdd * i, posY + y), new Vector2(0f, -18f), type, NPC.damage, 1f, Main.myPlayer);
-							Projectile.NewProjectile(NPC.GetSource_FromThis(), new Vector2(posX + xAdd * i, posY - y), new Vector2(0f, 18f), type, NPC.damage, 1f, Main.myPlayer);
-						}
-					}
-					if (++NPC.ai[1] > 601)
-					{
-						NPC.TargetClosest();
-						NPC.ai[0] = 0;
-						NPC.ai[1] = 0;
-						NPC.ai[2] = 0;
-						NPC.netUpdate = true;
-					}
-					break;
-			}
-		}
-
-		public override void FindFrame(int FrameHeight)
-		{
-			int startFrame = 0;
-			int finalFrame = Main.npcFrameCount[NPC.type] - 1;
-
-			int frameSpeed = 10; // Used to delay in frames an animation
-			NPC.frameCounter += 1f; // How fast the frames are going
-
-			if (NPC.frameCounter > frameSpeed) // As long as there's no random animation playing
-			{
-				NPC.frameCounter = 0;
-				NPC.frame.Y += FrameHeight;
-
-				if (NPC.frame.Y > finalFrame * FrameHeight) // If the current frame is past all frames
-                {
-                    NPC.frame.Y = startFrame * FrameHeight; // Reset to the first frame
-                }
-			}
-		}
-
 		public override void ModifyNPCLoot(NPCLoot npcLoot)
 		{
 			int[] drops = { ModContent.ItemType<Items.Weapons.Melee.HatefulBlade>(), ModContent.ItemType<Items.Weapons.Ranged.HatredBow>(), ModContent.ItemType<Items.Weapons.Ranged.HatredGun>() };
@@ -223,8 +105,6 @@ namespace GMR.NPCs.Bosses.Worms
 
 		public override void OnKill()
 		{
-			GerdWorld.downedTrerios = true;
-
 			int dustType = 60;
 			for (int i = 0; i < 20; i++)
 			{
@@ -240,24 +120,22 @@ namespace GMR.NPCs.Bosses.Worms
 
 	internal class TreriosBody : WormBody
 	{
-		public int AI6;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Trerios");
-
 			NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
 			{
 				Hide = true // Hides this NPC from the Bestiary, useful for multi-part NPCs whom you only want one entry.
 			};
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, value);
+			NPC.AddElement(0);
 		}
 
 		public override void SetDefaults()
 		{
 			NPC.CloneDefaults(NPCID.DiggerBody);
 			NPC.aiStyle = -1;
-			NPC.width = 48;
-			NPC.height = 48;
+			NPC.width = 44;
+			NPC.height = 44;
 		}
 
 		public override void Init()
@@ -270,21 +148,20 @@ namespace GMR.NPCs.Bosses.Worms
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Trerios");
-
 			NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
 			{
 				Hide = true // Hides this NPC from the Bestiary, useful for multi-part NPCs whom you only want one entry.
 			};
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, value);
+			NPC.AddElement(0);
 		}
 
 		public override void SetDefaults()
 		{
 			NPC.CloneDefaults(NPCID.DiggerTail);
 			NPC.aiStyle = -1;
-			NPC.width = 64;
-			NPC.height = 64;
+			NPC.width = 60;
+			NPC.height = 60;
 		}
 
 		public override void Init()

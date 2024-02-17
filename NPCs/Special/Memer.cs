@@ -220,6 +220,7 @@ namespace GMR.NPCs.Special
 				.Add<ChaosAngelHalo>(new Condition("Mods.GMR.Conditions.DefeatSkeletron", () => NPC.downedBoss3))
 				.Add<ChaosAngelShirt>(new Condition("Mods.GMR.Conditions.DefeatSkeletron", () => NPC.downedBoss3))
 				.Add<ChaosAngelPants>(new Condition("Mods.GMR.Conditions.DefeatSkeletron", () => NPC.downedBoss3))
+				.Add<ChaosAngelWings>(new Condition("Mods.GMR.Conditions.DefeatSkeletron", () => NPC.downedBoss3 && Main.hardMode))
 				.Add<PhoenixSword>(new Condition("Mods.GMR.Conditions.DefeatSkeletron", () => NPC.downedBoss3))
 
 

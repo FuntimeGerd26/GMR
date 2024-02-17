@@ -11,6 +11,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using GMR;
 
 namespace GMR.NPCs.Enemies
 {
@@ -31,6 +32,8 @@ namespace GMR.NPCs.Enemies
             };
 
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
+            NPC.AddElement(0);
+            NPC.AddElement(2);
         }
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)

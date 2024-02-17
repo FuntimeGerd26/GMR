@@ -161,7 +161,7 @@ namespace GMR.NPCs.Special
 		public override void SetChatButtons(ref string button, ref string button2)
 		{ // What the chat buttons are when you open up the chat UI
 			button = Language.GetTextValue("LegacyInterface.28");
-            if (Main.LocalPlayer.HasItem(ModContent.ItemType<Items.Accessories.JackExpert>()))
+            if (Main.LocalPlayer.HasItem(ModContent.ItemType<Items.Accessories.JackExpert>()) && Main.expertMode)
             {
                 button2 = $"Trade Infra-Red Emblem";
             }
@@ -211,23 +211,29 @@ namespace GMR.NPCs.Special
 				.Add<TomeOfDreams>()
 				.Add<YinGun>()
 				.Add<YangGun>()
-				.Add(ItemID.BlackInk, new Condition("Mods.GMR.Conditions.GetFixedBoi", () => Main.getGoodWorld))
-				.Add(ItemID.SharkFin, new Condition("Mods.GMR.Conditions.GetFixedBoi", () => Main.getGoodWorld))
-				.Add(ItemID.DivingHelmet, new Condition("Mods.GMR.Conditions.GetFixedBoi", () => Main.getGoodWorld))
+				.Add(ItemID.BlackInk, new Condition("Mods.GMR.Conditions.GetFixedBoi", () => Main.getGoodWorld && NPC.downedBoss2))
+				.Add(ItemID.SharkFin, new Condition("Mods.GMR.Conditions.GetFixedBoi", () => Main.getGoodWorld && NPC.downedBoss2))
+				.Add(ItemID.DivingHelmet, new Condition("Mods.GMR.Conditions.GetFixedBoi", () => Main.getGoodWorld && NPC.downedBoss2))
 
 				.Add<AluminiumCharm>(new Condition("Mods.GMR.Conditions.DefeatEvil", () => NPC.downedBoss2))
 
 				.Add<JackyMask>(new Condition("Mods.GMR.Conditions.Hardmode", () => Main.hardMode))
+				.Add<InfraRedWings>(new Condition("Mods.GMR.Conditions.AnyMech", () => Main.hardMode))
 
-				.Add<InfraRedWings>(new Condition("Mods.GMR.Conditions.AnyMech", () => NPC.downedMechBossAny))
+				.Add<HardmodeUpgradeCrystal>(new Condition("Mods.GMR.Conditions.AnyMech", () => NPC.downedMechBossAny))
 
 				.Add(ItemID.FrostCore, new Condition("Mods.GMR.Conditions.AnyMech", () => NPC.downedMechBossAny))
+				.Add(ItemID.AncientBattleArmorMaterial, new Condition("Mods.GMR.Conditions.AnyMech", () => NPC.downedMechBossAny))
+
+				.Add<BlueSunCannon>(new Condition("Mods.GMR.Conditions.AnyMech", () => NPC.downedMechBossAny))
 
 				.Add<ScrapFragment>(new Condition("Mods.GMR.Conditions.DefeatAcheron", () => GerdWorld.downedAcheron))
+				.Add<PrimePlating>(new Condition("Mods.GMR.Conditions.DefeatAcheron", () => NPC.downedPlantBoss))
 
 				.Add<NeonModule>(new Condition("Mods.GMR.Conditions.DefeatJack", () => GerdWorld.downedJack))
 				.Add<MaskedPlagueModule>(new Condition("Mods.GMR.Conditions.DefeatJack", () => GerdWorld.downedJack))
 				.Add<AmethystModule>(new Condition("Mods.GMR.Conditions.DefeatJack", () => GerdWorld.downedJack))
+
 				.Add<GerdHead>(new Condition("Mods.GMR.Conditions.DefeatJack", () => GerdWorld.downedJack))
 				.Add<GerdBody>(new Condition("Mods.GMR.Conditions.DefeatJack", () => GerdWorld.downedJack))
 				.Add<GerdLegs>(new Condition("Mods.GMR.Conditions.DefeatJack", () => GerdWorld.downedJack));

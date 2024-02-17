@@ -3,17 +3,17 @@ Mods: {
 		ItemTooltip.Common.DedicatedItem: Bonded Item
 
 		Conditions: {
-			DefeatEye: Sold after defeating the Eye of Cthulhu
-			DefeatEvil: Sold after defeating the Eater of World or the Brain of Cthulhu
-			DefeatMagma: Sold after defeating Magma Eye
-			DefeatSkeletron: Sold after defeating Skeletron
-			DefeatJack: Sold after defeating Jack
-			Hardmode: Sold after entering Hardmode in any way
-			DefeatAcheron: Solf after defeating Acheron
-			AnyMech: Sold after defeating any of the mech bosses
-			DefeatPlantera: Sold after defeating Plantera
-			DefeatGolem: Sold after defeating Golem
-			DefeatMagmaEye: Sold After defeating Magma Eye
+			DefeatEye: After defeating the Eye of Cthulhu
+			DefeatEvil: After defeating the Eater of World or the Brain of Cthulhu
+			DefeatMagma: After defeating Magma Eye
+			DefeatSkeletron: After defeating Skeletron
+			DefeatJack: After defeating Jack
+			Hardmode: After entering Hardmode
+			DefeatAcheron: After defeating Acheron
+			AnyMech: After defeating any of the mech bosses
+			DefeatPlantera: After defeating Plantera
+			DefeatGolem: After defeating Golem
+			DefeatMagmaEye: After defeating Magma Eye
 			GetFixedBoi: Be in the seed "For The Worthy" or any mix with it
 		}
 
@@ -53,8 +53,8 @@ Mods: {
 					'7'
 					Increases invincibility frames by 4 seconds
 					Increases ranged and magic damage by 14%
-					Weapons have a chance to shoot 5 projectiles and shoot an aditional special projectile
-					Converts wooden and fire arrows turn into 3 Jack Shards
+					[i:GMR/DevPlushie] Weapons have a chance to shoot 5 projectiles and shoot an aditional special projectile
+					[i:GMR/JackExpert] When hit, the player will create an explotion in a large radius
 					'''
 				DisplayName: Amalgamation Plushie
 			}
@@ -64,7 +64,6 @@ Mods: {
 					'''
 					If the weapon uses bullets as ammo, it has a chance to turn them into Infra-Red Bullets that inflict 'Partially Crystalized'
 					Increases ranged damage by 3% and ranged attack speed by 5%
-					'Holds just a bit of data'
 					'''
 				DisplayName: Ancient Bullets
 			}
@@ -75,7 +74,7 @@ Mods: {
 					Increases summon and melee damage by 5%
 					Increases magic crit rate by 5%
 					If the weapon uses bullets as ammo, it has a chance to turn them into Explosive Infra-Red Bullets that inflict 'Partially Crystalized'
-					'Holds just a bit of data'
+					'It goes like: Kaboom!'
 					'''
 				DisplayName: Ancient Core
 			}
@@ -93,7 +92,7 @@ Mods: {
 			BLFujoshi: {
 				Tooltip:
 					'''
-					Summons 8 orbiting BL Books and Psyco Axes around the player
+					[i:GMR/BLBook] [i:GMR/PsycopathAxe] Summons 8 orbiting BL Books and Psyco Axes around the player
 					Increases all damage by 25%
 					Increases damage taken by 10%
 					Hide the accessory to only get the buffs
@@ -121,15 +120,10 @@ Mods: {
 				DisplayName: Charged Rocket Arm
 			}
 
-			CoreHookArm: {
-				Tooltip: Pulls you towards enemies when hitting them with the hook
-				DisplayName: Core Hook Arm
-			}
-
 			DevPlushie: {
 				Tooltip:
 					'''
-					'Wait was it 3 or 4?'
+					'It's a speark!'
 					Increases invincibility frames by 2 seconds
 					Weapons have a chance to shoot 3 projectile that deal 75% damage and shoot an aditional special projectile
 					'''
@@ -148,7 +142,7 @@ Mods: {
 
 			IceyWings: {
 				Tooltip: Allows the player to fly
-				DisplayName: Icey Wings
+				DisplayName: Ice Princess Wings
 			}
 
 			InfraRedWings: {
@@ -157,7 +151,7 @@ Mods: {
 					Allows the player to fly
 					Increases damage and attack speed by 3%
 					'''
-				DisplayName: Infra Red Wings
+				DisplayName: Infra-Red Wings
 			}
 
 			JackCore: {
@@ -248,8 +242,8 @@ Mods: {
 					'It has woken up to kick gum and chew ass'
 					Increases damage by 12% and attack speed by 10%
 					Increases invincibility frames by 3 seconds
-					Weapons have a chance to shoot 3 projectile that deal 75% damage and shoot an aditional special projectile
-					Summons 6 orbiting saws around you that inflict 'Mimir' to enemies
+					[i:GMR/DevPlushie] Weapons have a chance to shoot 3 projectile that deal 75% damage and shoot an aditional special projectile
+					[i:GMR/MayDress] Summons 6 orbiting saws around you that inflict 'Mimir' to enemies
 					Hide the accessory to distable this effect
 					'''
 				DisplayName: Awakened Dress
@@ -271,14 +265,14 @@ Mods: {
 				Tooltip:
 					'''
 					Increases damage and attack speed by 8%
-					Makes lightnings fall from the sky when taking damage
-					Using any weapon that's not ranged will shoot a fireball that explodes dealing damage on a large area
+					[i:GMR/ThunderbladeCharm] Makes lightnings fall from the sky when taking damage
+					[i:GMR/NajaCharm] Using any weapon that's not ranged will summon a homing fireball from above and below
 					'''
 				DisplayName: Thunder Volcano Charm
 			}
 
 			NajaCharm: {
-				Tooltip: Using any weapon that's not ranged will shoot a fireball that explodes dealing damage on a large area
+				Tooltip: Using any weapon that's not ranged will summon a homing fireball from above and below
 				DisplayName: Volcano Charm
 			}
 
@@ -295,7 +289,7 @@ Mods: {
 					Increases armor penetration and attack speed of all weapons by 5%
 					Increases max minions and sentries by 2
 					When under 50% of health: increased armor penetration, crit chance, damage by 7% and decreased mana cost by 7%
-					Summons 8 orbiting BL Books and Psyco Axes around the player and increases damage taken by 10%, you can hide the accessory to distable this effect
+					[i:GMR/BLFujoshi] Summons 8 orbiting BL Books and Psyco Axes around the player and increases damage taken by 10%, you can hide the accessory to distable this effect
 					Melee weapons shoot an Alloyblood Dagger that inflicts 'Devilish' to enemies, hitting enemies with this dagger has a chance to drop Alloyblood Cans above you which heal 15% life
 					'Conclusion, Zero'
 					'''
@@ -305,8 +299,8 @@ Mods: {
 			AluminiumEnchantment: {
 				Tooltip:
 					'''
-					Increases damage, knockback, attack speed by 5%, weapons have a chance to shoot an Aluminium Shuriken
-					Ranged weapons will shoot a projectile that will home into enemies
+					Increases damage, knockback, attack speed by 5%
+					[i:GMR/AluminiumHelmet] [i:GMR/AluminiumCharm] Weapons have a chance to shoot an Aluminium Shuriken, and will shoot a homing bullet
 					'It's called aluminium you silly'
 					'''
 				DisplayName: Aluminium Enchantment
@@ -321,6 +315,7 @@ Mods: {
 					Gives the player the 'Plague Regen' buff
 					Weapons have a chance to shoot 3 projectile that deal 75% damage and shoot an aditional special projectile
 					Summons 6 orbiting saws around you that inflict 'Mimir' to enemies, hide the accessory to distable this effect
+					Summons a stand that summons a gun when enemies get near you, the bullets home into enemies
 					[c/00BBFF:'It's orange!]'
 					'''
 				DisplayName: Amalgamate Enchantment
@@ -358,8 +353,8 @@ Mods: {
 					Increases armor penetration and attack speed of all weapons by 15%
 					Increases max minions and sentries by 3
 					When under 75% of health: increased armor penetration, crit chance, damage by 14% and decreased mana cost by 10%
-					Summons 8 orbiting BL Books and Psyco Axes around the player and increases damage taken by 10%, you can hide the accessory to distable this effect
-					Melee weapons shoot an Alloyblood Dagger that inflicts 'Devilish' to enemies, hitting enemies with this dagger has a chance to drop Alloyblood Cans above you which heal 15% life
+					[i:GMR/BLFujoshi] Summons 8 orbiting BL Books and Psyco Axes around the player and increases damage taken by 10%, you can hide the accessory to distable this effect
+					[i:GMR/AlloybloodEnchantment] Melee weapons shoot an Alloyblood Dagger that inflicts 'Devilish' to enemies, hitting enemies with this dagger has a chance to drop Alloyblood Cans above you which heal 15% life
 					'Conclusion, One'
 					'''
 				DisplayName: Ark Enchantment
@@ -368,13 +363,13 @@ Mods: {
 			BoostEnchantment: {
 				Tooltip:
 					'''
-					Melee weapons that shoot projectiles now shoot an aditional fire ball
+					[i:GMR/BoostFoxMask] Melee weapons that shoot projectiles now shoot an aditional fire projectile
 					Increases max mana by 10%
 					Reduces mana cost by 5%
 					Greatly increases movement speed and allows to walk on water and lava
 					Increases attack speed by 15% and increases wing time by 10%
-					Makes lightnings fall from the sky when taking damage and using any weapon that's not ranged will shoot a fireball that explodes dealing damage on a large area
-					[c/FF5555:Boost Time!]
+					[i:GMR/NajaBladeCharm] Makes lightnings fall from the sky when taking damage and using any weapon that's not ranged will shoot a fireball that explodes dealing damage on a large area
+					'Boost Time!'
 					'''
 				DisplayName: Boost Enchantment
 			}
@@ -382,11 +377,11 @@ Mods: {
 			ChaosAngelEnchantment: {
 				Tooltip:
 					'''
-					Heals you by 10% of HP when you are below 20% HP and increases max HP by 10%
-					While in cooldown increases summon damage by 15% and decreases damage taken by 25% but can't naturally regenerate health
-					Increases summon damage and attack speed by 9%
+					Increases summon damage and attack speed by 9% and increases max HP by 10%
 					Increases health regeneration by 20%
 					Increases max sentries by 1
+					[i:GMR/BloodyMedkit] Heals you by 10% of HP when you are below 20% HP
+					While in cooldown increases summon damage by 15% and decreases damage taken by 25% but can't naturally regenerate health
 					'Im just tired man'
 					'''
 				DisplayName: Chaos Angel Enchantment
@@ -397,17 +392,16 @@ Mods: {
 					'''
 					Increases max minions and sentries by 3, increases armor penetration, attack speed and knockback by 20%, increases movement speed and damage by 35% and increases jump speed and wing time by 20%
 					Increases mana by 40 and increases damage reduction by 5%
-					Every 2 seconds you shoot a knife that homes into enemies and gives the player the 'Sunburnt' and 'Empowered' buffs
-					Increases invincibility frames by 2 seconds and weapons have a chance to shoot 3 projectile that deal 75% damage and shoot an aditional special projectile
-					Melee and ranged attack inflict frostburn
-					A style of swords can now shoot an extra projectile that goes through walls and deals 50% more damage
-					Melee weapons that shoot projectiles now shoot an aditional fire ball
-					Makes lightnings fall from the sky when taking damage and using any weapon that's not ranged will shoot a fireball that explodes dealing damage on a large area
+					[i:GMR/SandwaveEnchantment] Every 2 seconds you shoot a knife that homes into enemies and gives the player the 'Sunburnt' and 'Empowered' buffs
+					[i:GMR/ArkEnchantment] Increases invincibility frames by 2 seconds and weapons have a chance to shoot 3 projectile that deal 75% damage and shoot an aditional special projectile
+					[i:GMR/IcePrincessEnchantment] Melee and ranged attacks inflict frostburn, there's a chance shurikens fall from the sky
+					[i:GMR/BoostEnchantment] [i:GMR/JackEnchantment] Melee weapons can shoot an additional fire projectile, and some will shoot a slash
+					[i:GMR/BoostEnchantment] Makes lightnings fall from the sky when taking damage and using any weapon that's not ranged will shoot a fireball that explodes dealing damage on a large area
 					Greatly increases movement speed and allows to walk on water and lava
 					When under 75% of health: increased armor penetration, crit chance, damage by 14% and decreased mana cost by 10%
-					Summons 8 orbiting BL Books and Psyco Axes around the player and increases damage taken by 10%, you can hide the accessory to distable this effect
-					Melee weapons shoot an Alloyblood Dagger that inflicts 'Devilish' to enemies, hitting enemies with this dagger has a chance to drop Alloyblood Cans above you which heal 15% life
-					'The end is never the end is never the end'
+					[i:GMR/ArkEnchantment] Summons 8 orbiting BL Books and Psyco Axes around the player and increases damage taken by 10%, you can hide the accessory to distable this effect
+					[i:GMR/ArkEnchantment] Melee weapons shoot an Alloyblood Dagger that inflicts 'Devilish' to enemies, hitting enemies with this dagger has a chance to drop Alloyblood Cans above you which heal 15% life
+					'The end is never the end is never the end is never the end is never the end is never the end is never the end'
 					'''
 				DisplayName: Force Of Curses
 			}
@@ -418,16 +412,14 @@ Mods: {
 					Increases invincibility frames by 3 seconds
 					Increases summon damage and attack speed by 10%
 					Increases knockback by 8% and increases health, health regen and damage reduction by 10%
-					Gives the player the 'Plague Regen' buff
-					Weapons have a chance to shoot 3 projectile that deal 75% damage and shoot an aditional special projectile
-					Summons 6 orbiting saws around you that inflict 'Mimir' to enemies, hide the accessory to distable this effect
-					Increases luck cap and bullet damage by 20%
-
-					Heals you by 10% of HP when you are below 20% HP and increases max HP by 10%
-					While in cooldown increases summon damage by 15% and decreases damage taken by 25% but can't naturally regenerate health
-					Increases flight time by 2 seconds and gives the effects of Star Veil, Shiny Stone, Honeycomb, Frozen Turtle Shell, Mana Flower and Celestial Cuffs
 					Increases falling speed and melee size and increases defense by 10
-					Makes you explode into a rain of fireballs when hit
+					Increases luck cap and bullet damage by 20%
+					Gives the player the 'Plague Regen' buff
+					[i:GMR/AmalgamateEnchantment] Weapons have a chance to shoot 3 projectile that deal 75% damage and shoot an aditional special projectile
+					[i:GMR/AmalgamateEnchantment] Summons 6 orbiting saws around you that inflict 'Mimir' to enemies, hide the accessory to distable this effect, summons a stand that summons a gun when enemies get near you
+					[i:GMR/ChaosAngelEnchantment] Heals you by 10% of HP when you are below 20% HP, while in cooldown increases summon damage by 15% and decreases damage taken by 25% but can't naturally regenerate health
+					[i:GMR/MemerEnchantment] [i:GMR/AmalgamationEnchantment] Grants an extra jump, increases flight time by 2 seconds and gives the effects of Star Veil, Shiny Stone, Honeycomb, Palladin Shield, Frozen Turtle Shell, Mana Flower and Celestial Cuffs
+					[i:GMR/MagmaticEnchantment] Makes you explode into a rain of fireballs when hit
 					'It's not orange'
 					'''
 				DisplayName: Force Of References
@@ -438,11 +430,11 @@ Mods: {
 					'''
 					Increases damage, knockback, armor penetration, attack speed, max health and movement speed by 15%
 					Increases damage reduction by 5% and max minions by 2
-					Increases the speed of ranged velocity and ranged weapons have a chance to shoot a rocket
-					Using Magic or Summon weapons will shoot a homing projectile
-					When damaged you release crystal shards
-					Ranged weapons will shoot a projectile that will home into enemies and all weapons have a chance to shoot an Aluminium Shuriken
-					Buffs the Zombie Breaker, makes ALL projectile shooting weapons deal 5% more damage
+					[i:GMR/MagnumEnchantment] Increases the speed of ranged velocity and ranged weapons have a chance to shoot a rocket
+					[i:GMR/MaskedPlagueEnchantment] Using Magic or Summon weapons will shoot a homing projectile
+					[i:GMR/AmethystGolemEnchantment] When damaged you release crystal shards
+					[i:GMR/AluminiumEnchantment] Ranged weapons will shoot a projectile that will home into enemies and all weapons have a chance to shoot an Aluminium Shuriken
+					[i:GMR/ArmoredBullEnchantment] Buffs the Zombie Breaker, makes ALL projectile shooting weapons deal 5% more damage
 					'A handy tool that will help us later'
 					'''
 				DisplayName: Force Of Utilities
@@ -460,7 +452,7 @@ Mods: {
 				DisplayName: Chaos Angel Soul
 			}
 
-			MagamaticEnchantment: {
+			MagmaticEnchantment: {
 				Tooltip:
 					'''
 					Makes you explode into a rain of fireballs when hit
@@ -468,19 +460,21 @@ Mods: {
 					Increases melee and summon damage and attack speed by 5%
 					'Rip and tear them apart'
 					'''
-				DisplayName: Magamatic Enchantment
+				DisplayName: Magmatic Enchantment
 			}
 
 			VioletsSoul: {
 				Tooltip:
 					'''
-					'For the love of whatever higher being you have just use Recipe Browser or memorize what the materials did, If you can't do that then may you have mercy for yourself'
-					Increases damage, attack speed, knockback, movement speed, health, life regeneration, mana, damage reduction, aggro and immunity time
-					Spawnrate is increased to x5
-					Increases ranged velocity, you randomly shoot rockets, when hit you release crystal shards and fireballs
-					Gives the player buffs, increases luck, below 20% health you will be healed, increases flight time and grants the effects of Star Veil, Shiny Stone, Honeycomb, Frozen Turtle Shell, Mana Flower and Celestial Cuffs
-					Every 2 seconds shoots a projectile that homes, attacking has a chance to shoot 5 of the projectile you shot and summons orbiting projectiles if not hidden
-					Attacks shoot extra projectiles, increases the damage of all projectile shooting weapons by 5% and buffs the Zombie Breaker
+					Increases damage, attack speed, knockback, movement speed, health, life regeneration, mana, damage reduction, aggro, luck, flight time and immunity time
+					[i:GMR/Halu] Spawnrate is increased to x5
+					[i:GMR/IcePrincessEnchantment] [i:GMR/MaskedPlagueEnchantment] [i:GMR/ArkEnchantment] [i:GMR/AluminiumEnchantment] [i:GMR/JackEnchantment] [i:GMR/BoostEnchantment] [i:GMR/MagnumEnchantment] Attacks shoot many extra projectiles depending on the weapon's class, when hit you release crystal shards and fireballs
+					[i:GMR/SandwaveEnchantment] [i:GMR/ArkEnchantment] [i:GMR/AmalgamateEnchantment] [i:GMR/MemerEnchantment] [i:GMR/AmalgamationEnchantment] Gives the player various buffs, below 20% health you will be healed, grants the effects of Star Veil, Shiny Stone, Honeycomb,
+					Palladin Shield, Frozen Turtle Shell, Mana Flower and Celestial Cuffs
+					[i:GMR/SandwaveEnchantment] Shoots a homing knife every 2 seconds
+					[i:GMR/AmalgamateEnchantment] Summons a stand that summons a gun when enemies get near you, summons orbiting projectiles, and has a chance to split projectiles into 5 weaker ones
+					[i:GMR/ArmoredBullEnchantment] Increases the damage of all projectile shooting weapons by 5% and buffs the Zombie Breaker
+					'If you haven't faced hell, now's a good time'
 					'''
 				DisplayName: Violet's Soul
 			}
@@ -488,7 +482,7 @@ Mods: {
 			IcePrincessEnchantment: {
 				Tooltip:
 					'''
-					Increases invincibility frames by 2 seconds and weapons have a chance to shoot 3 projectile that deal 75% damage and shoot an aditional special projectile
+					There's a 1/3 chance to summon a shuriken from the sky towards your cursor
 					Increases melee damage by 5% and melee speed by 8%
 					Increases mana by 40 and decreases knockback by 15%
 					Melee and ranged attack inflict frostburn
@@ -500,7 +494,7 @@ Mods: {
 			JackEnchantment: {
 				Tooltip:
 					'''
-					A style of swords can now shoot an extra projectile that goes through walls and deals 50% more damage
+					[i:GMR/InfraRedVisor] A style of swords can now shoot an extra projectile that goes through walls and deals 50% more damage
 					Increases crit chance by 4%, increases jump speed by 14%
 					Increases max minions and sentries by 2
 					Increases movement speed by 7%
@@ -512,8 +506,8 @@ Mods: {
 			MagnumEnchantment: {
 				Tooltip:
 					'''
-					Increases the speed of ranged velocity
-					Ranged weapons have a chance to shoot a rocket
+					[i:GMR/MagnumFoxMask] Increases the speed of ranged velocity
+					[i:GMR/ChargedArm] Ranged weapons have a chance to shoot a rocket
 					Increases ranged damage by 10%
 					Increases max health by 10%
 					Increases movement speed by 5%
@@ -526,7 +520,7 @@ Mods: {
 				Tooltip:
 					'''
 					Increases endurance and melee attack speed by 2%
-					Zombie Breaker will now be inflict 'Venom', and the 'Poison Charge' mode's attacks will heal you by 2% of your max health
+					[i:GMR/ArmoredBullHelmet] Zombie Breaker will now be inflict 'Venom', and the 'Poison Charge' mode's attacks will heal you by 2% of your max health
 					Increases the damage of ALL projectile shooting weapons by 5%
 					'Hit! Golden Fever'
 					'''
@@ -536,7 +530,7 @@ Mods: {
 			MaskedPlagueEnchantment: {
 				Tooltip:
 					'''
-					Using Magic or Summon weapons will shoot a homing projectile that inflicts 'Crystal Plague'
+					[i:GMR/MaskedPlagueCloak] Using Magic or Summon weapons will shoot a homing projectile that inflicts 'Crystal Plague'
 					Increases magic damage by 6% and summon damage by 10%
 					Increases max minions by 2
 					'No it dosen't bring the plague'
@@ -547,6 +541,7 @@ Mods: {
 			MemerEnchantment: {
 				Tooltip:
 					'''
+					Grants an extra jump, which releases homing fire particles
 					Increases flight time by 2 seconds and increases magic damage by 15%
 					Star Veil, Shiny Stone, Honeycomb, Mana Flower and Celestial Cuffs effects
 					Increases falling speed and melee size
@@ -900,16 +895,6 @@ Mods: {
 				DisplayName: Magmatic Altar
 			}
 
-			DualSlashShooter: {
-				Tooltip: "'A weapon in beta stage, handle it carefuly'"
-				DisplayName: Dual Slash Shooter
-			}
-
-			DualSlashShooterDX: {
-				Tooltip: "'Testing Complete'"
-				DisplayName: Dual Slash Shooter DX
-			}
-
 			Crucifix: {
 				Tooltip: Shoots hallowed energy in random directions that after some time home into enemies
 				DisplayName: The Crucifix
@@ -931,7 +916,7 @@ Mods: {
 			}
 
 			MaskedPlagueTome: {
-				Tooltip: Shoots a plague bolt that inflicts poison and homes into enemies, having this in your inventory increases magic damage and mana by [c/66FF66:5%]
+				Tooltip: Shoots a plague bolt that inflicts poison, having this in your inventory increases magic damage and mana by [c/66FF66:5%]
 				DisplayName: Masked Plague's Tome
 			}
 
@@ -971,7 +956,8 @@ Mods: {
 			AlloybloodSword: {
 				Tooltip:
 					'''
-					Throws a sword which chases your cursor
+					Spins a sword around you that causes explosions upon hitting an enemy
+					Release the cursor to throw the sword through an infinite count of enemies
 					Grants the 'Blood Overflow' buff upon hitting enemies 
 					'''
 				DisplayName: Alloyblood Sword
@@ -1029,7 +1015,7 @@ Mods: {
 				Tooltip:
 					'''
 					Inflicts 'Devilish' to enemies
-					Heals you by 0.5% of health when hitting an enemy
+					Heals you by [c/66FF66:0.5%] of health when hitting an enemy
 					[c/DD1166:--Special Melee Weapon--]
 					'''
 			}
@@ -1100,20 +1086,14 @@ Mods: {
 			DualSlashBlade: {
 				Tooltip:
 					'''
-					'Blade mode'
-					Grants 'Cutting Edge', 'Rapid Healing' and 'Wrath' buffs when hitting an enemy
-					Inflicts 'Venom' on enemies
+					'Blade Mode'
+					Hitting enemies will hit them a second time
 					'''
 				DisplayName: Dual Slash Blade
 			}
 
 			DualSlashCutter: {
-				Tooltip:
-					'''
-					'Today is friday in california'
-					Grants 'Cutting Edge', 'Rapid Healing' and 'Wrath' buffs when hitting an enemy
-					Inflicts 'Venom' on enemies
-					'''
+				Tooltip: On hit enemies can take up to [c/66FF66:50%] more damage
 				DisplayName: Dual Slash Cutter
 			}
 
@@ -1149,8 +1129,10 @@ Mods: {
 			GerdHeroSword: {
 				Tooltip:
 					'''
-					Shoots swords that over time summon homing swords
-					Increases melee speed and all damage by [c/66FF66:5%] and increases critical chance by [c/66FF66:7%] while in your inventory
+					On hit grants the 'Empowered' buff
+					Increases attack speed and critical strike chance by [c/66FF66:5%] while in your inventory
+					Right-Click to summon eight swords that spin around you
+					After 5 seconds they will shoot out and home into enemies and deal [c/66FF66:200%] damage
 					'''
 				DisplayName: Hero Training Sword
 			}
@@ -1193,7 +1175,8 @@ Mods: {
 				Tooltip:
 					'''
 					Inflicts Partially Crystalized debuff to enemies
-					On hit with the blade or projectiles creates an explosion
+					Shoots 3 homing projectiles
+					On hit creates explosions
 					[c/DD1166:--Special Melee Weapon--]
 					'''
 				DisplayName: Infra-Red Sword
@@ -1210,7 +1193,7 @@ Mods: {
 			}
 
 			KizunaScythe: {
-				Tooltip: Will go backwards after a few seconds
+				Tooltip: Inflicts 'Electrified' to enemies, and homes into enemies near it
 				DisplayName: Kizuna's Scythe
 			}
 
@@ -1325,14 +1308,14 @@ Mods: {
 				Tooltip:
 					'''
 					Hitting enemies makes homing eyes fall on top of the enemy and grants you the 'Empowered' buff for 5 seconds
-					The damage of the eyes is [c/FF4444:75%] of the damage dealt
+					The damage of the eyes is [c/FF4444:50%] of the damage dealt
 					'''
 				DisplayName: Spazmatanium Sword
 			}
 
 			TrueBraycoeSword: {
-				DisplayName: True Braycoe Sword
-				Tooltip: ""
+				DisplayName: True Hallowed Sword
+				Tooltip: "[c/DD1166:--Special Melee Weapon--]"
 			}
 
 			TrueSpazSword: {
@@ -1421,7 +1404,8 @@ Mods: {
 				Tooltip:
 					'''
 					Shoots a fast high damage energy ray, but hitting enemies wont't allow you to shoot again for some time
-					Uses modules for ammo
+					Cycle through beam types with Right-Click
+					Pierce Mode, Chase Mode and Explode Mode
 					'''
 				DisplayName: Bio-Mass Force Gun
 			}
@@ -1434,8 +1418,9 @@ Mods: {
 			CoreEjectShotgun: {
 				Tooltip:
 					'''
-					Shoots a spread of 10 bullets
-					Right click to shoot an explosive core that explodes dealing triple damage
+					Shoots a spread of 6 bullets that can pierce up to 3 enemies
+					Along an extra one that always goes towards where you aim and deals twice the damage
+					Right click to shoot an explosive core that explodes dealing higher damage
 					'''
 				DisplayName: Core Eject Shotgun
 			}
@@ -1459,9 +1444,14 @@ Mods: {
 				DisplayName: Dual Gun Shooter
 			}
 
-			DuneSearcherShotgun: {
-				Tooltip: Shoots 5 high velocity bullets, and has a chance to shoot an extra one that explodes when hitting an enemy, and deals [c/66FF66:50%] more damage to enemies
-				DisplayName: Dune Searcher Shotgun
+			DuneSearcher: {
+				DisplayName: Dune Searcher
+				Tooltip: Shoots 5 high velocity bullets, and shoots an extra bullet that explodes when hitting any enemy that's not a boss, or after piercing 5 times
+			}
+
+			DuneSearcherPrime: {
+				DisplayName: Dune Searcher Prime
+				Tooltip: Shoots 7 high velocity bullets, and shoots an extra bullet that explodes when colliding
 			}
 
 			Equalizer: {
@@ -1472,17 +1462,6 @@ Mods: {
 					Projectiles will home into targets
 					'''
 				DisplayName: Equalizer
-			}
-
-			EqualizerArk: {
-				Tooltip:
-					'''
-					'Balance though force'
-					When piercing more than 5 enemies or after some time the projectiles will split into 3 smaller non-homing projectiles with random spread
-					The homing projectile will circle around enemies
-					Has a chance to shoot a secondary projectile which will explode in a small area that deals [c/66FF66:150%] damage
-					'''
-				DisplayName: Ark's Equalizer
 			}
 
 			EqualizerLite: {
@@ -1504,26 +1483,6 @@ Mods: {
 				DisplayName: Ultra-Blue Handgun
 			}
 
-			GerdRocketLauncher: {
-				Tooltip:
-					'''
-					'It's easier modifying things than making them'
-					Increases ranged damage by [c/66FF66:8%] and increases ranged knockback while in the inventory
-					On contact with an enemy the projectile will explode
-					'''
-				DisplayName: Ultra-Blue Rocket Launcher
-			}
-
-			GerdSniper: {
-				Tooltip:
-					'''
-					'U got a problem mate?'
-					Having this in your inventory decreases ranged weapon speed by [c/FF4444:5%] and increases damage by [c/66FF66:10%]
-					Upon hitting an enemy makes the projectile split into 4 energy bolts which home after a bit
-					'''
-				DisplayName: Ultra-Blue Dart Rifle
-			}
-
 			InfraRedMinigun: {
 				Tooltip: Replaces most bullets with Infra-Red Bullets that inflict 'Partially Crystalized' on enemies
 				DisplayName: Infra-Red Minigun
@@ -1540,7 +1499,7 @@ Mods: {
 					Shoots a fast high damage ray, but hitting enemies wont't allow you to shoot again for some time
 					Uses modules for ammo
 					'''
-				DisplayName: Ancient Railgun
+				DisplayName: Ancient Railcannon
 			}
 
 			JackRailgun: {
@@ -1564,19 +1523,19 @@ Mods: {
 			MagnumRifle: {
 				Tooltip:
 					'''
-					'Magnum'
+					'It's time for the highlight'
 					Shoots a strong piercing bullet
 					'''
-				DisplayName: Magnum Rifle
+				DisplayName: Magnum Shooter 40X (Rifle)
 			}
 
 			MagnumShooter: {
 				Tooltip:
 					'''
 					'Ready, Fight'
-					Shoots in bursts of 3
+					Shoots a single bullet with very close range homing
 					'''
-				DisplayName: Magnum Shooter
+				DisplayName: Magnum Shooter 40X (Handgun)
 			}
 
 			MaskedPlagueRifle: {
@@ -1648,7 +1607,7 @@ Mods: {
 			ScarletLauncher: {
 				Tooltip:
 					'''
-					'It can't slow down time sadly'
+					Shoot a rocket that homes into enemies
 					Right-click to shoot a rocket that deals [c/66FF66:200%] damage, that has a longer attack cooldown and moves after a 2/3rd of a second
 					'''
 				DisplayName: Scalet Launcher
@@ -1683,7 +1642,7 @@ Mods: {
 				Tooltip:
 					'''
 					'Bad in the Good'
-					Upon hitting an enemy the projectiles will split into 3 more
+					When hitting an enemy, the projectile splits into 3 non splitting ones
 					'''
 				DisplayName: Yang Gun
 			}
@@ -1692,7 +1651,7 @@ Mods: {
 				Tooltip:
 					'''
 					'Good in the Bad'
-					Upon hitting an enemy the projectiles will go in the oposite direction
+					Hitting tiles will make the projectile bounce
 					'''
 				DisplayName: Yin Gun
 			}
@@ -1710,9 +1669,7 @@ Mods: {
 			AlloybloodWhip: {
 				Tooltip:
 					'''
-					'Do you remember'
-					Inflicts Devilish to enemies
-					Winding up will increase the damage dealt
+					'Do you remember?'
 					Inflicts 'Devilish' to enemies
 					'''
 				DisplayName: Alloyblood Whip
@@ -1742,7 +1699,7 @@ Mods: {
 					'''
 					'Made durning the peak light of the sun shined it's maker's town'
 					Inflicts Sun Burn to enemies and yourself
-					Holding the use button will wind-up and increase the damage it deals until x3 damage
+					Enemies have a chance to explode on hit
 					'''
 				DisplayName: Sun Burnt Whip
 			}
@@ -1911,7 +1868,7 @@ Mods: {
 			}
 
 			Hatred: {
-				Tooltip: Right-Click to change boss types: Trerios, Magma Eye, Jack, Acheron, loop back
+				Tooltip: Right-Click to change boss types: Magma Eye, Jack, Acheron, loop back
 				DisplayName: Hatred
 			}
 
@@ -1940,7 +1897,7 @@ Mods: {
 			PrismaticMirror: {
 				Tooltip:
 					'''
-					Shoots beams that when hitting an enemy, makes the player get healed by [c/44FF44:1%] of their heath
+					On hit, heals the player by by [c/44FF44:2] health
 					[c/DD1166:--Special Melee Weapon--]
 					'''
 				DisplayName: Prismatic Mirror
@@ -1954,17 +1911,6 @@ Mods: {
 					Slashes cause explosions upon hitting an enemy
 					[c/DD1166:--Special Melee Weapon--]
 					'''
-			}
-
-			MagmaticEnchantment: {
-				Tooltip:
-					'''
-					Makes you explode into a rain of fireballs when hit
-					Increases armor penetration by 10%
-					Increases melee and summon damage and attack speed by 5%
-					'Rip and tear them apart'
-					'''
-				DisplayName: Magmatic Enchantment
 			}
 
 			MagmaticBoots: {
@@ -2007,12 +1953,17 @@ Mods: {
 
 			Blasphemy: {
 				DisplayName: Blasphemy
-				Tooltip: ""
+				Tooltip: Inflicts 'Devilish' to enemies on hit
 			}
 
 			Heresy: {
 				DisplayName: Heresy
-				Tooltip: "[c/DD1166:--Special Melee Weapon--]"
+				Tooltip:
+					'''
+					Shoots 3 spinning storms that will repeatedly hit enemies
+					Inflicts 'Devilish' to enemies on hit
+					[c/DD1166:--Special Melee Weapon--]
+					'''
 			}
 
 			EtherealSawLauncher: {
@@ -2026,18 +1977,18 @@ Mods: {
 			}
 
 			Magmathrower: {
-				Tooltip: ""
+				Tooltip: Quickly attacks enemiesand inflicts the 'On Fire!' debuff on hit
 				DisplayName: Magmathrower
 			}
 
 			SlabPistol: {
 				DisplayName: Slab Pistol
-				Tooltip: Shoots piercing bullets that hit the enemies multiple times
+				Tooltip: Shoots piercing bullets that can hit enemies up to 12 times
 			}
 
 			Iceberg: {
 				DisplayName: Iceberg
-				Tooltip: ""
+				Tooltip: Attacks in bursts of 3 and each one shoots a small blade that inflicts 'Frostburn'
 			}
 
 			LunarNovaAxe: {
@@ -2062,10 +2013,10 @@ Mods: {
 			HopefulFlower: {
 				Tooltip:
 					'''
-					Increases magic and ranged damage by 11%
-					Multiplies attack speed by x1.05
-					Decreases crit chance by 11%
-					Health regen is slower by 20%
+					Decreases damage over time debuff's speed by 40%
+					Increases magic damage and crit chance by 4%
+					All damage reduction is decreased by 10%, then damage reduction is increased by 5%
+
 					'''
 				DisplayName: Hopeful Flower
 			}
@@ -2081,7 +2032,7 @@ Mods: {
 			}
 
 			BrokenMagmaticSword: {
-				Tooltip: "If the sword hits an enemy a fireball will appear above the enemy to attack it again"
+				Tooltip: If the sword hits an enemy a fireball will appear above the enemy to attack it again
 				DisplayName: Broken Magmatic Sword
 			}
 
@@ -2094,13 +2045,309 @@ Mods: {
 					'''
 				DisplayName: Magmatic Sword
 			}
+
+			AncientRaygun: {
+				DisplayName: Ancient Raygun
+				Tooltip: Shoots a beam of energy that inflicts 'Partially Crystalized' to enemies
+			}
+
+			InfraRedBar: {
+				DisplayName: Infra Red Bar
+				Tooltip: Made to last for eons
+			}
+
+			RefinedSpazGun: {
+				DisplayName: Refined Spazmatanium Rifle
+				Tooltip: Right-Click to throw grenades
+			}
+
+			AncientHandgun: {
+				Tooltip: Replaces most bullets with Ancient ones that inflict 'Partially Crystalized' to enemies
+				DisplayName: Ancient Handgun
+			}
+
+			YinYangGuns: {
+				Tooltip:
+					'''
+					'Keep the balance manually'
+					Alternate between the two fire modes to double your damage
+					'''
+				DisplayName: Yin Yang Guns
+			}
+
+			HeistGun: {
+				DisplayName: Heist Gun
+				Tooltip:
+					'''
+					Inflicts enemies with 'Midas'
+					On hit gives the player 2 mana back
+					'It's payday motherfuckers!'
+					'''
+			}
+
+			NanashiSword: {
+				Tooltip:
+					'''
+					Inflicts 'Poisoned' to enemies
+					[c/AA0033:'May have a chance to cause a devastating attack on unlucky souls']
+					'''
+				DisplayName: Nanashi Sword
+			}
+
+			SoulofAmalgamation: {
+				Tooltip:
+					'''
+					Increases melee and magic damage by [c/66FF66:15%]
+					Decreases ranged attack speed by [c/66FF66:12%]
+					Increases melee and magic crit chance by [c/66FF66:5%]
+					[c/FF44444:Defense is halved]
+					If the player is below [c/FF44444:50%] HP, mana regen is increased greatly
+					'Only a fake replica'
+					'''
+				DisplayName: Soul of the Amalgamation
+			}
+
+			RefinedSpazSniper: {
+				DisplayName: Refined Spazmatanium Sniper
+				Tooltip:
+					'''
+					Shoots a spread of 5 bullets that hit the enemy multiple times
+					Right-Click to throw a grenade
+					'''
+			}
+
+			FG20: {
+				DisplayName: FG-20
+				Tooltip: Quickly shoots bullets with some spread, on hit grants the 'Alternate Engine' buff
+			}
+
+			SG14: {
+				DisplayName: SG-14
+				Tooltip:
+					'''
+					Hitting enemies grants the 'Alternate Engine' buff
+					May require some aim to use efficiently
+					'''
+			}
+
+			ChaosAngelWings: {
+				DisplayName: Chaos Angel Wings
+				Tooltip: Allows the player to fly
+			}
+
+			NeonSaber: {
+				DisplayName: Neon Saber
+				Tooltip:
+					'''
+					Shoots a piercing slash
+					Hitting enemies with the sword swing inflicts 'On Fire'
+					'''
+			}
+
+			LunarNovaBow: {
+				DisplayName: Lunar Nova Bow
+				Tooltip: The arrows cause tiny stars to form and hit the enemy again!
+			}
+
+			Guttertank: {
+				Tooltip:
+					'''
+					Shoots fast bullets than can pierce randomly from 1-3 enemies
+					Hitting enemies has a 4% chance to create an explosion that deals [c/66FF66:200%] of the damage [c/66FF66:dealt]
+					If the enemy has under 300 max HP it will be eradicated
+					'''
+				DisplayName: Guttertank
+			}
+
+			IllusionOfLove: {
+				Tooltip:
+					'''
+					Increases magic and melee attack speed by [c/66FF66:20%]
+					Decreases mana costs by [c/66FF66:10%]
+					When hitting an enemy, grants the 'Possessive' buff for 3 seconds
+					The enemy hit will take 10% more damage from all sources, and have defense decreased by 10
+					'''
+				DisplayName: Illusion Of Love
+			}
+
+			CyberNeonAxe: {
+				Tooltip:
+					'''
+					Holding the attack button makes the axe spin faster
+					Releasing the attack button when it's going fast enough throws the axe, and after a bit it will seek your cursor
+					'''
+				DisplayName: Cyber Neon Axe
+			}
+
+			GlimmeringChestplate: {
+				DisplayName: Glimmering Chestplate
+				Tooltip: Perfect for impersonating festive devs!
+			}
+
+			GlimmeringGreaves: {
+				DisplayName: Glimmering Greaves
+				Tooltip: Perfect for impersonating festive devs!
+			}
+
+			GlimmeringMask: {
+				DisplayName: Glimmering Mask
+				Tooltip: Perfect for impersonating festive devs!
+			}
+
+			AngelOfJudgement: {
+				DisplayName: Angel of Judgement
+				Tooltip:
+					'''
+					Swing the sword and shoot a beam that can hit enemies up to 3 times
+					The beam will boomerang back to the spot it was shot on if it dosen't hit an enemy
+					Right-Click to throw the sword and cause an explosion on impact, that deals [c/66FF66:200%] damage
+					'Splay the gore of your profane form across the stars!'
+					'''
+			}
+
+			UltraBlueWings: {
+				Tooltip: Allows the player to fly
+				DisplayName: Ultra-Blue Wings
+			}
+
+			UltraBlueEnergyGun: {
+				DisplayName: Ultra-Blue Energy Gun
+				Tooltip: Shoots a piercing beam that can hit enemies multiple times
+			}
+
+			UltraBlueShotgun: {
+				DisplayName: Ultra-Blue Shotgun
+				Tooltip: Shoots 5 ultra-blue bullets that can pierce through enemies, but have a limited range
+			}
+
+			EtherealNailGun: {
+				DisplayName: Ethereal Nail Gun
+				Tooltip: Shoots nails that stick to enemies and explode
+			}
+
+			ManaBarrierPotion: {
+				DisplayName: Mana Barrier Potion
+				Tooltip: Increases your defense by 1/8 of your max mana
+			}
+
+			ExterminationPotion: {
+				DisplayName: Extermination Potion
+				Tooltip: Increases damage by 50%
+			}
+
+			RavagingPotion: {
+				DisplayName: Ravaging Potion
+				Tooltip: Increases attack speed by 50%, but decreases damage by 60%
+			}
+
+			SpitePotion: {
+				DisplayName: Spite Potion
+				Tooltip: Increases crit chance by 25%
+			}
+
+			AncientBow: {
+				DisplayName: Ancient Bow
+				Tooltip: Shoots special arrows that explode on impact
+			}
+
+			BlueSunCannon: {
+				DisplayName: Blue Sun Cannon
+				Tooltip: Shoots three short range beams that can pierce enemies infinitely
+			}
+
+			PrimeEnhancementModule: {
+				DisplayName: Prime Enhancement Module
+				Tooltip: Calibrates a weapon to it's maximum potential with little changes
+			}
+
+			PrimePlating: {
+				DisplayName: Prime Plating
+				Tooltip: An expensive material to create powerful artifacts
+			}
+
+			EqualizerPrime: {
+				DisplayName: Equalizer Prime
+				Tooltip:
+					'''
+					'The weight is the same in any angle'
+					Shoots mini rockets that home into enemies and explode
+					'''
+			}
+
+			GutterVisor: {
+				Tooltip:
+					'''
+					Increases attack speed by 10%
+					Decreases crit chance by 2%
+					Grants half a second of extra immunity time
+					Makes you immune to the 'Darkness' debuff
+					'''
+				DisplayName: Gutter Visor
+			}
+
+			GutterLeggings: {
+				Tooltip:
+					'''
+					Decreases movement speed by 10%
+					Increases jump height
+					Makes you immune to the 'Slow' debuff
+					Increases attack speed and decreases crit chance by 8%
+					'''
+				DisplayName: Gutter Leggings
+			}
+
+			GutterChestplate: {
+				Tooltip:
+					'''
+					Increases damage by 12%
+					Increases attack speed by 5%
+					Decreases crit chance by 2%
+					Grants an extra second of extra immunity time
+					Increases the speed at which you fall
+					'''
+				DisplayName: Gutter Chestplate
+			}
+
+			SlabPistolPrime: {
+				Tooltip: Shoots piercing bullets that can hit enemies up to 12 times
+				DisplayName: Slab Pistol Prime
+			}
+
+			FG20Prime: {
+				Tooltip: Quickly shoots bullets with some spread, on collision they explode
+				DisplayName: FG-20 Prime
+			}
+
+			EternityJackGlider: {
+				DisplayName: Ancient Glider
+				Tooltip:
+					'''
+					Allows the player to glide in the air
+					Increases movement speed by 20%
+					Increases fall speed and jump height
+					'''
+			}
+
+			AcheronTreasureBag: {
+				DisplayName: Treasure Bag (Acheron)
+				Tooltip: Right Click to open
+			}
+
+			JackTreasureBag: {
+				DisplayName: Treasure Bag (Jack)
+				Tooltip: Right Click to open
+			}
+
+			MagmaEyeTreasureBag: {
+				DisplayName: Treasure Bag (Magma Eye)
+				Tooltip: Right Click to open
+			}
 		}
 
 		BossChecklist: {
-			Jack: Use an Ancient Drone at day time.
-			Acheron: Talk with the Shape Shifter on hardmode and use the 'Fight!' button.
-			MagmaEye: Talk with the Memer on The Underworld and use the 'Yo' button.
-			Trerios: Use 'Hatred' on it's first mode.
+			Jack: Utilize [i:GMR/Hatred] in the correct configuration.
+			Acheron: Utilize [i:GMR/Hatred] in the correct configuration while in hardmode.
+			MagmaEye: Utilize [i:GMR/Hatred] in the correct configuration.
 		}
 
 		TownNPCMood: {
@@ -2164,7 +2411,7 @@ Mods: {
 				DisplayName: Empowered
 				Description:
 					'''
-					Increases damage by 5%
+					Increases attack speed by 5%
 					Increases crit chance by 3%
 					Increases knockback
 					'''
@@ -2196,6 +2443,16 @@ Mods: {
 				Description: Increases magic damage and attacks speed by 10% and mana regeneration by 20%
 			}
 
+			YangEmpower: {
+				DisplayName: Yin Focus
+				Description: Increases crit rate by 3% and Yang Gun will deal double damage
+			}
+
+			YinEmpower: {
+				DisplayName: Yang Focus
+				Description: Increases attack speed by 5% and Yin Gun will deal double damage
+			}
+
 			ChaosBurnt: {
 				DisplayName: ChaosBurnt.cs
 				Description:
@@ -2215,11 +2472,6 @@ Mods: {
 					'''
 			}
 
-			Cooldown: {
-				DisplayName: Cooldown
-				Description: You cannot use abilities that require a key to be pressed
-			}
-
 			CrystalPlague: {
 				DisplayName: Crystal Plague
 				Description: Slight damage over time
@@ -2231,7 +2483,7 @@ Mods: {
 					'''
 					'Your skin burns even in the shadows'
 					Increases summon knockback and movement speed of the player by 5%
-					Killing enemies makes them explode on death (if they share this debuff)
+					Hitting enemies makes them explode (If they posses this debuff)
 					'''
 			}
 
@@ -2310,9 +2562,55 @@ Mods: {
 				DisplayName: Virtue Wisps
 				Description: Wisps aid you in combat
 			}
-		}
 
-		DamageClasses.Classless.DisplayName: base damage
+			BuiltDifferent: {
+				DisplayName: Alternative Engine
+				Description:
+					'''
+					Increases ranged damage by 15% and ranged crit chance by 5%
+					Increases ranged attack speed by 10%
+					'''
+			}
+
+			Cooldown: {
+				DisplayName: Cooldown
+				Description: Cooldown for items
+			}
+
+			IllusionOfLove: {
+				DisplayName: Possessive
+				Description: Increases crit chance by 10%, decreases damage by 20% and increases health regen mildly
+			}
+
+			IllusionOfBeingLoved: {
+				DisplayName: Illusion Of Being Loved
+				Description: You feel much weaker
+			}
+
+			Spiteful: {
+				Description: Crit chance greatly increased!
+				DisplayName: Spiteful
+			}
+
+			Ravaging: {
+				Description:
+					'''
+					Attack speed greatly increased!
+					Damage greatly decreased!
+					'''
+				DisplayName: Ravaging
+			}
+
+			ManaBarrier: {
+				Description: You are protected by your own magic!
+				DisplayName: Mana Barrier
+			}
+
+			Exterminate: {
+				Description: Damage greatly increased!
+				DisplayName: Exterminate
+			}
+		}
 
 		NPCs: {
 			Acheron: {
@@ -2364,7 +2662,7 @@ Mods: {
 				Census.SpawnCondition: Defeat Brain of Cthulhu or Eater of Worlds.
 			}
 
-			ShadowSpirit.DisplayName: ???
+			ShadowSpirit.DisplayName: TestNPC
 
 			ShapeShifter: {
 				DisplayName: Shape Shifter
@@ -2403,9 +2701,12 @@ Mods: {
 			Trerios.DisplayName: Trerios
 			TreriosBody.DisplayName: Trerios Body
 			TreriosTail.DisplayName: Trerios Tail
-			JackE.DisplayName: Jack E
-			JackEArmClaw.DisplayName: Jack E Arm Claw
-			JackEArmGun.DisplayName: Jack E Arm Gun
+			JackE.DisplayName: Jack
+			JackEArmClaw.DisplayName: Jack Claw
+			JackEArmGun.DisplayName: Jack Gun
+			TheAmalgamation.DisplayName: The Amalgamation
+			CyberNeon.DisplayName: Cyber Neon
+			EternityTower.DisplayName: Eternity Tower
 		}
 
 		Projectiles: {
@@ -2614,6 +2915,7 @@ Mods: {
 			MagmaSummon.DisplayName: Magma Summon
 			AncientBulletHome.DisplayName: Ancient Bullet Home
 			SpazSwordSwing.DisplayName: Spaz Sword Swing
+			SpazSword.DisplayName: Spaz Sword
 			AmethystSwordSwing.DisplayName: Amethyst Sword Swing
 			AmethystBeam.DisplayName: Amethyst Beam
 			DualSlashBladeSwing.DisplayName: Dual Slash Blade Swing
@@ -2656,6 +2958,50 @@ Mods: {
 			EternityCut.DisplayName: Eternity Cut
 			MagmaticFireball.DisplayName: Magmatic Fireball
 			MagmaticSword.DisplayName: Magmatic Sword
+			AncientEnergy.DisplayName: Ancient Energy
+			RefinedSpazmataniumBullet.DisplayName: Refined Spazmatanium Bullet
+			DualSlashBladeCut.DisplayName: Dual Slash Blade Cut
+			YinYangGunsHeld.DisplayName: Yin Yang Guns Held
+			GreedBullet.DisplayName: Greed Bullet
+			NanashiSword.DisplayName: Nanashi Sword
+			MemerEnchSpark.DisplayName: Memer Ench Spark
+			SpazHitSpark.DisplayName: Spaz Hit Spark
+			BlasphemyHitSpark.DisplayName: Blasphemy Hit Spark
+			SlashCutterHitSpark.DisplayName: Slash Cutter Hit Spark
+			PrismaticSpark.DisplayName: Prismatic Spark
+			MechBullet.DisplayName: Mech Bullet
+			GoldenEmpire.DisplayName: Golden Empire
+			GoldenEmpireGun.DisplayName: Golden Empire Gun
+			GoldenEmpireBullet.DisplayName: Golden Empire Bullet
+			NeonHitSpark.DisplayName: Neon Hit Spark
+			NeonSaber.DisplayName: Neon Saber
+			NeonScythe.DisplayName: Neon Scythe
+			LunarNovaArrow.DisplayName: Lunar Nova Arrow
+			LineBlast.DisplayName: Line Blast
+			GutterBullet.DisplayName: Gutter Bullet
+			GuttertankHeldProj.DisplayName: Guttertank Held Proj
+			ThousandEdge.DisplayName: Thousand Edge
+			AlloybloodSpinThrow.DisplayName: Alloyblood Spin Throw
+			CyberNeonCut.DisplayName: Cyber Neon Slash
+			CyberNeonAxeThrow.DisplayName: Cyber Neon Axe
+			CyberNeonAxe.DisplayName: Cyber Neon Axe
+			InfraRedSwordBullet.DisplayName: Infra Red Beam
+			NeonSaberSlash.DisplayName: Neon Saber
+			DualSlashCutterSwingFlip.DisplayName: Dual Slash Cutter Swing Flip
+			AngelOfJudgement.DisplayName: Angel Of Judgement
+			AngelOfJudgementThrow.DisplayName: Angel Of Judgement Throw
+			AngelOfJudgementSpear.DisplayName: Angel Of Judgement Spear
+			Glaicey.DisplayName: Glaicey
+			UltraBlueBullet.DisplayName: Ultra Blue Bullet
+			EtherealNailGunHeldProj.DisplayName: Ethereal Nail Gun Held Proj
+			AncientArrow.DisplayName: Ancient Arrow
+			BlueSunCannonHeldProj.DisplayName: Blue Sun Cannon Held Proj
+			SlabPistolPrimeHeldProj.DisplayName: Slab Pistol Prime Held Proj
+			PrimeBullet.DisplayName: Prime Bullet
+			EqualBulletPrime.DisplayName: Equal Bullet Prime
+			HeroTrainingSwordSwing.DisplayName: Hero Training Sword Swing
+			GerdHeroSwordSpin.DisplayName: Gerd Hero Sword Spin
+			BlasphemySlash.DisplayName: Blasphemy Slash
 		}
 
 		Tiles: {
@@ -2668,31 +3014,43 @@ Mods: {
 				DisplayName: Client Config
 
 				Headers: {
-					Misc: Misc Header
-					Accessories: Accessories Header
+					Misc: Misc
+					Accessories: Accessories
 				}
 
 				EnabledScreenShake: {
 					Label: Screen-Shake
-					Tooltip: ""
+					Tooltip: Enable or turn off screenshake from weapons and bosses, makes it easier to look around and focus
 				}
 
 				AlloybloodDagger: {
-					Label: "{$[i:GMR/AlloybloodEnchantment]-Alloyblodd-Dagger}"
-					Tooltip: ""
+					Label: "[i:GMR/AlloybloodEnchantment] Alloyblodd Dagger"
+					Tooltip: May create lag with all the items it creates
 				}
 
 				MultiplicateProj: {
-					Label: "{$[i:GMR/DevPlushie]-Multiplicative-Projectiles}"
+					Label: "[i:GMR/DevPlushie] Multiplicative Projectiles"
 					Tooltip: In case you require more frames or it breaks weapons
 				}
 
 				NajaFireball: {
-					Label: "{$[i:GMR/NajaCharm]-Volcano-Charm-Fireballs}"
-					Tooltip: ""
+					Label: "[i:GMR/NajaCharm] Volcano Charm Fireballs"
+					Tooltip: Same as the above, decrease lag from too many projectiles & dust
+				}
+
+				GoldenEmpire: {
+					Tooltip: If it's getting in the way just turn this off
+					Label: "[i:GMR/AmalgamateEnchantment] Active Stand"
+				}
+
+				BlacklistMultProj: {
+					Tooltip: Blacklist a set of items that shouldn't be affected by the 'Multiplicative Projectiles' effect of accessories
+					Label: "[i:GMR/AmalgamationPlushie] Blacklist Multiplicative Projectiles"
 				}
 			}
 		}
+
+		"Keybinds.Special Key.DisplayName": Special  Key
 	}
 }
 

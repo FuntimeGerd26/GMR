@@ -46,12 +46,12 @@ namespace GMR.NPCs.Bosses.Jack.Eternity
         {
             NPC.width = 36;
             NPC.height = 90;
-            NPC.lifeMax = 825;
-            NPC.defense = 1;
+            NPC.lifeMax = 785;
+            NPC.defense = 5;
             NPC.HitSound = SoundID.NPCHit42;
             NPC.DeathSound = SoundID.NPCDeath37;
-            NPC.knockBackResist = 0.25f;
-            NPC.damage = 18;
+            NPC.knockBackResist = 0.15f;
+            NPC.damage = 20;
             NPC.aiStyle = -1;
             NPC.noTileCollide = true;
             NPC.noGravity = true;
@@ -67,6 +67,8 @@ namespace GMR.NPCs.Bosses.Jack.Eternity
 
         public override void AI()
         {
+            Lighting.AddLight(NPC.Center, new Vector3(0.8f, 0.8f, 0.15f));
+
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 if (!NPC.AnyNPCs(ModContent.NPCType<JackE>()))
@@ -91,8 +93,8 @@ namespace GMR.NPCs.Bosses.Jack.Eternity
                     return;
                 }
 
-                if (NPC.damage > 30)
-                    NPC.damage = 30;
+                if (NPC.damage > 80)
+                    NPC.damage = 80;
 
                 Player player = Main.player[NPC.target];
                 if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
@@ -102,6 +104,17 @@ namespace GMR.NPCs.Bosses.Jack.Eternity
 
                 Vector2 toPlayer = NPC.Center - player.Center;
                 NPC.rotation = toPlayer.ToRotation() + MathHelper.ToRadians(90f);
+
+                if (!NPC.AnyNPCs(ModContent.NPCType<EternityTower>()))
+                {
+                    NPC.dontTakeDamage = false;
+                    NPC.netUpdate = true;
+                }
+                else
+                {
+                    NPC.dontTakeDamage = true;
+                    NPC.netUpdate = true;
+                }
 
                 if (player.dead)
                 {
@@ -166,15 +179,17 @@ namespace GMR.NPCs.Bosses.Jack.Eternity
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             var texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
+            var glow = GMR.Instance.Assets.Request<Texture2D>($"NPCs/Bosses/Jack/JackArmClaw_Glow", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             var origin = new Vector2(texture.Width / 2f, texture.Height / 2f);
             var offset = NPC.Size / 2f - screenPos;
+            SpriteEffects spriteEffects = SpriteEffects.FlipHorizontally;
+            if (NPC.spriteDirection == -1)
+                spriteEffects = SpriteEffects.None;
 
-            var glow = GMR.Instance.Assets.Request<Texture2D>($"NPCs/Bosses/Jack/Eternity/JackEArmClaw_Glow", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            Color color = new Color(195, 195, 95, 5);
 
-            SpriteEffects effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-
-            Main.EntitySpriteDraw(texture, NPC.position + offset, null, drawColor, NPC.rotation, origin, NPC.scale, effects, 0);
-            Main.EntitySpriteDraw(glow, NPC.position + offset, null, Color.White, NPC.rotation, origin, NPC.scale, effects, 0);
+            Main.EntitySpriteDraw(texture, NPC.position + offset, null, drawColor, NPC.rotation, origin, NPC.scale, spriteEffects, 0);
+            Main.EntitySpriteDraw(glow, NPC.position + offset, null, color, NPC.rotation, origin, NPC.scale, spriteEffects, 0);
             return false;
         }
     }

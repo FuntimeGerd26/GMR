@@ -29,6 +29,8 @@ namespace GMR.NPCs.Bosses.Jack
                 PortraitPositionYOverride = 1.5f,
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
+            NPC.AddElement(0);
+            NPC.AddElement(2);
         }
 
         public override void SetDefaults()
@@ -40,7 +42,7 @@ namespace GMR.NPCs.Bosses.Jack
             NPC.HitSound = SoundID.NPCHit42;
             NPC.DeathSound = SoundID.NPCDeath14;
             NPC.knockBackResist = 0f;
-            NPC.damage = 12;
+            NPC.damage = 20;
             NPC.aiStyle = 0;
             NPC.noTileCollide = true;
             NPC.noGravity = true;

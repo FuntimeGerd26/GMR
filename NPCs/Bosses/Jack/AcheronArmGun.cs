@@ -41,6 +41,8 @@ namespace GMR.NPCs.Bosses.Jack
                 Hide = true
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, value);
+            NPC.AddElement(0);
+            NPC.AddElement(2);
         }
 
         public override void SetDefaults()
@@ -48,11 +50,11 @@ namespace GMR.NPCs.Bosses.Jack
             NPC.width = 30;
             NPC.height = 72;
             NPC.lifeMax = 1000;
-            NPC.defense = 3;
+            NPC.defense = 5;
             NPC.HitSound = SoundID.NPCHit42;
             NPC.DeathSound = SoundID.NPCDeath37;
             NPC.knockBackResist = 0.5f;
-            NPC.damage = 18;
+            NPC.damage = 45;
             NPC.aiStyle = -1;
             NPC.noTileCollide = true;
             NPC.noGravity = true;
@@ -69,6 +71,8 @@ namespace GMR.NPCs.Bosses.Jack
 
         public override void AI()
         {
+            Lighting.AddLight(NPC.Center, new Vector3(0.8f, 0.15f, 0.5f));
+
             if (!NPC.AnyNPCs(ModContent.NPCType<Acheron>()))
             {
                 NPC.life += -200;
@@ -98,8 +102,8 @@ namespace GMR.NPCs.Bosses.Jack
                 NPC.netUpdate = true;
             }
 
-            if (NPC.damage > 36)
-                NPC.damage = 36;
+            if (NPC.damage > 72)
+                NPC.damage = 72;
 
             Vector2 toPlayer = NPC.Center - player.Center;
             NPC.rotation = toPlayer.ToRotation() + MathHelper.ToRadians(90f);
@@ -152,6 +156,7 @@ namespace GMR.NPCs.Bosses.Jack
                     NPC.ai[1] = 0;
                     NPC.ai[0]++;
                     NPC.ai[0] *= -1;
+                    SoundEngine.PlaySound(GMR.GetSounds("NPCs/armchangevariant", 2, 1f, 0f, 0.75f), NPC.Center);
                     NPC.netUpdate = true;
                 }
                 else if (++NPC.ai[1] > 300) // After 5 seconds
@@ -174,7 +179,7 @@ namespace GMR.NPCs.Bosses.Jack
                 spriteEffects = SpriteEffects.None;
 
             Main.EntitySpriteDraw(texture, NPC.position + offset, null, drawColor, NPC.rotation, origin, NPC.scale, spriteEffects, 0);
-            Main.EntitySpriteDraw(glow, NPC.position + offset, null, Color.White, NPC.rotation, origin, NPC.scale, spriteEffects, 0);
+            Main.EntitySpriteDraw(glow, NPC.position + offset, null, new Color(194, 91, 112, 5), NPC.rotation, origin, NPC.scale, spriteEffects, 0);
             return false;
         }
     }

@@ -19,7 +19,6 @@ using Terraria.ModLoader.IO;
 using Terraria.ModLoader.Utilities;
 using static Terraria.ModLoader.ModContent;
 using GMR;
-using GMR.NPCs.Bosses.Jack;
 
 namespace GMR.NPCs.Bosses.Jack
 {
@@ -49,14 +48,16 @@ namespace GMR.NPCs.Bosses.Jack
                 PortraitPositionYOverride = 1.2f,
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
+            NPC.AddElement(0);
+            NPC.AddElement(2);
         }
 
         public override void SetDefaults()
         {
             NPC.width = 110;
             NPC.height = 122;
-            NPC.lifeMax = 15500;
-            NPC.defense = 75;
+            NPC.lifeMax = 16500;
+            NPC.defense = 5;
             NPC.HitSound = SoundID.NPCHit42;
             NPC.DeathSound = SoundID.NPCDeath14;
             NPC.knockBackResist = 0.2f;
@@ -122,6 +123,8 @@ namespace GMR.NPCs.Bosses.Jack
 
         public override void AI()
         {
+            Lighting.AddLight(NPC.Center, new Vector3(0.8f, 0.15f, 0.5f));
+
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 Player player = Main.player[NPC.target];
@@ -132,8 +135,8 @@ namespace GMR.NPCs.Bosses.Jack
                     NPC.netUpdate = true;
                 }
 
-                if (NPC.damage > 56)
-                    NPC.damage = 56;
+                if (NPC.damage > 112)
+                    NPC.damage = 112;
 
                 if (player.dead)
                 {
@@ -182,18 +185,30 @@ namespace GMR.NPCs.Bosses.Jack
                         SoundEngine.PlaySound(SoundID.Research, NPC.Center);
                     }
 
-                    NPC.defense = 75;
+                    NPC.defense = 30;
                     NPC.netUpdate = true;
                 }
 
 
                 switch ((int)NPC.ai[0])
                 {
+                    case -1: // Just a loading thing
+                        if (++NPC.ai[1] == 180)
+                        {
+                            AI4 = 0;
+                            NPC.TargetClosest();
+                            NPC.ai[0]++;
+                            NPC.ai[1] = 0;
+                            NPC.ai[2] = 0;
+                            NPC.localAI[0] = 0;
+                            NPC.netUpdate = true;
+                        }
+                        break;
                     case 0: // Heal for skill issue
                         if (++NPC.ai[2] % 30 == 0 && (NPC.AnyNPCs(ModContent.NPCType<AcheronArmGun>()) || NPC.AnyNPCs(ModContent.NPCType<AcheronArmClaw>())))
                         {
-                            int lifeHeal = NPC.lifeMax / 10;
-                            if (NPC.life > (int)(NPC.lifeMax * 0.9))
+                            int lifeHeal = NPC.lifeMax / 20;
+                            if (NPC.life > (int)(NPC.lifeMax * 0.95))
                             {
                                 lifeHeal = NPC.lifeMax - NPC.life;
                                 NPC.life += lifeHeal;
@@ -219,7 +234,7 @@ namespace GMR.NPCs.Bosses.Jack
                     case 1: // Spining Projectiles
                         if (++NPC.ai[1] == 1)
                         {
-                            SoundEngine.PlaySound(SoundID.Roar, NPC.Center);
+                            SoundEngine.PlaySound(new SoundStyle($"{nameof(GMR)}/Sounds/NPCs/acheronscream").WithVolumeScale(2f), NPC.Center);
                         }
                         if (++NPC.ai[2] % 10 == 0)
                         {
@@ -249,7 +264,7 @@ namespace GMR.NPCs.Bosses.Jack
                     case 2: // Rune Beam
                         if (++NPC.ai[1] == 1)
                         {
-                            SoundEngine.PlaySound(SoundID.Roar, NPC.Center);
+                            SoundEngine.PlaySound(new SoundStyle($"{nameof(GMR)}/Sounds/NPCs/acheronscream").WithVolumeScale(2f), NPC.Center);
                         }
                         if (++NPC.ai[2] == 120)
                         {
@@ -276,7 +291,7 @@ namespace GMR.NPCs.Bosses.Jack
                     case 3: // Spin Saws
                         if (++NPC.ai[1] == 1)
                         {
-                            SoundEngine.PlaySound(SoundID.Roar, NPC.Center);
+                            SoundEngine.PlaySound(new SoundStyle($"{nameof(GMR)}/Sounds/NPCs/acheronscream").WithVolumeScale(2f), NPC.Center);
                         }
                         if (++NPC.ai[2] % 200 == 0)
                         {
@@ -307,7 +322,7 @@ namespace GMR.NPCs.Bosses.Jack
                     case 4: // Reverse Spinning Projectiles
                         if (++NPC.ai[1] == 1)
                         {
-                            SoundEngine.PlaySound(SoundID.Roar, NPC.Center);
+                            SoundEngine.PlaySound(new SoundStyle($"{nameof(GMR)}/Sounds/NPCs/acheronscream").WithVolumeScale(2f), NPC.Center);
                         }
                         if (++NPC.ai[2] % 10 == 0)
                         {
@@ -337,7 +352,23 @@ namespace GMR.NPCs.Bosses.Jack
                     case 5: // Jack Rain Attack is back
                         if (++NPC.ai[1] == 1)
                         {
-                            SoundEngine.PlaySound(SoundID.Roar, NPC.Center);
+                            SoundEngine.PlaySound(new SoundStyle($"{nameof(GMR)}/Sounds/NPCs/acheronscream").WithVolumeScale(2f), NPC.Center);
+
+                            player.GetModPlayer<GerdPlayer>().ShakeScreen(2, 0.50f);
+                            float x = 1000f;
+                            float y = 2000f;
+                            int amount = 24;
+                            var posX = player.position.X + player.width / 2f;
+                            var posY = player.position.Y + player.height / 2f - y / 2f;
+                            float yAdd = y / (amount / 2);
+                            int type = ModContent.ProjectileType<Projectiles.Bosses.JackBlastBad>();
+                            for (int i = 0; i < amount; i++)
+                            {
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), new Vector2(posX + x, posY + yAdd * i), new Vector2(-3f, 0f), type, NPC.damage, 1f, Main.myPlayer);
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), new Vector2(posX - x, posY + yAdd * i), new Vector2(3f, 0f), type, NPC.damage, 1f, Main.myPlayer);
+                                SoundEngine.PlaySound(SoundID.Item12, NPC.Center);
+                                NPC.netUpdate = true;
+                            }
                         }
                         if (++NPC.ai[2] % 400 == 0)
                         {
@@ -361,7 +392,7 @@ namespace GMR.NPCs.Bosses.Jack
                     case 6: // Homing Orbs
                         if (++NPC.ai[1] == 1)
                         {
-                            SoundEngine.PlaySound(SoundID.Roar, NPC.Center);
+                            SoundEngine.PlaySound(new SoundStyle($"{nameof(GMR)}/Sounds/NPCs/acheronscream").WithVolumeScale(2f), NPC.Center);
                         }
                         if (++NPC.ai[1] < 600 && ++NPC.ai[2] % 5 == 0)
                         {
@@ -372,7 +403,8 @@ namespace GMR.NPCs.Bosses.Jack
                             Vector2 velocity = new Vector2(0f, 8f);
                             for (int i = 0; i < 1; i++)
                             {
-                                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.DirectionTo(player.Center) * 5f, ModContent.ProjectileType<Projectiles.Bosses.AcheronOrb>(), NPC.damage, 0f, Main.myPlayer);
+                                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center - 8 * Vector2.UnitY,
+                                    NPC.DirectionTo(player.Center) * 5f, ModContent.ProjectileType<Projectiles.Bosses.AcheronOrb>(), NPC.damage, 0f, Main.myPlayer);
                                 SoundEngine.PlaySound(SoundID.Item33, NPC.Center);
                             }
                         }
@@ -389,38 +421,38 @@ namespace GMR.NPCs.Bosses.Jack
                         break;
 
                     default:
-                        NPC.ai[0] = 0;
-                        goto case 0;
+                        NPC.ai[0] = -1;
+                        goto case -1;
                 }
             }
         }
 
         public override void BossLoot(ref string name, ref int potionType)
         {
-            potionType = ItemID.HealingPotion;
+            potionType = ItemID.GreaterHealingPotion;
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Misc.Materials.ScrapFragment>(), 1, 14, 30));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Misc.Consumable.DGPCrate>(), 10));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Ranged.JackRifle>(), 50));
+            LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 
             int[] drops = { ModContent.ItemType<Items.Weapons.Melee.InfraRedSpear>(), ModContent.ItemType<Items.Weapons.Ranged.AcheronBow>(), ModContent.ItemType<Items.Weapons.Magic.InfraRedStaff>(), };
 
-            npcLoot.Add(ItemDropRule.OneFromOptions(1, drops));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Vanity.JackMask>(), 10));
-            if (Main.expertMode)
+            notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, drops));
+
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Ranged.JackRifle>(), 50));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Misc.Materials.InfraRedBar>(), 1, 18, 45));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Misc.Materials.ScrapFragment>(), 1, 8, 20));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Misc.Consumable.DGPCrate>(), 10));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Vanity.JackMask>(), 10));
+
+            if (ModLoader.TryGetMod("MagicStorage", out Mod magicStorage) && !GerdWorld.downedAcheron)
             {
-                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Accessories.JackExpert>(), 1));
+                npcLoot.Add(ItemDropRule.Common(magicStorage.Find<ModItem>("ShadowDiamond").Type));
             }
 
-            npcLoot.Add(ItemDropRule.Common(ItemID.IronBar, 1, 7, 18));
-            npcLoot.Add(ItemDropRule.Common(ItemID.LeadBar, 1, 7, 18));
-            npcLoot.Add(ItemDropRule.Common(ItemID.TungstenBar, 3, 5, 16));
-            npcLoot.Add(ItemDropRule.Common(ItemID.SilverBar, 3, 5, 16));
-            npcLoot.Add(ItemDropRule.Common(ItemID.GoldBar, 4, 4, 18));
-            npcLoot.Add(ItemDropRule.Common(ItemID.PlatinumBar, 4, 4, 18));
+            npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<Items.Misc.Consumable.AcheronTreasureBag>()));
+            npcLoot.Add(notExpertRule);
         }
 
         public override void OnKill()
@@ -453,24 +485,28 @@ namespace GMR.NPCs.Bosses.Jack
             int trailLength = NPCID.Sets.TrailCacheLength[NPC.type];
 
             var rune = GMR.Instance.Assets.Request<Texture2D>("Assets/Images/JackRitual", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            var star = GMR.Instance.Assets.Request<Texture2D>("Assets/Images/Star08", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             var glow = GMR.Instance.Assets.Request<Texture2D>($"NPCs/Bosses/Jack/Acheron_Glow", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             var shield = GMR.Instance.Assets.Request<Texture2D>($"NPCs/Bosses/Jack/AcheronShields", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             var shieldglow = GMR.Instance.Assets.Request<Texture2D>($"NPCs/Bosses/Jack/AcheronShields_Glow", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            Color drawColor2 = new Color(255, 155, 155, 55);
+            Color drawColor2 = new Color(194, 91, 112, 5);
             var origin2 = new Vector2(rune.Width / 2f, rune.Height / 2f);
+            var originstar = new Vector2(star.Width / 2f, star.Height / 2f);
             var originshields = new Vector2(shield.Width / 2f, shield.Height / 2f);
             runeRotate += 0.015f;
             for (int i = 0; i < trailLength; i++)
             {
                 float progress = 1f - 1f / trailLength * i;
-                Main.EntitySpriteDraw(rune, NPC.oldPos[i] + offset, null, drawColor2 * progress, runeRotate, origin2, NPC.scale * 0.75f, SpriteEffects.None, 0);
+                Main.EntitySpriteDraw(rune, NPC.oldPos[i] + offset, null, drawColor2 * progress, runeRotate - MathHelper.ToRadians(1f), origin2, NPC.scale * 0.75f, SpriteEffects.None, 0);
             }
             Main.EntitySpriteDraw(rune, NPC.position + offset, null, drawColor2, runeRotate, origin2, NPC.scale * 0.75f, SpriteEffects.None, 0);
             Main.EntitySpriteDraw(shield, NPC.position + offset, null, drawColor, runeRotate, originshields, NPC.scale, SpriteEffects.None, 0);
             Main.EntitySpriteDraw(shieldglow, NPC.position + offset, null, drawColor2, runeRotate, originshields, NPC.scale, SpriteEffects.None, 0);
 
             Main.EntitySpriteDraw(texture, NPC.position + offset, null, drawColor, NPC.rotation, origin, NPC.scale, SpriteEffects.None, 0);
-            Main.EntitySpriteDraw(glow, NPC.position + offset, null, Color.White, NPC.rotation, origin, NPC.scale, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(glow, NPC.position + offset, null, drawColor2, NPC.rotation, origin, NPC.scale, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(star, NPC.position + offset - 8 * Vector2.UnitY, null, drawColor2 * 0.5f, runeRotate, originstar, NPC.scale * 0.125f, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(star, NPC.position + offset + 30 * Vector2.UnitY, null, drawColor2 * 0.6f, runeRotate, originstar, NPC.scale * 0.15f, SpriteEffects.None, 0);
             return false;
         }
     }
