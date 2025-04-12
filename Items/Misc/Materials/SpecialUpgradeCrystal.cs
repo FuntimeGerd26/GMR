@@ -15,7 +15,7 @@ namespace GMR.Items.Misc.Materials
 			DisplayName.SetDefault("Crystal Emblem");
 			Tooltip.SetDefault("'A crystal gotten from dificult extraction, extracting it is more of patience than effort'");
 
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
 		}
 
 		public override void SetDefaults()

@@ -12,7 +12,7 @@ namespace GMR.Items.Misc.Materials
 	{
 		public override void SetStaticDefaults()
 		{
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 30;
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 15;
 		}
 
 		public override void SetDefaults()

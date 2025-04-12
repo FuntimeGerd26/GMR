@@ -47,14 +47,14 @@ namespace GMR.Items.Misc.Consumable
 				itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Armor.BoostFoxMask>()));
 				itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Armor.BoostFoxChestplate>()));
 				itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Armor.BoostFoxBoots>()));
-				itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.BullChainsaw>()));
+				itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.Others.BullChainsaw>()));
 			}
 			else
 			{
 				itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Armor.MagnumFoxMask>()));
 				itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Armor.MagnumFoxChestplate>()));
 				itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Armor.MagnumFoxBoots>()));
-				itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Ranged.MagnumShooter>()));
+				itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Ranged.Guns.MagnumShooter>()));
 			}
 		}
 	}

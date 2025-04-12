@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 
 namespace GMR.Items.Misc.Materials
 {
-	public class InfraRedBar : ModItem
+	public class AncientInfraRedPlating : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -17,12 +17,12 @@ namespace GMR.Items.Misc.Materials
 
 		public override void SetDefaults()
 		{
-			Item.width = 26;
-			Item.height = 26;
-			Item.rare = 4;
-			Item.maxStack = 999;
-			Item.value = Item.buyPrice(silver: 450);
-			Item.buyPrice(gold: 15);
+			Item.width = 20;
+			Item.height = 22;
+			Item.rare = 3;
+			Item.maxStack = 9999;
+			Item.value = Item.sellPrice(gold: 2);
+			Item.buyPrice(gold: 6);
 		}
 	}
 }

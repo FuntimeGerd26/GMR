@@ -15,7 +15,7 @@ namespace GMR.Items.Misc.Materials
 			DisplayName.SetDefault("Crytal Claw");
 			Tooltip.SetDefault("'A crystal powerful enough to make hardmode items'");
 
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 20;
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 40;
 		}
 
 		public override void SetDefaults()

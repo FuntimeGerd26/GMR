@@ -12,7 +12,7 @@ namespace GMR.Items.Misc.Materials
 	{
 		public override void SetStaticDefaults()
 		{
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 30;
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
 		}
 
 		public override void SetDefaults()
@@ -28,7 +28,7 @@ namespace GMR.Items.Misc.Materials
 		public override void AddRecipes()
 		{
 			Recipe recipe = CreateRecipe(2);
-			recipe.AddIngredient(ItemID.HellstoneBar, 5);
+			recipe.AddIngredient(null, "MagmaticShard", 5);
 			recipe.AddIngredient(ItemID.GoldBar, 10);
 			recipe.AddRecipeGroup("IronBar", 40);
 			recipe.AddIngredient(null, "BossUpgradeCrystal", 10);
@@ -36,7 +36,7 @@ namespace GMR.Items.Misc.Materials
 			recipe.Register();
 
 			Recipe recipe2 = CreateRecipe(2);
-			recipe2.AddIngredient(ItemID.HellstoneBar, 5);
+			recipe2.AddIngredient(null, "MagmaticShard", 5);
 			recipe2.AddIngredient(ItemID.PlatinumBar, 10);
 			recipe2.AddRecipeGroup("IronBar", 40);
 			recipe2.AddIngredient(null, "BossUpgradeCrystal", 10);

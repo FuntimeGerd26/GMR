@@ -15,7 +15,7 @@ namespace GMR.Items.Misc.Materials
 			DisplayName.SetDefault("Crystal Ring");
 			Tooltip.SetDefault("'A crystal powerful enough to make rarer items'");
 
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 10;
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 50;
 		}
 
 		public override void SetDefaults()

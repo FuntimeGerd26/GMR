@@ -15,7 +15,7 @@ namespace GMR.Items.Misc.Materials
 			DisplayName.SetDefault("Crystal Screw");
 			Tooltip.SetDefault("'A crystal powerful enough to make common items'");
 
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 40;
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
 		}
 
 		public override void SetDefaults()
