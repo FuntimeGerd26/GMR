@@ -4,17 +4,16 @@ This mod only aims to add content, with no clear specific goal. Yeah, that's it.
 You may find references to multiple inside jokes, games, shows, people, etc.
 
 Current Progress:
-- 134 Weapons for your enjoyment across progression
-- 10 Armors to defend from foes or friends
+- 168 Weapons for your enjoyment across progression (17 magic, 69 melee, 76 ranged, 5 summon and 1 multiclass)
+- 11 Armors to defend yourself from foes
+- A lot of accessories to increase your power in combat
 - 2 Town NPCs you'll meet through your journey
-- 3 Bosses to defeat and loot
+- 3 Bosses to battle and defeat (please read the discussions page for more information)
 
 Contributiors: (Directly or Indirectly influencing the mod)
-- Lunziestella (Made the theme for Trerios, taken from a giveaway of old songs for her own mod)
 - Spectra (Created the theme for Jack)
 - extra (Sound effects for Acheron and Jack, along some weapon sound effects)
-- Rockman Zeta (Play Shards of Atheria, some code taken from his mods to help make this one)
-- Nalyddd & Aequus team (As an open source mod, some parts of code have been taken to create things you see in it)
+- Rockman Zeta (Play Shards of Atheria, helped coding some things I just couldn't have figured out)
 - Kerm (R.I.P Pellucid mod, may Radiant mod succeed, custom gun code & visuals from Pellucid)
 - Spazmatanium, An Agent of Chaos, icey, Snith Nord Darth Bathrobe (Very good friends, i began modding thanks to wanting to make something for us to play)
 - Ebon & Braycoe (Modder friends, they have been helpful in very niche issues, along ideas and inspiration)

@@ -67,6 +67,21 @@ namespace GMR
             GMR.TryElementCall("assignElement", npc, multipliers);
         }
 
+        public static Item HeldItemFixed(this Player player)
+        {
+            if (Main.myPlayer == player.whoAmI && player.selectedItem == 58 && Main.mouseItem != null && !Main.mouseItem.IsAir)
+            {
+                return Main.mouseItem;
+            }
+            return player.HeldItem;
+        }
+
+
+        public static IEntitySource GetSource_HeldItem(this Player player)
+        {
+            return player.GetSource_ItemUse(player.HeldItemFixed());
+        }
+
         public static int FindClosestHostileNPC(Vector2 location, float detectionRange, bool lineCheck = false)
         {
             NPC closestNpc = null;
@@ -164,6 +179,29 @@ namespace GMR
             return GetMinionTarget(projectile, projectile.Center, out distance, maxDistance, ignoreTilesDistance);
         }
 
+        public static void ScaleUp(Projectile proj)
+        {
+            float scale = Main.player[proj.owner].CappedMeleeScale();
+            if (scale != 1f)
+            {
+                proj.scale *= scale;
+                proj.width = (int)(proj.width * proj.scale);
+                proj.height = (int)(proj.height * proj.scale);
+            }
+        }
+
+        public static void DisableWorldInteractions(this Projectile projectile)
+        {
+            projectile.tileCollide = false;
+            projectile.ignoreWater = true;
+            projectile.aiStyle = -1;
+            projectile.penetrate = -1;
+        }
+
+        public static void DefaultToHeldProj(this Projectile projectile)
+        {
+            DisableWorldInteractions(projectile);
+        }
 
         public static int Abs(this int value)
         {
@@ -208,6 +246,38 @@ namespace GMR
         public static Color GetRainbowColor(Player player, float position)
         {
             return GetRainbowColor(player.whoAmI, position);
+        }
+
+        public static Rectangle Frame(this Projectile projectile)
+        {
+            return TextureAssets.Projectile[projectile.type].Value.Frame(1, Main.projFrames[projectile.type], 0, projectile.frame);
+        }
+
+        public static void GetDrawInfo(this NPC npc, out Texture2D texture, out Vector2 offset, out Rectangle frame, out Vector2 origin, out int trailLength)
+        {
+            texture = TextureAssets.Npc[npc.type].Value;
+            offset = npc.Size / 2f;
+            frame = npc.frame;
+            origin = frame.Size() / 2f;
+            trailLength = NPCID.Sets.TrailCacheLength[npc.type];
+        }
+        public static void GetDrawInfo(this Projectile projectile, out Texture2D texture, out Vector2 offset, out Rectangle frame, out Vector2 origin, out int trailLength)
+        {
+            texture = TextureAssets.Projectile[projectile.type].Value;
+            offset = projectile.Size / 2f;
+            frame = projectile.Frame();
+            origin = frame.Size() / 2f;
+            trailLength = ProjectileID.Sets.TrailCacheLength[projectile.type];
+        }
+
+        public static void DrawLine(Vector2 start, float rotation, float length, float width, Color color)
+        {
+            Main.spriteBatch.Draw(ModContent.Request<Texture2D>($"GMR/Assets/Images/Pixel", AssetRequestMode.ImmediateLoad).Value, start,
+                new Rectangle(0, 0, 1, 1), color, rotation, new Vector2(1f, 0.5f), new Vector2(length, width), SpriteEffects.None, 0f);
+        }
+        public static void DrawLine(Vector2 start, Vector2 end, float width, Color color)
+        {
+            DrawLine(start, (start - end).ToRotation(), (end - start).Length(), width, color);
         }
 
         public static void DrawFramedChain(Texture2D chain, Rectangle frame, Vector2 currentPosition, Vector2 endPosition, Vector2 screenPos, Func<Vector2, Color> getLighting = null)
@@ -274,6 +344,20 @@ namespace GMR
                 proj.width = (int)(proj.width * proj.scale);
                 proj.height = (int)(proj.height * proj.scale);
             }
+        }
+
+        public static bool DeathrayHitbox(Vector2 center, Rectangle targetHitbox, float rotation, float length, float size, float startLength = 0f)
+        {
+            return DeathrayHitbox(center, targetHitbox, rotation.ToRotationVector2(), length, size, startLength);
+        }
+        public static bool DeathrayHitbox(Vector2 center, Rectangle targetHitbox, Vector2 normal, float length, float size, float startLength = 0f)
+        {
+            return DeathrayHitbox(center + normal * startLength, center + normal * startLength + normal * length, targetHitbox, size);
+        }
+        public static bool DeathrayHitbox(Vector2 from, Vector2 to, Rectangle targetHitbox, float size)
+        {
+            float _ = float.NaN;
+            return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), from, to, size, ref _);
         }
 
         public static string CapSpaces(string text)

@@ -63,10 +63,16 @@ namespace GMR
 			}
 
 			if (target.HasBuff(ModContent.BuffType<Buffs.Debuffs.IllusionOfBeingLoved>()))
-				target.takenDamageMultiplier = 1.1f;
+				target.takenDamageMultiplier *= 1.1f;
 
-			if (player.GPlayer().MaskedPlagueCloak != null && projectile.friendly && projectile.DamageType?.CountsAsClass(DamageClass.Magic) == true && Main.rand.NextBool(10))
-				player.Heal((int)(player.statLifeMax * 0.01));
+			if (player.GPlayer().MaskedPlagueCloak != null && projectile.friendly && projectile.DamageType?.CountsAsClass(DamageClass.Magic) == true && Main.rand.NextBool(100))
+				player.Heal((int)(player.statLifeMax * 0.02));
+
+			if (player.HeldItem.type == ModContent.ItemType<Items.Weapons.Ranged.Guns.RCorpRifle>())
+				target.AddBuff(ModContent.BuffType<Buffs.Debuffs.Rupture>(), 180);
+
+			if (target.HasBuff(ModContent.BuffType<Buffs.Debuffs.Rupture>()))
+				target.takenDamageMultiplier *= 2f;
 		}
 	}
 }

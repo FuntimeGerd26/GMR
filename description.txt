@@ -2,21 +2,20 @@
 This mod only aims to add content, with no clear specific goal. Yeah, that's it.
 
 You may find references to multiple inside jokes, games, shows, people, etc.
-
 Current Progress:
-- 134 Weapons for your enjoyment across progression
-- 10 Armors to defend from foes or friends
+- 168 Weapons for your enjoyment across progression (17 magic, 69 melee, 76 ranged, 5 summon and 1 multiclass)
+- 11 Armors to defend yourself from foes
+- A lot of accessories to increase your power in combat
 - 2 Town NPCs you'll meet through your journey
-- 3 Bosses to defeat and loot
+- 3 Bosses to battle and defeat (please read the discussions page on the workshop page for more information)
 
 Contributiors: ([c/D500EA:Directly] or [c/4CBAB7:Indirectly] influencing the mod)
 - [c/D500EA:Spectra] (Created the theme for Jack)
 - [c/D500EA:extra] (Sound effects for Acheron and Jack, along some weapon sound effects)
-- [c/4CBAB7:Rockman Zeta] (Play Shards of Atheria, some code taken from his mods to help make this one)
-- [c/4CBAB7:Nalyddd & Aequus team] (As an open source mod, some parts of code have been taken to create things you see in it)
+- [c/D500EA:Rockman Zeta] (Play Shards of Atheria, helped coding some things I just couldn't have figured out)
 - [c/4CBAB7:Kerm] (R.I.P Pellucid mod, may Radiant mod succeed, custom gun code & visuals from Pellucid)
-- [c/D500EA:Spazmatanium, An Agent of Chaos, icey, Snith Nord Darth Bathrobe] (Very good friends, i began modding thanks to wanting to make something for us to play)
-- [c/D500EA:Ebon & Braycoe] (Modder friends, they have been helpful in very niche issues, along ideas and inspiration)
+- [c/4CBAB7:Spazmatanium, An Agent of Chaos, icey, Snith Nord Darth Bathrobe] (Very good friends, i began modding thanks to wanting to make something for us to play)
+- [c/4CBAB7:Ebon & Braycoe] (Modder friends, they have been helpful in very niche issues, along ideas and inspiration)
 - [c/D500EA:Y'all who have given feedback on the mod], it helps me see bugs i didn't find or think of durning development.
 
 And of course, You for reading all of this, or not, that you play the mod is enough for me.

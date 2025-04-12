@@ -21,6 +21,7 @@ using Terraria.GameContent.Creative;
 using ReLogic.Content;
 
 using GMR;
+using GMR.Items.Tiles;
 using GMR.Items.Vanity;
 using GMR.Items.Accessories;
 using GMR.Items.Weapons;
@@ -28,8 +29,20 @@ using GMR.Items.Misc;
 using GMR.Items.Misc.Consumable;
 using GMR.Items.Misc.Materials;
 using GMR.Items.Weapons.Melee;
+using GMR.Items.Weapons.Melee.Swords;
+using GMR.Items.Weapons.Melee.Spears;
+using GMR.Items.Weapons.Melee.Others;
 using GMR.Items.Weapons.Ranged;
+using GMR.Items.Weapons.Ranged.Guns;
+using GMR.Items.Weapons.Ranged.Bows;
+using GMR.Items.Weapons.Ranged.Others;
+using GMR.Items.Weapons.Ranged.Railcannons;
 using GMR.Items.Weapons.Magic;
+using GMR.Items.Weapons.Magic.Books;
+using GMR.Items.Weapons.Magic.Staffs;
+using GMR.Items.Weapons.Magic.Others;
+using GMR.NPCs.Bosses;
+using GMR.NPCs.Bosses.Acheron;
 using GMR.NPCs.Bosses.Jack;
 using GMR.NPCs.Bosses.MagmaEye;
 using GMR.NPCs.Special;
@@ -104,146 +117,149 @@ namespace GMR
 			RecipeGroup.RegisterGroup("GerdBoss:AnyX", group);*/
         }
 
-        internal static SoundStyle GetSounds(string name, int num, float volume = 1f, float pitch = 0f, float variance = 0f)
+        internal static SoundStyle GetSounds(string name, int num, float volume = 1f, float pitch = 0f, float variance = 0f, int instances = 4)
         {
-            return new SoundStyle(SoundsPath + name, 0, num) { Volume = volume, Pitch = pitch, PitchVariance = variance, };
+            return new SoundStyle(SoundsPath + name, 0, num) { Volume = volume, Pitch = pitch, PitchVariance = variance, MaxInstances = instances, };
         }
-        internal static SoundStyle GetSound(string name, float volume = 1f, float pitch = 0f, float variance = 0f)
+        internal static SoundStyle GetSound(string name, float volume = 1f, float pitch = 0f, float variance = 0f, int instances = 4)
         {
-            return new SoundStyle(SoundsPath + name) { Volume = volume, Pitch = pitch, PitchVariance = variance, };
+            return new SoundStyle(SoundsPath + name) { Volume = volume, Pitch = pitch, PitchVariance = variance, MaxInstances = instances, };
         }
     }
 
-    // PS: Waiting till this whole thing breaks, nvm it already did
-    /*internal class ModSupport<TMod> : ModSystem where TMod : ModSupport<TMod>
-    {
-        public static Mod Instance { get; private set; }
-        public static string ModName => typeof(TMod).Name;
 
-        public static bool IsLoadingEnabled() { return ModLoader.HasMod(ModName); }
+	public class GMRModIntegrationsSystem : ModSystem
+	{
+		public override void PostSetupContent()
+		{
+			DoBossChecklistIntegration();
+		}
+		private void DoBossChecklistIntegration()
+		{
+			if (!ModLoader.TryGetMod("BossChecklist", out Mod bossChecklistMod))
+			{
+				return;
+			}
 
-        public static int GetItem(string name, int defaultItem = 0) { return TryFind<ModItem>(name, out var value) ? value.Type : defaultItem; }
+			if (bossChecklistMod.Version < new Version(1, 6))
+			{
+				return;
+			}
 
-        public static bool TryFind<T>(string name, out T value) where T : IModType
-        {
-            if (Instance == null)
+            string internalName = "MagmaEye";
+            float weight = 3.25f;
+            Func<bool> downed = () => GerdWorld.downedMagmaEye;
+            int bossType = ModContent.NPCType<MagmaEye>();
+            int spawnItem = ModContent.ItemType<Hatred>();
+            List<int> collectibles = new List<int>()
             {
-                value = default(T);
-                return false;
-            }
-            return Instance.TryFind(name, out value);
-        }
+                ModContent.ItemType<DGPCrate>(),
+                ModContent.ItemType<ExolBlade>(),
+                ModContent.ItemType<MagmaticSword>(),
+                ModContent.ItemType<Magmathrower>(),
+                ModContent.ItemType<MagmaKnife>(),
+                ModContent.ItemType<MagmaStaff>(),
+                ModContent.ItemType<MagmaticShard>(),
+            };
+            var customPortrait = (SpriteBatch sb, Rectangle rect, Color color) => {
+                Texture2D texture = ModContent.Request<Texture2D>("GMR/NPCs/Bosses/MagmaEye_Still").Value;
+                Vector2 centered = new Vector2(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
+                sb.Draw(texture, centered, color);
+            };
+            bossChecklistMod.Call(
+                "LogBoss",
+                Mod,
+                internalName,
+                weight,
+                downed,
+                bossType,
+                new Dictionary<string, object>()
+                {
+                    ["spawnItems"] = spawnItem,
+                    ["collectibles"] = collectibles,
+                    ["customPortrait"] = customPortrait
+                }
+            );
 
-        public static object Call(params object[] args) { return Instance?.Call(args); }
-
-        public override bool IsLoadingEnabled(Mod mod) { return IsLoadingEnabled(); }
-
-        public sealed override void Load()
-        {
-            Instance = null;
-            if (ModLoader.TryGetMod(ModName, out var mod))
+            
+            internalName = "Jack";
+            weight = 5.75f;
+            downed = () => GerdWorld.downedJack;
+            bossType = ModContent.NPCType<Jack>();
+            spawnItem = ModContent.ItemType<Hatred>();
+            collectibles = new List<int>()
             {
-                Instance = mod;
-                SafeLoad(Instance);
-            }
-        }
+                ModContent.ItemType<AncientInfraRedPlating>(),
+                ModContent.ItemType<InfraRedCrystalShard>(),
+                ModContent.ItemType<DGPCrate>(),
+                ModContent.ItemType<JackRailcannon>(),
+                ModContent.ItemType<IllusionOfLove>(),
+                ModContent.ItemType<JackSword>(),
+                ModContent.ItemType<AncientHarpoon>(),
+                ModContent.ItemType<AncientRifle>(),
+                ModContent.ItemType<JuiceBox>(),
+                ModContent.ItemType<EternityJackGlider>(),
+            };
+            customPortrait = (SpriteBatch sb, Rectangle rect, Color color) => {
+                Texture2D texture = ModContent.Request<Texture2D>("GMR/NPCs/Bosses/Jack_Still").Value;
+                Vector2 centered = new Vector2(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
+                sb.Draw(texture, centered, color);
+            };
+            bossChecklistMod.Call(
+                "LogBoss",
+                Mod,
+                internalName,
+                weight,
+                downed,
+                bossType,
+                new Dictionary<string, object>()
+                {
+                    ["spawnItems"] = spawnItem,
+                    ["collectibles"] = collectibles,
+                    ["customPortrait"] = customPortrait
+                }
+            );
 
-        public virtual void SafeLoad(Mod mod) { }
-
-        public sealed override void Unload()
-        {
-            SafeUnload();
-            Instance = null;
-        }
-
-        public virtual void SafeUnload() { }
-    }
-
-
-    internal class BossChecklist : ModSupport<BossChecklist>
-    {
-        internal enum LogEntryType
-        {
-            Boss,
-            MiniBoss,
-        }
-
-        private void LogBossEntry(LogEntryType type, string bossName, List<int> npcIDs, float progression, Func<bool> downed, Func<bool> available, List<int> extraDrops, List<int> spawnItems)
-        {
-            try
+            internalName = "Acheron";
+            weight = 7.6f;
+            downed = () => GerdWorld.downedAcheron;
+            bossType = ModContent.NPCType<Acheron>();
+            spawnItem = ModContent.ItemType<Hatred>();
+            collectibles = new List<int>()
             {
-                Instance.Call(
-                    $"Add{type}",
-                    Mod,
-                    $"$Mods.GMR.NPCName.{bossName}",
-                    npcIDs,
-                    progression,
-                    downed,
-                    available,
-                    extraDrops,
-                    spawnItems,
-                    $"$Mods.GMR.BossChecklist.{bossName}",
-                    null,
-                    new Action<SpriteBatch, Rectangle, Color>((spriteBatch, rect, color) =>
-                    {
-                        var tex = Mod.Assets.Request<Texture2D>("NPCs/Bosses/" + bossName + "_Still", AssetRequestMode.ImmediateLoad).Value;
-                        var sourceRect = tex.Bounds;
-                        float scale = Math.Min(1f, (float)rect.Width / sourceRect.Width);
-                        spriteBatch.Draw(tex, rect.Center.ToVector2(), sourceRect, color, 0f, sourceRect.Size() / 2, scale, SpriteEffects.None, 0);
-                    })
-                );
-            }
-            catch (Exception ex)
-            {
-                Mod.Logger.Error($"{ex.Message}\n{ex.StackTrace}");
-            }
+                ModContent.ItemType<InfraRedBar>(),
+                ModContent.ItemType<InfraRedCrystalShard>(),
+                ModContent.ItemType<DGPCrate>(),
+                ModContent.ItemType<IllusionOfLove>(),
+                ModContent.ItemType<InfraRedSpear>(),
+                ModContent.ItemType<AcheronBow>(),
+                ModContent.ItemType<InfraRedStaff>(),
+                ModContent.ItemType<JackRifle>(),
+                ModContent.ItemType<JackMask>(),
+            };
+            customPortrait = (SpriteBatch sb, Rectangle rect, Color color) => {
+                Texture2D texture = ModContent.Request<Texture2D>("GMR/NPCs/Bosses/Acheron_Still").Value;
+                Vector2 centered = new Vector2(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
+                sb.Draw(texture, centered, color);
+            };
+            bossChecklistMod.Call(
+                "LogBoss",
+                Mod,
+                internalName,
+                weight,
+                downed,
+                bossType,
+                new Dictionary<string, object>()
+                {
+                    ["spawnItems"] = spawnItem,
+                    ["collectibles"] = collectibles,
+                    ["customPortrait"] = customPortrait
+                }
+            );
         }
+	}
 
-        private void LogBossEntries()
-        {
-            LogBossEntry(
-                LogEntryType.Boss,
-                    "Jack",
-                    new List<int>() { ModContent.NPCType<Jack>() },
-                    6.5f, // Post Skeletron, before Wall of Flesh
-                    () => GerdWorld.downedJack,
-                    null,
-                    null,
-                    new List<int>() { ModContent.ItemType<JackDroneOld>(), });
-
-            LogBossEntry(
-                LogEntryType.Boss,
-                "Acheron",
-                new List<int>() { ModContent.NPCType<Acheron>() },
-                7.5f, // Right before Queen Slime
-                () => GerdWorld.downedAcheron,
-                null,
-                null,
-                null);
-
-            LogBossEntry(
-                LogEntryType.Boss,
-                "MagmaEye",
-                new List<int>() { ModContent.NPCType<MagmaEye>() },
-                5.5f, // Somewhere before Skeletron
-                () => GerdWorld.downedMagmaEye,
-                null,
-                null,
-                null);
-
-        }
-
-        public override void PostSetupContent()
-        {
-            if (Instance == null)
-                return;
-
-            LogBossEntries();
-        }
-    }*/
-
-
-    internal class LocalizationRewriter : ModSystem
+	internal class LocalizationRewriter : ModSystem
     {
         public override void PostSetupContent()
         {

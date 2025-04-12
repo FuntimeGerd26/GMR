@@ -18,6 +18,28 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using ReLogic.Content;
 
+#region Mod Items
+
+using GMR.Items.Misc;
+using GMR.Items.Misc.Materials;
+using GMR.Items.Misc.Consumable;
+using GMR.Items.Weapons.Unique;
+using GMR.Items.Weapons.Melee;
+using GMR.Items.Weapons.Melee.Swords;
+using GMR.Items.Weapons.Melee.Spears;
+using GMR.Items.Weapons.Melee.Others;
+using GMR.Items.Weapons.Ranged;
+using GMR.Items.Weapons.Ranged.Bows;
+using GMR.Items.Weapons.Ranged.Guns;
+using GMR.Items.Weapons.Ranged.Others;
+using GMR.Items.Weapons.Ranged.Railcannons;
+using GMR.Items.Weapons.Magic;
+using GMR.Items.Weapons.Magic.Books;
+using GMR.Items.Weapons.Magic.Staffs;
+using GMR.Items.Weapons.Magic.Others;
+
+#endregion
+
 namespace GMR
 {
     public class GerdGlobalNPC : GlobalNPC
@@ -35,6 +57,7 @@ namespace GMR
         public bool PlagueCrystal;
         public bool ChaosBurnt;
         public bool IllusionOfBeingLoved;
+        public bool SunExplosion;
 
         public static int gerdBoss = -1;
 
@@ -49,6 +72,7 @@ namespace GMR
             PlagueCrystal = false;
             ChaosBurnt = false;
             IllusionOfBeingLoved = false;
+            SunExplosion = false;
         }
 
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
@@ -58,14 +82,14 @@ namespace GMR
             {
                 if (npc.boss)
                 {
-                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Misc.Consumable.Medkit>(), 1, 2, 10));
-                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Misc.Materials.BossUpgradeCrystal>(), 1, 1, 4));
+                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Medkit>(), 1, 2, 10));
+                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<BossUpgradeCrystal>(), 1, 1, 4));
                     npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Accessories.Halu>(), 10));
                 }
                 else if (npc.type != NPCID.EaterofWorldsHead || npc.type != NPCID.EaterofWorldsBody || npc.type != NPCID.EaterofWorldsTail)
                 {
-                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Misc.Materials.SpecialUpgradeCrystal>(), 10000));
-                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Misc.Materials.UpgradeCrystal>(), 20, 5, 10));
+                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SpecialUpgradeCrystal>(), 10000));
+                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<UpgradeCrystal>(), 20, 5, 10));
                 }
 
                 switch (npc.type)
@@ -111,31 +135,31 @@ namespace GMR
                     // Lunar Nova Axe
                     #region Hallowed Enemies
                     case 75: // Pixie
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.LunarNovaAxe>(), 20));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<LunarNovaAxe>(), 20));
                         break;
                     case 86: // Unicorn
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.LunarNovaAxe>(), 20));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<LunarNovaAxe>(), 20));
                         break;
                     case 122: // Gastropod
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.LunarNovaAxe>(), 20));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<LunarNovaAxe>(), 20));
                         break;
                     case 138: // Illuminant Slime
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.LunarNovaAxe>(), 20));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<LunarNovaAxe>(), 20));
                         break;
                     case 137: // Illuminant Bat
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.LunarNovaAxe>(), 20));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<LunarNovaAxe>(), 20));
                         break;
                     case 84: // Enchanted Sword
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.LunarNovaAxe>(), 20));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<LunarNovaAxe>(), 20));
                         break;
                     case 120: // Chaos Elemental
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.LunarNovaAxe>(), 20));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<LunarNovaAxe>(), 20));
                         break;
                     case 80: // Light Mummy
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.LunarNovaAxe>(), 20));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<LunarNovaAxe>(), 20));
                         break;
                     case 171: // Hallowed Pigron
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.LunarNovaAxe>(), 20));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<LunarNovaAxe>(), 20));
                         break;
 
                     #endregion
@@ -143,161 +167,161 @@ namespace GMR
                     // Silent Gloves
                     #region Underworld Enemies
                     case 60: // Hellbat
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.SilentGloves>(), 250));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SilentGloves>(), 250));
                         break;
                     case 59: // Lava Slime
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.SilentGloves>(), 250));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SilentGloves>(), 250));
                         break;
                     case 24: // Imp
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.SilentGloves>(), 250));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SilentGloves>(), 250));
                         break;
                     case 62: // Demon
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.SilentGloves>(), 250));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SilentGloves>(), 150));
                         break;
                     case 66: // Voodoo Demon
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.SilentGloves>(), 200));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SilentGloves>(), 100));
                         break;
                     case 39: // Bone Serpent
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.SilentGloves>(), 200));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SilentGloves>(), 150));
                         break;
                     case 151: // Lava Bat
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.SilentGloves>(), 250));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SilentGloves>(), 300));
                         break;
                     case 156: // Red Devil
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.SilentGloves>(), 200));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SilentGloves>(), 300));
                         break;
                     #endregion
 
                     // Psyco Axe
                     #region Zombies, a fuck ton of em', You have been warned
                     case 3:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.PsycopathAxe>(), 100));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PsycopathAxe>(), 100));
                         break;
                     case -26:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.PsycopathAxe>(), 100));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PsycopathAxe>(), 100));
                         break;
                     case -27:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.PsycopathAxe>(), 100));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PsycopathAxe>(), 100));
                         break;
                     case 430:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.PsycopathAxe>(), 100));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PsycopathAxe>(), 100));
                         break;
                     case 132:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.PsycopathAxe>(), 100));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PsycopathAxe>(), 100));
                         break;
                     case -28:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.PsycopathAxe>(), 100));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PsycopathAxe>(), 100));
                         break;
                     case -29:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.PsycopathAxe>(), 100));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PsycopathAxe>(), 100));
                         break;
                     case 186:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.PsycopathAxe>(), 100));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PsycopathAxe>(), 100));
                         break;
                     case -30:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.PsycopathAxe>(), 100));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PsycopathAxe>(), 100));
                         break;
                     case -31:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.PsycopathAxe>(), 100));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PsycopathAxe>(), 100));
                         break;
                     case 187:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.PsycopathAxe>(), 100));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PsycopathAxe>(), 100));
                         break;
                     case -32:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.PsycopathAxe>(), 100));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PsycopathAxe>(), 100));
                         break;
                     case -33:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.PsycopathAxe>(), 100));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PsycopathAxe>(), 100));
                         break;
                     case 433:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.PsycopathAxe>(), 100));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PsycopathAxe>(), 100));
                         break;
                     case 188:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.PsycopathAxe>(), 100));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PsycopathAxe>(), 100));
                         break;
                     case -34:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.PsycopathAxe>(), 100));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PsycopathAxe>(), 100));
                         break;
                     case -35:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.PsycopathAxe>(), 100));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PsycopathAxe>(), 100));
                         break;
                     case 434:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.PsycopathAxe>(), 100));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PsycopathAxe>(), 100));
                         break;
                     case 189:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.PsycopathAxe>(), 100));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PsycopathAxe>(), 100));
                         break;
                     case -36:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.PsycopathAxe>(), 100));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PsycopathAxe>(), 100));
                         break;
                     case -37:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.PsycopathAxe>(), 100));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PsycopathAxe>(), 100));
                         break;
                     case 200:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.PsycopathAxe>(), 100));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PsycopathAxe>(), 100));
                         break;
                     case -44:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.PsycopathAxe>(), 100));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PsycopathAxe>(), 100));
                         break;
                     case -45:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.PsycopathAxe>(), 100));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PsycopathAxe>(), 100));
                         break;
                     case 438:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.PsycopathAxe>(), 100));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PsycopathAxe>(), 100));
                         break;
                     case 590:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.PsycopathAxe>(), 100));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PsycopathAxe>(), 100));
                         break;
                     case 591:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.PsycopathAxe>(), 100));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PsycopathAxe>(), 100));
                         break;
                     case 319:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.PsycopathAxe>(), 100));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PsycopathAxe>(), 100));
                         break;
                     case 320:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.PsycopathAxe>(), 100));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PsycopathAxe>(), 100));
                         break;
                     case 321:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.PsycopathAxe>(), 100));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PsycopathAxe>(), 100));
                         break;
                     case 331:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.PsycopathAxe>(), 100));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PsycopathAxe>(), 100));
                         break;
                     case 332:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.PsycopathAxe>(), 100));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PsycopathAxe>(), 100));
                         break;
                     case 223:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.PsycopathAxe>(), 100));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PsycopathAxe>(), 100));
                         break;
                     case -54:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.PsycopathAxe>(), 100));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PsycopathAxe>(), 100));
                         break;
                     case -55:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.PsycopathAxe>(), 100));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PsycopathAxe>(), 100));
                         break;
                     case 161:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.PsycopathAxe>(), 100));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PsycopathAxe>(), 100));
                         break;
                     case 254:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.PsycopathAxe>(), 100));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PsycopathAxe>(), 100));
                         break;
                     case 255:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.PsycopathAxe>(), 100));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PsycopathAxe>(), 100));
                         break;
                     case 52:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.PsycopathAxe>(), 100));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PsycopathAxe>(), 100));
                         break;
                     case 53:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.PsycopathAxe>(), 100));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PsycopathAxe>(), 100));
                         break;
                     case 536:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.PsycopathAxe>(), 100));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PsycopathAxe>(), 100));
                         break;
                     case 632:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.PsycopathAxe>(), 100));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PsycopathAxe>(), 100));
                         break;
                     case 251:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.PsycopathAxe>(), 100));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PsycopathAxe>(), 100));
                         break;
                     #endregion
 
@@ -305,81 +329,78 @@ namespace GMR
                     #region Bosses
 
                     case NPCID.KingSlime:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Misc.Materials.UpgradeCrystal>(), 1, 4, 6));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<UpgradeCrystal>(), 1, 4, 6));
                         break;
 
                     case NPCID.EyeofCthulhu:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Misc.Materials.UpgradeCrystal>(), 1, 4, 6));
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.DesertAxe>(), 25));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<UpgradeCrystal>(), 1, 4, 6));
                         break;
 
                     case NPCID.BrainofCthulhu:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Misc.Materials.UpgradeCrystal>(), 1, 4, 6));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<UpgradeCrystal>(), 1, 4, 6));
                         break;
 
                     case NPCID.EaterofWorldsHead:
                     case NPCID.EaterofWorldsBody:
                     case NPCID.EaterofWorldsTail:
                         LeadingConditionRule lastEater = new LeadingConditionRule(new Conditions.LegacyHack_IsABoss());
-                        lastEater.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Misc.Materials.BossUpgradeCrystal>()));
-                        lastEater.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Misc.Materials.UpgradeCrystal>(), 1, 4, 6));
+                        lastEater.OnSuccess(ItemDropRule.Common(ModContent.ItemType<BossUpgradeCrystal>()));
+                        lastEater.OnSuccess(ItemDropRule.Common(ModContent.ItemType<UpgradeCrystal>(), 1, 4, 6));
                         npcLoot.Add(lastEater);
                         break;
 
                     case NPCID.QueenBee:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Misc.Materials.UpgradeCrystal>(), 1, 4, 6));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<UpgradeCrystal>(), 1, 4, 6));
                         break;
 
                     case NPCID.SkeletronHead:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Misc.Materials.UpgradeCrystal>(), 1, 4, 6));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<UpgradeCrystal>(), 1, 4, 6));
                         break;
 
                     case NPCID.WallofFlesh:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.NanashiSword>(), 10));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<NanashiSword>(), 10));
                         npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Accessories.HopefulFlower>(), 8)); // Just to make it easier for future me or wiki makers, This is 12.5% chance to drop
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Misc.Materials.UpgradeCrystal>(), 1, 4, 6));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<UpgradeCrystal>(), 1, 4, 6));
                         break;
 
                     case NPCID.TheDestroyer:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Magic.SpaceDoggoStaff>(), 5));
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Misc.Materials.HardmodeUpgradeCrystal>(), 5));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SpaceDoggoStaff>(), 5));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<HardmodeUpgradeCrystal>(), 5));
                         break;
 
                     case NPCID.SkeletronPrime:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Magic.SpaceDoggoStaff>(), 5));
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Misc.Materials.HardmodeUpgradeCrystal>(), 5));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SpaceDoggoStaff>(), 5));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<HardmodeUpgradeCrystal>(), 5));
                         break;
 
 
                     case NPCID.Retinazer:
                     case NPCID.Spazmatism:
                         LeadingConditionRule noTwin = new LeadingConditionRule(new Conditions.MissingTwin());
-                        noTwin.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Magic.SpaceDoggoStaff>(), 5));
-                        noTwin.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Misc.Materials.HardmodeUpgradeCrystal>(), 5));
+                        noTwin.OnSuccess(ItemDropRule.Common(ModContent.ItemType<SpaceDoggoStaff>(), 5));
+                        noTwin.OnSuccess(ItemDropRule.Common(ModContent.ItemType<HardmodeUpgradeCrystal>(), 5));
                         npcLoot.Add(noTwin);
                         break;
 
                     case NPCID.Plantera:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Summoner.Whips.PlanteraWhip>(), 10));
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Misc.Materials.HardmodeUpgradeCrystal>(), 5));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<HardmodeUpgradeCrystal>(), 5));
                         break;
 
                     case NPCID.Golem:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Misc.Materials.HardmodeUpgradeCrystal>(), 5));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<HardmodeUpgradeCrystal>(), 5));
                         break;
 
                     case NPCID.DukeFishron:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.PrincessTrident>(), 10));
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.ElementalSpear>(), 5));
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Misc.Materials.HardmodeUpgradeCrystal>(), 5));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ElementalSpear>(), 5));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<HardmodeUpgradeCrystal>(), 5));
                         break;
 
                     case NPCID.CultistBoss:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Misc.Materials.HardmodeUpgradeCrystal>(), 5));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<HardmodeUpgradeCrystal>(), 5));
                         break;
 
                     case NPCID.MoonLordCore:
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Misc.Materials.HardmodeUpgradeCrystal>(), 5));
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<HardmodeUpgradeCrystal>(), 5));
                         break;
                     #endregion
 
@@ -433,13 +454,14 @@ namespace GMR
         {
             GerdPlayer modPlayer = player.GetModPlayer<GerdPlayer>();
 
-            if (Main.rand.NextBool(3) && modPlayer.DamnSun && npc.boss)
+            if (Main.rand.NextBool(5) && modPlayer.DamnSun && npc.boss)
             {
-                Projectile.NewProjectile(player.GetSource_Misc(""), npc.Center, new Vector2(0f, 0f), ModContent.ProjectileType<Projectiles.Explotion>(), npc.damage * 2, 2f, player.whoAmI);
+                Projectile.NewProjectile(player.GetSource_Misc(""), npc.Center, npc.velocity, ModContent.ProjectileType<Projectiles.Explosion>(), (int)(item.damage / 2), 0f, player.whoAmI);
             }
-            else if (Main.rand.NextBool(3) && modPlayer.DamnSun)
+
+            else if (Main.rand.NextBool(5) && modPlayer.DamnSun)
             {
-                Projectile.NewProjectile(player.GetSource_Misc(""), npc.Center, new Vector2(0f, 0f), ModContent.ProjectileType<Projectiles.SmallExplotion>(), npc.damage * 2, 2f, player.whoAmI);
+                Projectile.NewProjectile(player.GetSource_Misc(""), npc.Center, npc.velocity, ModContent.ProjectileType<Projectiles.SmallExplosion>(), (int)(item.damage / 2), 0f, player.whoAmI);
             }
         }
 
@@ -448,13 +470,14 @@ namespace GMR
             Player player = Main.player[projectile.owner];
             GerdPlayer modPlayer = player.GetModPlayer<GerdPlayer>();
 
-            if (Main.rand.NextBool(3) && npc.HasBuff(ModContent.BuffType<Buffs.Debuffs.DamnSun>()) && npc.boss)
+            if (Main.rand.NextBool(5) && npc.HasBuff(ModContent.BuffType<Buffs.Debuffs.DamnSun>()) && npc.boss)
             {
-                Projectile.NewProjectile(player.GetSource_Misc(""), npc.Center, new Vector2(0f, 0f), ModContent.ProjectileType<Projectiles.Explotion>(), npc.damage * 2, 2f, player.whoAmI);
+                Projectile.NewProjectile(player.GetSource_Misc(""), npc.Center, npc.velocity, ModContent.ProjectileType<Projectiles.Explosion>(), (int)(projectile.damage / 2), 0f, player.whoAmI);
             }
-            else if (Main.rand.NextBool(3) && npc.HasBuff(ModContent.BuffType<Buffs.Debuffs.DamnSun>()))
+
+            else if (Main.rand.NextBool(5) && npc.HasBuff(ModContent.BuffType<Buffs.Debuffs.DamnSun>()))
             {
-                Projectile.NewProjectile(player.GetSource_Misc(""), npc.Center, new Vector2(0f, 0f), ModContent.ProjectileType<Projectiles.SmallExplotion>(), npc.damage * 2, 2f, player.whoAmI);
+                Projectile.NewProjectile(player.GetSource_Misc(""), npc.Center, npc.velocity, ModContent.ProjectileType<Projectiles.SmallExplosion>(), (int)(projectile.damage / 2), 0f, player.whoAmI);
             }
         }
 

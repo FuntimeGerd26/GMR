@@ -33,9 +33,10 @@ namespace GMR
             }
 
             if (target.HasBuff(ModContent.BuffType<Buffs.Debuffs.IllusionOfBeingLoved>()))
-            {
-                target.takenDamageMultiplier = 1.1f;
-            }
+                target.takenDamageMultiplier *= 1.1f;
+
+            if (target.HasBuff(ModContent.BuffType<Buffs.Debuffs.Rupture>()))
+                target.takenDamageMultiplier *= 2f;
         }
     }
 }
