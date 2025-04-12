@@ -5,3 +5,5 @@
 /.vs
 /obj
 /GMR.sln
+/bin/Debug/net8.0
+/Properties
