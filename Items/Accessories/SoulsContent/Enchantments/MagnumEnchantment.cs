@@ -55,7 +55,6 @@ namespace GMR.Items.Accessories.SoulsContent.Enchantments
 			recipe.AddIngredient(null, "MagnumFoxBoots");
 			recipe.AddIngredient(null, "MagnumShooter");
 			recipe.AddIngredient(null, "HatredGun");
-			recipe.AddIngredient(null, "VacuumBuilder");
 			recipe.AddIngredient(null, "ChargedArm");
 			recipe.AddTile(TileID.CrystalBall);
 			recipe.Register();

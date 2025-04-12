@@ -80,15 +80,15 @@ namespace GMR.Items.Accessories.SoulsContent.Enchantments
 		{
 			// Use this hook to set the duration of the extra jump
 			// The XML summary for this hook mentions the values used by the vanilla extra jumps
-			return 2.85f;
+			return 1.6f;
 		}
 
 		public override void UpdateHorizontalSpeeds(Player player)
 		{
 			// Use this hook to modify "player.runAcceleration" and "player.maxRunSpeed"
 			// The XML summary for this hook mentions the values used by the vanilla extra jumps
-			player.runAcceleration *= 1.5f;
-			player.maxRunSpeed *= 3f;
+			player.runAcceleration *= 1.15f;
+			player.maxRunSpeed *= 2f;
 		}
 
 		public override void OnStarted(Player player, ref bool playSound)

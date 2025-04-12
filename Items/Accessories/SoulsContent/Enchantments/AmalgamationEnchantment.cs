@@ -60,7 +60,7 @@ namespace GMR.Items.Accessories.SoulsContent.Enchantments
 			recipe.AddIngredient(null, "AmalgamationLeggings");
 			recipe.AddIngredient(null, "Epiphany");
 			recipe.AddIngredient(null, "UltraBlueChainsaw");
-			recipe.AddIngredient(null, "XShotVice");
+			recipe.AddIngredient(null, "UltraBlueScythe");
 			recipe.AddIngredient(null, "UltraBlueEnergyGun");
 			recipe.AddIngredient(null, "XShotBow");
 			recipe.AddTile(TileID.CrystalBall);

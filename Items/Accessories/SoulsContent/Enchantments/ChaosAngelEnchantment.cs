@@ -63,9 +63,7 @@ namespace GMR.Items.Accessories.SoulsContent.Enchantments
 			recipe.AddIngredient(null, "ChaosAngelShirt");
 			recipe.AddIngredient(null, "ChaosAngelPants");
 			recipe.AddIngredient(null, "ChaosAngelWings");
-			recipe.AddIngredient(null, "PlanteraWhip");
 			recipe.AddIngredient(null, "AlloybloodWhip");
-			recipe.AddIngredient(null, "SunBurntWhip");
 			recipe.AddIngredient(null, "BloodyMedkit");
 			recipe.AddTile(TileID.CrystalBall);
 			recipe.Register();
