@@ -40,7 +40,7 @@ namespace GMR.NPCs.Enemies
         {
             if (spawnInfo.Player.ZoneDirtLayerHeight && NPC.downedBoss3)
             {
-                return 0.00025f; //0.025% chance of spawning on the underground after beating Skeletron
+                return 0.00095f; //0.095% chance of spawning on the underground after beating Skeletron
             }
             return 0f;
         }
@@ -49,7 +49,7 @@ namespace GMR.NPCs.Enemies
         {
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
             BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Underground,
-            new FlavorTextBestiaryInfoElement("A small sentry drone, it had over a thousand sales withing a single day when it was on stock, they were cheap but the machinery to make them was destroyed in an attack"),
+            new FlavorTextBestiaryInfoElement("A small sentry drone, it had over a thousand sales withing a single day when it was on stock, they were cheap but the machinery to make them was destroyed in an attack."),
             });
         }
 
@@ -68,6 +68,7 @@ namespace GMR.NPCs.Enemies
             NPC.noGravity = true;
             NPC.value = Item.buyPrice(silver: 35);
             NPC.npcSlots = 1f;
+            NPC.ElementMultipliers([1f, 0.5f, 0.8f, 1.5f]);
         }
 
         public override void HitEffect(NPC.HitInfo hit)
@@ -95,6 +96,8 @@ namespace GMR.NPCs.Enemies
                     dust.fadeIn = Main.rand.NextFloat(0.1f, 0.5f);
                 }
             }
+
+            NPC.ai[1] = 1;
         }
 
         public override void AI()
@@ -107,7 +110,7 @@ namespace GMR.NPCs.Enemies
 
             Vector2 toPlayer = NPC.Center - player.Center;
             NPC.rotation = toPlayer.ToRotation() + MathHelper.ToRadians(180f);
-            NPC.velocity = NPC.DirectionTo(player.Center) * 2.5f;
+            NPC.velocity = NPC.DirectionTo(player.Center.X > NPC.Center.X ? player.Center - 60 * Vector2.UnitX : player.Center + 60 * Vector2.UnitX) * 2.5f;
 
             if (player.dead)
             {
@@ -130,8 +133,7 @@ namespace GMR.NPCs.Enemies
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            if (GerdWorld.downedAcheron)
-                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Misc.Materials.ScrapFragment>(), 1, 3, 10));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Misc.Materials.AncientInfraRedPlating>(), 1, 3, 12));
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

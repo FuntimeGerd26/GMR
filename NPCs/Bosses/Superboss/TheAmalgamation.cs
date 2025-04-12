@@ -32,6 +32,11 @@ namespace GMR.NPCs.Bosses.Superboss
         float AI4;
         bool PlayerDead;
 
+        public bool Alivent;
+        public int DeadAI;
+        public int ExplodeTimer;
+        public int ShouldDie;
+
         public override void SetStaticDefaults()
         {
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
@@ -64,7 +69,7 @@ namespace GMR.NPCs.Bosses.Superboss
             NPC.npcSlots = 10f;
             if (!Main.dedServ)
             {
-                Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Bosses/TheAmalgamation");
+                Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Bosses/sevenxtraMETALPIPE");
             }
         }
 
@@ -98,6 +103,27 @@ namespace GMR.NPCs.Bosses.Superboss
             }
         }
 
+        public override bool CheckDead()
+        {
+            if (DeadAI == -3)
+            {
+                NPC.lifeMax = -33333;
+                return true;
+            }
+            DeadAI = -3;
+            NPC.velocity *= 0f;
+            NPC.dontTakeDamage = true;
+            NPC.life = NPC.lifeMax;
+            Alivent = true;
+            return false;
+        }
+
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
+        {
+            NPC.lifeMax = (int)(NPC.lifeMax * (0.5f * (3 - balance) + (numPlayers * 0.1f)));
+            NPC.damage = (int)(NPC.damage * (0.5f * (3 - balance)));
+        }
+
         public override void AI()
         {
             if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -118,11 +144,42 @@ namespace GMR.NPCs.Bosses.Superboss
                 else
                 {
                     Vector2 bossToPlayer = Main.player[NPC.target].Center - 250 * Vector2.UnitY;
-                    NPC.velocity = (bossToPlayer - NPC.Center) * 0.08f;
+                    NPC.velocity = (bossToPlayer - NPC.Center) * 0.1f;
                     NPC.netUpdate = true;
                 }
 
                 NPC.rotation = NPC.velocity.X * 0.0314f;
+
+                if (Alivent)
+                {
+                    NPC.alpha++;
+
+                    if (++ShouldDie == 180)
+                        player.ApplyDamageToNPC(NPC, NPC.lifeMax * 4, 0, 0, false);
+
+                    if (++ExplodeTimer % 15 == 0)
+                    {
+                        Projectile.NewProjectile(NPC.GetSource_FromAI(), new Vector2(NPC.Center.X + Main.rand.Next(-NPC.width / 2, NPC.width / 2), NPC.Center.Y + Main.rand.Next(-NPC.height / 2, NPC.height / 2)),
+                            Vector2.Zero, ModContent.ProjectileType<Projectiles.SmallExplosion>(), 0, 0f, Main.myPlayer, NPC.whoAmI);
+                        player.GetModPlayer<GerdPlayer>().ShakeScreen(3, 0.75f);
+                    }
+
+                    if (NPC.life <= 0)
+                    {
+                        int dustType = 59 + Main.rand.Next(6);
+                        for (int i = 0; i < 20; i++)
+                        {
+                            Vector2 velocity = NPC.velocity + new Vector2(Main.rand.NextFloat(-5f, 5f), Main.rand.NextFloat(-5f, 5f));
+                            Dust dust = Dust.NewDustPerfect(NPC.Center, dustType, velocity, 30, Color.White, Main.rand.NextFloat(1.6f, 3.8f));
+
+                            dust.noLight = false;
+                            dust.noGravity = true;
+                            dust.fadeIn = Main.rand.NextFloat(0.1f, 0.5f);
+                        }
+                        SoundEngine.PlaySound(SoundID.Item62, NPC.Center);
+                    }
+                }
+
 
                 if (AI0 <= 0 && ++AI1 >= 180)
                 {
@@ -171,13 +228,21 @@ namespace GMR.NPCs.Bosses.Superboss
                         AI0 = 0;
                     }
                 }
+
+                if (Alivent)
+                {
+                    AI1 = 0;
+                    AI2 = 0;
+                    AI3 = 0;
+                    AI0 = 0;
+                }
             }
         }
 
         public void BasicAttack()
         {
             Player player = Main.player[NPC.target];
-            Vector2 pos1 = NPC.Center - (51 * Vector2.UnitY).RotatedBy(NPC.rotation) - (70 * Vector2.UnitX).RotatedBy(NPC.rotation); // Issues with rotation
+            Vector2 pos1 = NPC.Center - (51 * Vector2.UnitY).RotatedBy(NPC.rotation) - (70 * Vector2.UnitX).RotatedBy(NPC.rotation);
             Vector2 pos2 = NPC.Center - (51 * Vector2.UnitY).RotatedBy(NPC.rotation) + (70 * Vector2.UnitX).RotatedBy(NPC.rotation);
             Vector2 toPlayer1 = (Main.player[NPC.target].Center - pos1) * 0.04f;
             Vector2 toPlayer2 = (Main.player[NPC.target].Center - pos2) * 0.04f;
@@ -267,6 +332,7 @@ namespace GMR.NPCs.Bosses.Superboss
             var origin = new Vector2(texture.Width / 2f, texture.Height / 2f);
             var offset = NPC.Size / 2f - screenPos;
             int trailLength = NPCID.Sets.TrailCacheLength[NPC.type];
+            drawColor *= NPC.Opacity;
 
             var back = GMR.Instance.Assets.Request<Texture2D>("NPCs/Bosses/Superboss/TheAmalgamationBack", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             var originback = new Vector2(back.Width / 2f, back.Height / 2f);
@@ -277,19 +343,19 @@ namespace GMR.NPCs.Bosses.Superboss
             var wing = GMR.Instance.Assets.Request<Texture2D>("NPCs/Bosses/Superboss/TheAmalgamationWing", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             var originwing = new Vector2(wing.Width / 2f, wing.Height / 2f);
 
-            Main.EntitySpriteDraw(back, NPC.position + offset, null, drawColor, NPC.velocity.X * 0.1f, originback, NPC.scale, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(back, NPC.position + offset, null, drawColor, NPC.velocity.X * 0.05f, originback, NPC.scale, SpriteEffects.None, 0);
 
             #region Arms
             Main.EntitySpriteDraw(shoulder, NPC.position + offset + (70 * Vector2.UnitX).RotatedBy(NPC.rotation) - (26 * Vector2.UnitY).RotatedBy(NPC.rotation),
                 null, drawColor, NPC.rotation * 1.01f, originshoulder, NPC.scale, SpriteEffects.None, 0);
-            Main.EntitySpriteDraw(arm, NPC.position + offset + (190 * Vector2.UnitX).RotatedBy(NPC.rotation) + (54 * Vector2.UnitY).RotatedBy(NPC.rotation),
+            Main.EntitySpriteDraw(arm, NPC.position + offset + (200 * Vector2.UnitX).RotatedBy(NPC.rotation) + (74 * Vector2.UnitY).RotatedBy(NPC.rotation),
                 null, drawColor, NPC.rotation * 1.5f, originarm, NPC.scale, SpriteEffects.None, 0);
             Main.EntitySpriteDraw(wing, NPC.position + offset + (220 * Vector2.UnitX).RotatedBy(NPC.rotation) - (90 * Vector2.UnitY).RotatedBy(NPC.rotation),
                 null, drawColor, NPC.rotation * 2f, originwing, NPC.scale, SpriteEffects.None, 0);
 
             Main.EntitySpriteDraw(shoulder, NPC.position + offset - (70 * Vector2.UnitX).RotatedBy(NPC.rotation) - (26 * Vector2.UnitY).RotatedBy(NPC.rotation),
                 null, drawColor, NPC.rotation * 1.01f, originshoulder, NPC.scale, SpriteEffects.FlipHorizontally, 0);
-            Main.EntitySpriteDraw(arm, NPC.position + offset - (190 * Vector2.UnitX).RotatedBy(NPC.rotation) + (54 * Vector2.UnitY).RotatedBy(NPC.rotation),
+            Main.EntitySpriteDraw(arm, NPC.position + offset - (200 * Vector2.UnitX).RotatedBy(NPC.rotation) + (74 * Vector2.UnitY).RotatedBy(NPC.rotation),
                 null, drawColor, NPC.rotation * 1.5f, originarm, NPC.scale, SpriteEffects.FlipHorizontally, 0);
             Main.EntitySpriteDraw(wing, NPC.position + offset - (220 * Vector2.UnitX).RotatedBy(NPC.rotation) - (90 * Vector2.UnitY).RotatedBy(NPC.rotation),
                 null, drawColor, NPC.rotation * 2f, originwing, NPC.scale, SpriteEffects.FlipHorizontally, 0);

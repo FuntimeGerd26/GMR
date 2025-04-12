@@ -12,10 +12,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
 
-namespace GMR.NPCs.Bosses.Jack
+namespace GMR.NPCs.Bosses.Acheron
 {
-    public class JackArmClaw : ModNPC
+    public class AcheronArmGun : ModNPC
     {
+        public int Attack;
         public int ParentIndex
         {
             get => (int)NPC.ai[1] - 1;
@@ -27,14 +28,13 @@ namespace GMR.NPCs.Bosses.Jack
         // Helper method to determine the body type
         public static int BodyType()
         {
-                return ModContent.NPCType<Jack>();
+           return ModContent.NPCType<Acheron>();
         }
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Jack Claw");
+            DisplayName.SetDefault("Acheron Cannon");
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
-            NPCID.Sets.MPAllowedEnemies[Type] = true;
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
             NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
             {
@@ -47,14 +47,14 @@ namespace GMR.NPCs.Bosses.Jack
 
         public override void SetDefaults()
         {
-            NPC.width = 36;
-            NPC.height = 90;
-            NPC.lifeMax = 350;
-            NPC.defense = 1;
+            NPC.width = 30;
+            NPC.height = 72;
+            NPC.lifeMax = 800;
+            NPC.defense = 5;
             NPC.HitSound = SoundID.NPCHit42;
             NPC.DeathSound = SoundID.NPCDeath37;
             NPC.knockBackResist = 0.5f;
-            NPC.damage = 30;
+            NPC.damage = 45;
             NPC.aiStyle = -1;
             NPC.noTileCollide = true;
             NPC.noGravity = true;
@@ -65,7 +65,7 @@ namespace GMR.NPCs.Bosses.Jack
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
-            //cooldownSlot = ImmunityCooldownID.Bosses; // use the boss immunity cooldown counter, to prevent ignoring boss attacks by taking damage from other sources (NOTE: Unused)
+            cooldownSlot = ImmunityCooldownID.Bosses; // use the boss immunity cooldown counter, to prevent ignoring boss attacks by taking damage from other sources
             return false; // Set to false because fuck contact damage
         }
 
@@ -77,15 +77,11 @@ namespace GMR.NPCs.Bosses.Jack
 
         public override void AI()
         {
-            if (Main.dayTime)
-                Lighting.AddLight(NPC.Center, new Vector3(0.8f, 0.15f, 0.5f));
-            else
-                Lighting.AddLight(NPC.Center, new Vector3(0.8f, 0.8f, 0.15f));
+            Lighting.AddLight(NPC.Center, new Vector3(0.8f, 0.15f, 0.5f));
 
-            if (!NPC.AnyNPCs(ModContent.NPCType<Jack>()))
+            if (!NPC.AnyNPCs(ModContent.NPCType<Acheron>()))
             {
-                NPC.life += -50;
-                NPC.alpha = 0;
+                NPC.life += -200;
 
                 if (NPC.life <= 0)
                 {
@@ -102,7 +98,6 @@ namespace GMR.NPCs.Bosses.Jack
                     SoundEngine.PlaySound(SoundID.Item62, NPC.Center);
                 }
                 NPC.netUpdate = true;
-
                 return;
             }
 
@@ -113,12 +108,16 @@ namespace GMR.NPCs.Bosses.Jack
                 NPC.netUpdate = true;
             }
 
+            if (NPC.damage > 72)
+                NPC.damage = 72;
+
             Vector2 toPlayer = NPC.Center - player.Center;
             NPC.rotation = toPlayer.ToRotation() + MathHelper.ToRadians(90f);
 
             if (player.dead)
             {
                 NPC.netUpdate = true;
+                NPC.Center = NPC.position;
                 NPC.velocity.Y += 0.5f;
                 NPC.EncourageDespawn(300);
                 return;
@@ -130,12 +129,12 @@ namespace GMR.NPCs.Bosses.Jack
 
                 if (NPC.ai[0] < 0)
                 {
-                    Vector2 bossToPlayer = Main.player[NPC.target].Center + 420 * Vector2.UnitX - 350 * Vector2.UnitY;
+                    Vector2 bossToPlayer = Main.player[NPC.target].Center + 350 * Vector2.UnitX + 300 * Vector2.UnitY;
                     NPC.velocity = (bossToPlayer - NPC.Center) * 0.075f;
                 }
                 else
                 {
-                    Vector2 bossToPlayer = Main.player[NPC.target].Center + 480 * Vector2.UnitX;
+                    Vector2 bossToPlayer = Main.player[NPC.target].Center + 350 * Vector2.UnitX - 300 * Vector2.UnitY;
                     NPC.velocity = (bossToPlayer - NPC.Center) * 0.075f;
                 }
             }
@@ -146,19 +145,18 @@ namespace GMR.NPCs.Bosses.Jack
 
                 if (NPC.ai[0] < 0)
                 {
-                    Vector2 bossToPlayer = Main.player[NPC.target].Center - 420 * Vector2.UnitX - 350 * Vector2.UnitY;
+                    Vector2 bossToPlayer = Main.player[NPC.target].Center - 350 * Vector2.UnitX + 300 * Vector2.UnitY;
                     NPC.velocity = (bossToPlayer - NPC.Center) * 0.075f;
                 }
                 else
                 {
-                    Vector2 bossToPlayer = Main.player[NPC.target].Center - 480 * Vector2.UnitX;
+                    Vector2 bossToPlayer = Main.player[NPC.target].Center - 350 * Vector2.UnitX - 300 * Vector2.UnitY;
                     NPC.velocity = (bossToPlayer - NPC.Center) * 0.075f;
                 }
             }
 
             if (Main.netMode != NetmodeID.MultiplayerClient)
-            {
-                if (++NPC.ai[1] > 420) // After 7 seconds plus one tick, reset
+                if (++NPC.ai[1] > 301) // After 5 seconds plus one tick, reset
                 {
                     NPC.ai[3] = 0;
                     NPC.ai[1] = 0;
@@ -167,35 +165,27 @@ namespace GMR.NPCs.Bosses.Jack
                     SoundEngine.PlaySound(GMR.GetSounds("NPCs/armchangevariant", 2, 1f, 0f, 0.75f), NPC.Center);
                     NPC.netUpdate = true;
                 }
-                else if (NPC.ai[0] < 0 && ++NPC.ai[1] >= 419) // After 7 seconds
+                else if (++NPC.ai[1] > 300) // After 5 seconds
                 {
-                    NPC.netUpdate = true;
-                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.DirectionTo(player.Center) * 3f, ModContent.ProjectileType<Projectiles.Bosses.JackClawProj>(), NPC.damage, 1f, Main.myPlayer, NPC.whoAmI);
-                    SoundEngine.PlaySound(SoundID.Item94, NPC.Center);
-                }
-                else if (++NPC.ai[1] >= 419) // After 7 seconds
-                {
-                    NPC.netUpdate = true;
-                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.DirectionTo(player.Center) * 3f, ModContent.ProjectileType<Projectiles.Bosses.JackClawProj>(), NPC.damage, 1f, Main.myPlayer, NPC.whoAmI);
+                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.DirectionTo(player.Center) * 4f, ModContent.ProjectileType<Projectiles.Bosses.JackBlastBad>(), NPC.damage, 1f, Main.myPlayer, NPC.whoAmI);
                     SoundEngine.PlaySound(SoundID.Research, NPC.Center);
+                    NPC.netUpdate = true;
                 }
-            }
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             var texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
-            var glow = GMR.Instance.Assets.Request<Texture2D>($"NPCs/Bosses/Jack/JackArmClaw_Glow", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            var origin = texture.Size() / 2f;
+            var glow = GMR.Instance.Assets.Request<Texture2D>($"NPCs/Bosses/Acheron/AcheronArmGun_Glow", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            var origin = new Vector2(texture.Width / 2f, texture.Height / 2f);
             var offset = NPC.Size / 2f - screenPos;
+            int trailLength = NPCID.Sets.TrailCacheLength[NPC.type];
             SpriteEffects spriteEffects = SpriteEffects.FlipHorizontally;
             if (NPC.spriteDirection == -1)
                 spriteEffects = SpriteEffects.None;
 
-            Color color = !Main.dayTime ? new Color(195, 195, 95, 5) : new Color(194, 91, 112, 5);
-
             Main.EntitySpriteDraw(texture, NPC.position + offset, null, drawColor, NPC.rotation, origin, NPC.scale, spriteEffects, 0);
-            Main.EntitySpriteDraw(glow, NPC.position + offset, null, color, NPC.rotation, origin, NPC.scale, spriteEffects, 0);
+            Main.EntitySpriteDraw(glow, NPC.position + offset, null, new Color(194, 91, 112, 5), NPC.rotation, origin, NPC.scale, spriteEffects, 0);
             return false;
         }
     }

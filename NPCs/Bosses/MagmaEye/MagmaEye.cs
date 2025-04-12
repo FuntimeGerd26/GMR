@@ -20,6 +20,27 @@ using Terraria.ModLoader.Utilities;
 using static Terraria.ModLoader.ModContent;
 using GMR;
 
+#region Mod Items
+
+using GMR.Items.Misc;
+using GMR.Items.Misc.Materials;
+using GMR.Items.Misc.Consumable;
+using GMR.Items.Weapons.Melee;
+using GMR.Items.Weapons.Melee.Swords;
+using GMR.Items.Weapons.Melee.Spears;
+using GMR.Items.Weapons.Melee.Others;
+using GMR.Items.Weapons.Ranged;
+using GMR.Items.Weapons.Ranged.Bows;
+using GMR.Items.Weapons.Ranged.Guns;
+using GMR.Items.Weapons.Ranged.Others;
+using GMR.Items.Weapons.Ranged.Railcannons;
+using GMR.Items.Weapons.Magic;
+using GMR.Items.Weapons.Magic.Books;
+using GMR.Items.Weapons.Magic.Staffs;
+using GMR.Items.Weapons.Magic.Others;
+
+#endregion
+
 namespace GMR.NPCs.Bosses.MagmaEye
 {
     [AutoloadBossHead()]
@@ -65,6 +86,7 @@ namespace GMR.NPCs.Bosses.MagmaEye
             {
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Bosses/ExolThemeOld");
             }
+            NPC.ElementMultipliers([0.5f, 1.5f, 1.0f, 1.2f]);
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -79,6 +101,12 @@ namespace GMR.NPCs.Bosses.MagmaEye
         {
             cooldownSlot = ImmunityCooldownID.Bosses; // use the boss immunity cooldown counter, to prevent ignoring boss attacks by taking damage from other sources
             return true;
+        }
+
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
+        {
+            NPC.lifeMax = (int)(NPC.lifeMax * (0.5f * (3 - balance) + (numPlayers * 0.1f)));
+            NPC.damage = (int)(NPC.damage * (0.5f * (3 - balance)));
         }
 
         public override void AI()
@@ -170,7 +198,13 @@ namespace GMR.NPCs.Bosses.MagmaEye
                     NPC.velocity = Vector2.Lerp(NPC.velocity, Vector2.Normalize(gotoPosition - center) * 12f, 0.0137f);
                 }
 
-                if (AI4 == 0) // Basic AI (Homing Fireballs)
+                if (AI4 == -1)
+                {
+                    NPC.netUpdate = true;
+                    NPC.velocity.Y += 7f;
+                    NPC.EncourageDespawn(300);
+                }
+                else if (AI4 == 0) // Basic AI (Homing Fireballs)
                 {
                     NPC.rotation = NPC.velocity.X * 0.0314f;
                     NPC.ai[1]++;
@@ -493,26 +527,26 @@ namespace GMR.NPCs.Bosses.MagmaEye
         {
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 
-            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Misc.Consumable.DGPCrate>(), 20));
-            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Melee.ExolBlade>(), 10));
-            int[] drops = { ModContent.ItemType<Items.Weapons.Melee.BrokenMagmaticSword>(), ModContent.ItemType<Items.Weapons.Ranged.Magmathrower>(), ModContent.ItemType<Items.Weapons.Ranged.MagmaKnife>(),
-                ModContent.ItemType<Items.Weapons.Magic.MagmaStaff>() };
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<DGPCrate>(), 20));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<ExolBlade>(), 10));
+            int[] drops = { ModContent.ItemType<MagmaticSword>(), ModContent.ItemType<Magmathrower>(), ModContent.ItemType<MagmaKnife>(), ModContent.ItemType<MagmaStaff>() };
 
             notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, drops));
-            notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.Hellstone, 1, 20, 38));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<MagmaticShard>(), 1, 20, 45));
 
             if (ModLoader.TryGetMod("MagicStorage", out Mod magicStorage) && !GerdWorld.downedMagmaEye)
             {
                 npcLoot.Add(ItemDropRule.Common(magicStorage.Find<ModItem>("ShadowDiamond").Type));
             }
 
-            npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<Items.Misc.Consumable.MagmaEyeTreasureBag>()));
+            npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<MagmaEyeTreasureBag>()));
             npcLoot.Add(notExpertRule);
         }
 
         public override void OnKill()
         {
             GerdWorld.downedMagmaEye = true;
+            NPC.netUpdate = true;
 
             int dustType = 60;
             for (int i = 0; i < 20; i++)

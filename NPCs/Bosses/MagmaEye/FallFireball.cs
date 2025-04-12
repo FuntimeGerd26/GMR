@@ -35,7 +35,7 @@ namespace GMR.NPCs.Bosses.MagmaEye
 
 		public override void Kill(int timeLeft)
 		{
-			Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity * 0.75f, ModContent.ProjectileType<Projectiles.Explotion>(), Projectile.damage * 2, Projectile.knockBack, Main.myPlayer);
+			Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity * 0.75f, ModContent.ProjectileType<Projectiles.Explosion>(), Projectile.damage * 2, Projectile.knockBack, Main.myPlayer);
 			SoundEngine.PlaySound(SoundID.Item62, Projectile.Center);
 			int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 6, Projectile.velocity.X * 0.5f,
 				Projectile.velocity.Y * 0.2f, 60, default(Color), 2f);

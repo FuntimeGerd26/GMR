@@ -65,6 +65,12 @@ namespace GMR.NPCs.Bosses.Jack.Eternity
             return false; // Set to false because fuck contact damage
         }
 
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
+        {
+            NPC.lifeMax = (int)(NPC.lifeMax * ((0.4f * numPlayers) + 0.6f * balance));
+            NPC.damage = (int)(NPC.damage * (0.8f * balance));
+        }
+
         public override void AI()
         {
             Lighting.AddLight(NPC.Center, new Vector3(0.8f, 0.8f, 0.15f));
@@ -164,7 +170,7 @@ namespace GMR.NPCs.Bosses.Jack.Eternity
                     }
                     else if (NPC.ai[0] < 0 && ++NPC.ai[1] >= 420) // After 7 seconds
                     {
-                        Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.DirectionTo(player.Center) * 3f, ModContent.ProjectileType<Projectiles.Bosses.JackSlash>(), NPC.damage, 1f, Main.myPlayer, NPC.whoAmI);
+                        Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.DirectionTo(player.Center) * 3f, ModContent.ProjectileType<Projectiles.Bosses.JackClawProj>(), NPC.damage, 1f, Main.myPlayer, NPC.whoAmI);
                         SoundEngine.PlaySound(SoundID.Item94, NPC.Center);
                     }
                     else if (++NPC.ai[1] >= 420) // After 7 seconds
@@ -180,7 +186,7 @@ namespace GMR.NPCs.Bosses.Jack.Eternity
         {
             var texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
             var glow = GMR.Instance.Assets.Request<Texture2D>($"NPCs/Bosses/Jack/JackArmClaw_Glow", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            var origin = new Vector2(texture.Width / 2f, texture.Height / 2f);
+            var origin = texture.Size() / 2f;
             var offset = NPC.Size / 2f - screenPos;
             SpriteEffects spriteEffects = SpriteEffects.FlipHorizontally;
             if (NPC.spriteDirection == -1)

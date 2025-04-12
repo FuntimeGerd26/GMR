@@ -1,3 +1,4 @@
+/*
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -41,7 +42,7 @@ namespace GMR.NPCs.Bosses.CyberNeon
             NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
             {
                 PortraitScale = 1f,
-                PortraitPositionYOverride = -1f,
+                PortraitPositionYOverride = 1.2f,
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
             Main.npcFrameCount[Type] = 3;
@@ -289,3 +290,4 @@ namespace GMR.NPCs.Bosses.CyberNeon
         }
     }
 }
+*/

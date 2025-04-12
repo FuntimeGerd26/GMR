@@ -19,6 +19,27 @@ using Terraria.ModLoader.IO;
 using Terraria.ModLoader.Utilities;
 using static Terraria.ModLoader.ModContent;
 
+#region Mod Items
+
+using GMR.Items.Misc;
+using GMR.Items.Misc.Materials;
+using GMR.Items.Misc.Consumable;
+using GMR.Items.Weapons.Melee;
+using GMR.Items.Weapons.Melee.Swords;
+using GMR.Items.Weapons.Melee.Spears;
+using GMR.Items.Weapons.Melee.Others;
+using GMR.Items.Weapons.Ranged;
+using GMR.Items.Weapons.Ranged.Bows;
+using GMR.Items.Weapons.Ranged.Guns;
+using GMR.Items.Weapons.Ranged.Others;
+using GMR.Items.Weapons.Ranged.Railcannons;
+using GMR.Items.Weapons.Magic;
+using GMR.Items.Weapons.Magic.Books;
+using GMR.Items.Weapons.Magic.Staffs;
+using GMR.Items.Weapons.Magic.Others;
+
+#endregion
+
 namespace GMR.NPCs.Bosses.Worms
 {
 	// No longer a boss btw
@@ -56,6 +77,7 @@ namespace GMR.NPCs.Bosses.Worms
 			NPC.damage = 40;
 			NPC.aiStyle = -1;
 			NPC.npcSlots = 1f;
+			NPC.ElementMultipliers([0.8f, 1f, 1.5f, 1f]);
 		}
 
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -63,7 +85,7 @@ namespace GMR.NPCs.Bosses.Worms
 			// We can use AddRange instead of calling Add multiple times in order to add multiple items at once
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 				// Sets the spawning conditions of this NPC that is listed in the bestiary.
-				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Underground,
+				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns,
 
 				// Sets the description of this NPC that is listed in the bestiary.
 				new FlavorTextBestiaryInfoElement("Born from the hatred of a mad scientist, it fuels itself eating any organic material it comes across. It can also eat inorganic things to repair itself, but only on cases of extreme danger.")
@@ -72,9 +94,9 @@ namespace GMR.NPCs.Bosses.Worms
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			if (spawnInfo.Player.ZoneDirtLayerHeight)
+			if (spawnInfo.Player.ZoneRockLayerHeight)
 			{
-				return 0.0125f; //1.25% chance of spawning on the underground, not the caverns
+				return 0.012f; //0.125% chance of spawning on the caverns every tick
 			}
 			return 0f;
 		}
@@ -97,9 +119,15 @@ namespace GMR.NPCs.Bosses.Worms
 			worm.Acceleration = 0.075f;
 		}
 
+		public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
+		{
+			NPC.lifeMax = (int)(NPC.lifeMax * (0.5f * (3 - balance) + (numPlayers * 0.1f)));
+			NPC.damage = (int)(NPC.damage * (0.5f * (3 - balance)));
+		}
+
 		public override void ModifyNPCLoot(NPCLoot npcLoot)
 		{
-			int[] drops = { ModContent.ItemType<Items.Weapons.Melee.HatefulBlade>(), ModContent.ItemType<Items.Weapons.Ranged.HatredBow>(), ModContent.ItemType<Items.Weapons.Ranged.HatredGun>() };
+			int[] drops = { ModContent.ItemType<HatefulBlade>(), ModContent.ItemType<HatredBow>(), ModContent.ItemType<HatredGun>() };
 			npcLoot.Add(ItemDropRule.OneFromOptions(1, drops));
 		}
 
@@ -136,6 +164,7 @@ namespace GMR.NPCs.Bosses.Worms
 			NPC.aiStyle = -1;
 			NPC.width = 44;
 			NPC.height = 44;
+			NPC.ElementMultipliers([0.8f, 1f, 1.5f, 1f]);
 		}
 
 		public override void Init()
@@ -162,6 +191,7 @@ namespace GMR.NPCs.Bosses.Worms
 			NPC.aiStyle = -1;
 			NPC.width = 60;
 			NPC.height = 60;
+			NPC.ElementMultipliers([0.8f, 1f, 1.5f, 1f]);
 		}
 
 		public override void Init()

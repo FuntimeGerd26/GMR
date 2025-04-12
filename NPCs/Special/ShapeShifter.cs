@@ -21,8 +21,19 @@ using GMR.Items.Misc.Materials;
 using GMR.Items.Misc.Modules;
 using GMR.Items.Vanity;
 using GMR.Items.Weapons.Melee;
+using GMR.Items.Weapons.Melee.Swords;
+using GMR.Items.Weapons.Melee.Spears;
+using GMR.Items.Weapons.Melee.Others;
 using GMR.Items.Weapons.Ranged;
+using GMR.Items.Weapons.Ranged.Bows;
+using GMR.Items.Weapons.Ranged.Guns;
+using GMR.Items.Weapons.Ranged.Others;
+using GMR.Items.Weapons.Ranged.Railcannons;
 using GMR.Items.Weapons.Magic;
+using GMR.Items.Weapons.Magic.Books;
+using GMR.Items.Weapons.Magic.Staffs;
+using GMR.Items.Weapons.Magic.Others;
+using GMR.NPCs.Bosses.Acheron;
 
 namespace GMR.NPCs.Special
 {
@@ -185,15 +196,21 @@ namespace GMR.NPCs.Special
 					var entitySource = NPC.GetSource_GiftOrReward();
 
 					Main.LocalPlayer.inventory[itemIndex].TurnToAir();
-					Main.LocalPlayer.QuickSpawnItem(entitySource, ModContent.ItemType<Items.Weapons.Ranged.JackRifle>());
+					Main.LocalPlayer.QuickSpawnItem(entitySource, ModContent.ItemType<JackRifle>());
+
+					return;
+				}
+				else if (!NPC.AnyNPCs(ModContent.NPCType<Acheron>()))
+				{
+					Main.npcChatText = $"Want a challenge? Let's go";
+					NPC.NewNPC(new EntitySource_Parent(NPC), (int)NPC.position.X + NPC.width / 2, (int)NPC.position.Y + NPC.height / 2, ModContent.NPCType<NPCs.Bosses.Acheron.Acheron>());
+					NPC.life -= 2600;
 
 					return;
 				}
 				else
 				{
-					Main.npcChatText = $"Want a challenge? Let's go";
-					NPC.NewNPC(new EntitySource_Parent(NPC), (int)NPC.position.X + NPC.width / 2, (int)NPC.position.Y + NPC.height / 2, ModContent.NPCType<NPCs.Bosses.Jack.Acheron>());
-					NPC.life -= 2600;
+					Main.npcChatText = $"Bro look behind you, IS THAT ME!??";
 
 					return;
 				}
@@ -211,32 +228,33 @@ namespace GMR.NPCs.Special
 				.Add<TomeOfDreams>()
 				.Add<YinGun>()
 				.Add<YangGun>()
-				.Add(ItemID.BlackInk, new Condition("Mods.GMR.Conditions.GetFixedBoi", () => Main.getGoodWorld && NPC.downedBoss2))
-				.Add(ItemID.SharkFin, new Condition("Mods.GMR.Conditions.GetFixedBoi", () => Main.getGoodWorld && NPC.downedBoss2))
-				.Add(ItemID.DivingHelmet, new Condition("Mods.GMR.Conditions.GetFixedBoi", () => Main.getGoodWorld && NPC.downedBoss2))
+				.Add<GunslayerPistol>(new Condition("Mods.GMR.Conditions.DefeatEvil", () => NPC.downedBoss2))
 
 				.Add<AluminiumCharm>(new Condition("Mods.GMR.Conditions.DefeatEvil", () => NPC.downedBoss2))
+				.Add<Coffin>(new Condition("Mods.GMR.Conditions.DefeatEvil", () => NPC.downedBoss2))
 
-				.Add<JackyMask>(new Condition("Mods.GMR.Conditions.Hardmode", () => Main.hardMode))
-				.Add<InfraRedWings>(new Condition("Mods.GMR.Conditions.AnyMech", () => Main.hardMode))
-
+				.Add<MagmaticShard>(new Condition("Mods.GMR.Conditions.DefeatMagmaEye", () => GerdWorld.downedMagmaEye))
 				.Add<HardmodeUpgradeCrystal>(new Condition("Mods.GMR.Conditions.AnyMech", () => NPC.downedMechBossAny))
-
-				.Add(ItemID.FrostCore, new Condition("Mods.GMR.Conditions.AnyMech", () => NPC.downedMechBossAny))
-				.Add(ItemID.AncientBattleArmorMaterial, new Condition("Mods.GMR.Conditions.AnyMech", () => NPC.downedMechBossAny))
-
-				.Add<BlueSunCannon>(new Condition("Mods.GMR.Conditions.AnyMech", () => NPC.downedMechBossAny))
-
-				.Add<ScrapFragment>(new Condition("Mods.GMR.Conditions.DefeatAcheron", () => GerdWorld.downedAcheron))
-				.Add<PrimePlating>(new Condition("Mods.GMR.Conditions.DefeatAcheron", () => NPC.downedPlantBoss))
+				.Add<InfraRedCrystalShard>(new Condition("Mods.GMR.Conditions.DefeatAcheron", () => GerdWorld.downedAcheron))
+				.Add<AncientInfraRedPlating>(new Condition("Mods.GMR.Conditions.DefeatAcheron", () => GerdWorld.downedAcheron))
+				.Add<InfraRedBar>(new Condition("Mods.GMR.Conditions.DefeatAcheron", () => GerdWorld.downedAcheron))
 
 				.Add<NeonModule>(new Condition("Mods.GMR.Conditions.DefeatJack", () => GerdWorld.downedJack))
 				.Add<MaskedPlagueModule>(new Condition("Mods.GMR.Conditions.DefeatJack", () => GerdWorld.downedJack))
 				.Add<AmethystModule>(new Condition("Mods.GMR.Conditions.DefeatJack", () => GerdWorld.downedJack))
 
+				.Add<JackyMask>(new Condition("Mods.GMR.Conditions.Hardmode", () => Main.hardMode))
 				.Add<GerdHead>(new Condition("Mods.GMR.Conditions.DefeatJack", () => GerdWorld.downedJack))
 				.Add<GerdBody>(new Condition("Mods.GMR.Conditions.DefeatJack", () => GerdWorld.downedJack))
-				.Add<GerdLegs>(new Condition("Mods.GMR.Conditions.DefeatJack", () => GerdWorld.downedJack));
+				.Add<GerdLegs>(new Condition("Mods.GMR.Conditions.DefeatJack", () => GerdWorld.downedJack))
+				.Add<InfraRedWings>(new Condition("Mods.GMR.Conditions.AnyMech", () => NPC.downedMechBossAny))
+
+				.Add(ItemID.FrostCore, new Condition("Mods.GMR.Conditions.AnyMech", () => NPC.downedMechBossAny))
+				.Add(ItemID.AncientBattleArmorMaterial, new Condition("Mods.GMR.Conditions.AnyMech", () => NPC.downedMechBossAny))
+				.Add(ItemID.BlackInk, new Condition("Mods.GMR.Conditions.GetFixedBoi", () => Main.getGoodWorld && NPC.downedBoss2))
+				.Add(ItemID.SharkFin, new Condition("Mods.GMR.Conditions.GetFixedBoi", () => Main.getGoodWorld && NPC.downedBoss2))
+				.Add(ItemID.DivingHelmet, new Condition("Mods.GMR.Conditions.GetFixedBoi", () => Main.getGoodWorld && NPC.downedBoss2));
+
 			npcShop.Register(); // Name of this shop tab
 		}
 

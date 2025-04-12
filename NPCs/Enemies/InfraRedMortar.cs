@@ -15,14 +15,10 @@ using GMR;
 
 namespace GMR.NPCs.Enemies
 {
-    public class JackBlade : ModNPC
+    public class InfraRedMortar : ModNPC
     {
-        public override string Texture => "GMR/Items/Weapons/Melee/Swords/JackSword";
-
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ancient Blade");
-            NPCID.Sets.DontDoHardmodeScaling[Type] = true;
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
             NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
             {
@@ -35,9 +31,9 @@ namespace GMR.NPCs.Enemies
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.ZoneDirtLayerHeight && NPC.downedBoss2)
+            if ((spawnInfo.Player.ZoneDirtLayerHeight || spawnInfo.Player.ZoneRockLayerHeight) && Main.hardMode)
             {
-                return 0.00185f; //0.185% chance of spawning on the underground after beating any evil boss
+                return 0.00068f; //0.068% chance of spawning on the underground or caverns in hardmode
             }
             return 0f;
         }
@@ -46,32 +42,33 @@ namespace GMR.NPCs.Enemies
         {
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
             BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Underground,
-            new FlavorTextBestiaryInfoElement("A blade which used to be only for self defense, after an attack on it's factory of origin many units escaped." +
-            "\nHowever, their cheap sensors caused multiple issues with navigation since they can't recognize what's in front of them correctly, leading to a very few remaining intact."),
+            new FlavorTextBestiaryInfoElement("These flying cannons are deadly weapons designed for large scale wars." + 
+            "\nWhile Acheron was in development, multiple units were created to keep the facility secure from any intruders attempting to destroy or steal the technologies found within them." +
+            "\nAlong keeping secure the facilities, they also used to test the durability of armors by firing at them with high ammounts of energy projectiles."),
             });
         }
 
         public override void SetDefaults()
         {
-            NPC.width = 64;
-            NPC.height = 64;
-            NPC.lifeMax = 400;
+            NPC.width = 76;
+            NPC.height = 66;
+            NPC.lifeMax = 500;
             NPC.defense = 5;
             NPC.HitSound = SoundID.NPCHit42;
             NPC.DeathSound = SoundID.NPCDeath44;
             NPC.knockBackResist = 0.5f;
             NPC.damage = 28;
-            NPC.aiStyle = 23;
+            NPC.aiStyle = -1;
             NPC.noTileCollide = true;
             NPC.noGravity = true;
-            NPC.value = Item.buyPrice(silver: 50);
+            NPC.value = Item.buyPrice(silver: 25);
             NPC.npcSlots = 1f;
             NPC.ElementMultipliers([1f, 0.5f, 0.8f, 1.5f]);
         }
         public override void HitEffect(NPC.HitInfo hit)
         {
             int dustType = 60;
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 5; i++)
             {
                 Vector2 velocity = NPC.velocity + new Vector2(Main.rand.NextFloat(-5f, 5f), Main.rand.NextFloat(-5f, 5f));
                 Dust dust = Dust.NewDustPerfect(NPC.Center, dustType, velocity, 120, Color.White, Main.rand.NextFloat(1.6f, 3.8f));
@@ -80,27 +77,17 @@ namespace GMR.NPCs.Enemies
                 dust.noGravity = true;
                 dust.fadeIn = Main.rand.NextFloat(0.1f, 0.5f);
             }
-
-            if (NPC.life <= 0)
-            {
-                for (int i = 0; i < 40; i++)
-                {
-                    Vector2 velocity = NPC.velocity + new Vector2(Main.rand.NextFloat(-10f, 10f), Main.rand.NextFloat(-10f, 10f));
-                    Dust dust = Dust.NewDustPerfect(NPC.Center, dustType, velocity, 120, Color.White, Main.rand.NextFloat(1.6f, 3.8f));
-
-                    dust.noLight = false;
-                    dust.noGravity = true;
-                    dust.fadeIn = Main.rand.NextFloat(0.1f, 0.5f);
-                }
-            }
         }
 
+        bool checkPos;
+        float offsetX;
+        Vector2 playerOldPos;
         public override void AI()
         {
             if (NPC.life <= 0)
             {
                 int dustType = 60;
-                for (int i = 0; i < 20; i++)
+                for (int i = 0; i < 30; i++)
                 {
                     Vector2 velocity = NPC.velocity + new Vector2(Main.rand.NextFloat(-5f, 5f), Main.rand.NextFloat(-5f, 5f));
                     Dust dust = Dust.NewDustPerfect(NPC.Center, dustType, velocity, 30, Color.White, Main.rand.NextFloat(1.6f, 3.8f));
@@ -118,46 +105,54 @@ namespace GMR.NPCs.Enemies
                 NPC.TargetClosest();
             }
 
+            Vector2 toPlayer =  player.Center - NPC.Center;
+            if (++NPC.ai[0] >= 300)
+            {
+                if (!checkPos)
+                {
+                    offsetX = Main.rand.NextFloat(-400f, 400f);
+                    playerOldPos = player.Center;
+                    checkPos = true;
+                }
+
+                Vector2 toAtkPosition = new Vector2(playerOldPos.X + offsetX, playerOldPos.Y - 150f);
+                NPC.rotation = Vector2.Lerp(Vector2.UnitX.RotatedBy(NPC.rotation), Vector2.UnitX.RotatedBy(-0f), 0.25f).ToRotation();
+                NPC.velocity = Vector2.Lerp(NPC.velocity, toAtkPosition - NPC.Center, 0.2f);
+                NPC.defense = 15;
+            }
+            else
+            {
+                NPC.rotation = Vector2.Lerp(Vector2.UnitX.RotatedBy(NPC.rotation), Vector2.UnitX.RotatedBy(toPlayer.ToRotation() + MathHelper.ToRadians(90f)), 0.15f).ToRotation();
+                NPC.velocity = ((player.Center - Vector2.UnitY * 100) - NPC.Center) * 0.03f;
+                NPC.defense = 5;
+                checkPos = false;
+            }
 
             if (player.dead)
             {
-                NPC.velocity.Y += 0.5f;
-                NPC.EncourageDespawn(300);
-                NPC.aiStyle = -1;
+                NPC.velocity.Y -= 0.25f;
+                NPC.EncourageDespawn(120);
                 return;
             }
             else
             {
-                NPC.aiStyle = 23;
-            }
-
-            if (++NPC.ai[2] % 120 == 0)
-            {
-                const int max2 = 6;
-                for (int i = 0; i < max2; i++)
+                if (++NPC.ai[0] >= 420 && ++NPC.ai[2] % 2 == 0)
                 {
-                    if (Main.getGoodWorld)
-                    {
-                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.UnitX.RotatedBy(2 * Math.PI / max2 * (i + 0.5)) * 3f, ModContent.ProjectileType<Projectiles.Bosses.JackBlastRotate>(), NPC.damage, 0f, Main.myPlayer);
-                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.UnitX.RotatedBy(2 * Math.PI / max2 * (i + 0.5)) * 3f, ModContent.ProjectileType<Projectiles.Bosses.JackBlastRotateFlip>(), NPC.damage, 0f, Main.myPlayer);
-                    }
+                    Vector2 velocity = Vector2.UnitY * -8f;
+                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center - (Vector2.UnitY * NPC.height).RotatedBy(NPC.rotation),
+                        velocity.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-12f, 12f))), ModContent.ProjectileType<Projectiles.Bosses.InfraRedBlastFall>(), NPC.damage, 0f, Main.myPlayer);
+                    SoundEngine.PlaySound(SoundID.Item33, NPC.Center);
+
+                    NPC.velocity += Vector2.UnitY * 0.4f;
+                    if (++NPC.ai[0] >= 480)
+                        NPC.ai[0] = 0;
                 }
             }
-
-            int dustId = Dust.NewDust(NPC.position, NPC.width, NPC.height, 60, NPC.velocity.X * 0.5f,
-                NPC.velocity.Y * 0.2f, 60, default(Color), 2f);
-            Main.dust[dustId].noGravity = true;
-            int dustId3 = Dust.NewDust(NPC.position, NPC.width, NPC.height, 60, NPC.velocity.X * 0.5f,
-                NPC.velocity.Y * 0.2f, 60, default(Color), 2f);
-            Main.dust[dustId3].noGravity = true;
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.Common(ItemID.IronBar, 2, 4, 12));
-            npcLoot.Add(ItemDropRule.Common(ItemID.LeadBar, 2, 4, 12));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Misc.Materials.AncientInfraRedPlating>(), 1, 12, 32));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Accessories.AncientBullets>(), 30));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Misc.Materials.InfraRedBar>(), 1, 6, 20));
         }
     }
 }

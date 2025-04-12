@@ -35,19 +35,20 @@ namespace GMR.NPCs.Bosses.Jack
 
         public override void SetDefaults()
         {
-            NPC.width = 52;
+            NPC.width = 64;
             NPC.height = 64;
             NPC.lifeMax = 1500;
             NPC.defense = 8;
             NPC.HitSound = SoundID.NPCHit42;
             NPC.DeathSound = SoundID.NPCDeath14;
             NPC.knockBackResist = 0f;
-            NPC.damage = 20;
+            NPC.damage = 30;
             NPC.aiStyle = 0;
             NPC.noTileCollide = true;
             NPC.noGravity = true;
             NPC.value = Item.buyPrice(gold: 1);
             NPC.npcSlots = 1f;
+            NPC.ElementMultipliers([1f, 0.5f, 0.8f, 1.5f]);
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
@@ -57,10 +58,6 @@ namespace GMR.NPCs.Bosses.Jack
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.ZoneRockLayerHeight && NPC.downedBoss3)
-            {
-                return 0.000005f; //0.0005% chance of spawning on the canverns after Skeletron
-            }
             return 0f;
         }
 
@@ -99,78 +96,59 @@ namespace GMR.NPCs.Bosses.Jack
             }
         }
 
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
+        {
+            NPC.lifeMax = (int)(NPC.lifeMax * (0.5f * (3 - balance) + (numPlayers * 0.1f)));
+            NPC.damage = (int)(NPC.damage * (0.5f * (3 - balance)));
+        }
+
+        float rotate;
         public override void AI()
         {
             Player player = Main.player[NPC.target];
 
-            Vector2 FTWPos = Vector2.Lerp(NPC.Center, Main.player[NPC.target].Center - 320 * Vector2.UnitY, 0.15f);
-            Vector2 Pos = Vector2.Lerp(NPC.Center, Main.player[NPC.target].Center - 250 * Vector2.UnitY, 0.15f);
-            NPC.Center = Main.getGoodWorld ? FTWPos : Pos ;
-            NPC.rotation = MathHelper.ToRadians(180f);
+            rotate += 0.5f;
+            Vector2 Pos = Vector2.Lerp(NPC.Center, Main.player[NPC.target].Center - (250 * Vector2.UnitY).RotatedBy(MathHelper.ToRadians(rotate)), 0.15f);
+            NPC.Center = Pos;
+
+            Vector2 toPlayer = NPC.Center - player.Center;
+            NPC.rotation = toPlayer.ToRotation() + MathHelper.ToRadians(90f);
 
 
             if (++NPC.ai[1] % 120 == 0)
             {
                 NPC.netUpdate = true;
-
-                int dustType = 60;
-                for (int i = 0; i < 20; i++)
-                {
-                    Vector2 velocity = NPC.velocity + new Vector2(Main.rand.NextFloat(-5f, 5f), Main.rand.NextFloat(-5f, 5f));
-                    Dust dust = Dust.NewDustPerfect(NPC.Center, dustType, velocity, 120, Color.White, Main.rand.NextFloat(1.6f, 3.8f));
-
-                    dust.noLight = false;
-                    dust.noGravity = true;
-                    dust.fadeIn = Main.rand.NextFloat(0.1f, 0.5f);
-                }
-                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center - NPC.height * Vector2.UnitY, new Vector2(0f, 6f), ModContent.ProjectileType<Projectiles.Bosses.AlloyCrate>(), NPC.damage, 1f, Main.myPlayer, NPC.whoAmI);
+                SpawnDust();
+                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.DirectionTo(player.Center) * 6f,
+                    ModContent.ProjectileType<Projectiles.Bosses.AlloyCrate>(), NPC.damage, 1f, Main.myPlayer, NPC.whoAmI);
                 SoundEngine.PlaySound(SoundID.Research, NPC.Center);
             }
 
             if (++NPC.ai[2] % 600 == 0)
             {
                 NPC.netUpdate = true;
-
-                int dustType = 60;
-                for (int i = 0; i < 20; i++)
+                SpawnDust();
+                for (int i = 0; i < 4; i++)
                 {
-                    Vector2 velocity = NPC.velocity + new Vector2(Main.rand.NextFloat(-5f, 5f), Main.rand.NextFloat(-5f, 5f));
-                    Dust dust = Dust.NewDustPerfect(NPC.Center, dustType, velocity, 120, Color.White, Main.rand.NextFloat(1.6f, 3.8f));
-
-                    dust.noLight = false;
-                    dust.noGravity = true;
-                    dust.fadeIn = Main.rand.NextFloat(0.1f, 0.5f);
-                }
-                const int max = 8;
-                for (int i = 0; i < max; i++)
-                {
-                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.UnitX.RotatedBy(2 * Math.PI / max * (i + 0.5)) * 2f, ModContent.ProjectileType<Projectiles.Bosses.JackBlastBad>(), NPC.damage, 0f, Main.myPlayer);
+                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.UnitX.RotatedBy(2 * Math.PI / 4 * (i + 0.5)) * 2f, ModContent.ProjectileType<Projectiles.Bosses.JackBlastBad>(), NPC.damage, 0f, Main.myPlayer);
+                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.UnitX.RotatedBy(MathHelper.ToRadians(45f) + 2 * Math.PI / 4 * (i + 0.5)) * 1f,
+                        ModContent.ProjectileType<Projectiles.Bosses.JackBlastBad>(), NPC.damage, 0f, Main.myPlayer);
                     SoundEngine.PlaySound(SoundID.Item33, NPC.Center);
-                }
-
-                const int max2 = 6;
-                for (int i = 0; i < max2; i++)
-                {
-                    if (Main.getGoodWorld)
-                    {
-                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.UnitX.RotatedBy(2 * Math.PI / max2 * (i + 0.5)) * 3f, ModContent.ProjectileType<Projectiles.Bosses.JackBlastRotate>(), NPC.damage, 0f, Main.myPlayer);
-                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.UnitX.RotatedBy(2 * Math.PI / max2 * (i + 0.5)) * 3f, ModContent.ProjectileType<Projectiles.Bosses.JackBlastRotateFlip>(), NPC.damage, 0f, Main.myPlayer);
-                    }
                 }
             }
         }
 
-        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        private void SpawnDust()
         {
-            if (!NPC.AnyNPCs(ModContent.NPCType<Jack>()))
+            int dustType = 60;
+            for (int i = 0; i < 20; i++)
             {
-                if (GerdWorld.downedAcheron)
-                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Misc.Materials.ScrapFragment>(), 1, 3, 10));
-                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Misc.Materials.SpecialUpgradeCrystal>(), 20));
-                npcLoot.Add(ItemDropRule.Common(ItemID.TungstenBar, 2, 4, 14));
-                npcLoot.Add(ItemDropRule.Common(ItemID.SilverBar, 2, 4, 14));
-                npcLoot.Add(ItemDropRule.Common(ItemID.GoldBar, 4, 6, 16));
-                npcLoot.Add(ItemDropRule.Common(ItemID.PlatinumBar, 4, 6, 16));
+                Vector2 velocity = NPC.velocity + new Vector2(Main.rand.NextFloat(-5f, 5f), Main.rand.NextFloat(-5f, 5f));
+                Dust dust = Dust.NewDustPerfect(NPC.Center, dustType, velocity, 120, Color.White, Main.rand.NextFloat(1.6f, 3.8f));
+
+                dust.noLight = false;
+                dust.noGravity = true;
+                dust.fadeIn = Main.rand.NextFloat(0.1f, 0.5f);
             }
         }
     }

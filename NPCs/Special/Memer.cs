@@ -17,11 +17,16 @@ using System.Collections.Generic;
 using ReLogic.Content;
 using Terraria.ModLoader.IO;
 using GMR.Items.Accessories;
+using GMR.Items.Armor;
 using GMR.Items.Misc;
 using GMR.Items.Misc.Materials;
 using GMR.Items.Vanity;
 using GMR.Items.Weapons.Melee;
+using GMR.Items.Weapons.Melee.Swords;
+using GMR.Items.Weapons.Melee.Spears;
+using GMR.Items.Weapons.Melee.Others;
 using GMR.Items.Weapons.Summoner;
+using GMR.Items.Weapons.Summoner.Summons;
 
 namespace GMR.NPCs.Special
 {
@@ -207,20 +212,24 @@ namespace GMR.NPCs.Special
 				.Add<PsycopathAxe>()
 				.Add<DesertAxe>()
 				.Add<BookOfVirtues>()
+				.Add<ShadowSword>(new Condition("Mods.GMR.Conditions.DefeatAcheron", () => GerdWorld.downedAcheron))
+				.Add<KizunaScythe>(new Condition("Mods.GMR.Conditions.AnyMech", () => NPC.downedMechBossAny))
+
 				.Add<Hatred>()
+				.Add<ChargedArm>(new Condition("Mods.GMR.Conditions.DefeatAcheron", () => GerdWorld.downedAcheron))
+
 				.Add<UpgradeCrystal>()
 				.Add<BossUpgradeCrystal>(new Condition("Mods.GMR.Conditions.Hardmode", () => Main.hardMode))
+				.Add<Items.Tiles.MagmaAltar>(new Condition("Mods.GMR.Conditions.DefeatMagmaEye", () => GerdWorld.downedMagmaEye))
 
 				.Add<SandwaveHat>()
-				.Add<SandwaveShirt>()
-				.Add<SandwavePants>()
-
-				.Add<Items.Tiles.MagmaAltar>(new Condition("Mods.GMR.Conditions.DefeatMagmaEye", () => GerdWorld.downedMagmaEye))
+				.Add<SandwaveVest>()
+				.Add<SandwaveLeggings>()
 
 				.Add<ChaosAngelHalo>(new Condition("Mods.GMR.Conditions.DefeatSkeletron", () => NPC.downedBoss3))
 				.Add<ChaosAngelShirt>(new Condition("Mods.GMR.Conditions.DefeatSkeletron", () => NPC.downedBoss3))
 				.Add<ChaosAngelPants>(new Condition("Mods.GMR.Conditions.DefeatSkeletron", () => NPC.downedBoss3))
-				.Add<ChaosAngelWings>(new Condition("Mods.GMR.Conditions.DefeatSkeletron", () => NPC.downedBoss3 && Main.hardMode))
+				.Add<ChaosAngelWings>(new Condition("Mods.GMR.Conditions.DefeatSkeletron" + ", " + "Mods.GMR.Conditions.Hardmode", () => NPC.downedBoss3 && Main.hardMode))
 				.Add<PhoenixSword>(new Condition("Mods.GMR.Conditions.DefeatSkeletron", () => NPC.downedBoss3))
 
 
@@ -229,17 +238,14 @@ namespace GMR.NPCs.Special
 				.Add<IceyLegs>(new Condition("Mods.GMR.Conditions.Hardmode", () => Main.hardMode))
 				.Add<IceyWings>(new Condition("Mods.GMR.Conditions.Hardmode", () => Main.hardMode))
 
-				.Add<KizunaScythe>(new Condition("Mods.GMR.Conditions.AnyMech", () => NPC.downedMechBossAny))
 
 				.Add<SpazHatMask>(new Condition("Mods.GMR.Conditions.AnyMech", () => NPC.downedMechBossAny))
 				.Add<SpazMask>(new Condition("Mods.GMR.Conditions.AnyMech", () => NPC.downedMechBossAny))
 				.Add<SpazDress>(new Condition("Mods.GMR.Conditions.AnyMech", () => NPC.downedMechBossAny))
 				.Add<SpazThighs>(new Condition("Mods.GMR.Conditions.AnyMech", () => NPC.downedMechBossAny))
-				.Add<SpazCape>(new Condition("Mods.GMR.Conditions.AnyMech", () => NPC.downedMechBossAny))
+				.Add<SpazCape>(new Condition("Mods.GMR.Conditions.AnyMech", () => NPC.downedMechBossAny));
 
 
-				.Add<ChargedArm>(new Condition("Mods.GMR.Conditions.DefeatAcheron", () => GerdWorld.downedAcheron))
-				.Add<ShadowSword>(new Condition("Mods.GMR.Conditions.DefeatAcheron", () => GerdWorld.downedAcheron));
 			npcShop.Register(); // Name of this shop tab
 		}
 

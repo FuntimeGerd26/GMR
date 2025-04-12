@@ -20,6 +20,27 @@ using Terraria.ModLoader.Utilities;
 using static Terraria.ModLoader.ModContent;
 using GMR;
 
+#region Mod Items
+
+using GMR.Items.Misc;
+using GMR.Items.Misc.Materials;
+using GMR.Items.Misc.Consumable;
+using GMR.Items.Weapons.Melee;
+using GMR.Items.Weapons.Melee.Swords;
+using GMR.Items.Weapons.Melee.Spears;
+using GMR.Items.Weapons.Melee.Others;
+using GMR.Items.Weapons.Ranged;
+using GMR.Items.Weapons.Ranged.Bows;
+using GMR.Items.Weapons.Ranged.Guns;
+using GMR.Items.Weapons.Ranged.Others;
+using GMR.Items.Weapons.Ranged.Railcannons;
+using GMR.Items.Weapons.Magic;
+using GMR.Items.Weapons.Magic.Books;
+using GMR.Items.Weapons.Magic.Staffs;
+using GMR.Items.Weapons.Magic.Others;
+
+#endregion
+
 namespace GMR.NPCs.Bosses.Jack.Eternity
 {
     [AutoloadBossHead()]
@@ -84,6 +105,7 @@ namespace GMR.NPCs.Bosses.Jack.Eternity
             {
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Bosses/Jack");
             }
+            NPC.ElementMultipliers([1f, 0.5f, 0.8f, 1.5f]);
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
@@ -102,7 +124,7 @@ namespace GMR.NPCs.Bosses.Jack.Eternity
             BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
             BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
             new FlavorTextBestiaryInfoElement("An ancient machine that was never finished, it has a really bad temper for this reason." +
-            "It launched an attack on it's creators for never bothring finishing it. Consuming souls causes it to become more powerful for following fights, making it a threat possibly as dangerous as the mechanical bosses."),
+            "It launched an attack on it's creators for never bothring finishing it."),
             });
         }
 
@@ -135,7 +157,6 @@ namespace GMR.NPCs.Bosses.Jack.Eternity
             }
         }
 
-
         public override bool CheckDead()
         {
             if (AI8 == -3)
@@ -151,16 +172,10 @@ namespace GMR.NPCs.Bosses.Jack.Eternity
             return false;
         }
 
-        public void Die()
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.ai[1] += 0.5f;
-
-            if (NPC.ai[1] > DEATHTIME * 1.314f)
-            {
-                NPC.life = -33333;
-                NPC.HitEffect();
-                CheckDead();
-            }
+            NPC.lifeMax = (int)(NPC.lifeMax * ((0.4f * numPlayers) + 0.6f * balance));
+            NPC.damage = (int)(NPC.damage * (0.8f * balance));
         }
 
         public override void AI()
@@ -181,11 +196,6 @@ namespace GMR.NPCs.Bosses.Jack.Eternity
                 NPC.damage *= 2;
             }
 
-            if (NPC.life <= 1)
-            {
-                Die();
-            }
-
             if (Alivent)
             {
                 NPC.alpha++;
@@ -195,7 +205,7 @@ namespace GMR.NPCs.Bosses.Jack.Eternity
 
                 if (++ExplodeTimer % 15 == 0)
                     Projectile.NewProjectile(NPC.GetSource_FromAI(), new Vector2(NPC.Center.X + Main.rand.Next(-NPC.width / 2, NPC.width / 2), NPC.Center.Y + Main.rand.Next(-NPC.height / 2, NPC.height / 2)),
-                        Vector2.Zero, ModContent.ProjectileType<Projectiles.SmallExplotion>(), 0, 0f, Main.myPlayer, NPC.whoAmI);
+                        Vector2.Zero, ModContent.ProjectileType<Projectiles.SmallExplosion>(), 0, 0f, Main.myPlayer, NPC.whoAmI);
 
                 if (NPC.life <= 0)
                 {
@@ -351,7 +361,6 @@ namespace GMR.NPCs.Bosses.Jack.Eternity
                 }
             }
 
-            Projectile.NewProjectile(NPC.GetSource_FromAI(), player.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.Bosses.JackRain>(), NPC.damage * 2, 0f, Main.myPlayer);
             SoundEngine.PlaySound(SoundID.Item61, NPC.Center);
             NPC.netUpdate = true;
         }
@@ -410,11 +419,12 @@ namespace GMR.NPCs.Bosses.Jack.Eternity
         {
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 
-            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Misc.Materials.ScrapFragment>(), 1, 8, 20));
-            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Misc.Consumable.DGPCrate>(), 4));
-            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Ranged.JackRailcannon>(), 50));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<AncientInfraRedPlating>(), 1, 9, 25));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<InfraRedCrystalShard>(), 2, 4, 12));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<DGPCrate>(), 4));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<JackRailcannon>(), 50));
 
-            int[] drops = { ModContent.ItemType<Items.Weapons.Melee.JackSword>(), ModContent.ItemType<Items.Weapons.Ranged.AncientRifle>(), };
+            int[] drops = { ModContent.ItemType<JackSword>(), ModContent.ItemType<AncientHarpoon>(), ModContent.ItemType<AncientRifle>(), };
 
             notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, drops));
 
@@ -425,13 +435,14 @@ namespace GMR.NPCs.Bosses.Jack.Eternity
                 npcLoot.Add(ItemDropRule.Common(magicStorage.Find<ModItem>("ShadowDiamond").Type));
             }
 
-            npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<Items.Misc.Consumable.JackTreasureBag>()));
+            npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<JackTreasureBag>()));
             npcLoot.Add(notExpertRule);
         }
 
         public override void OnKill()
         {
             GerdWorld.downedJack = true;
+            NPC.netUpdate = true;
 
             int dustType = 60;
             for (int i = 0; i < 40; i++)

@@ -54,18 +54,25 @@ namespace GMR.NPCs.Bosses.Jack
             NPC.HitSound = SoundID.NPCHit42;
             NPC.DeathSound = SoundID.NPCDeath37;
             NPC.knockBackResist = 0.5f;
-            NPC.damage = 20;
+            NPC.damage = 25;
             NPC.aiStyle = -1;
             NPC.noTileCollide = true;
             NPC.noGravity = true;
             NPC.value = Item.buyPrice(gold: 0);
             NPC.npcSlots = 1f;
+            NPC.ElementMultipliers([1f, 0.5f, 0.8f, 1.5f]);
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
             //cooldownSlot = ImmunityCooldownID.Bosses; // use the boss immunity cooldown counter, to prevent ignoring boss attacks by taking damage from other sources (NOTE: Unused)
             return false; // Set to false because fuck contact damage
+        }
+
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
+        {
+            NPC.lifeMax = (int)(NPC.lifeMax * (0.5f * (3 - balance) + (numPlayers * 0.1f)));
+            NPC.damage = (int)(NPC.damage * (0.5f * (3 - balance)));
         }
 
         public override void AI()
@@ -75,143 +82,122 @@ namespace GMR.NPCs.Bosses.Jack
             else
                 Lighting.AddLight(NPC.Center, new Vector3(0.8f, 0.8f, 0.15f));
 
-            if (Main.netMode != NetmodeID.MultiplayerClient)
+            if (!NPC.AnyNPCs(ModContent.NPCType<Jack>()))
             {
-                if (!NPC.AnyNPCs(ModContent.NPCType<Jack>()))
+                NPC.life += -50;
+
+                if (NPC.life <= 0)
                 {
-                    NPC.life += -50;
-
-                    if (NPC.life <= 0)
+                    int dustType = 60;
+                    for (int i = 0; i < 20; i++)
                     {
-                        int dustType = 60;
-                        for (int i = 0; i < 20; i++)
-                        {
-                            Vector2 velocity = NPC.velocity + new Vector2(Main.rand.NextFloat(-5f, 5f), Main.rand.NextFloat(-5f, 5f));
-                            Dust dust = Dust.NewDustPerfect(NPC.Center, dustType, velocity, 30, Color.White, Main.rand.NextFloat(1.6f, 3.8f));
+                        Vector2 velocity = NPC.velocity + new Vector2(Main.rand.NextFloat(-5f, 5f), Main.rand.NextFloat(-5f, 5f));
+                        Dust dust = Dust.NewDustPerfect(NPC.Center, dustType, velocity, 30, Color.White, Main.rand.NextFloat(1.6f, 3.8f));
 
-                            dust.noLight = false;
-                            dust.noGravity = true;
-                            dust.fadeIn = Main.rand.NextFloat(0.1f, 0.5f);
-                        }
-                        SoundEngine.PlaySound(SoundID.Item62, NPC.Center);
+                        dust.noLight = false;
+                        dust.noGravity = true;
+                        dust.fadeIn = Main.rand.NextFloat(0.1f, 0.5f);
                     }
-                    NPC.netUpdate = true;
-                    return;
+                    SoundEngine.PlaySound(SoundID.Item62, NPC.Center);
                 }
+                NPC.netUpdate = true;
 
-                if (NPC.damage > 80)
-                    NPC.damage = 80;
+                return;
+            }
 
-                if (!Main.dayTime)
-                    NPC.damage *= 2;
+            Player player = Main.player[NPC.target];
+            if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
+            {
+                NPC.TargetClosest();
+                NPC.netUpdate = true;
+            }
 
-                Player player = Main.player[NPC.target];
-                if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
+            Vector2 toPlayer = NPC.Center - player.Center;
+            NPC.rotation = toPlayer.ToRotation() + MathHelper.ToRadians(90f);
+
+            if (player.dead)
+            {
+                NPC.netUpdate = true;
+                NPC.velocity.Y += 0.5f;
+                NPC.EncourageDespawn(300);
+                return;
+            }
+            else if (NPC.ai[2] > 0)
+            {
+                NPC.netUpdate = true;
+                NPC.spriteDirection = 1;
+
+                if (NPC.ai[0] < 0)
                 {
-                    NPC.TargetClosest();
-                    NPC.netUpdate = true;
+                    Vector2 bossToPlayer = Main.player[NPC.target].Center + 350 * Vector2.UnitX + 300 * Vector2.UnitY;
+                    NPC.velocity = (bossToPlayer - NPC.Center) * 0.075f;
                 }
-
-                Vector2 toPlayer = NPC.Center - player.Center;
-                NPC.rotation = toPlayer.ToRotation() + MathHelper.ToRadians(90f);
-
-                if (player.dead)
+                else if (NPC.ai[0] > 0)
                 {
-                    NPC.netUpdate = true;
-                    NPC.velocity.Y += 0.5f;
-                    NPC.EncourageDespawn(300);
-                    return;
+                    Vector2 bossToPlayer = Main.player[NPC.target].Center + 350 * Vector2.UnitX - 300 * Vector2.UnitY;
+                    NPC.velocity = (bossToPlayer - NPC.Center) * 0.075f;
                 }
-                else if (NPC.ai[2] > 0)
+                else
                 {
-                    NPC.netUpdate = true;
-                    NPC.spriteDirection = 1;
-
-                    if (NPC.ai[0] < 0)
-                    {
-                        Vector2 bossToPlayer = Main.player[NPC.target].Center + 350 * Vector2.UnitX + 300 * Vector2.UnitY;
-                        NPC.velocity = (bossToPlayer - NPC.Center) * 0.075f;
-                    }
-                    else if (NPC.ai[0] > 0)
-                    {
-                        Vector2 bossToPlayer = Main.player[NPC.target].Center + 350 * Vector2.UnitX - 300 * Vector2.UnitY;
-                        NPC.velocity = (bossToPlayer - NPC.Center) * 0.075f;
-                    }
-                    else
-                    {
-                        Vector2 bossToPlayer = Main.player[NPC.target].Center + 440 * Vector2.UnitX;
-                        NPC.velocity = (bossToPlayer - NPC.Center) * 0.075f;
-                    }
+                    Vector2 bossToPlayer = Main.player[NPC.target].Center + 440 * Vector2.UnitX;
+                    NPC.velocity = (bossToPlayer - NPC.Center) * 0.075f;
                 }
-                else if (NPC.ai[2] < 0)
-                {
-                    NPC.netUpdate = true;
-                    NPC.spriteDirection = -1;
+            }
+            else if (NPC.ai[2] < 0)
+            {
+                NPC.netUpdate = true;
+                NPC.spriteDirection = -1;
 
 
-                    if (NPC.ai[0] < 0)
-                    {
-                        Vector2 bossToPlayer = Main.player[NPC.target].Center - 350 * Vector2.UnitX + 300 * Vector2.UnitY;
-                        NPC.velocity = (bossToPlayer - NPC.Center) * 0.075f;
-                    }
-                    else if (NPC.ai[0] > 0)
-                    {
-                        Vector2 bossToPlayer = Main.player[NPC.target].Center - 350 * Vector2.UnitX - 300 * Vector2.UnitY;
-                        NPC.velocity = (bossToPlayer - NPC.Center) * 0.075f;
-                    }
-                    else
-                    {
-                        Vector2 bossToPlayer = Main.player[NPC.target].Center - 440 * Vector2.UnitX;
-                        NPC.velocity = (bossToPlayer - NPC.Center) * 0.075f;
-                    }
+                if (NPC.ai[0] < 0)
+                {
+                    Vector2 bossToPlayer = Main.player[NPC.target].Center - 350 * Vector2.UnitX + 300 * Vector2.UnitY;
+                    NPC.velocity = (bossToPlayer - NPC.Center) * 0.075f;
                 }
+                else if (NPC.ai[0] > 0)
+                {
+                    Vector2 bossToPlayer = Main.player[NPC.target].Center - 350 * Vector2.UnitX - 300 * Vector2.UnitY;
+                    NPC.velocity = (bossToPlayer - NPC.Center) * 0.075f;
+                }
+                else
+                {
+                    Vector2 bossToPlayer = Main.player[NPC.target].Center - 440 * Vector2.UnitX;
+                    NPC.velocity = (bossToPlayer - NPC.Center) * 0.075f;
+                }
+            }
 
-                if (++NPC.ai[1] > 241) // After 4 seconds plus one tick, reset
-                {
-                    NPC.ai[3] = 0;
-                    NPC.ai[1] = 0;
-                    if (NPC.ai[0] < 0)
-                        NPC.ai[0] = 0;
-                    else if (NPC.ai[0] == 0)
-                        NPC.ai[0]++;
-                    else if (NPC.ai[0] > 0)
-                        NPC.ai[0] *= -1;
+            if (++NPC.ai[1] > 420) // After 6 seconds, reset
+            {
+                NPC.ai[3] = 0;
+                NPC.ai[1] = 0;
+                if (NPC.ai[0] < 0)
+                    NPC.ai[0] = 0;
+                else if (NPC.ai[0] == 0)
+                    NPC.ai[0]++;
+                else if (NPC.ai[0] > 0)
+                    NPC.ai[0] *= -1;
 
-                    SoundEngine.PlaySound(GMR.GetSounds("NPCs/armchangevariant", 2, 1f, 0f, 0.75f), NPC.Center);
-                    NPC.netUpdate = true;
-                }
-                else if (NPC.ai[0] == 0 && ++NPC.ai[1] > 240) // After 4 seconds
+                SoundEngine.PlaySound(GMR.GetSounds("NPCs/armchangevariant", 2, 1f, 0f, 0.75f), NPC.Center);
+                NPC.netUpdate = true;
+            }
+            else if (NPC.ai[0] == 0 && ++NPC.ai[1] > 419) // After 7 seconds, On the player's side
+            {
+                float numberProjectiles = 3;
+                float rotation = MathHelper.ToRadians(35);
+                Vector2 velocity = NPC.DirectionTo(player.Center) * 3f;
+                for (int i = 0; i < numberProjectiles; i++)
                 {
-                    float numberProjectiles = 3;
-                    float rotation = MathHelper.ToRadians(35);
-                    Vector2 velocity = NPC.DirectionTo(player.Center) * 3f;
-                    for (int i = 0; i < numberProjectiles; i++)
-                    {
-                        Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1)));
-                        Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, perturbedSpeed, ModContent.ProjectileType<Projectiles.Bosses.JackBlastBad>(), NPC.damage, 1f, Main.myPlayer, NPC.whoAmI);
-                    }
-                    SoundEngine.PlaySound(SoundID.Research, NPC.Center);
-                    NPC.netUpdate = true;
+                    Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1)));
+                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, perturbedSpeed, ModContent.ProjectileType<Projectiles.Bosses.JackBlastBad>(), NPC.damage, 1f, Main.myPlayer, NPC.whoAmI);
                 }
-                else if (++NPC.ai[1] > 240 && !Main.getGoodWorld) // After 4 seconds
-                {
-                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.DirectionTo(player.Center) * 7f, ModContent.ProjectileType<Projectiles.Bosses.AlloyCrate>(), NPC.damage, 1f, Main.myPlayer, NPC.whoAmI);
-                    SoundEngine.PlaySound(SoundID.Research, NPC.Center);
-                    NPC.netUpdate = true;
-                }
-                else if (++NPC.ai[1] > 240) // After 4 seconds and FTW
-                {
-                    float numberProjectiles = 2;
-                    float rotation = MathHelper.ToRadians(25);
-                    Vector2 velocity = NPC.DirectionTo(player.Center) * 6f;
-                    for (int i = 0; i < numberProjectiles; i++)
-                    {
-                        Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1)));
-                        Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, perturbedSpeed, ModContent.ProjectileType<Projectiles.Bosses.JackBlastBad>(), NPC.damage, 1f, Main.myPlayer, NPC.whoAmI);
-                    }
-                    SoundEngine.PlaySound(SoundID.Research, NPC.Center);
-                    NPC.netUpdate = true;
-                }
+                SoundEngine.PlaySound(SoundID.Research, NPC.Center);
+                NPC.netUpdate = true;
+            }
+            else if (++NPC.ai[1] > 419 && !Main.getGoodWorld) // After 7 seconds
+            {
+                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.DirectionTo(player.Center) * 7f, ModContent.ProjectileType<Projectiles.Bosses.AlloyCrate>(), NPC.damage, 1f, Main.myPlayer, NPC.whoAmI);
+                SoundEngine.PlaySound(SoundID.Research, NPC.Center);
+                NPC.netUpdate = true;
             }
         }
 

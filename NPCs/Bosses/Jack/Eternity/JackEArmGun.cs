@@ -65,6 +65,12 @@ namespace GMR.NPCs.Bosses.Jack.Eternity
             return false; // Set to false because fuck contact damage
         }
 
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
+        {
+            NPC.lifeMax = (int)(NPC.lifeMax * ((0.4f * numPlayers) + 0.6f * balance));
+            NPC.damage = (int)(NPC.damage * (0.8f * balance));
+        }
+
         public override void AI()
         {
             Lighting.AddLight(NPC.Center, new Vector3(0.8f, 0.8f, 0.15f));
