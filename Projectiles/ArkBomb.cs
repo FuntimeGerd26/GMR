@@ -11,12 +11,11 @@ namespace GMR.Projectiles
 {
     public class ArkBomb : ModProjectile
     {
-        public override string Texture => "Terraria/Images/Projectile_687";
+        public override string Texture => "Terraria/Images/Projectile_85";
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ark Explosion");
-            Main.projFrames[Projectile.type] = Main.projFrames[ProjectileID.LunarFlare];
+            Main.projFrames[Projectile.type] = 7;
             Projectile.AddElement(0);
             Projectile.AddElement(2);
         }
@@ -27,21 +26,30 @@ namespace GMR.Projectiles
             Projectile.height = 100;
             Projectile.friendly = true;
             Projectile.DamageType = DamageClass.Generic;
-            Projectile.penetrate = -1;
-            Projectile.timeLeft = 10;
-            Projectile.light = 0.5f;
+            Projectile.penetrate = 5;
+            Projectile.timeLeft = 60;
             Projectile.ignoreWater = true;
             Projectile.tileCollide = false;
-            Projectile.usesIDStaticNPCImmunity = true;
-            Projectile.idStaticNPCHitCooldown = 1;
-            Projectile.scale = 2f;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 15;
+            Projectile.scale = 1.25f;
+            Projectile.stopsDealingDamageAfterPenetrateHits = true;
         }
 
         public override void AI()
         {
             Projectile.velocity = Vector2.Zero;
 
-            if (++Projectile.frameCounter > 2)
+            for (int i = 0; i < 10; i++)
+            {
+                Dust dustId = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 60, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-3f, 3f), 60, default(Color), 1f);
+                dustId.noGravity = true;
+            }
+
+            Projectile.scale += 0.025f;
+            Projectile.alpha += 8;
+
+            if (++Projectile.frameCounter > 4)
             {
                 Projectile.frameCounter = 0;
                 if (++Projectile.frame >= Main.projFrames[Projectile.type])
@@ -55,15 +63,15 @@ namespace GMR.Projectiles
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(BuffID.OnFire3, 600);
-            int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 6, Projectile.velocity.X * 0.7f,
-                Projectile.velocity.Y * 0.4f, 120, default(Color), 2f);
-            Main.dust[dustId].noGravity = true;
+            Dust dustId = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 60, Main.rand.NextFloat(-7f, 7f), Main.rand.NextFloat(-7f, 7f), 60, default(Color), 1f);
+            dustId.noGravity = true;
+            Dust dustId2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 60, Main.rand.NextFloat(-7f, 7f), Main.rand.NextFloat(-7f, 7f), 60, default(Color), 1.5f);
+            dustId2.noGravity = true;
         }
 
         public override Color? GetAlpha(Color lightColor)
         {
-            Color color = new Color(255, 25, 125, 25);
-            return color;
+            return Color.White;
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -73,9 +81,16 @@ namespace GMR.Projectiles
             int y3 = num156 * Projectile.frame; //ypos of upper left corner of sprite to draw
             Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);
             Vector2 origin2 = rectangle.Size() / 2f;
+            SpriteEffects spriteEffects = Projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
             Main.EntitySpriteDraw(texture2D13, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY),
-                new Microsoft.Xna.Framework.Rectangle?(rectangle), Projectile.GetAlpha(lightColor), Projectile.rotation, origin2,
-                Projectile.scale, SpriteEffects.None, 0);
+                new Microsoft.Xna.Framework.Rectangle?(rectangle), new Color(155, 25, 25, 255) * Projectile.Opacity, Projectile.rotation, origin2, Projectile.scale * 1.05f, spriteEffects, 0);
+
+            Main.EntitySpriteDraw(texture2D13, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY),
+                new Microsoft.Xna.Framework.Rectangle?(rectangle), new Color(200, 35, 35, 100) * 0.8f * Projectile.Opacity, Projectile.rotation, origin2, Projectile.scale, spriteEffects, 0);
+
+            Main.EntitySpriteDraw(texture2D13, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY),
+                new Microsoft.Xna.Framework.Rectangle?(rectangle), new Color(255, 125, 125, 125) * Projectile.Opacity, Projectile.rotation, origin2, Projectile.scale * 0.6f, spriteEffects, 0);
             return false;
         }
     }

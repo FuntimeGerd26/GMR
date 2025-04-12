@@ -6,7 +6,7 @@ using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using GMR.NPCs.Bosses.Jack;
+using GMR.NPCs.Bosses.Acheron;
 
 namespace GMR.Projectiles
 {

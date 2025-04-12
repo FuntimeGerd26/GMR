@@ -24,7 +24,7 @@ namespace GMR.Projectiles.Summon.Whips
 
 			// use these to change from the vanilla defaults
 			Projectile.WhipSettings.Segments = 18;
-			Projectile.WhipSettings.RangeMultiplier = 0.80f;
+			Projectile.WhipSettings.RangeMultiplier = 0.60f;
 		}
 
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)

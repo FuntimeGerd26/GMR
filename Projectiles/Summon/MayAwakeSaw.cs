@@ -35,6 +35,7 @@ namespace GMR.Projectiles.Summon
             Projectile.tileCollide = false;
             Projectile.extraUpdates = 4;
             Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 40;
         }
 
         public override void SendExtraAI(BinaryWriter writer)
@@ -91,11 +92,6 @@ namespace GMR.Projectiles.Summon
             {
                 Projectile.timeLeft = 2;
             }
-        }
-
-        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
-        {
-            target.immune[Projectile.owner] = 10;
         }
 
         public override bool PreDraw(ref Color lightColor)

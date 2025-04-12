@@ -34,6 +34,7 @@ namespace GMR.Projectiles.Summon
 			Projectile.tileCollide = false;
 			Projectile.extraUpdates = 4;
 			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 80;
 		}
 
 		public override void AI()

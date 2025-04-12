@@ -40,6 +40,8 @@ namespace GMR.Projectiles.Summon
             Projectile.timeLeft *= 5;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 30;
         }
 
         public override void SendExtraAI(BinaryWriter writer)
@@ -54,11 +56,10 @@ namespace GMR.Projectiles.Summon
             Projectile.localAI[1] = reader.ReadSingle();
         }
 
-        int damage;
-        int BossesDowned;
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
+            Projectile.damage = Projectile.damage;
             Lighting.AddLight(Projectile.Center, new Vector3(0.5f, 0.5f, 1.25f));
 
             if (++Projectile.frameCounter > 5)
@@ -75,24 +76,15 @@ namespace GMR.Projectiles.Summon
                 return;
             }
 
-            if (NPC.downedMoonlord) BossesDowned = 6;
-            else if (Main.hardMode) BossesDowned = 3;
-            else BossesDowned = 1;
-
-            var target = Projectile.FindTargetWithinRange(1000);
-            if (target != null && Projectile.FindTargetWithLineOfSight(1000f) != null)
+            var target = Projectile.FindTargetWithinRange(600);
+            if (target != null && Projectile.FindTargetWithLineOfSight(600f) != null)
             {
-                Vector2 Aim = Projectile.DirectionTo(target.Center) * 8f;
-                damage = (int)(target.lifeMax * 0.005f);
-                if (damage < 10)
-                    damage = 10;
-                if (++ShootTimer % 60 == 0)
+                Vector2 Aim = Projectile.DirectionTo(target.Center) * 18f;
+                if (++ShootTimer % 40 == 0)
                 {
-                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Aim, ModContent.ProjectileType<Projectiles.Summon.TearProj>(), damage * BossesDowned, Projectile.knockBack, Main.myPlayer);
+                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Aim, ModContent.ProjectileType<Projectiles.Summon.TearProj>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
                 }
             }
-
-            Projectile.damage = damage;
 
             if (Projectile.localAI[0] == 0)
             {

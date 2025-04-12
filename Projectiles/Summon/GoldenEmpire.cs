@@ -22,7 +22,6 @@ namespace GMR.Projectiles.Summon
         {
             Projectile.width = 70;
             Projectile.height = 78;
-            Projectile.friendly = true;
             Projectile.penetrate = -1;
             Projectile.timeLeft = 180;
             Projectile.ignoreWater = true;

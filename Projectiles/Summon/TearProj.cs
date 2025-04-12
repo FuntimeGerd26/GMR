@@ -15,27 +15,27 @@ namespace GMR.Projectiles.Summon
 
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Tear");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			Projectile.AddElement(0);
 			Projectile.AddElement(1);
 		}
 
 		public override void SetDefaults()
 		{
-			Projectile.width = 10;
-			Projectile.height = 10;
+			Projectile.width = 12;
+			Projectile.height = 12;
 			Projectile.friendly = true;
 			Projectile.aiStyle = -1;
 			Projectile.DamageType = DamageClass.Summon;
-			Projectile.timeLeft = 1200;
+			Projectile.timeLeft = 600;
 			Projectile.light = 0.25f;
 			Projectile.ignoreWater = false;
-			Projectile.tileCollide = true;
+			Projectile.tileCollide = false;
 			AIType = ProjectileID.Bullet;
 		}
 
-		public override Color? GetAlpha(Color lightColor) => new Color(155, 155, 255);
+		public override Color? GetAlpha(Color lightColor) => new Color(155, 155, 255, 40);
 
 		public override void AI()
 		{
@@ -58,7 +58,7 @@ namespace GMR.Projectiles.Summon
 			Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);
 			Vector2 origin2 = rectangle.Size() / 2f;
 
-			Color color26 = new Color(155, 155, 255);
+			Color color26 = new Color(155, 155, 255, 40);
 
 			SpriteEffects effects = SpriteEffects.None;
 
