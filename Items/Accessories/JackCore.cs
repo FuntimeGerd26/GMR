@@ -13,9 +13,6 @@ namespace GMR.Items.Accessories
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Infra-Red Core");
-			Tooltip.SetDefault("'It dosen't do much, it's just a core'\nIncreases damage by 3%\nIncreases movement speed by 3%");
-
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
@@ -30,8 +27,8 @@ namespace GMR.Items.Accessories
 
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			player.GetDamage(DamageClass.Generic) += 0.3f;
-			player.moveSpeed += 0.03f;
+			player.GetDamage(DamageClass.Generic) += 0.8f;
+			player.moveSpeed += 0.15f;
 		}
 
 		public override void AddRecipes()
@@ -39,14 +36,16 @@ namespace GMR.Items.Accessories
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(ItemID.CobaltBar, 30);
 			recipe.AddIngredient(ItemID.SoulofLight, 18);
-			recipe.AddIngredient(null, "ScrapFragment", 30);
+			recipe.AddIngredient(null, "InfraRedBar", 30);
+			recipe.AddIngredient(null, "InfraRedCrystalShard", 4);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 
 			Recipe recipe2 = CreateRecipe();
 			recipe2.AddIngredient(ItemID.PalladiumBar, 30);
 			recipe2.AddIngredient(ItemID.SoulofLight, 18);
-			recipe2.AddIngredient(null, "ScrapFragment", 30);
+			recipe2.AddIngredient(null, "InfraRedBar", 30);
+			recipe2.AddIngredient(null, "InfraRedCrystalShard", 4);
 			recipe2.AddTile(TileID.MythrilAnvil);
 			recipe2.Register();
 		}

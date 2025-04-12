@@ -13,10 +13,6 @@ namespace GMR.Items.Accessories
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Masked Plague's Cloak");
-			Tooltip.SetDefault($"Using Magic or Summon weapons will shoot a homing projectile that inflicts 'Crystal Plague'\nWhen hitting enemies, magic projectiles have a 10% chance to heal 1% of your max health" +
-				"\nIncreases magic damage by 3% and summon damage by 8%");
-
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
@@ -31,7 +27,8 @@ namespace GMR.Items.Accessories
 
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			player.GPlayer().MaskedPlagueCloak = Item;
+			if (player.GPlayer().EnchantToggles["MaskedPlagueCloak"])
+				player.GPlayer().MaskedPlagueCloak = Item;
 			player.GetDamage(DamageClass.Magic) += 0.03f;
 			player.GetDamage(DamageClass.Summon) += 0.08f;
 		}
@@ -40,11 +37,19 @@ namespace GMR.Items.Accessories
 		{
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(ItemID.Feather, 8);
+			recipe.AddIngredient(ItemID.ShadowScale, 12);
 			recipe.AddIngredient(ItemID.Silk, 14);
-			recipe.AddRecipeGroup("GMR:AnyGem", 2);
 			recipe.AddIngredient(null, "UpgradeCrystal", 25);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
+
+			Recipe recipe2 = CreateRecipe();
+			recipe2.AddIngredient(ItemID.Feather, 8);
+			recipe2.AddIngredient(ItemID.TissueSample, 12);
+			recipe2.AddIngredient(ItemID.Silk, 14);
+			recipe2.AddIngredient(null, "UpgradeCrystal", 25);
+			recipe2.AddTile(TileID.Anvils);
+			recipe2.Register();
 		}
 	}
 }

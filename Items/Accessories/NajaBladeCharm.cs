@@ -34,7 +34,7 @@ namespace GMR.Items.Accessories
 			player.GetDamage(DamageClass.Generic) += 0.08f;
 			player.GetAttackSpeed(DamageClass.Generic) += 0.08f;
 			player.GPlayer().Thunderblade = Item;
-			if (ClientConfig.Instance.NajaFireball)
+			if (player.GPlayer().EnchantToggles["BoostFireball"])
 			{
 				player.GPlayer().NajaCharm = Item;
 			}

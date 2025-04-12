@@ -56,6 +56,7 @@ namespace GMR.Items.Accessories
 		{
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(null, "InfraRedBar", 15);
+			recipe.AddIngredient(null, "InfraRedCrystalShard", 10);
 			recipe.AddIngredient(ItemID.SoulofFlight, 20);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();

@@ -23,11 +23,6 @@ namespace GMR.Items.Accessories
 
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Awakened Dress");
-			Tooltip.SetDefault($"'It has woken up to kick gum and chew ass'\nIncreases damage by 12% and attack speed by 10%" + 
-				$"\nIncreases invincibility frames by 3 seconds\nWeapons have a chance to shoot 3 projectile that deal 75% damage and shoot an aditional special projectile" +
-				$"\nSummons 6 orbiting saws around you that inflict 'Mimir' to enemies\nHide the accessory to distable the orbiting and multiplying projectile effect");
-
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
@@ -50,13 +45,14 @@ namespace GMR.Items.Accessories
 			player.GetAttackSpeed(DamageClass.Generic) += 0.10f;
 			player.GPlayer().DevInmune = true;
 			player.GPlayer().AwakeMayDress = true;
-			if (!hideVisual)
+			if (player.GPlayer().EnchantToggles["MultipleProjectile"])
+			{
+				player.GPlayer().DevPlush = Item;
+			}
+
+			if (player.GPlayer().EnchantToggles["MayDress"])
 			{
 				player.GPlayer().MayDress = true;
-				if (ClientConfig.Instance.MultiplicateProj)
-				{
-					player.GPlayer().DevPlush = Item;
-				}
 				if (player.ownedProjectileCounts[ModContent.ProjectileType<Projectiles.Summon.MayAwakeSaw>()] < 1)
 				{
 					const int max = 6;

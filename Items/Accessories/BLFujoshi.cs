@@ -40,7 +40,7 @@ namespace GMR.Items.Accessories
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			player.GetDamage(DamageClass.Generic) += 0.25f;
-			if (!hideVisual)
+			if (player.GPlayer().EnchantToggles["AlloybloodOrbitingProjectiles"])
 			{
 				player.GPlayer().BLBook = true;
 				flip = !flip;

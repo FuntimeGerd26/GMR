@@ -29,7 +29,7 @@ namespace GMR.Items.Accessories
 		{
 			player.GPlayer().GambleCrown = Item;
 			player.GetDamage(DamageClass.Generic) *= 1.5f;
-			player.GetCritChance(DamageClass.Generic) *= 0f;
+			player.GetCritChance(DamageClass.Generic) = 0f;
 			player.GetKnockback(DamageClass.Generic) *= 0.5f;
 			player.statDefense -= player.statDefense / 2;
 		}
