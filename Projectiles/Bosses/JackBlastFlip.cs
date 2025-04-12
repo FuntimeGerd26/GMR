@@ -16,8 +16,8 @@ namespace GMR.Projectiles.Bosses
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Jack Blast");
-			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
-			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
 			Projectile.AddElement(0);
 			Projectile.AddElement(2);
 		}
@@ -26,11 +26,10 @@ namespace GMR.Projectiles.Bosses
 		{
 			Projectile.width = 6;
 			Projectile.height = 6;
-			Projectile.aiStyle = 0;
+			Projectile.aiStyle = -1;
+			Projectile.penetrate = -1;
 			Projectile.hostile = true;
 			Projectile.timeLeft = 1200;
-			Projectile.alpha = 55;
-			Projectile.light = 0.5f;
 			Projectile.ignoreWater = true;
 			Projectile.tileCollide = false;
 			Projectile.extraUpdates = 4;
@@ -39,7 +38,7 @@ namespace GMR.Projectiles.Bosses
 
 		public override bool? CanDamage()
 		{
-			if (Projectile.ai[0] >= 120)
+			if (Projectile.timeLeft <= 1080)
 				return true;
 			else
 				return false;
@@ -54,12 +53,12 @@ namespace GMR.Projectiles.Bosses
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
 			Projectile.velocity += 0.05f / Projectile.MaxUpdates * Vector2.Normalize(Projectile.velocity);
 
-			if (++Projectile.ai[0] == 120)
+			if (Projectile.timeLeft == 1080)
 			{
 				Projectile.velocity = -Projectile.velocity;
 
 				int dustType = 60;
-				for (int i = 0; i < 40; i++)
+				for (int i = 0; i < 5; i++)
 				{
 					Vector2 velocityDust = Projectile.velocity + new Vector2(Main.rand.NextFloat(-10f, 10f), Main.rand.NextFloat(-10f, 10f));
 					Dust dust = Dust.NewDustPerfect(Projectile.Center, dustType, velocityDust, 120, Color.White, Main.rand.NextFloat(1.6f, 3.8f));
@@ -75,14 +74,14 @@ namespace GMR.Projectiles.Bosses
 		{
 			Main.instance.LoadProjectile(Projectile.type);
 			Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, Projectile.height * 0.5f);
+			Vector2 drawOrigin = texture.Size() / 2;
 			for (int k = 0; k < Projectile.oldPos.Length; k++)
 			{
 				Vector2 drawPos = (Projectile.oldPos[k] - Main.screenPosition) + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
-				Color color = Projectile.GetAlpha(lightColor) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
+				Color color = Projectile.GetAlpha(new Color(255, 55, 85, 5)) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
 				Main.EntitySpriteDraw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
 			}
-			return true;
+			return false;
 		}
 	}
 }

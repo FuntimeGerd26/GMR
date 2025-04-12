@@ -6,6 +6,10 @@ using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using GMR.NPCs.Bosses.Acheron;
+using GMR.NPCs.Bosses.Jack;
+using GMR.NPCs.Bosses.Jack.Eternity;
+using GMR.NPCs.Bosses.Superboss;
 
 namespace GMR.Projectiles.Bosses
 {
@@ -18,7 +22,7 @@ namespace GMR.Projectiles.Bosses
 
 		public override void SetStaticDefaults()
 		{
-			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
 			Projectile.AddElement(0);
 			Projectile.AddElement(2);
@@ -29,6 +33,7 @@ namespace GMR.Projectiles.Bosses
 			Projectile.width = 5;
 			Projectile.height = 5;
 			Projectile.aiStyle = -1;
+			Projectile.penetrate = -1;
 			Projectile.hostile = true;
 			Projectile.timeLeft = 900;
 			Projectile.ignoreWater = true;
@@ -37,13 +42,13 @@ namespace GMR.Projectiles.Bosses
 
 		public override void AI()
 		{
-			if (--Projectile.timeLeft < 860)
+			if (--Projectile.timeLeft < 840)
 			{
 				for (int i = 0; i < Main.maxPlayers; i++)
 				{
 					Rectangle hitbox = Projectile.Hitbox;
 
-					int maxDistance = 1200;
+					int maxDistance = 2400;
 
 					Rectangle areaCheck;
 
@@ -78,15 +83,18 @@ namespace GMR.Projectiles.Bosses
 			Projectile.rotation = Projectile.velocity.ToRotation();
 
 			Lighting.AddLight(Projectile.Center, new Vector3(0.75f, 0.15f, 0.5f));
+
+			if (!NPC.AnyNPCs(ModContent.NPCType<Jack>()) && !NPC.AnyNPCs(ModContent.NPCType<Acheron>()) && !NPC.AnyNPCs(ModContent.NPCType<TheAmalgamation>()) && !NPC.AnyNPCs(ModContent.NPCType<JackE>()))
+			{
+				Projectile.Kill();
+				return;
+			}
 		}
 
 		public override bool PreDraw(ref Color lightColor)
 		{
 			Texture2D texture2D13 = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
-			int num156 = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Height / Main.projFrames[Projectile.type]; //ypos of lower right corner of sprite to draw
-			int y3 = num156 * Projectile.frame; //ypos of upper left corner of sprite to draw
-			Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);
-			Vector2 origin2 = rectangle.Size() / 2f;
+			Vector2 origin2 = texture2D13.Size() / 2f;
 
 			Color color26 = new Color(255, 55, 125) * Projectile.Opacity;
 
@@ -103,7 +111,7 @@ namespace GMR.Projectiles.Bosses
 					continue;
 				Vector2 value4 = Vector2.Lerp(Projectile.oldPos[(int)i], Projectile.oldPos[max0], 1 - i % 1);
 				Main.EntitySpriteDraw(texture2D13, value4 + Projectile.Size / 2f - Main.screenPosition + new Vector2(0, Projectile.gfxOffY),
-					new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, Projectile.rotation, origin2, Projectile.scale * 0.1f, spriteEffects, 0);
+					null, color27, Projectile.rotation, origin2, Projectile.scale * 0.1f, spriteEffects, 0);
 			}
 			return false;
 		}

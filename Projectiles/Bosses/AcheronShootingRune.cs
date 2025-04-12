@@ -13,28 +13,16 @@ namespace GMR.Projectiles.Bosses
 	{
 		public override string Texture => "GMR/Empty";
 
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Infra-Red Rune");
-			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
-			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
-		}
-
 		public override void SetDefaults()
 		{
 			Projectile.width = 30;
 			Projectile.height = 30;
 			Projectile.aiStyle = -1;
-			Projectile.hostile = true;
+			Projectile.hostile = false;
 			Projectile.timeLeft = 360;
 			Projectile.ignoreWater = true;
 			Projectile.tileCollide = false;
 			Projectile.scale = 0.25f;
-		}
-
-		public override bool? CanDamage()
-		{
-			return false; // Set to false since the projectile will most likely hit the player otherwise
 		}
 
 		public override void AI()
@@ -65,7 +53,7 @@ namespace GMR.Projectiles.Bosses
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			var offset = Projectile.Size / 2f - Main.screenPosition;
 			runeRotate += 0.05f;
-			Color color26 = new Color(194, 91, 112, 5);
+			Color color26 = new Color(255, 55, 85, 5);
 
 			Main.EntitySpriteDraw(texture, Projectile.position + offset, null, color26, runeRotate, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
 			Main.EntitySpriteDraw(texture, Projectile.position + offset, null, color26, runeRotate, drawOrigin, Projectile.scale * 0.65f, SpriteEffects.None, 0);

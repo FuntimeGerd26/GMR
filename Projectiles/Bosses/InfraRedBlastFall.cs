@@ -9,13 +9,12 @@ using Terraria.ModLoader;
 
 namespace GMR.Projectiles.Bosses
 {
-	public class JackBlastRotate : ModProjectile
+	public class InfraRedBlastFall : ModProjectile
 	{
-		public override string Texture => "GMR/Projectiles/Bosses/AcheronSaw";
+		public override string Texture => "GMR/Projectiles/Bosses/JackBlastBad";
 
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Acheron Saw");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
 			Projectile.AddElement(0);
@@ -24,33 +23,26 @@ namespace GMR.Projectiles.Bosses
 
 		public override void SetDefaults()
 		{
-			Projectile.width = 90;
-			Projectile.height = 90;
-			Projectile.aiStyle = -1;
+			Projectile.width = 6;
+			Projectile.height = 6;
+			Projectile.aiStyle = 1;
 			Projectile.penetrate = -1;
 			Projectile.hostile = true;
-			Projectile.timeLeft = 300;
+			Projectile.timeLeft = 1200;
 			Projectile.ignoreWater = true;
 			Projectile.tileCollide = false;
 			Projectile.extraUpdates = 1;
-			AIType = ProjectileID.Bullet;
 		}
 
-		public override bool? CanDamage()
-		{
-			if (Projectile.timeLeft < 200)
-				return true;
-			else
-				return false;
-		}
+		public override Color? GetAlpha(Color lightColor) => new Color(255, 55, 85, 5);
 
 		public override void AI()
 		{
 			Lighting.AddLight(Projectile.Center, new Vector3(0.8f, 0.15f, 0.5f));
 
-			Projectile.rotation += 0.045f;
-			Projectile.velocity = Projectile.velocity.RotatedBy(MathHelper.ToRadians(2f));
-        }
+			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
+			Projectile.velocity += 0.05f / Projectile.MaxUpdates * Vector2.Normalize(Projectile.velocity);
+		}
 
         public override bool PreDraw(ref Color lightColor)
 		{
@@ -60,10 +52,10 @@ namespace GMR.Projectiles.Bosses
 			for (int k = 0; k < Projectile.oldPos.Length; k++)
 			{
 				Vector2 drawPos = (Projectile.oldPos[k] - Main.screenPosition) + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
-				Color color = Projectile.GetAlpha(new Color(255, 55, 85, 5)) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
+				Color color = Projectile.GetAlpha(lightColor) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
 				Main.EntitySpriteDraw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
 			}
-			return false;
+			return true;
 		}
 	}
 }

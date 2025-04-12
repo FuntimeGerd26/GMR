@@ -9,7 +9,7 @@ using Terraria.ModLoader;
 
 namespace GMR.Projectiles.Bosses
 {
-    public class ExplotionBad : ModProjectile
+    public class ExplosionBad : ModProjectile
     {
         public override string Texture => "Terraria/Images/Projectile_645";
 
@@ -28,10 +28,10 @@ namespace GMR.Projectiles.Bosses
             Projectile.hostile = true;
             Projectile.penetrate = -1;
             Projectile.timeLeft = 10;
-            Projectile.light = 0.5f;
             Projectile.ignoreWater = true;
             Projectile.tileCollide = false;
             Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 30;
             Projectile.scale = 2f;
         }
 
@@ -46,20 +46,20 @@ namespace GMR.Projectiles.Bosses
                 Projectile.localAI[0] = 1;
 
                 SoundEngine.PlaySound(SoundID.Item14, Projectile.Center);
-                for (int i = 0; i < 20; i++)
+                for (int i = 0; i < 5; i++)
                 {
                     int dust = Dust.NewDust(Projectile.position, Projectile.width,
                         Projectile.height, 60, 0f, 0f, 100, default(Color), 3f);
                     Main.dust[dust].velocity *= 1.4f;
                 }
-                for (int i = 0; i < 30; i++)
+                for (int i = 0; i < 10; i++)
                 {
                     int d = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 60, 0f, 0f, 0, default(Color), 3.5f);
                     Main.dust[d].noGravity = true;
                     Main.dust[d].noLight = true;
                     Main.dust[d].velocity *= 4f;
                 }
-                for (int i = 0; i < 20; i++)
+                for (int i = 0; i < 5; i++)
                 {
                     int dust = Dust.NewDust(Projectile.position, Projectile.width,
                         Projectile.height, 60, 0f, 0f, 100, default(Color), 3.5f);
@@ -82,13 +82,6 @@ namespace GMR.Projectiles.Bosses
             }
         }
 
-        public override Color? GetAlpha(Color lightColor)
-        {
-            Color color = new Color(255, 25, 125, 55);
-            color.A = 55;
-            return color;
-        }
-
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture2D13 = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
@@ -96,9 +89,8 @@ namespace GMR.Projectiles.Bosses
             int y3 = num156 * Projectile.frame; //ypos of upper left corner of sprite to draw
             Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);
             Vector2 origin2 = rectangle.Size() / 2f;
-            Main.EntitySpriteDraw(texture2D13, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY),
-                new Microsoft.Xna.Framework.Rectangle?(rectangle), Projectile.GetAlpha(lightColor), Projectile.rotation, origin2,
-                Projectile.scale, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(texture2D13, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle),
+                Projectile.GetAlpha(new Color(255, 25, 125, 55)), Projectile.rotation, origin2, Projectile.scale, SpriteEffects.None, 0);
             return false;
         }
     }

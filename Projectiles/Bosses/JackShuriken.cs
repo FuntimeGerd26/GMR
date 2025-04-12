@@ -24,23 +24,14 @@ namespace GMR.Projectiles.Bosses
 		{
 			Projectile.width = 36;
 			Projectile.height = 36;
-			Projectile.aiStyle = 0;
-			Projectile.hostile = true;
+			Projectile.aiStyle = -1;
 			Projectile.timeLeft = 120;
-			Projectile.alpha = 0;
-			Projectile.light = 0.45f;
 			Projectile.ignoreWater = true;
 			Projectile.tileCollide = false;
 			Projectile.extraUpdates = 1;
-			AIType = ProjectileID.Bullet;
 		}
 
 		public override Color? GetAlpha(Color lightColor) => new Color(255, 55, 85, 5);
-
-		public override bool? CanDamage()
-		{
-			return false; // Set to false since the projectile will most likely hit the player otherwise
-		}
 
 		public override void AI()
 		{
@@ -70,7 +61,7 @@ namespace GMR.Projectiles.Bosses
 
 		public override void Kill(int timeleft)
 		{
-			float numberProjectiles = 8;
+			float numberProjectiles = Main.masterMode ? 8 : 4;
 			for (int i = 0; i < numberProjectiles; i++)
 			{
 				Vector2 perturbedSpeed = Vector2.UnitX.RotatedBy(2 * Math.PI / numberProjectiles * i) * 2f;

@@ -11,13 +11,11 @@ namespace GMR.Projectiles.Bosses
 {
 	public class JackClawProj : ModProjectile
 	{
-		public override string Texture => "GMR/NPCs/Bosses/Jack/AcheronArmClaw";
+		public override string Texture => "GMR/NPCs/Bosses/Acheron/AcheronArmClaw";
 
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Jack Claw");
-			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
-			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
 			Projectile.AddElement(0);
 			Projectile.AddElement(2);
 		}
@@ -26,10 +24,10 @@ namespace GMR.Projectiles.Bosses
 		{
 			Projectile.width = 32;
 			Projectile.height = 32;
-			Projectile.aiStyle = 0;
+			Projectile.aiStyle = -1;
+			Projectile.penetrate = -1;
 			Projectile.hostile = true;
 			Projectile.timeLeft = 1200;
-			Projectile.light = 0.45f;
 			Projectile.ignoreWater = true;
 			Projectile.tileCollide = false;
 			Projectile.extraUpdates = 1;
@@ -46,10 +44,7 @@ namespace GMR.Projectiles.Bosses
 		public override bool PreDraw(ref Color lightColor)
 		{
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>(Texture);
-			int frameHeight = texture.Height / Main.projFrames[Projectile.type];
-			int y3 = frameHeight * Projectile.frame;
-			Rectangle rectangle = new Rectangle(0, y3, texture.Width, frameHeight);
-			Vector2 origin = rectangle.Size() / 2f;
+			Vector2 origin = texture.Size() / 2f;
 			SpriteEffects spriteEffects = SpriteEffects.None;
 			if (Projectile.direction == -1)
 				spriteEffects = SpriteEffects.FlipHorizontally;
@@ -57,7 +52,7 @@ namespace GMR.Projectiles.Bosses
 			Color drawColor = new Color(255, 55, 85, 5);
 
 			Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY),
-				rectangle, drawColor, Projectile.rotation, origin, Projectile.scale, spriteEffects, 0);
+				null, drawColor, Projectile.rotation, origin, Projectile.scale, spriteEffects, 0);
 
 			return false;
 		}
