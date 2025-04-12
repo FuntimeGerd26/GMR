@@ -13,6 +13,7 @@ namespace GMR.GerdUI.EnchantmentToggles
         private DragablePanel panel;
         private UIList toggleList;
         private UIScrollbar scrollBar;
+        private string EnchantmentPath = "GMR/Items/Accessories/SoulsContent/Enchantments/{0}/Enchantment";
 
         public override void OnInitialize()
         {
@@ -27,18 +28,19 @@ namespace GMR.GerdUI.EnchantmentToggles
 
             toggleList = new()
             {
-                new EffectToggle("MayDress", "Amalgamate", "Dreaming/Awakened Dress Saws"),
-                new EffectToggle("GoldenEmpire", "Amalgamate", "Active Golden Empire"),
-                new EffectToggle("MultipleProjectile", "Amalgamate", "Multiply Projectiles"),
-                new EffectToggle("AlloybloodDagger", "Alloyblood", "Alloyblood Dagger"),
-                new EffectToggle("AlloybloodOrbitingProjectiles", "Alloyblood", "BL Fujoshi Orbitals"),
-                new EffectToggle("AluminiumShuriken", "Aluminium", "Aluminium Shuriken"),
-                new EffectToggle("BoostFireball", "Boost", "Naja Charm Fireball"),
-                new EffectToggle("BoostSet", "Boost", "Boost Set Bonus"),
-                new EffectToggle("IcePrincessShuriken", "IcePrincess", "Ice Princess Shuriken"),
-                new EffectToggle("ArmRocket", "Magnum", "Charged Arm Rocket"),
-                new EffectToggle("MaskedPlagueCloak", "MaskedPlague", "Masked Plague Cloak"),
-                new EffectToggle("SandwaveKnife", "Sandwave", "Sandwave Knife"),
+                new EffectToggle("MayDress", EnchantmentPath.FormatWith("Amalgamate"), "Dreaming/Awakened Dress Saws"),
+                new EffectToggle("GoldenEmpire", EnchantmentPath.FormatWith("Amalgamate"), "Active Golden Empire"),
+                new EffectToggle("MultipleProjectile", EnchantmentPath.FormatWith("Amalgamate"), "Multiply Projectiles"),
+                new EffectToggle("AlloybloodDagger", EnchantmentPath.FormatWith("Alloyblood"), "Alloyblood Dagger"),
+                new EffectToggle("AlloybloodOrbitingProjectiles", EnchantmentPath.FormatWith("Alloyblood"), "BL Fujoshi Orbitals"),
+                new EffectToggle("AluminiumShuriken", EnchantmentPath.FormatWith("Aluminium"), "Aluminium Shuriken"),
+                new EffectToggle("BoostFireball", EnchantmentPath.FormatWith("Boost"), "Naja Charm Fireball"),
+                new EffectToggle("BoostSet", EnchantmentPath.FormatWith("Boost"), "Boost Set Bonus"),
+                new EffectToggle("IcePrincessShuriken", EnchantmentPath.FormatWith("IcePrincess"), "Ice Princess Shuriken"),
+                new EffectToggle("ArmRocket", EnchantmentPath.FormatWith("Magnum"), "Charged Arm Rocket"),
+                new EffectToggle("MaskedPlagueCloak", EnchantmentPath.FormatWith("MaskedPlague"), "Masked Plague Cloak"),
+                new EffectToggle("SandwaveKnife", EnchantmentPath.FormatWith("Sandwave"), "Sandwave Knife"),
+                new EffectToggle("Halu", "Halu", "Halu"),
             };
             toggleList.SetRectangle(0, 0, 360, 500);
             toggleList.SetScrollbar(scrollBar);

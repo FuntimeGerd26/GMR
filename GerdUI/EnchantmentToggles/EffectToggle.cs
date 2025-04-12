@@ -12,10 +12,9 @@ namespace GMR.GerdUI.EnchantmentToggles
         public string IndexEffect;
         UIImageButton button;
 
-        public EffectToggle(string effectIndex, string enchantmentName, string text)
+        public EffectToggle(string effectIndex, string EnchantmentTexturePath, string text)
         {
             IndexEffect = effectIndex;
-            string EnchantmentTexturePath = "GMR/Items/Accessories/SoulsContent/Enchantments/" + enchantmentName + "Enchantment";
 
             UIPanel panel = new();
             panel.SetRectangle(0, 0, 336, 70);
