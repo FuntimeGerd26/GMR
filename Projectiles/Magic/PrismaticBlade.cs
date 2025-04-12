@@ -11,7 +11,7 @@ namespace GMR.Projectiles.Magic
 {
 	public class PrismaticBlade : ModProjectile
 	{
-		public override string Texture => "GMR/Items/Weapons/Magic/PrismaticBlade";
+		public override string Texture => "GMR/Items/Weapons/Magic/Staffs/PrismaticBlade";
 
 		public override void SetStaticDefaults()
 		{
@@ -33,6 +33,7 @@ namespace GMR.Projectiles.Magic
 			Projectile.ignoreWater = true;
 			Projectile.tileCollide = false;
 			Projectile.extraUpdates = 1;
+			Projectile.localNPCHitCooldown = 5;
 			Projectile.usesLocalNPCImmunity = true;
 		}
 

@@ -9,11 +9,10 @@ using Terraria.ModLoader;
 
 namespace GMR.Projectiles.Magic
 {
-	public class VioletHeart : ModProjectile
+	public class SnatchedSoul : ModProjectile
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Violet Heart");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
 			Projectile.AddElement(-1);
@@ -23,7 +22,7 @@ namespace GMR.Projectiles.Magic
 		{
 			Projectile.width = 30;
 			Projectile.height = 30;
-			Projectile.aiStyle = 0;
+			Projectile.aiStyle = -1;
 			Projectile.friendly = true;
 			Projectile.DamageType = DamageClass.Magic;
 			Projectile.timeLeft = 600;
@@ -32,41 +31,36 @@ namespace GMR.Projectiles.Magic
 			Projectile.tileCollide = false;
 			Projectile.extraUpdates = 1;
 			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 15;
 		}
 
 		public override Color? GetAlpha(Color lightColor) => Color.White;
 
 		public override void AI()
 		{
-			var target = Projectile.FindTargetWithinRange(625f);
-			if (target != null)
+			var target = Projectile.FindTargetWithinRange(600f);
+			if (target != null && ++Projectile.ai[0] > 30)
 			{
-				Projectile.velocity = Vector2.Lerp(Projectile.velocity, Vector2.Normalize(target.Center - Projectile.Center) * 12f, 0.09f);
+				Projectile.velocity = Vector2.Lerp(Projectile.velocity, Vector2.Normalize(target.Center - Projectile.Center) * 12f, 0.06f);
+				Projectile.damage = Projectile.originalDamage;
+			}
+			else
+			{
+				Projectile.damage = 0;
 			}
 
-			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90f);
+			Projectile.rotation = Projectile.velocity.ToRotation();
 
-			int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 21, Projectile.velocity.X * 0.5f,
-				Projectile.velocity.Y * 0.2f, 21, default(Color), 2f);
+			int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.SilverFlame, Projectile.velocity.X * 0.5f,
+				Projectile.velocity.Y * 0.5f, 30, default(Color), 2f);
 			Main.dust[dustId].noGravity = true;
-		}
-
-		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
-		{
-			target.AddBuff(ModContent.BuffType<Buffs.Debuffs.Glimmering>(), 1200);
 		}
 
 		public override void Kill(int timeleft)
 		{
-			int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 21, Projectile.velocity.X * 0.5f,
-				Projectile.velocity.Y * 0.2f, 21, default(Color), 2f);
+			int dustId = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.SilverFlame, Projectile.velocity.X * 0.5f,
+				Projectile.velocity.Y * 0.5f, 30, default(Color), 2f);
 			Main.dust[dustId].noGravity = true;
-
-			if (Projectile.penetrate >= 0)
-			{
-				Projectile.penetrate = -1;
-				Projectile.Damage();
-			}
 		}
 
 		public override bool PreDraw(ref Color lightColor)

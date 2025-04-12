@@ -27,18 +27,19 @@ namespace GMR.Projectiles.Magic
 			Projectile.aiStyle = -1;
 			Projectile.friendly = true;
 			Projectile.DamageType = DamageClass.Magic;
-			Projectile.timeLeft = 600;
+			Projectile.timeLeft = 1200;
 			Projectile.light = 0.25f; 
 			Projectile.ignoreWater = true;
 			Projectile.tileCollide = false;
 			Projectile.extraUpdates = 4;
 			AIType = ProjectileID.DemonScythe;
 			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 15;
 		}
 
 		public override void AI()
 		{
-			if (++Projectile.ai[1] >= 80)
+			if (++Projectile.ai[1] >= 10)
 				Projectile.velocity *= 1.025f;
 
 			Projectile.rotation += Projectile.velocity.Length() * -0.03f;
