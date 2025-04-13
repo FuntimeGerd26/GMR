@@ -1,51 +1,30 @@
-using Humanizer;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Terraria;
-using Terraria.Graphics.Effects;
-using Terraria.Graphics.Shaders;
-using Terraria.ID;
-using Terraria.Localization;
-using Terraria.ModLoader;
-using Terraria.ModLoader.IO;
-using Terraria.UI;
-using Terraria.Utilities;
-using Terraria.Audio;
-using Terraria.DataStructures;
-using Terraria.GameContent.Creative;
-using ReLogic.Content;
-
-using GMR;
-using GMR.Items.Tiles;
-using GMR.Items.Vanity;
 using GMR.Items.Accessories;
-using GMR.Items.Weapons;
 using GMR.Items.Misc;
 using GMR.Items.Misc.Consumable;
 using GMR.Items.Misc.Materials;
-using GMR.Items.Weapons.Melee;
-using GMR.Items.Weapons.Melee.Swords;
+using GMR.Items.Tiles;
+using GMR.Items.Vanity;
+using GMR.Items.Weapons.Magic.Staffs;
 using GMR.Items.Weapons.Melee.Spears;
-using GMR.Items.Weapons.Melee.Others;
-using GMR.Items.Weapons.Ranged;
-using GMR.Items.Weapons.Ranged.Guns;
+using GMR.Items.Weapons.Melee.Swords;
 using GMR.Items.Weapons.Ranged.Bows;
+using GMR.Items.Weapons.Ranged.Guns;
 using GMR.Items.Weapons.Ranged.Others;
 using GMR.Items.Weapons.Ranged.Railcannons;
-using GMR.Items.Weapons.Magic;
-using GMR.Items.Weapons.Magic.Books;
-using GMR.Items.Weapons.Magic.Staffs;
-using GMR.Items.Weapons.Magic.Others;
-using GMR.NPCs.Bosses;
 using GMR.NPCs.Bosses.Acheron;
 using GMR.NPCs.Bosses.Jack;
 using GMR.NPCs.Bosses.MagmaEye;
 using GMR.NPCs.Special;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.Collections.Generic;
+using System.Reflection;
+using Terraria;
+using Terraria.Audio;
+using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ModLoader;
 
 namespace GMR
 {
@@ -128,23 +107,23 @@ namespace GMR
     }
 
 
-	public class GMRModIntegrationsSystem : ModSystem
-	{
-		public override void PostSetupContent()
-		{
-			DoBossChecklistIntegration();
-		}
-		private void DoBossChecklistIntegration()
-		{
-			if (!ModLoader.TryGetMod("BossChecklist", out Mod bossChecklistMod))
-			{
-				return;
-			}
+    public class GMRModIntegrationsSystem : ModSystem
+    {
+        public override void PostSetupContent()
+        {
+            DoBossChecklistIntegration();
+        }
+        private void DoBossChecklistIntegration()
+        {
+            if (!ModLoader.TryGetMod("BossChecklist", out Mod bossChecklistMod))
+            {
+                return;
+            }
 
-			if (bossChecklistMod.Version < new Version(1, 6))
-			{
-				return;
-			}
+            if (bossChecklistMod.Version < new Version(1, 6))
+            {
+                return;
+            }
 
             string internalName = "MagmaEye";
             float weight = 3.25f;
@@ -161,7 +140,8 @@ namespace GMR
                 ModContent.ItemType<MagmaStaff>(),
                 ModContent.ItemType<MagmaticShard>(),
             };
-            var customPortrait = (SpriteBatch sb, Rectangle rect, Color color) => {
+            var customPortrait = (SpriteBatch sb, Rectangle rect, Color color) =>
+            {
                 Texture2D texture = ModContent.Request<Texture2D>("GMR/NPCs/Bosses/MagmaEye_Still").Value;
                 Vector2 centered = new Vector2(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
                 sb.Draw(texture, centered, color);
@@ -181,7 +161,7 @@ namespace GMR
                 }
             );
 
-            
+
             internalName = "Jack";
             weight = 5.75f;
             downed = () => GerdWorld.downedJack;
@@ -200,7 +180,8 @@ namespace GMR
                 ModContent.ItemType<JuiceBox>(),
                 ModContent.ItemType<EternityJackGlider>(),
             };
-            customPortrait = (SpriteBatch sb, Rectangle rect, Color color) => {
+            customPortrait = (SpriteBatch sb, Rectangle rect, Color color) =>
+            {
                 Texture2D texture = ModContent.Request<Texture2D>("GMR/NPCs/Bosses/Jack_Still").Value;
                 Vector2 centered = new Vector2(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
                 sb.Draw(texture, centered, color);
@@ -237,7 +218,8 @@ namespace GMR
                 ModContent.ItemType<JackRifle>(),
                 ModContent.ItemType<JackMask>(),
             };
-            customPortrait = (SpriteBatch sb, Rectangle rect, Color color) => {
+            customPortrait = (SpriteBatch sb, Rectangle rect, Color color) =>
+            {
                 Texture2D texture = ModContent.Request<Texture2D>("GMR/NPCs/Bosses/Acheron_Still").Value;
                 Vector2 centered = new Vector2(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
                 sb.Draw(texture, centered, color);
@@ -257,9 +239,9 @@ namespace GMR
                 }
             );
         }
-	}
+    }
 
-	internal class LocalizationRewriter : ModSystem
+    internal class LocalizationRewriter : ModSystem
     {
         public override void PostSetupContent()
         {

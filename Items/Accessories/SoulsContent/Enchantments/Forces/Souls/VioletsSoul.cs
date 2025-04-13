@@ -52,9 +52,12 @@ namespace GMR.Items.Accessories.SoulsContent.Enchantments.Forces.Souls
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             // Halu
-            player.aggro += 100;
-            player.aggro *= 4;
-            player.GPlayer().Halu = Item;
+            if (player.GPlayer().EnchantToggles["Halu"])
+            {
+                player.aggro += 100;
+                player.aggro *= 4;
+                player.GPlayer().Halu = Item;
+            }
 
             #region Force of Utilities
             player.GetDamage(DamageClass.Generic) += 0.30f;

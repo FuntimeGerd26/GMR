@@ -94,6 +94,7 @@ namespace GMR
             { "GoldenEmpire", true },
             { "MayDress", true },
             { "MultipleProjectile", true },
+            { "Halu", true },
         };
         #endregion
 
