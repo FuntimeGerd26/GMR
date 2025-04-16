@@ -1,37 +1,15 @@
-using log4net;
+using GMR;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using ReLogic.Content;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.IO;
 using System.Reflection;
-using System.Text;
-using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
-using System.Linq;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.GameContent.Bestiary;
-using Terraria.GameContent.Creative;
-using Terraria.GameContent.ItemDropRules;
-using Terraria.GameContent.UI.Elements;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
-using Terraria.Chat;
-using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ModLoader.IO;
-using Terraria.ObjectData;
-using Terraria.UI;
-using Terraria.UI.Chat;
-using Terraria.Utilities;
-using GMR;
 
 namespace GMR
 {
@@ -365,22 +343,22 @@ namespace GMR
             return Regex.Replace(text, "([A-Z])", " $1").Trim();
         }
 
-        public static string FormatWith(this string text, object obj)
-        {
-            string input = text;
-            PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(obj);
-            return SubstitutionRegex.Replace(input, delegate (Match match)
-            {
-                if (match.Groups[1].Length != 0)
-                {
-                    return "";
-                }
+        //public static string FormatWith(this string text, object obj)
+        //{
+        //    string input = text;
+        //    PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(obj);
+        //    return SubstitutionRegex.Replace(input, delegate (Match match)
+        //    {
+        //        if (match.Groups[1].Length != 0)
+        //        {
+        //            return "";
+        //        }
 
-                string name = match.Groups[2].ToString();
-                PropertyDescriptor propertyDescriptor = properties.Find(name, ignoreCase: false);
-                return (propertyDescriptor != null) ? (propertyDescriptor.GetValue(obj) ?? "")!.ToString() : "";
-            });
-        }
+        //        string name = match.Groups[2].ToString();
+        //        PropertyDescriptor propertyDescriptor = properties.Find(name, ignoreCase: false);
+        //        return (propertyDescriptor != null) ? (propertyDescriptor.GetValue(obj) ?? "")!.ToString() : "";
+        //    });
+        //}
 
         public class Loader : IOnModLoad
         {

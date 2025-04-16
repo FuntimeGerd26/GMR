@@ -10,7 +10,7 @@ using Terraria.ModLoader;
 
 namespace GMR.Projectiles.Magic
 {
-	public class FallFireballFriendly : ModProjectile
+	public class FallFireballFriendlyMagic : ModProjectile
 	{
 		public override string Texture => "GMR/NPCs/Bosses/MagmaEye/BackFireball";
 
