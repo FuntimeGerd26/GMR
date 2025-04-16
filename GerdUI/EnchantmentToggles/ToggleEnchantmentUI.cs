@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Humanizer;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
@@ -13,7 +14,6 @@ namespace GMR.GerdUI.EnchantmentToggles
         private DragablePanel panel;
         private UIList toggleList;
         private UIScrollbar scrollBar;
-        private string EnchantmentPath = "GMR/Items/Accessories/SoulsContent/Enchantments/{0}/Enchantment";
 
         public override void OnInitialize()
         {
@@ -25,6 +25,8 @@ namespace GMR.GerdUI.EnchantmentToggles
             scrollBar = new();
             scrollBar.SetRectangle(340, 0, 20, 480);
             scrollBar.OverflowHidden = true;
+
+            string EnchantmentPath = "GMR/Items/Accessories/SoulsContent/Enchantments/{0}Enchantment";
 
             toggleList = new()
             {
@@ -40,7 +42,7 @@ namespace GMR.GerdUI.EnchantmentToggles
                 new EffectToggle("ArmRocket", EnchantmentPath.FormatWith("Magnum"), "Charged Arm Rocket"),
                 new EffectToggle("MaskedPlagueCloak", EnchantmentPath.FormatWith("MaskedPlague"), "Masked Plague Cloak"),
                 new EffectToggle("SandwaveKnife", EnchantmentPath.FormatWith("Sandwave"), "Sandwave Knife"),
-                new EffectToggle("Halu", "Halu", "Halu"),
+                new EffectToggle("Halu", "GMR/Items/Accessories/Halu", "Halu"),
             };
             toggleList.SetRectangle(0, 0, 360, 500);
             toggleList.SetScrollbar(scrollBar);

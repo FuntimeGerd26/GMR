@@ -3431,6 +3431,10 @@ Mods: {
 			UnbendingCut.DisplayName: Unbending Cut
 			Unbending.DisplayName: Unbending
 			AltelierLogicRifleHeldProj.DisplayName: Altelier Logic Rifle Held Proj
+			Explotion.DisplayName: Explosion
+			InfraRedExplotion.DisplayName: Infra-Red Explosion
+			PlagueExplotion.DisplayName: Plague Explosion
+			SmallExplotion.DisplayName: Small Explosion
 		}
 
 		Tiles: {
