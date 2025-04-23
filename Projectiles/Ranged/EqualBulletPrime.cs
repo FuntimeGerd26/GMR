@@ -1,7 +1,5 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -45,10 +43,10 @@ namespace GMR.Projectiles.Ranged
 
             if (++Projectile.localAI[1] >= 15)
             {
-                var target = Projectile.FindTargetWithinRange(800f);
-                if (target != null)
+                var target = Projectile.FindTargetWithLineOfSight(800f);
+                if (target != -1)
                 {
-                    Projectile.velocity = Vector2.Lerp(Projectile.velocity, Vector2.Normalize(target.Center - Projectile.Center) * 32f, 0.06f);
+                    Projectile.velocity = Vector2.Lerp(Projectile.velocity, Vector2.Normalize(Main.npc[target].Center - Projectile.Center) * 32f, 0.06f);
                 }
             }
             else
