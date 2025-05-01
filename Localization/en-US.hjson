@@ -3435,6 +3435,7 @@ Mods: {
 			InfraRedExplotion.DisplayName: Infra-Red Explosion
 			PlagueExplotion.DisplayName: Plague Explosion
 			SmallExplotion.DisplayName: Small Explosion
+			FallFireballFriendlyMagic.DisplayName: Fall Fireball Friendly Magic
 		}
 
 		Tiles: {
