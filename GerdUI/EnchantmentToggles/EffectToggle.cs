@@ -25,8 +25,13 @@ namespace GMR.GerdUI.EnchantmentToggles
             button.Top.Set(-19, 0.5f);
             button.OnLeftClick += (a, b) => ToggleEffect();
             panel.Append(button);
-            UIImage enchantmentImage = new(ModContent.Request<Texture2D>(EnchantmentTexturePath));
-            enchantmentImage.SetRectangle(5, 3, 30, 34);
+
+            var enchantTexture = ModContent.Request<Texture2D>(EnchantmentTexturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad);
+            UIImage enchantmentImage = new(enchantTexture);
+            enchantmentImage.Width.Set(enchantTexture.Width(), 0f);
+            enchantmentImage.Height.Set(enchantTexture.Height(), 0f);
+            enchantmentImage.Left.Set(2 - enchantTexture.Width() / 2, 0.5f);
+            enchantmentImage.Top.Set(2 - enchantTexture.Height() / 2, 0.5f);
             button.Append(enchantmentImage);
 
             UIText effectName = new(text);
