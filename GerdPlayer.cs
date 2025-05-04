@@ -110,7 +110,11 @@ namespace GMR
             {
                 var keys = tag.GetList<string>("EnchantTogglesKeys");
                 var values = tag.GetList<bool>("EnchantTogglesValues");
-                EnchantToggles = keys.Zip(values, (k, v) => new { Key = k, Value = v }).ToDictionary(x => x.Key, x => x.Value);
+                var pairs = keys.Zip(values, (k, v) => new { Key = k, Value = v }).ToDictionary(x => x.Key, x => x.Value);
+                foreach (var pair in pairs)
+                {
+                    EnchantToggles[pair.Key] = pair.Value;
+                }
             }
         }
 
