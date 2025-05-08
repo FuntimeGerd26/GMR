@@ -65,11 +65,9 @@ namespace GMR.Projectiles.Melee.SpecialSwords
             {
                 Dust dustId2 = Dust.NewDustDirect(target.position, target.width, target.height, DustID.SilverFlame, target.velocity.X * -1.5f, target.velocity.Y * -1.5f, 60, default(Color), 1f);
                 dustId2.noGravity = true;
-                dustId2.color = new Color(Main.DiscoR, 125, 255, 100);
 
                 Dust dustId3 = Dust.NewDustDirect(target.position, target.width, target.height, DustID.SilverFlame, target.velocity.X * -1.5f, target.velocity.Y * -1.5f, 60, default(Color), 1.5f);
                 dustId3.noGravity = true;
-                dustId3.color = new Color(Main.DiscoR, 125, 255, 100);
             }
 
             Vector2 projPos = new Vector2(target.Center.X + Main.rand.Next(-30, 30), target.Center.Y + Main.rand.Next(-30, 30));
@@ -110,20 +108,16 @@ namespace GMR.Projectiles.Melee.SpecialSwords
                 Dust dust7 = Dust.NewDustPerfect(Projectile.Center + num10.ToRotationVector2() * (Main.rand.NextFloat() * 80f * Projectile.scale + 20f * Projectile.scale), DustID.SilverFlame, vector3 * 1f);
                 dust7.fadeIn = 0.4f + Main.rand.NextFloat() * 0.15f;
                 dust7.noGravity = true;
-                dust7.color = new Color(Main.DiscoR, 125, 255, 100);
                 Dust dust8 = Dust.NewDustPerfect(Projectile.Center + num10.ToRotationVector2() * (Main.rand.NextFloat() * 80f * Projectile.scale + 20f * Projectile.scale), DustID.SilverFlame, vector3 * 1f);
                 dust8.fadeIn = 0.4f + Main.rand.NextFloat() * 0.15f;
                 dust8.noGravity = true;
-                dust8.color = new Color(Main.DiscoR, 125, 255, 100);
             }
             if (Main.rand.NextFloat() * 1.5f < Projectile.Opacity)
             {
                 var dust9 = Dust.NewDustPerfect(vector2, DustID.SilverFlame, vector3 * 1f);
                 dust9.noGravity = true;
-                dust9.color = new Color(Main.DiscoR, 125, 255, 100);
                 var dust10 = Dust.NewDustPerfect(vector2, DustID.SilverFlame, vector3 * 1f);
                 dust10.noGravity = true;
-                dust10.color = new Color(Main.DiscoR, 125, 255, 100);
             }
             //Projectile.scale *= Projectile.ai[2];
             if (Projectile.localAI[0] >= Projectile.ai[1])
@@ -328,11 +322,9 @@ namespace GMR.Projectiles.Melee.SpecialSwords
             {
                 Dust dustId2 = Dust.NewDustDirect(player.position, player.width, player.height, DustID.SilverFlame, player.velocity.X * -1f, player.velocity.Y, 60, default(Color), 1f);
                 dustId2.noGravity = true;
-                dustId2.color = new Color(125, 125, 125, 100);
 
                 Dust dustId3 = Dust.NewDustDirect(player.position, player.width, player.height, DustID.SilverFlame, player.velocity.X * -0.8f, player.velocity.Y, 60, default(Color), 1.5f);
                 dustId3.noGravity = true;
-                dustId3.color = new Color(125, 125, 125, 100);
             }
         }
 
@@ -385,6 +377,7 @@ namespace GMR.Projectiles.Melee.SpecialSwords
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 20;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
             Projectile.AddElement(2);
+            Projectile.scale = Main.rand.NextFloat(0.75f, 1.25f);
         }
 
         public override void SetDefaults()
