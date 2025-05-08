@@ -2625,13 +2625,18 @@ Mods: {
 			}
 
 			Unbending: {
-				Tooltip: ""
+				Tooltip:
+					'''
+					Slashes the enemy again when hitting them to deal a second hit of damage
+					Grants 'Cutting Edge' for 5 seconds when hitting an enemy
+					Right-Click to do thrust forwards 4 times, dashing to the horizontal direction where you aimed at (Vertical velocity is reset during this effect)
+					'''
 				DisplayName: Unbending
 			}
 
 			AltelierLogicRifle: {
 				DisplayName: Altelier Logic Rifle
-				Tooltip: ""
+				Tooltip: Can pierce through up to 3 enemies and has 25 armor penetration
 			}
 		}
 
