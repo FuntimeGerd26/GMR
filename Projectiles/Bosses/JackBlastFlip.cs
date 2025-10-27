@@ -16,7 +16,7 @@ namespace GMR.Projectiles.Bosses
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Jack Blast");
-			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
 			Projectile.AddElement(0);
 			Projectile.AddElement(2);
@@ -24,8 +24,8 @@ namespace GMR.Projectiles.Bosses
 
 		public override void SetDefaults()
 		{
-			Projectile.width = 6;
-			Projectile.height = 6;
+			Projectile.width = 10;
+			Projectile.height = 10;
 			Projectile.aiStyle = -1;
 			Projectile.penetrate = -1;
 			Projectile.hostile = true;
@@ -70,17 +70,21 @@ namespace GMR.Projectiles.Bosses
 			}
 		}
 
-        public override bool PreDraw(ref Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
-			Main.instance.LoadProjectile(Projectile.type);
-			Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-			Vector2 drawOrigin = texture.Size() / 2;
+			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>(Texture);
+			Vector2 origin = texture.Size() / 2f;
+			SpriteEffects spriteEffects = SpriteEffects.None;
+			if (Projectile.direction == -1)
+				spriteEffects = SpriteEffects.FlipHorizontally;
+
 			for (int k = 0; k < Projectile.oldPos.Length; k++)
 			{
-				Vector2 drawPos = (Projectile.oldPos[k] - Main.screenPosition) + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
+				Vector2 drawPos = (Projectile.oldPos[k]) - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY);
 				Color color = Projectile.GetAlpha(new Color(255, 55, 85, 5)) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-				Main.EntitySpriteDraw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
+				Main.EntitySpriteDraw(texture, drawPos, null, color, Projectile.rotation, origin, Projectile.scale, spriteEffects, 0);
 			}
+
 			return false;
 		}
 	}
