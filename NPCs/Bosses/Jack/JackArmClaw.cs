@@ -59,6 +59,7 @@ namespace GMR.NPCs.Bosses.Jack
             NPC.noTileCollide = true;
             NPC.noGravity = true;
             NPC.value = Item.buyPrice(gold: 0);
+            NPC.netAlways = true;
             NPC.npcSlots = 1f;
             NPC.ElementMultipliers([1f, 0.5f, 0.8f, 1.5f]);
         }
@@ -67,6 +68,20 @@ namespace GMR.NPCs.Bosses.Jack
         {
             //cooldownSlot = ImmunityCooldownID.Bosses; // use the boss immunity cooldown counter, to prevent ignoring boss attacks by taking damage from other sources (NOTE: Unused)
             return false; // Set to false because fuck contact damage
+        }
+
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(NPC.localAI[0]);
+            writer.Write(NPC.localAI[1]);
+            writer.Write(NPC.localAI[2]);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            NPC.localAI[0] = reader.ReadSingle();
+            NPC.localAI[1] = reader.ReadSingle();
+            NPC.localAI[2] = reader.ReadSingle();
         }
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)

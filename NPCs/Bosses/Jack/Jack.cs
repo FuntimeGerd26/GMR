@@ -46,21 +46,13 @@ namespace GMR.NPCs.Bosses.Jack
 	[AutoloadBossHead()]
 	public class Jack : ModNPC
 	{
-		public bool PlayAnimation;
-		public bool PlayerDead;
-		public bool HalfHealthSummon;
-		public bool Alive;
-		public int AI4;
-		public int AI5;
-		public int AI6;
-		public int AI7;
-		public int AI8;
-		public bool IncrAtkTime;
+		Player player => Main.player[NPC.target];
+
+		public bool ArmsAlive;
+		public bool DroneExisted;
 		public bool Alivent;
 		public int ExplodeTimer;
 		public int ShouldDie;
-
-		private const float DEATHTIME = MathHelper.PiOver4 * 134;
 
 		public static int MinionType()
 		{
@@ -101,6 +93,7 @@ namespace GMR.NPCs.Bosses.Jack
 			NPC.noGravity = true;
 			NPC.value = Item.buyPrice(gold: 7);
 			NPC.boss = true;
+			NPC.netAlways = true;
 			NPC.npcSlots = 10f;
 			if (!Main.dedServ)
 			{
@@ -114,13 +107,28 @@ namespace GMR.NPCs.Bosses.Jack
 			return false; // Set to false because fuck contact damage
 		}
 
+		public override void SendExtraAI(BinaryWriter writer)
+		{
+			writer.Write(NPC.localAI[0]);
+			writer.Write(NPC.localAI[1]);
+			writer.Write(NPC.localAI[2]);
+			writer.Write(NPC.localAI[3]);
+		}
+
+		public override void ReceiveExtraAI(BinaryReader reader)
+		{
+			NPC.localAI[0] = reader.ReadSingle();
+			NPC.localAI[1] = reader.ReadSingle();
+			NPC.localAI[2] = reader.ReadSingle();
+			NPC.localAI[3] = reader.ReadSingle();
+		}
+
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
 		{
 			bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
 			BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
 			BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
-			new FlavorTextBestiaryInfoElement("An ancient machine that was never finished, it has a really bad temper for this reason." +
-			"It launched an attack on it's creators for never bothring finishing it."),
+			new FlavorTextBestiaryInfoElement("An ancient machine that was never finished, it has a really bad temper for this reason.\nIt launched an attack on it's creators for never bothring finishing it."),
 			});
 		}
 
@@ -129,9 +137,10 @@ namespace GMR.NPCs.Bosses.Jack
 			int dustType = 60;
 			if (!Main.dayTime)
 				dustType = 64;
+
 			for (int i = 0; i < 10; i++)
 			{
-				Vector2 velocity = NPC.velocity + new Vector2(Main.rand.NextFloat(-5f, 5f), Main.rand.NextFloat(-5f, 5f));
+				Vector2 velocity = new Vector2(Main.rand.NextFloat(-5f, 5f), Main.rand.NextFloat(-5f, 5f));
 				Dust dust = Dust.NewDustPerfect(NPC.Center, dustType, velocity, 120, Color.White, Main.rand.NextFloat(1.6f, 3.8f));
 
 				dust.noLight = false;
@@ -141,10 +150,10 @@ namespace GMR.NPCs.Bosses.Jack
 
 			if (NPC.life <= 0)
 			{
-				for (int i = 0; i < 40; i++)
+				for (int i = 0; i < 60; i++)
 				{
-					Vector2 velocity = NPC.velocity + new Vector2(Main.rand.NextFloat(-10f, 10f), Main.rand.NextFloat(-10f, 10f));
-					Dust dust = Dust.NewDustPerfect(NPC.Center, dustType, velocity, 120, Color.White, Main.rand.NextFloat(1.6f, 3.8f));
+					Vector2 velocity = new Vector2(Main.rand.NextFloat(-12f, 12f), Main.rand.NextFloat(-12f, 12f));
+					Dust dust = Dust.NewDustPerfect(NPC.Center, dustType, velocity, 120, Color.White, Main.rand.NextFloat(2f, 4f));
 
 					dust.noLight = false;
 					dust.noGravity = true;
@@ -153,15 +162,12 @@ namespace GMR.NPCs.Bosses.Jack
 			}
 		}
 
-		float deadcheck;
 		public override bool CheckDead()
 		{
-			if (deadcheck == -3)
+			if (ShouldDie >= 180)
 			{
-				NPC.lifeMax = -33333;
 				return true;
 			}
-			deadcheck = -3;
 			NPC.velocity = new Vector2(0f, 0f);
 			NPC.dontTakeDamage = true;
 			NPC.life = NPC.lifeMax;
@@ -173,42 +179,83 @@ namespace GMR.NPCs.Bosses.Jack
 		{
 			NPC.lifeMax = (int)(NPC.lifeMax * (0.5f * (3 - balance) + (numPlayers * 0.1f)));
 			NPC.damage = (int)(NPC.damage * (0.5f * (3 - balance)));
-		}
+        }
 
-		public override void AI()
-		{
-			if (Main.dayTime)
-				Lighting.AddLight(NPC.Center, new Vector3(0.8f, 0.15f, 0.5f));
-			else
-				Lighting.AddLight(NPC.Center, new Vector3(0.8f, 0.8f, 0.15f));
+        public override void AI()
+        {
+            if (Main.dayTime)
+                Lighting.AddLight(NPC.Center, new Vector3(0.8f, 0.15f, 0.5f));
+            else
+                Lighting.AddLight(NPC.Center, new Vector3(0.8f, 0.8f, 0.15f));
 
-			Player player = Main.player[NPC.target];
+            if (Alivent) // Death Animation, Disables about everything else
+            {
+                NPC.alpha++;
 
-			if (Alivent)
+                if (++ShouldDie == 180)
+                    player.ApplyDamageToNPC(NPC, NPC.lifeMax * 2, 0, 0, false);
+
+                if (++ExplodeTimer % 15 == 0)
+                {
+                    Projectile.NewProjectile(NPC.GetSource_FromAI(), new Vector2(NPC.Center.X + Main.rand.Next(-NPC.width / 2, NPC.width / 2), NPC.Center.Y + Main.rand.Next(-NPC.height / 2, NPC.height / 2)),
+                        Vector2.Zero, ModContent.ProjectileType<Projectiles.SmallExplosion>(), 0, 0f, Main.myPlayer, NPC.whoAmI);
+                    SoundEngine.PlaySound(SoundID.Item62, NPC.Center);
+                }
+            }
+
+            // Make sure to target a player
+            if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
+            {
+                NPC.TargetClosest();
+                NPC.netUpdate = true;
+            }
+
+            #region Minion Managing Section
+
+            // Become vulnerable if no arms are alive or Jack is under 10% of max HP
+            if (!Alivent && !NPC.AnyNPCs(ModContent.NPCType<JackArmGun>()) && !NPC.AnyNPCs(ModContent.NPCType<JackArmClaw>()) || NPC.life < (int)(NPC.lifeMax * 0.1))
+            {
+                NPC.dontTakeDamage = false;
+                NPC.netUpdate = true;
+            }
+            else
+            {
+                NPC.dontTakeDamage = true;
+                NPC.netUpdate = true;
+            }
+
+            if (NPC.dontTakeDamage == false) // If this NPC can be damaged, AKA no arms are alive
+            {
+                if (++NPC.ai[3] == 900) // The second is used when this Boss spawns
+                {
+                    ArmsAlive = false; // Spawn the arms
+                }
+                NPC.netUpdate = true;
+            }
+            else
+            {
+                NPC.ai[3] = 0;
+                NPC.netUpdate = true;
+            }
+
+            // Spawn Arms
+            if (!ArmsAlive)
 			{
-				NPC.alpha++;
-
-				if (++ShouldDie == 180)
-					player.ApplyDamageToNPC(NPC, NPC.lifeMax * 2, 0, 0, false);
-
-				if (++ExplodeTimer % 15 == 0)
-				{
-					Projectile.NewProjectile(NPC.GetSource_FromAI(), new Vector2(NPC.Center.X + Main.rand.Next(-NPC.width / 2, NPC.width / 2), NPC.Center.Y + Main.rand.Next(-NPC.height / 2, NPC.height / 2)),
-						Vector2.Zero, ModContent.ProjectileType<Projectiles.SmallExplosion>(), 0, 0f, Main.myPlayer, NPC.whoAmI);
-					SoundEngine.PlaySound(SoundID.Item62, NPC.Center);
+				ArmsAlive = true;
+				int count = 1;
+                int spawnX = (int)player.position.X + player.width / 2;
+                int spawnY = (int)player.position.Y + player.height / 2;
+                for (int i = 0; i < count; i++)
+                {
+                    NPC.NewNPC(NPC.GetSource_FromThis("GMR/NPCs/Jack"), spawnX + 1000 * 2, spawnY, ModContent.NPCType<JackArmGun>(), NPC.whoAmI, 0f, 0f, 5f);
+                    NPC.NewNPC(NPC.GetSource_FromThis("GMR/NPCs/Jack"), spawnX + 1000 * 2, spawnY, ModContent.NPCType<JackArmClaw>(), NPC.whoAmI, 0f, 0f, 5f);
+                    NPC.NewNPC(NPC.GetSource_FromThis("GMR/NPCs/Jack"), spawnX - 1000 * 2, spawnY, ModContent.NPCType<JackArmGun>(), NPC.whoAmI, 0f, 0f, -5f);
+                    NPC.NewNPC(NPC.GetSource_FromThis("GMR/NPCs/Jack"), spawnX - 1000 * 2, spawnY, ModContent.NPCType<JackArmClaw>(), NPC.whoAmI, 0f, 0f, -5f);
 				}
-			}
-
-			// Make sure to target a player
-			if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
-			{
-				NPC.TargetClosest();
 				NPC.netUpdate = true;
 			}
 
-			#region Arm & More Spawn Managing
-
-			if (!Alivent && NPC.life <= NPC.lifeMax / 2 && !HalfHealthSummon && Main.masterMode) // When under 50% HP, Spawn this NPC
+			if (!Alivent && NPC.life <= NPC.lifeMax / 2 && !DroneExisted && !NPC.AnyNPCs(ModContent.NPCType<JackDrone>()) && Main.expertMode) // When under 50% HP, Spawn this NPC
 			{
 				int spawnX = (int)NPC.position.X + NPC.width / 2;
 				int spawnY = (int)NPC.position.Y + NPC.height / 2 - 300;
@@ -216,117 +263,66 @@ namespace GMR.NPCs.Bosses.Jack
 				{
 					NPC.NewNPC(NPC.GetSource_FromThis("GMR/NPCs/Jack"), spawnX, spawnY, ModContent.NPCType<JackDrone>(), NPC.whoAmI, 0f, 0f);
 				}
-				HalfHealthSummon = true; // Keep false to Spawn an NPC every frame
-				NPC.netUpdate = true;
-			}
-
-			// Become vulnerable if no arms are alive or Jack is under 10% of max HP
-			if (!Alivent && !NPC.AnyNPCs(ModContent.NPCType<JackArmGun>()) && !NPC.AnyNPCs(ModContent.NPCType<JackArmClaw>()) || NPC.life < (int)(NPC.lifeMax * 0.1))
-			{
-				NPC.dontTakeDamage = false;
-				NPC.netUpdate = true;
-			}
-			else
-			{
-				NPC.dontTakeDamage = true;
-				NPC.netUpdate = true;
-			}
-
-			if (NPC.dontTakeDamage == false) // Arms alive or not under 10% of max HP
-			{
-				// After 15 seconds, Spawn arms
-				if (++NPC.ai[3] == 900)
-				{
-					NPC.ai[2] = 0; // Spawn Arms, Look below
-				}
-				// Become less aggressive when arms are live
-				if (!Main.dayTime || NPC.life < (int)(NPC.lifeMax * 0.1))
-					IncrAtkTime = false;
-				else
-					IncrAtkTime = true;
-				NPC.netUpdate = true;
-			}
-			else // No arms alive or under 10% of max HP
-			{
-				NPC.ai[3] = 0; // Reset countdown for a delay in spawning arms
-				NPC.ai[2] = 2; // Any number higher than 0 works
-				IncrAtkTime = true;
-				NPC.netUpdate = true;
-			}
-
-			// Spawn Arms
-			if (!Alivent && NPC.ai[2] == 0)
-			{
-				NPC.ai[2]++;
-				int count = 1;
-				int spawnX = (int)player.position.X + player.width / 2;
-				int spawnY = (int)player.position.Y + player.height / 2;
-				for (int i = 0; i < count; i++)
-				{
-					NPC.NewNPC(NPC.GetSource_FromThis("GMR/NPCs/Jack"), spawnX + 1000 * 2, spawnY, ModContent.NPCType<JackArmGun>(), NPC.whoAmI, 0f, 0f, 5f);
-					NPC.NewNPC(NPC.GetSource_FromThis("GMR/NPCs/Jack"), spawnX + 1000 * 2, spawnY, ModContent.NPCType<JackArmClaw>(), NPC.whoAmI, 0f, 0f, 5f);
-					NPC.NewNPC(NPC.GetSource_FromThis("GMR/NPCs/Jack"), spawnX - 1000 * 2, spawnY, ModContent.NPCType<JackArmGun>(), NPC.whoAmI, 0f, 0f, -5f);
-					NPC.NewNPC(NPC.GetSource_FromThis("GMR/NPCs/Jack"), spawnX - 1000 * 2, spawnY, ModContent.NPCType<JackArmClaw>(), NPC.whoAmI, 0f, 0f, -5f);
-				}
+				DroneExisted = true;
 				NPC.netUpdate = true;
 			}
 
 			#endregion
 
 			// Fall into the void if all players that it can target are dead
-			if (Main.player[NPC.target].dead && !Main.player[NPC.target].active)
-			{
-				NPC.netUpdate = true;
-				NPC.velocity.Y += 7f;
-				NPC.EncourageDespawn(300);
-				if (!PlayerDead)
-				{
-					Main.NewText("Objective Clear. " + NPC.life + " shield integrity remaining. Required maintenance.", Color.Red);
-					PlayerDead = true;
-				}
+			if (player.dead && !player.active)
+            {
+                NPC.netUpdate = true;
+                NPC.velocity.Y += 7f;
+                NPC.EncourageDespawn(300);
+            }
+            else
+            {
+                Movement();
+                NPC.netUpdate = true;
+            }
+
+            #region New AI System
+
+            NPC.ai[0] += 1;
+			if (NPC.ai[3] == 1)
+            {
 				return;
-			}
-			else
+            }
+            else if (NPC.ai[0] >= 180)
+            {
+                NPC.ai[0] = 0;
+            }
+            else if (NPC.ai[0] == 60)
 			{
-				Movement();
-				NPC.netUpdate = true;
-			}
-
-			if (!Alivent && NPC.dontTakeDamage == false && ++AI7 >= 60)
-			{
-				SideAttack();
-				NPC.netUpdate = true;
-			}
-
-			if (!Alivent && NPC.life < (int)(NPC.lifeMax * 0.45) && ++AI4 % (IncrAtkTime ? 420 : 300) == 0)
-			{
-				WallAttack();
-				NPC.netUpdate = true;
-			}
-
-			// Making it so it does not trigger while the arms are alive, it's chaotic enough already
-			if (!Alivent && !NPC.AnyNPCs(ModContent.NPCType<JackArmGun>()) && !NPC.AnyNPCs(ModContent.NPCType<JackArmClaw>()) && NPC.life < (int)(NPC.lifeMax * 0.75) && Main.expertMode && ++AI6 % 540 == 0)
-			{
-				RainAttack();
-				NPC.netUpdate = true;
-			}
-
-			if (!Alivent && NPC.dontTakeDamage == false && NPC.life > (int)(NPC.lifeMax * 0.1) && ++AI5 % (IncrAtkTime ? 420 : 300) == 0)
-			{
-				int max = 10;
-				for (int i = 0; i < max; i++)
+				if (NPC.ai[1] == 1)
 				{
-					Projectile.NewProjectile(NPC.GetSource_FromThis(), player.Center, Vector2.UnitX.RotatedBy(2 * Math.PI / max * (i + 0.5)) * 12f,
-					ModContent.ProjectileType<Projectiles.Bosses.JackBlastRotate>(), NPC.damage, 1f, Main.myPlayer);
-					SoundEngine.PlaySound(SoundID.Item12, NPC.Center);
-					NPC.netUpdate = true;
+					Attack1();
+				}
+				else if (NPC.ai[1] == 2)
+				{
+					Attack2();
+				}
+				else if (NPC.ai[1] == 3)
+				{
+					Attack3();
 				}
 			}
+            else if (NPC.ai[0] == 59)
+			{
+				NPC.TargetClosest();
+				NPC.ai[1] = Main.rand.Next(1, 3); // Pick an attack randomly
+				NPC.ai[1] = NPC.ai[1] == NPC.ai[2] ? Main.rand.Next(1, 3) : NPC.ai[1]; // If the attack was already chosen before, try to choose another attack
+				NPC.ai[2] = NPC.ai[1]; // Save which attack was chosen before
+				SoundEngine.PlaySound(new SoundStyle($"{nameof(GMR)}/Sounds/NPCs/acheronscream"), NPC.Center);
+				NPC.netUpdate = true;
+            }
+
+			#endregion
 		}
 
 		private void Movement()
 		{
-			Player player = Main.player[NPC.target];
 			Vector2 bossShouldMoveTo = player.Center - 150 * Vector2.UnitY;
 
 			if (NPC.ai[3] <= 0)
@@ -337,70 +333,53 @@ namespace GMR.NPCs.Bosses.Jack
 			NPC.velocity = (bossShouldMoveTo - NPC.Center) * 0.055f;
 		}
 
-		private void SideAttack()
-		{
-			Player player = Main.player[NPC.target];
+		#region Attack List
 
-			if (++AI8 % 60 == 0 && Main.expertMode)
+		private void Attack1()
+		{
+			float projNum = 3;
+			float rotation = MathHelper.ToRadians(35f);
+			for (int y = 0; y < projNum; y++)
 			{
-				float numberProjectiles = 3;
-				float rotation = MathHelper.ToRadians(35f);
-				for (int y = 0; y < numberProjectiles; y++)
-				{
-					Vector2 projDirection = (NPC.DirectionTo(player.Center)).RotatedBy(MathHelper.Lerp(-rotation, rotation, y / (numberProjectiles - 1))) * 8f;
-					Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, projDirection, ModContent.ProjectileType<Projectiles.Bosses.JackShuriken>(), NPC.damage, 1f, Main.myPlayer);
-					SoundEngine.PlaySound(SoundID.Item74, NPC.Center);
-					if (AI8 >= 240)
-						AI7 = 0;
-					NPC.netUpdate = true;
-				}
+				Vector2 projDirection = (NPC.DirectionTo(player.Center)).RotatedBy(MathHelper.Lerp(-rotation, rotation, y / (projNum - 1))) * 9f;
+				Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, projDirection, ModContent.ProjectileType<Projectiles.Bosses.JackShuriken>(), NPC.damage, 1f, Main.myPlayer, NPC.whoAmI);
+				SoundEngine.PlaySound(SoundID.Item74, NPC.Center);
+				NPC.netUpdate = true;
 			}
 		}
 
-		private void WallAttack()
+		private void Attack2()
 		{
-			Player player = Main.player[NPC.target];
-			player.GetModPlayer<GerdPlayer>().ShakeScreen(2, 0.50f);
+			player.GetModPlayer<GerdPlayer>().ShakeScreen(3, 0.5f);
 
-			SoundEngine.PlaySound(new SoundStyle($"{nameof(GMR)}/Sounds/NPCs/acheronscream"), NPC.Center);
 			float x = 1000f;
 			float y = 2000f;
-			int amount = 24;
+			int projNum = 24;
 			var posX = player.position.X + player.width / 2f;
 			var posY = player.position.Y + player.height / 2f - y / 2f;
-			float yAdd = y / (amount / 2);
+			float yAdd = y / (projNum / 2);
 			int type = ModContent.ProjectileType<Projectiles.Bosses.JackBlastBad>();
-			for (int i = 0; i < amount; i++)
+			for (int i = 0; i < projNum; i++)
 			{
-				Projectile.NewProjectile(NPC.GetSource_FromThis(), new Vector2(posX + x, posY + yAdd * i), new Vector2(-3f, 0f), type, NPC.damage, 1f, Main.myPlayer);
-				Projectile.NewProjectile(NPC.GetSource_FromThis(), new Vector2(posX - x, posY + yAdd * i), new Vector2(3f, 0f), type, NPC.damage, 1f, Main.myPlayer);
+				Projectile.NewProjectile(NPC.GetSource_FromThis(), new Vector2(posX + x, posY + yAdd * i), new Vector2(-0.5f, 0f), type, NPC.damage, 1f, Main.myPlayer, NPC.whoAmI);
+				Projectile.NewProjectile(NPC.GetSource_FromThis(), new Vector2(posX - x, posY + yAdd * i), new Vector2(0.5f, 0f), type, NPC.damage, 1f, Main.myPlayer, NPC.whoAmI);
 				SoundEngine.PlaySound(SoundID.Item12, NPC.Center);
 				NPC.netUpdate = true;
 			}
 		}
 
-		private void RainAttack()
+		private void Attack3()
 		{
-			Player player = Main.player[NPC.target];
-
-			if (Main.masterMode)
+			player.GetModPlayer<GerdPlayer>().ShakeScreen(2, 0.4f);
+			int projNum = 8;
+			for (int i = 0; i < projNum; i++)
 			{
-				player.GetModPlayer<GerdPlayer>().ShakeScreen(3, 0.5f);
-				int max = 8;
-				for (int i = 0; i < max; i++)
-				{
-					Projectile.NewProjectile(NPC.GetSource_FromThis(), player.Center, Vector2.UnitX.RotatedBy(2 * Math.PI / max * (i + 0.5)) * 4f,
-					ModContent.ProjectileType<Projectiles.Bosses.JackBlastFlip>(), NPC.damage, 1f, Main.myPlayer);
-					SoundEngine.PlaySound(new SoundStyle($"{nameof(GMR)}/Sounds/NPCs/acheronscream"), NPC.Center);
-					NPC.netUpdate = true;
-				}
+				Projectile.NewProjectile(NPC.GetSource_FromThis(), player.Center, Vector2.UnitX.RotatedBy(2 * Math.PI / projNum * (i + 0.5)) * 4f,
+				ModContent.ProjectileType<Projectiles.Bosses.JackBlastFlip>(), NPC.damage, 1f, Main.myPlayer, NPC.whoAmI);
+				NPC.netUpdate = true;
 			}
-
-			//Projectile.NewProjectile(NPC.GetSource_FromAI(), player.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.Bosses.JackRain>(), NPC.damage, 0f, Main.myPlayer);
-			//SoundEngine.PlaySound(SoundID.Item61, NPC.Center);
-			NPC.netUpdate = true;
 		}
-
+		#endregion
 
 		public override void BossLoot(ref string name, ref int potionType)
 		{
@@ -450,50 +429,8 @@ namespace GMR.NPCs.Bosses.Jack
 
 		public override void FindFrame(int FrameHeight)
 		{
-			int startFrame = 0;
-			int finalFrame = Main.npcFrameCount[NPC.type] - 1;
-
-			int frameSpeed = 10; // Used to delay in frames an animation
-			NPC.frameCounter += 1f; // How fast the frames are going
-
-			if (Main.rand.NextBool(50) && NPC.frame.Y == 7 * FrameHeight) // Enable the animation randomly as long as the 8th frame is reached
-				PlayAnimation = true;
-
-			// Randomly if the current frame is the 8th or higher and the counter per tick is over the speed, next frame
-			if (Alivent)
-			{
-				NPC.frameCounter = 0;
-				NPC.frame.Y = 8 * FrameHeight;
-				frameSpeed = 0;
-				NPC.frameCounter += 0f;
-			}
-			else if (PlayAnimation && (NPC.frame.Y >= 7 * FrameHeight) && NPC.frameCounter > frameSpeed)
-			{
-				NPC.frameCounter = 0; // Reset counter
-				NPC.frame.Y += FrameHeight; // Next frame
-				frameSpeed = 15;
-
-				if (NPC.frame.Y > finalFrame * FrameHeight) // If the current frame is past the final frame
-				{
-					NPC.frame.Y = startFrame + 7 * FrameHeight; // Reset to the 8th frame
-					PlayAnimation = false; // Distable animation
-				}
-			}
-			else if (NPC.frame.Y < 7 * FrameHeight && NPC.frameCounter > frameSpeed) // As long as there's no random animation playing
-			{
-				NPC.frameCounter = 0;
-				NPC.frame.Y += FrameHeight;
-
-				if (NPC.frame.Y == 7 * FrameHeight) // If the current frame is the 8th frame
-				{
-					NPC.frame.Y = startFrame + 7 * FrameHeight; // Reset to the 8th frame
-				}
-
-				/*if (NPC.frame.Y > finalFrame * FrameHeight) // If the current frame is past all frames
-				{
-					NPC.frame.Y = startFrame * FrameHeight; // Reset to the first frame
-				}*/
-			}
+			NPC.frameCounter = 0;
+			NPC.frame.Y = 8 * FrameHeight;
 		}
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
