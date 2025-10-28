@@ -53,11 +53,11 @@ namespace GMR.NPCs.Bosses.Jack
 		public bool Alivent;
 		public int ExplodeTimer;
 		public int ShouldDie;
+		public float increase;
 
 		public static int MinionType()
 		{
-			return ModContent.NPCType<JackArmGun>();
-			return ModContent.NPCType<JackArmClaw>();
+			return ModContent.NPCType<JackArm>();
 		}
 
 		public override void SetStaticDefaults()
@@ -213,7 +213,7 @@ namespace GMR.NPCs.Bosses.Jack
             #region Minion Managing Section
 
             // Become vulnerable if no arms are alive or Jack is under 10% of max HP
-            if (!Alivent && !NPC.AnyNPCs(ModContent.NPCType<JackArmGun>()) && !NPC.AnyNPCs(ModContent.NPCType<JackArmClaw>()) || NPC.life < (int)(NPC.lifeMax * 0.1))
+            if (!Alivent && !NPC.AnyNPCs(ModContent.NPCType<JackArm>()) || NPC.life < (int)(NPC.lifeMax * 0.1))
             {
                 NPC.dontTakeDamage = false;
                 NPC.netUpdate = true;
@@ -239,19 +239,15 @@ namespace GMR.NPCs.Bosses.Jack
             }
 
             // Spawn Arms
-            if (!ArmsAlive)
+            if (!ArmsAlive && !Alivent)
 			{
 				ArmsAlive = true;
-				int count = 1;
                 int spawnX = (int)player.position.X + player.width / 2;
                 int spawnY = (int)player.position.Y + player.height / 2;
-                for (int i = 0; i < count; i++)
-                {
-                    NPC.NewNPC(NPC.GetSource_FromThis("GMR/NPCs/Jack"), spawnX + 1000 * 2, spawnY, ModContent.NPCType<JackArmGun>(), NPC.whoAmI, 0f, 0f, 5f);
-                    NPC.NewNPC(NPC.GetSource_FromThis("GMR/NPCs/Jack"), spawnX + 1000 * 2, spawnY, ModContent.NPCType<JackArmClaw>(), NPC.whoAmI, 0f, 0f, 5f);
-                    NPC.NewNPC(NPC.GetSource_FromThis("GMR/NPCs/Jack"), spawnX - 1000 * 2, spawnY, ModContent.NPCType<JackArmGun>(), NPC.whoAmI, 0f, 0f, -5f);
-                    NPC.NewNPC(NPC.GetSource_FromThis("GMR/NPCs/Jack"), spawnX - 1000 * 2, spawnY, ModContent.NPCType<JackArmClaw>(), NPC.whoAmI, 0f, 0f, -5f);
-				}
+				NPC.NewNPC(NPC.GetSource_FromThis("GMR/NPCs/Jack"), spawnX + 1500, spawnY + Main.rand.Next(-1000, 1000), ModContent.NPCType<JackArm>(), NPC.whoAmI, 0f, 300f, 180f);
+				NPC.NewNPC(NPC.GetSource_FromThis("GMR/NPCs/Jack"), spawnX + 1500, spawnY + Main.rand.Next(-1000, 1000), ModContent.NPCType<JackArm>(), NPC.whoAmI, 0f, 300f, -180f);
+				NPC.NewNPC(NPC.GetSource_FromThis("GMR/NPCs/Jack"), spawnX - 1500, spawnY + Main.rand.Next(-1000, 1000), ModContent.NPCType<JackArm>(), NPC.whoAmI, 0f, -300f, 180f);
+				NPC.NewNPC(NPC.GetSource_FromThis("GMR/NPCs/Jack"), spawnX - 1500, spawnY + Main.rand.Next(-1000, 1000), ModContent.NPCType<JackArm>(), NPC.whoAmI, 0f, -300f, -180f);
 				NPC.netUpdate = true;
 			}
 
@@ -270,12 +266,13 @@ namespace GMR.NPCs.Bosses.Jack
 			#endregion
 
 			// Fall into the void if all players that it can target are dead
-			if (player.dead && !player.active)
+			if (player.dead || !player.active)
             {
-                NPC.netUpdate = true;
-                NPC.velocity.Y += 7f;
+                NPC.position.Y += 7f;
                 NPC.EncourageDespawn(300);
-            }
+				NPC.netUpdate = true;
+				return;
+			}
             else
             {
                 Movement();
@@ -285,30 +282,33 @@ namespace GMR.NPCs.Bosses.Jack
             #region New AI System
 
             NPC.ai[0] += 1;
-			if (NPC.ai[3] == 1)
-            {
-				return;
-            }
-            else if (NPC.ai[0] >= 180)
-            {
-                NPC.ai[0] = 0;
-            }
-            else if (NPC.ai[0] == 60)
+			if (NPC.ai[3] == 0 || Alivent)
 			{
-				if (NPC.ai[1] == 1)
-				{
-					Attack1();
-				}
-				else if (NPC.ai[1] == 2)
+				return;
+			}
+			else if (NPC.ai[0] >= (NPC.ai[2] == 1 ? 300 : 180))
+			{
+				NPC.ai[0] = 0;
+				increase = 0;
+			}
+			else if (NPC.ai[0] >= 59 && NPC.ai[2] == 1)
+			{
+				Attack1();
+				if (NPC.ai[0] == 60)
+					NPC.ai[1] = 0;
+			}
+			else if (NPC.ai[0] == 60 && NPC.ai[2] != 1)
+			{
+				if (NPC.ai[2] == 2)
 				{
 					Attack2();
 				}
-				else if (NPC.ai[1] == 3)
+				else if (NPC.ai[2] == 3)
 				{
 					Attack3();
 				}
 			}
-            else if (NPC.ai[0] == 59)
+			else if (NPC.ai[0] == 59)
 			{
 				NPC.TargetClosest();
 				NPC.ai[1] = Main.rand.Next(1, 3); // Pick an attack randomly
@@ -316,7 +316,7 @@ namespace GMR.NPCs.Bosses.Jack
 				NPC.ai[2] = NPC.ai[1]; // Save which attack was chosen before
 				SoundEngine.PlaySound(new SoundStyle($"{nameof(GMR)}/Sounds/NPCs/acheronscream"), NPC.Center);
 				NPC.netUpdate = true;
-            }
+			}
 
 			#endregion
 		}
@@ -337,14 +337,20 @@ namespace GMR.NPCs.Bosses.Jack
 
 		private void Attack1()
 		{
-			float projNum = 3;
-			float rotation = MathHelper.ToRadians(35f);
-			for (int y = 0; y < projNum; y++)
+			NPC.ai[1] += 1;
+			if (NPC.ai[1] >= 10)
 			{
-				Vector2 projDirection = (NPC.DirectionTo(player.Center)).RotatedBy(MathHelper.Lerp(-rotation, rotation, y / (projNum - 1))) * 9f;
-				Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, projDirection, ModContent.ProjectileType<Projectiles.Bosses.JackShuriken>(), NPC.damage, 1f, Main.myPlayer, NPC.whoAmI);
-				SoundEngine.PlaySound(SoundID.Item74, NPC.Center);
-				NPC.netUpdate = true;
+				float angleRotate = 0;
+				angleRotate += (float)((MathHelper.Pi / 8) * increase);
+				Vector2 velocity = new Vector2(0f, 4f);
+				for (int i = 0; i < 1; i++)
+				{
+					Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, velocity.RotatedBy(angleRotate), ModContent.ProjectileType<Projectiles.Bosses.JackBlastBad>(), NPC.damage, 1f, Main.myPlayer);
+					SoundEngine.PlaySound(SoundID.Item33, NPC.Center);
+					NPC.ai[1] = 0;
+					increase += 1;
+					NPC.netUpdate = true;
+				}
 			}
 		}
 
@@ -361,8 +367,8 @@ namespace GMR.NPCs.Bosses.Jack
 			int type = ModContent.ProjectileType<Projectiles.Bosses.JackBlastBad>();
 			for (int i = 0; i < projNum; i++)
 			{
-				Projectile.NewProjectile(NPC.GetSource_FromThis(), new Vector2(posX + x, posY + yAdd * i), new Vector2(-0.5f, 0f), type, NPC.damage, 1f, Main.myPlayer, NPC.whoAmI);
-				Projectile.NewProjectile(NPC.GetSource_FromThis(), new Vector2(posX - x, posY + yAdd * i), new Vector2(0.5f, 0f), type, NPC.damage, 1f, Main.myPlayer, NPC.whoAmI);
+				Projectile.NewProjectile(NPC.GetSource_FromThis(), new Vector2(posX + x, posY + yAdd * i), new Vector2(-0.25f, 0f), type, NPC.damage, 1f, Main.myPlayer, NPC.whoAmI);
+				Projectile.NewProjectile(NPC.GetSource_FromThis(), new Vector2(posX - x, posY + yAdd * i), new Vector2(0.25f, 0f), type, NPC.damage, 1f, Main.myPlayer, NPC.whoAmI);
 				SoundEngine.PlaySound(SoundID.Item12, NPC.Center);
 				NPC.netUpdate = true;
 			}

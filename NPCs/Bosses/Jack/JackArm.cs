@@ -1,0 +1,197 @@
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.IO;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
+using Terraria.ModLoader;
+using Terraria.Localization;
+
+namespace GMR.NPCs.Bosses.Jack
+{
+    public class JackArm : ModNPC
+    {
+        public int ParentIndex
+        {
+            get => (int)NPC.ai[1] - 1;
+            set => NPC.ai[1] = value + 1;
+        }
+
+        public bool HasParent => ParentIndex > -1;
+
+        // Helper method to determine the body type
+        public static int BodyType()
+        {
+            return ModContent.NPCType<Jack>();
+        }
+
+        Player player => Main.player[NPC.target];
+
+        public Vector2 playerOldPos;
+
+        public override void SetStaticDefaults()
+        {
+            NPCID.Sets.DontDoHardmodeScaling[Type] = true;
+            NPCID.Sets.MPAllowedEnemies[Type] = true;
+            NPCID.Sets.CantTakeLunchMoney[Type] = true;
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+            {
+                Hide = true
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, value);
+            NPC.AddElement(0);
+            NPC.AddElement(2);
+        }
+
+        public override void SetDefaults()
+        {
+            NPC.width = 30;
+            NPC.height = 30;
+            NPC.lifeMax = 300;
+            NPC.defense = 3;
+            NPC.HitSound = SoundID.NPCHit42;
+            NPC.DeathSound = SoundID.NPCDeath37;
+            NPC.knockBackResist = 0.75f;
+            NPC.damage = 25;
+            NPC.aiStyle = -1;
+            NPC.noTileCollide = true;
+            NPC.noGravity = true;
+            NPC.value = Item.buyPrice(gold: 0);
+            NPC.netAlways = true;
+            NPC.npcSlots = 1f;
+            NPC.ElementMultipliers([1f, 0.5f, 0.8f, 1.5f]);
+        }
+
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+        {
+            //cooldownSlot = ImmunityCooldownID.Bosses; // use the boss immunity cooldown counter, to prevent ignoring boss attacks by taking damage from other sources (NOTE: Unused)
+            return false; // Set to false because fuck contact damage
+        }
+
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(NPC.localAI[0]);
+            writer.Write(NPC.localAI[1]);
+            writer.Write(NPC.localAI[2]);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            NPC.localAI[0] = reader.ReadSingle();
+            NPC.localAI[1] = reader.ReadSingle();
+            NPC.localAI[2] = reader.ReadSingle();
+        }
+
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
+        {
+            NPC.lifeMax = (int)(NPC.lifeMax * (0.5f * (3 - balance) + (numPlayers * 0.1f)));
+            NPC.damage = (int)(NPC.damage * (0.5f * (3 - balance)));
+        }
+
+        public override void AI()
+        {
+            if (Main.dayTime)
+                Lighting.AddLight(NPC.Center, new Vector3(0.8f, 0.15f, 0.5f));
+            else
+                Lighting.AddLight(NPC.Center, new Vector3(0.8f, 0.8f, 0.15f));
+
+            if (!NPC.AnyNPCs(ModContent.NPCType<Jack>()))
+            {
+                NPC.life += -50;
+
+                if (NPC.life <= 0)
+                {
+                    int dustType = 60;
+                    for (int i = 0; i < 20; i++)
+                    {
+                        Vector2 velocity = NPC.velocity + new Vector2(Main.rand.NextFloat(-5f, 5f), Main.rand.NextFloat(-5f, 5f));
+                        Dust dust = Dust.NewDustPerfect(NPC.Center, dustType, velocity, 30, Color.White, Main.rand.NextFloat(1.6f, 3.8f));
+
+                        dust.noLight = false;
+                        dust.noGravity = true;
+                        dust.fadeIn = Main.rand.NextFloat(0.1f, 0.5f);
+                    }
+                    SoundEngine.PlaySound(SoundID.Item62, NPC.Center);
+                }
+                NPC.netUpdate = true;
+
+                return;
+            }
+
+            if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
+            {
+                NPC.TargetClosest();
+                NPC.netUpdate = true;
+            }
+
+            Vector2 toPlayer = NPC.Center - player.Center;
+            NPC.rotation = toPlayer.ToRotation() + MathHelper.ToRadians(270f);
+
+            if (player.dead || !player.active)
+            {
+                NPC.position.Y += 0.65f;
+                NPC.EncourageDespawn(300);
+                NPC.netUpdate = true;
+                return;
+            }
+
+            NPC.ai[0] += 1;
+            if (NPC.ai[0] >= (Main.expertMode ? 300: 360))
+            {
+                NPC.ai[0] = Main.rand.Next(-15, 15);
+            }
+            else if (NPC.ai[0] == (Main.expertMode ? 240 : 300))
+            {
+                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(player.Center) * 7f, ModContent.ProjectileType<Projectiles.Bosses.JackBlastBad>(), NPC.damage, 1f, Main.myPlayer, NPC.whoAmI);
+                SoundEngine.PlaySound(SoundID.Research, NPC.Center);
+                NPC.netUpdate = true;
+            }
+            else if (NPC.ai[0] >= (Main.expertMode ? 120 : 180) && NPC.ai[0] < (Main.expertMode ? 239 : 299))
+            {
+                NPC.velocity = (playerOldPos - NPC.Center) * 0.075f;
+                NPC.netUpdate = true;
+            }
+            else if (NPC.ai[0] == 119)
+            {
+                NPC.TargetClosest();
+                playerOldPos = new Vector2(player.Center.X, player.Center.Y);
+                playerOldPos.X = playerOldPos.X + Main.rand.NextFloat(-350f, 350f);
+                playerOldPos.Y = playerOldPos.Y + Main.rand.NextFloat(-350f, 350f);
+                SoundEngine.PlaySound(GMR.GetSounds("NPCs/armchangevariant", 2, 1f, 0f, 0.75f), NPC.Center);
+                NPC.netUpdate = true;
+            }
+            else
+            {
+                Vector2 playerCenter = new Vector2(player.Center.X + NPC.ai[1], player.Center.Y + NPC.ai[2]);
+                NPC.velocity = (playerCenter - NPC.Center) * 0.075f;
+            }
+
+            if (NPC.ai[1] > 0)
+                NPC.spriteDirection = 1;
+            if (NPC.ai[1] < 0)
+                NPC.spriteDirection = -1;
+        }
+
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            var texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
+            var glow = GMR.Instance.Assets.Request<Texture2D>($"NPCs/Bosses/Jack/JackArm_Glow", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            var origin = new Vector2(texture.Width / 2f, texture.Height / 2f);
+            var offset = NPC.Size / 2f - screenPos;
+            SpriteEffects spriteEffects = SpriteEffects.FlipHorizontally;
+            if (NPC.spriteDirection == -1)
+                spriteEffects = SpriteEffects.None;
+
+            Color color = !Main.dayTime ? new Color(195, 195, 95, 5) : new Color(194, 91, 112, 5);
+
+            Main.EntitySpriteDraw(texture, NPC.position + offset, null, drawColor, NPC.rotation, origin, NPC.scale, spriteEffects, 0);
+            Main.EntitySpriteDraw(glow, NPC.position + offset, null, color, NPC.rotation, origin, NPC.scale, spriteEffects, 0);
+            return false;
+        }
+    }
+}
