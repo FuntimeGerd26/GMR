@@ -13,8 +13,6 @@ namespace GMR.Items.Weapons.Ranged.Guns
 	{
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("Replaces normal bullets with Infra-Red Bullets that inflict 'Partially Crystalized' on enemies");
-
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 			Item.AddElement(0);
 			Item.AddElement(2);
@@ -22,38 +20,35 @@ namespace GMR.Items.Weapons.Ranged.Guns
 
 		public override void SetDefaults()
 		{
-			Item.width = 72;
-			Item.height = 22;
+			Item.width = 62;
+			Item.height = 18;
 			Item.rare = 3;
-			Item.useTime = 18;
-			Item.useAnimation = 18;
+			Item.useTime = 60;
+			Item.useAnimation = 60;
 			Item.useStyle = ItemUseStyleID.Shoot;
-			Item.value = Item.sellPrice(silver: 95);
+			Item.value = Item.sellPrice(gold: 1, silver: 15, copper: 0);
 			Item.autoReuse = true;
 			Item.UseSound = new SoundStyle($"{nameof(GMR)}/Sounds/Items/Ranged/BulletShot2");
 			Item.DamageType = DamageClass.Ranged;
-			Item.damage = 18;
+			Item.damage = 24;
 			Item.crit = 6;
-			Item.knockBack = 1f;
+			Item.knockBack = 2f;
 			Item.noMelee = true;
-			Item.shoot = ProjectileID.Bullet;
-			Item.shootSpeed = 12f;
+			Item.shoot = ModContent.ProjectileType<Projectiles.Ranged.AncientEnergy>();
+			Item.shootSpeed = 18f;
 			Item.useAmmo = AmmoID.Bullet;
 		}
 
 		public override Vector2? HoldoutOffset()
 		{
-			return new Vector2(-18, -4);
+			return new Vector2(-16, -2);
 		}
 
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
 		{
 			position.Y = position.Y - 4;
-			velocity = velocity.RotatedByRandom(MathHelper.ToRadians(3));
-			if (type == ProjectileID.Bullet)
-			{
-				type = ModContent.ProjectileType<Projectiles.Ranged.JackBullet>();
-			}
+			type = ModContent.ProjectileType<Projectiles.Ranged.AncientEnergy>();
+			damage = (knockback < 1f) ? damage : (int)(damage * knockback);
 		}
 	}
 }
