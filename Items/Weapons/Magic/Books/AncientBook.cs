@@ -31,13 +31,21 @@ namespace GMR.Items.Weapons.Magic.Books
 			Item.autoReuse = true;
 			Item.UseSound = SoundID.Item43;
 			Item.DamageType = DamageClass.Magic;
-			Item.damage = 10;
+			Item.damage = 20;
 			Item.crit = -3;
 			Item.knockBack = 12f;
 			Item.noMelee = true;
 			Item.shoot = ModContent.ProjectileType<Projectiles.Magic.AncientInfraRedCrate>();
 			Item.shootSpeed = 8f;
 			Item.mana = 3;
+		}
+
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+		{
+			position.Y = player.Center.Y - 1000;
+			position.X = Main.MouseWorld.X + Main.rand.Next(-150, 150);
+			Projectile.NewProjectile(source, position, Vector2.Zero, type, damage, knockback, player.whoAmI);
+			return false;
 		}
 
 		public override void AddRecipes()
