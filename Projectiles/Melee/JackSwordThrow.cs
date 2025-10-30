@@ -15,9 +15,8 @@ namespace GMR.Projectiles.Melee
 
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Infra-Red Slash");
-			ProjectileID.Sets.TrailCacheLength[Type] = 30;
-			ProjectileID.Sets.TrailingMode[Type] = 6;
+			ProjectileID.Sets.TrailCacheLength[Type] = 6;
+			ProjectileID.Sets.TrailingMode[Type] = 2;
 			Projectile.AddElement(0);
 			Projectile.AddElement(2);
 		}
@@ -107,56 +106,32 @@ namespace GMR.Projectiles.Melee
 			}
 		}
 
-		public override Color? GetAlpha(Color lightColor) => new Color(255, 55, 85, 5);
-
 		public override bool PreDraw(ref Color lightColor)
 		{
-			var texture = TextureAssets.Projectile[Type].Value;
-			var drawOffset = new Vector2(Projectile.width / 2f, Projectile.height / 2f) - Main.screenPosition;
-			lightColor = Projectile.GetAlpha(lightColor);
-			var frame = texture.Frame(verticalFrames: Main.projFrames[Projectile.type], frameY: Projectile.frame);
-			frame.Height -= 2;
-			var origin = frame.Size() / 2f;
-			float opacity = Projectile.Opacity;
-			int trailLength = ProjectileID.Sets.TrailCacheLength[Type];
+			Texture2D texture2D13 = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
+			int num156 = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Height / Main.projFrames[Projectile.type]; //ypos of lower right corner of sprite to draw
+			int y3 = num156 * Projectile.frame; //ypos of upper left corner of sprite to draw
+			Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);
+			Vector2 origin2 = rectangle.Size() / 2f;
+
+			Color color26 = new Color(255, 55, 55);
+
 			SpriteEffects spriteEffects = SpriteEffects.None;
 			if (Projectile.direction == 1)
 				spriteEffects = SpriteEffects.FlipVertically;
 
-			for (int i = 0; i < trailLength; i++)
+			// Main Projectile
+			for (float i = 0; i < ProjectileID.Sets.TrailCacheLength[Projectile.type]; i += 0.5f)
 			{
-				float progress = 1f - 1f / trailLength * i;
-				Main.EntitySpriteDraw(texture, Projectile.oldPos[i] + drawOffset, frame, Projectile.GetAlpha(lightColor) * progress * opacity, Projectile.oldRot[i], origin, Projectile.scale, spriteEffects, 0);
-			}
-
-			Main.EntitySpriteDraw(texture, Projectile.position + drawOffset, frame, Projectile.GetAlpha(lightColor) * opacity, Projectile.rotation, origin, Projectile.scale, spriteEffects, 0);
-
-			var swish = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
-			var swish2 = GMR.Instance.Assets.Request<Texture2D>("Projectiles/Melee/SwordSlash2_Light", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-			var swishFrame = swish.Frame(verticalFrames: 1);
-			var swishColor = new Color(225, 55, 55, 255) * opacity;
-			var swishOrigin = swishFrame.Size() / 2;
-			float swishScale = Projectile.scale * 1f;
-			var swishPosition = Projectile.position + drawOffset;
-			float swishRotation = Projectile.rotation;
-			for (int i = 0; i < 1; i++)
-			{
-				Main.EntitySpriteDraw(
-					swish,
-					swishPosition,
-					swishFrame,
-					swishColor,
-					swishRotation,
-					swishOrigin,
-					swishScale, spriteEffects, 0);
-				Main.EntitySpriteDraw(
-					swish2,
-					swishPosition,
-					swishFrame,
-					new Color(225, 125, 125, 255) * opacity,
-					swishRotation,
-					swishOrigin,
-					swishScale, spriteEffects, 0);
+				Color color27 = color26;
+				color27.A = 0;
+				color27 *= (float)(ProjectileID.Sets.TrailCacheLength[Projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[Projectile.type];
+				int max0 = (int)i - 1;
+				if (max0 < 0)
+					continue;
+				Vector2 value4 = Vector2.Lerp(Projectile.oldPos[(int)i], Projectile.oldPos[max0], 1 - i % 1);
+				Main.EntitySpriteDraw(texture2D13, value4 + Projectile.Size / 2f - Main.screenPosition + new Vector2(0, Projectile.gfxOffY),
+					new Microsoft.Xna.Framework.Rectangle?(rectangle), color27 * Projectile.Opacity, Projectile.rotation, origin2, Projectile.scale, spriteEffects, 0);
 			}
 			return false;
 		}
