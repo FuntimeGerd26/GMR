@@ -241,4 +241,141 @@ namespace GMR.Items.Armor
 			recipe.Register();
 		}
 	}
+
+
+	[AutoloadEquip(EquipType.Head)]
+	public class InfraRedHelmet : ModItem
+	{
+		public override void SetStaticDefaults()
+		{
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+		}
+
+		public override void SetDefaults()
+		{
+			Item.width = 24;
+			Item.height = 26;
+			Item.value = Item.sellPrice(silver: 110);
+			Item.rare = 4;
+			Item.defense = 9;
+		}
+
+		public override void UpdateEquip(Player player)
+		{
+			player.maxMinions += 1;
+			player.maxTurrets += 1;
+			player.manaCost -= 0.10f;
+			player.endurance += 0.05f;
+		}
+
+		public override bool IsArmorSet(Item head, Item body, Item legs)
+		{
+			return body.type == ModContent.ItemType<InfraRedChestplate>() && legs.type == ModContent.ItemType<InfraRedLeggings>();
+		}
+
+		public override void UpdateArmorSet(Player player)
+		{
+			player.setBonus = $"Increases all damage by 5%\nIncreases melee weapon size by 15%\nWhen taking damage, heal 0.5% of max hp (A minimum of 5 hp is healed by this effect)";
+			player.GetDamage(DamageClass.Generic) += 0.05f;
+			player.GPlayer().InfraRedArmor = Item;
+		}
+
+		public override void AddRecipes()
+		{
+			Recipe recipe = CreateRecipe();
+			recipe.AddIngredient(null, "InfraRedBar", 16);
+			recipe.AddIngredient(null, "InfraRedCrystalShard", 20);
+			recipe.AddIngredient(null, "BossUpgradeCrystal", 1);
+			recipe.AddIngredient(null, "UpgradeCrystal", 15);
+			recipe.AddTile(TileID.MythrilAnvil);
+			recipe.Register();
+		}
+	}
+
+	[AutoloadEquip(EquipType.Body)]
+	public class InfraRedChestplate : ModItem
+	{
+		public override void SetStaticDefaults()
+		{
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+		}
+
+		public override void SetDefaults()
+		{
+			Item.width = 34;
+			Item.height = 22;
+			Item.value = Item.sellPrice(silver: 215);
+			Item.rare = 4;
+			Item.defense = 12;
+		}
+
+		public override void UpdateEquip(Player player)
+		{
+			if (!player.HasBuff(ModContent.BuffType<Buffs.Debuffs.JackyMaskOn>()))
+			{
+				player.GetDamage(DamageClass.Generic) += 0.08f;
+				player.GetCritChance(DamageClass.Generic) += 6f;
+			}
+			else
+			{
+				Item.defense = 0;
+				Item.vanity = true;
+			}
+		}
+
+		public override void AddRecipes()
+		{
+			Recipe recipe = CreateRecipe();
+			recipe.AddIngredient(null, "InfraRedBar", 28);
+			recipe.AddIngredient(null, "InfraRedCrystalShard", 12);
+			recipe.AddIngredient(null, "BossUpgradeCrystal", 2);
+			recipe.AddIngredient(null, "UpgradeCrystal", 15);
+			recipe.AddTile(TileID.MythrilAnvil);
+			recipe.Register();
+		}
+	}
+
+	[AutoloadEquip(EquipType.Legs)]
+	public class InfraRedLeggings : ModItem
+	{
+		public override void SetStaticDefaults()
+		{
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+		}
+
+		public override void SetDefaults()
+		{
+			Item.width = 22;
+			Item.height = 18;
+			Item.rare = 4;
+			Item.value = Item.sellPrice(silver: 175);
+			Item.defense = 11;
+		}
+
+		public override void UpdateEquip(Player player)
+		{
+			if (!player.HasBuff(ModContent.BuffType<Buffs.Debuffs.JackyMaskOn>()))
+			{
+				player.moveSpeed += 0.25f;
+				player.jumpSpeedBoost += 0.05f;
+				player.GetAttackSpeed(DamageClass.Generic) += 0.05f;
+			}
+			else
+			{
+				Item.defense = 0;
+				Item.vanity = true;
+			}
+		}
+
+		public override void AddRecipes()
+		{
+			Recipe recipe = CreateRecipe();
+			recipe.AddIngredient(null, "InfraRedBar", 25);
+			recipe.AddIngredient(null, "InfraRedCrystalShard", 10);
+			recipe.AddIngredient(null, "BossUpgradeCrystal", 2);
+			recipe.AddIngredient(null, "UpgradeCrystal", 10);
+			recipe.AddTile(TileID.MythrilAnvil);
+			recipe.Register();
+		}
+	}
 }
